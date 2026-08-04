@@ -324,6 +324,9 @@ select.field{appearance:none;cursor:pointer;
 .g-hero img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:9px;
   border:1px solid var(--hairline);display:block}
 .g-hero figcaption{font-size:11px;color:var(--ink-muted);margin-top:4px;line-height:1.35}
+/* Interactive panorama. Taller than a photo because you navigate inside it. */
+.g-pano iframe{width:100%;aspect-ratio:4/3;border:1px solid var(--hairline);
+  border-radius:9px;display:block}
 .g-photos{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:6px}
 .g-photos figure{margin:0;min-width:0}
 .g-photos img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;
@@ -2011,9 +2014,13 @@ async function streetViewFor(coords) {
   // about the place.
   if (meta.status === "ZERO_RESULTS") return { none:true };
   if (meta.status !== "OK") return { error:meta.status, why:meta.error_message || "" };
-  GOOGLE.spend(1);
-  return { src: `https://maps.googleapis.com/maps/api/streetview?size=640x360&location=${lat},${lng}`
-       + `&radius=3000&fov=90&return_error_code=true&key=${encodeURIComponent(key)}` };
+  // Embed API rather than the static image: you get a real panorama you can
+  // drag, zoom and walk along, which is what the pegman gives you in Google
+  // Maps. The Embed API is also not billed per request, unlike the static one.
+  // Snap to the panorama the metadata found so the view is never off in a field.
+  const at = meta.location ? `${meta.location.lat},${meta.location.lng}` : `${lat},${lng}`;
+  return { embed: `https://www.google.com/maps/embed/v1/streetview?key=${encodeURIComponent(key)}`
+       + `&location=${at}&heading=0&pitch=0&fov=90` };
 }
 
 /* A photo of THIS facility, by name. Text Search resolves the exact building
@@ -2118,10 +2125,10 @@ async function loadGoogleContext(settlementId, coords) {
   let html = "";
   try {
     const sv = await streetViewFor(coords);
-    if (sv.src) {
-      html += `<figure class="g-hero"><img src="${sv.src}" alt="Street View near this settlement" loading="lazy"
-             onerror="this.closest('figure').innerHTML='<p class=&quot;caption&quot;>Street View image failed to load.</p>'">
-         <figcaption>Street View, nearest panorama within 3 km</figcaption></figure>`;
+    if (sv.embed) {
+      html += `<figure class="g-hero g-pano"><iframe src="${sv.embed}" title="Street View panorama"
+             loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+         <figcaption>Drag to look around, click the arrows to move along the road.</figcaption></figure>`;
     } else if (sv.none) {
       html += `<p class="caption">No Street View here — no imagery has ever been captured at this
                location. That says nothing about the settlement itself.</p>`;
