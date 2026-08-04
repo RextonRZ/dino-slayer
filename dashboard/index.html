@@ -1,0 +1,2711 @@
+<!doctype html>
+<!--
+  DINO SLAYER — Digital Inclusion Priority Index, Sabah
+  ASEAN GeoAI Fusion 2026
+
+  Serve it, don't open it from disk (the browser blocks file:// fetch):
+      python -m http.server        # from the repo root
+      http://localhost:8000/dashboard/
+
+  Single file by design: no build step, no framework. Data is read from
+  ../dataset/web/ and is never modified, imputed or invented.
+-->
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dino Slayer — Digital Inclusion Priority Index, Sabah</title>
+<link rel="icon" type="image/png" href="public/favicon.png">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.css">
+<style>
+/* ══ 1. Tokens ══════════════════════════════════════════════════════════════
+   A theme is a re-assignment of these variables and nothing else.
+   Data colours (DIPI ramp, evidence hues) keep their hue in both themes;
+   only lightness is tuned, so they stay legible over either basemap.        */
+:root{
+  --bg:#0C0F13;
+  --surface:#141A22;
+  --material-bg:rgba(14,19,26,.88);
+  --hairline:rgba(226,235,245,.10);
+  --hairline-strong:rgba(226,235,245,.18);
+  --ink-strong:#F2F6FA;
+  --ink:#C2CCD9;
+  --ink-muted:#7C8899;
+  --accent:#3FC7E8;
+  --accent-bg:rgba(63,199,232,.14);
+  --safe:#40C289;   --safe-bg:rgba(64,194,137,.14);
+  --warn:#E3B341;   --warn-bg:rgba(227,179,65,.14);
+  --alert:#FF6B7A;  --alert-bg:rgba(255,107,122,.14);
+  --neutral:#8B96A6;--neutral-bg:rgba(139,150,166,.14);
+  --flood:#2FB8B0;   /* data colour: flood lens only, identical in both themes */
+  --bar:rgba(242,246,250,.62);
+  --track:rgba(242,246,250,.09);
+  --tint:rgba(242,246,250,.05);
+  --radius:.75rem;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --shadow:0 1px 3px rgba(0,0,0,.28), 0 10px 30px rgba(0,0,0,.22);
+  color-scheme:dark;
+}
+[data-theme="light"]{
+  --bg:#F7F8FA;
+  --surface:#FFFFFF;
+  --material-bg:rgba(255,255,255,.90);
+  --hairline:rgba(15,25,40,.12);
+  --hairline-strong:rgba(15,25,40,.20);
+  --ink-strong:#0E1620;
+  --ink:#3B4757;
+  --ink-muted:#697585;
+  --accent:#0B7E9E;
+  --accent-bg:rgba(11,126,158,.12);
+  --safe:#12855A;   --safe-bg:rgba(18,133,90,.12);
+  --warn:#9A6B00;   --warn-bg:rgba(154,107,0,.13);
+  --alert:#C42C3E;  --alert-bg:rgba(196,44,62,.12);
+  --neutral:#6B7787;--neutral-bg:rgba(107,119,135,.13);
+  --bar:rgba(14,22,32,.55);
+  --track:rgba(14,22,32,.08);
+  --tint:rgba(14,22,32,.045);
+  --shadow:0 1px 3px rgba(15,25,40,.06), 0 10px 30px rgba(15,25,40,.07);
+  color-scheme:light;
+}
+
+/* ══ 2. Base ═══════════════════════════════════════════════════════════════ */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow:hidden;
+}
+/* Two very faint radials. Nothing louder than this on the canvas. */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(60rem 40rem at 12% 0%,   rgba(63,199,232,.045), transparent 60%),
+    radial-gradient(55rem 38rem at 92% 100%, rgba(254,130,92,.04),  transparent 60%);
+}
+[data-theme="light"] body::before{
+  background:
+    radial-gradient(60rem 40rem at 12% 0%,   rgba(11,126,158,.05), transparent 60%),
+    radial-gradient(55rem 38rem at 92% 100%, rgba(205,86,48,.045), transparent 60%);
+}
+button,input,select{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer}
+button:active,a:active{transform:scale(.98)}
+button,a,input,select{transition:background-color .18s var(--ease),color .18s var(--ease),
+  border-color .18s var(--ease),transform .1s var(--ease),opacity .18s var(--ease)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(124,136,153,.28);border-radius:99px}
+::-webkit-scrollbar-thumb:hover{background:rgba(124,136,153,.45)}
+
+/* ══ 3. Type scale ═════════════════════════════════════════════════════════ */
+.micro{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-muted);font-weight:600}
+.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.28em;color:var(--ink-muted);font-weight:600}
+.sect-title{font-size:20px;font-weight:600;color:var(--ink-strong);letter-spacing:-.01em;margin:0}
+.card-title{font-size:15px;font-weight:600;color:var(--ink-strong);margin:0}
+/* Projector rule: readable at 1366x768 from three metres. Captions carry
+   real information here (null sentences, assumptions, disclaimers), so they
+   take --ink, not --ink-muted. */
+.caption{font-size:12.5px;color:var(--ink);line-height:1.5}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;color:var(--ink-strong)}
+
+/* ══ 4. Shell ══════════════════════════════════════════════════════════════ */
+/* The single implicit column MUST be constrained. Left as `auto` it sizes to
+   the widest item's max-content — the nowrap credits line blew the shell out
+   to 1460px in a 1366px window, pushing the header actions off-screen and
+   over-sizing the map canvas. */
+.app{position:relative;z-index:1;height:100%;display:grid;
+     grid-template-rows:64px minmax(0,1fr) auto;grid-template-columns:minmax(0,1fr);
+     overflow:hidden}
+.topbar{display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;border-bottom:1px solid var(--hairline);background:var(--material-bg);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand-logo{height:34px;width:auto;flex:none}
+[data-theme="dark"] .light-only{display:none}
+[data-theme="light"] .dark-only{display:none}
+.brand span{font-size:13px;color:var(--ink-muted);white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;padding-left:12px;border-left:1px solid var(--hairline)}
+.topbar-actions{display:flex;align-items:center;gap:8px;flex:none}
+.ghost-btn{height:34px;padding:0 12px;border-radius:8px;border:1px solid var(--hairline);
+  color:var(--ink);font-size:12.5px;font-weight:600;display:inline-flex;align-items:center;gap:7px}
+.ghost-btn:hover{background:var(--tint)}
+.ghost-btn[aria-pressed="true"]{background:var(--tint);color:var(--ink-strong);border-color:var(--hairline-strong)}
+.icon-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--hairline);
+  display:grid;place-items:center;color:var(--ink)}
+.icon-btn:hover{background:var(--tint)}
+svg{display:block}
+
+.body{display:grid;grid-template-columns:16.5rem minmax(0,1fr);min-height:0;position:relative}
+.body[data-rail="collapsed"]{grid-template-columns:0 minmax(0,1fr)}
+.body[data-rail="collapsed"] .sidebar{transform:translateX(-100%);opacity:0;pointer-events:none}
+
+/* ══ 5. Sidebar ════════════════════════════════════════════════════════════ */
+/* Flex column so TOP PRIORITY takes the leftover height and scrolls inside
+   itself. Nothing below it can be pushed off the fold at 768px. */
+.sidebar{background:var(--material-bg);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border-right:1px solid var(--hairline);overflow-y:auto;overflow-x:hidden;
+  display:flex;flex-direction:column;
+  padding:18px 14px 20px;transition:transform .22s var(--ease),opacity .22s var(--ease)}
+.group{margin-bottom:22px;flex:none}
+.group > .micro{display:block;margin:0 4px 9px}
+.group.grow{flex:1 1 auto;min-height:7rem;display:flex;flex-direction:column;margin-bottom:18px}
+.group.grow .top-list{flex:1 1 auto;overflow-y:auto;min-height:0;margin-right:-6px;padding-right:6px}
+/* Weightings is a V6b exploration tool, not a primary control: closed by default. */
+.wgroup{margin-bottom:4px}
+.wsum{cursor:pointer;list-style:none;display:block;margin:0 4px 9px;padding:3px 0}
+.wsum::-webkit-details-marker{display:none}
+.wsum::before{content:"▸ ";font-size:8px}
+details[open] > .wsum::before{content:"▾ "}
+.field{width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid var(--hairline);
+  background:color-mix(in srgb,var(--surface) 55%,transparent);color:var(--ink-strong);font-size:13px}
+.field::placeholder{color:var(--ink-muted)}
+.field:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-bg)}
+select.field{appearance:none;cursor:pointer;
+  background-image:linear-gradient(45deg,transparent 50%,var(--ink-muted) 50%),
+                   linear-gradient(135deg,var(--ink-muted) 50%,transparent 50%);
+  background-position:calc(100% - 15px) 17px,calc(100% - 10px) 17px;
+  background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+.search-wrap{position:relative}
+.results{position:absolute;top:42px;left:0;right:0;z-index:30;background:var(--surface);
+  border:1px solid var(--hairline);border-radius:10px;box-shadow:var(--shadow);
+  max-height:15rem;overflow-y:auto;padding:5px}
+.results:empty{display:none}
+.result-row{display:block;width:100%;text-align:left;padding:8px 9px;border-radius:7px;font-size:12.5px;color:var(--ink)}
+.result-row:hover,.result-row:focus-visible{background:var(--tint);color:var(--ink-strong)}
+.result-row small{display:block;color:var(--ink-muted);font-size:10.5px;margin-top:1px}
+
+.toggle-row{display:flex;align-items:flex-start;gap:10px;min-height:44px;padding:7px 9px;
+  border-radius:9px;cursor:pointer;user-select:none}
+/* display:flex beats the UA sheet's [hidden]{display:none}, so restate it. */
+.toggle-row[hidden]{display:none}
+.toggle-row:hover{background:var(--tint)}
+.toggle-row input{appearance:none;flex:none;width:16px;height:16px;margin:3px 0 0;border-radius:4px;
+  border:1px solid var(--hairline-strong);background:transparent;cursor:pointer;position:relative}
+/* Ink, not accent: two of these are checked by default and would eat the
+   accent budget before the map has spent any of it. */
+.toggle-row input:checked{background:var(--ink-strong);border-color:var(--ink-strong)}
+.toggle-row input:checked::after{content:"";position:absolute;left:4.5px;top:1px;width:4px;height:8px;
+  border:solid var(--bg);border-width:0 2px 2px 0;transform:rotate(43deg)}
+.toggle-row .lbl{font-size:12.5px;line-height:1.35;color:var(--ink)}
+.toggle-row .lbl .caption{margin-top:2px}
+
+/* Hairline separators only — no per-row cards, no left accent bars, and the
+   DIPI reads as a coloured NUMBER, never a filled pill. */
+/* Basemap segmented control */
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:9px 0 2px;padding:3px;
+  border:1px solid var(--hairline);border-radius:9px}
+.seg-btn{height:30px;border-radius:6px;font-size:11.5px;font-weight:600;color:var(--ink-muted)}
+.seg-btn:hover{color:var(--ink)}
+.seg-btn[aria-pressed="true"]{background:var(--tint);color:var(--ink-strong)}
+
+/* Over satellite imagery the label halo must be dark whatever the theme is. */
+[data-basemap="satellite"] .mlabel{color:#F4F8FC;
+  text-shadow:0 0 3px rgba(0,0,0,.95),0 0 9px rgba(0,0,0,.8)}
+[data-basemap="satellite"] .map-note{color:#E9EFF6;
+  text-shadow:0 0 4px rgba(0,0,0,.95),0 0 9px rgba(0,0,0,.8)}
+
+.top-list{display:flex;flex-direction:column}
+.top-row{display:grid;grid-template-columns:2ch minmax(0,1fr) auto;align-items:center;
+  gap:11px;min-height:44px;padding:5px 6px;text-align:left;width:100%;
+  border-bottom:1px solid var(--hairline)}
+.top-row:last-child{border-bottom:0}
+.top-row:hover{background:var(--tint)}
+.top-row[aria-current="true"]{background:var(--tint)}
+.top-row .rk{font-size:11px;font-variant-numeric:tabular-nums;color:var(--ink-muted);
+  font-weight:600;text-align:right}
+.top-row .nm{min-width:0}
+.top-row .nm b{display:block;font-size:12.5px;font-weight:600;color:var(--ink-strong);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.top-row .nm small{display:block;font-size:9.5px;color:var(--ink-muted);margin-top:1px;
+  letter-spacing:.13em;text-transform:uppercase;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.top-row .dv{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+
+/* Weight sliders (V6b) — ink, never accent: four of these are always on screen. */
+.wrow{margin-bottom:11px}
+.wrow .bar-head{margin-bottom:2px}
+.wslider{-webkit-appearance:none;appearance:none;width:100%;height:18px;
+  background:transparent;cursor:pointer;display:block;margin:0}
+.wslider::-webkit-slider-runnable-track{height:4px;border-radius:99px;background:var(--track)}
+.wslider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:13px;height:13px;
+  border-radius:50%;background:var(--ink-strong);border:0;margin-top:-4.5px}
+.wslider::-moz-range-track{height:4px;border-radius:99px;background:var(--track)}
+.wslider::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--ink-strong);border:0}
+.wslider:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ══ 6. Stage / map ════════════════════════════════════════════════════════ */
+.stage{position:relative;min-width:0;min-height:0}
+#map{position:absolute;inset:0}
+#map canvas{outline:none}
+.maplibregl-ctrl-attrib{font-size:10px}
+.rail-toggle{position:absolute;top:12px;left:12px;z-index:5;width:30px;height:30px;border-radius:8px;
+  background:var(--material-bg);border:1px solid var(--hairline);backdrop-filter:blur(8px);
+  display:grid;place-items:center;color:var(--ink)}
+.rail-toggle:hover{color:var(--ink-strong)}
+
+/* Division / district labels — HTML overlays, not symbol layers: no glyph
+   server to fail mid-pitch, and they inherit the house type scale exactly. */
+.map-labels{position:absolute;inset:0;pointer-events:none;z-index:4;overflow:hidden}
+.mlabel{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;
+  text-transform:uppercase;font-weight:700;opacity:0;
+  transition:opacity .25s var(--ease);
+  text-shadow:0 0 3px var(--bg),0 0 7px var(--bg),0 1px 2px var(--bg)}
+.mlabel[data-on="1"]{opacity:1}
+.mlabel.division{font-size:11px;letter-spacing:.26em;color:var(--ink)}
+.mlabel.district{font-size:9.5px;letter-spacing:.15em;color:var(--ink-muted)}
+
+/* §D1 honesty caption — sits directly under the legend, always visible. */
+.map-note{position:absolute;left:12px;bottom:0;z-index:5;margin:0;padding:0 2px 8px;
+  white-space:nowrap;font-size:11.5px;line-height:1.4;color:var(--ink-muted);
+  text-shadow:0 0 4px var(--bg),0 0 8px var(--bg)}
+
+.legend{position:absolute;left:12px;bottom:40px;z-index:5;background:var(--material-bg);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--hairline);
+  border-radius:var(--radius);padding:12px 13px;box-shadow:var(--shadow);max-width:15rem}
+.legend .micro{margin-bottom:8px;display:block}
+.ramp{display:flex;gap:2px;margin-bottom:6px}
+.ramp i{flex:1;height:9px;border-radius:2px}
+.ramp-ends{display:flex;justify-content:space-between;font-size:10px;color:var(--ink-muted);
+  font-variant-numeric:tabular-nums;margin-bottom:10px}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--ink-muted);margin-top:6px}
+.legend-item .glyph{flex:none;width:13px;height:13px;border-radius:50%}
+.glyph.queueb{border:1.5px solid var(--neutral)}
+.glyph.lowev{border:1.5px solid var(--warn)}
+.glyph.sel{border:2px solid var(--accent)}
+.glyph.flood{border:1.6px solid var(--flood)}
+.toggle-row[data-on="1"]{background:var(--tint)}
+
+.tooltip{position:absolute;z-index:8;pointer-events:none;background:var(--material-bg);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--hairline);
+  border-radius:9px;padding:8px 10px;box-shadow:var(--shadow);max-width:16rem;
+  transform:translate(-50%,-100%);opacity:0;transition:opacity .12s var(--ease)}
+.tooltip[data-show="1"]{opacity:1}
+.tooltip .t-name{font-size:12.5px;font-weight:600;color:var(--ink-strong);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tooltip .t-line{font-size:11px;color:var(--ink-muted);margin-top:3px;font-variant-numeric:tabular-nums}
+
+/* Facility popup card (§A3) — top-left, clear of the legend and the panel. */
+.fac-card{position:absolute;left:12px;top:52px;z-index:14;width:21rem;max-width:calc(100% - 24px);
+  background:var(--material-bg);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid var(--hairline);border-radius:var(--radius);padding:13px;box-shadow:var(--shadow);
+  opacity:0;transform:translateY(-6px);pointer-events:none;
+  transition:opacity .2s var(--ease),transform .2s var(--ease)}
+.fac-card[data-open="1"]{opacity:1;transform:none;pointer-events:auto}
+.fac-card h2{font-weight:600;color:var(--ink-strong);margin:0;letter-spacing:-.01em}
+
+/* Grouped search results */
+.res-head{font-size:9.5px;text-transform:uppercase;letter-spacing:.16em;color:var(--ink-muted);
+  font-weight:700;padding:7px 9px 4px}
+.res-head + .result-row{margin-top:0}
+
+/* Local context list (§B) */
+.fac-list{display:flex;flex-direction:column}
+.fac-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:9px;align-items:center;
+  padding:7px 2px;border-bottom:1px solid var(--hairline)}
+.fac-row:last-child{border-bottom:0}
+.fac-kind{width:9px;height:9px;flex:none;background:var(--ink-muted)}
+.fac-kind[data-kind="health"]{border-radius:50%;background:transparent;
+  border:1.6px solid var(--ink-muted);width:10px;height:10px}
+.fac-nm{min-width:0}
+.fac-nm b{display:block;font-size:12px;font-weight:600;color:var(--ink-strong);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fac-nm small{display:block;font-size:10px;color:var(--ink-muted);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fac-d{font-size:11.5px;font-weight:600;color:var(--ink)}
+.fac-link{color:var(--ink-muted);display:grid;place-items:center;width:22px;height:22px;border-radius:6px}
+.fac-link:hover{color:var(--ink-strong);background:var(--tint)}
+
+/* Google imagery (opt-in). Always captioned, never presented as evidence. */
+.g-mount{margin-top:10px}
+/* Lead image is full panel width — a thumbnail strip was too small to read. */
+.g-hero{margin:0 0 8px}
+.g-hero img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:9px;
+  border:1px solid var(--hairline);display:block}
+.g-hero figcaption{font-size:11px;color:var(--ink-muted);margin-top:4px;line-height:1.35}
+.g-photos{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:6px}
+.g-photos figure{margin:0;min-width:0}
+.g-photos img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;
+  border:1px solid var(--hairline);display:block}
+.g-photos figcaption{font-size:10.5px;color:var(--ink-muted);margin-top:3px;line-height:1.3;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.g-err{color:var(--warn)}
+.g-cap{margin-top:8px}
+
+/* Validation panel — ?debug=1 only. */
+.debug{position:absolute;top:12px;right:12px;z-index:20;width:27rem;max-height:calc(100% - 24px);
+  overflow-y:auto;background:var(--material-bg);backdrop-filter:blur(10px);
+  border:1px solid var(--hairline);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
+.debug[hidden]{display:none}
+/* Setup is a one-off dialog, so it centres instead of fighting the panel. */
+.debug.setup{top:50%;left:50%;right:auto;transform:translate(-50%,-50%);width:25rem;
+  padding:18px;box-shadow:0 24px 70px rgba(0,0,0,.45)}
+.setup-x{position:absolute;top:10px;right:10px}
+.debug h3{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:var(--ink-muted);
+  margin:0 0 10px;font-weight:700}
+.debug .dline{display:grid;grid-template-columns:3.1rem 1fr;gap:8px;font-size:11px;
+  padding:4px 0;border-bottom:1px solid var(--hairline);align-items:baseline}
+.debug .dline:last-child{border-bottom:0}
+.debug .dtag{font-size:9px;font-weight:700;letter-spacing:.08em;padding:1px 5px;border-radius:99px;text-align:center}
+.debug .dtag.ok{background:var(--safe-bg);color:var(--safe)}
+.debug .dtag.no{background:var(--alert-bg);color:var(--alert)}
+.debug .dname{color:var(--ink-strong);font-weight:600}
+.debug .ddet{color:var(--ink-muted);font-variant-numeric:tabular-nums;display:block;margin-top:1px}
+.debug pre{font-size:10px;line-height:1.5;color:var(--ink-muted);white-space:pre-wrap;
+  margin:9px 0 0;font-variant-numeric:tabular-nums}
+
+/* ══ 7. Chips, bars, tiles ═════════════════════════════════════════════════ */
+.chip{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:99px;
+  font-size:11px;font-weight:600;line-height:1.5;white-space:nowrap}
+.chip .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+.chip.safe{background:var(--safe-bg);color:var(--safe)}
+.chip.warn{background:var(--warn-bg);color:var(--warn)}
+.chip.neutral{background:var(--neutral-bg);color:var(--neutral)}
+.chip.plain{background:var(--tint);color:var(--ink-muted)}
+.chip.accent{background:var(--accent-bg);color:var(--accent)}
+
+.bar-row{margin-bottom:13px}
+.bar-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:5px}
+.bar-head .num{font-size:13px;font-weight:600}
+.track{height:6px;border-radius:99px;background:var(--track);overflow:hidden}
+.track > i{display:block;height:100%;border-radius:99px;background:var(--bar);width:0;
+  transition:width .38s var(--ease)}
+
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.tile{background:var(--surface);border:1px solid var(--hairline);border-radius:10px;padding:9px 10px;min-width:0}
+.tile .micro{display:block;margin-bottom:3px;font-size:9px;letter-spacing:.11em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .v{font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink-strong);
+  letter-spacing:-.01em}
+.tile .v.small{font-size:12px;font-weight:500;color:var(--ink-muted)}
+.tile .u{font-size:10px;color:var(--ink-muted);font-weight:500;margin-left:2px}
+
+/* ══ 8. Drill-down panel ═══════════════════════════════════════════════════ */
+.panel{position:absolute;top:0;right:0;bottom:0;width:23.5rem;max-width:100%;z-index:12;
+  background:var(--material-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-left:1px solid var(--hairline);box-shadow:var(--shadow);
+  overflow-y:auto;padding:16px 16px 28px;
+  transform:translateX(100%);visibility:hidden;transition:transform .22s var(--ease),visibility .22s}
+.panel[data-open="1"]{transform:none;visibility:visible}
+.panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}
+.panel-head h2{font-size:19px;font-weight:600;color:var(--ink-strong);margin:0 0 6px;letter-spacing:-.015em}
+.panel-meta{display:flex;flex-wrap:wrap;gap:6px}
+.hero{display:flex;align-items:flex-end;gap:10px;padding:14px 0 16px;border-bottom:1px solid var(--hairline);margin-bottom:16px}
+.hero .big{font-size:52px;font-weight:700;line-height:.92;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.hero .side{padding-bottom:5px}
+.hero .side .micro{display:block}
+.hero .side .sub{font-size:11.5px;color:var(--ink-muted);margin-top:2px}
+.block{margin-bottom:18px}
+.block > .micro{display:block;margin-bottom:9px}
+.evidence-block{border:1px solid var(--hairline);border-radius:var(--radius);padding:12px 13px;background:var(--surface)}
+.evidence-block .chip{margin-bottom:7px}
+.note{border-left:2px solid var(--hairline-strong);padding:2px 0 2px 10px;color:var(--ink-muted);font-size:11.5px}
+
+/* ══ 9. Simulator ══════════════════════════════════════════════════════════ */
+.sim{border:1px solid var(--hairline);border-radius:var(--radius);background:var(--surface);padding:13px}
+.sim-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:4px}
+.sim-q{font-size:13.5px;font-weight:600;color:var(--ink-strong);margin:0 0 10px}
+.sim-tabs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.sim-tab{padding:5px 10px;border-radius:99px;border:1px solid var(--hairline);font-size:11.5px;
+  font-weight:600;color:var(--ink-muted)}
+.sim-tab:hover{background:var(--tint);color:var(--ink)}
+.sim-tab[aria-pressed="true"]{background:var(--tint);color:var(--ink-strong);border-color:var(--hairline-strong)}
+/* Sharing stepper */
+.share{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin-bottom:6px}
+.share-chip{padding:5px 10px;border-radius:99px;border:1px solid var(--hairline);
+  font-size:11.5px;font-weight:600;color:var(--ink-muted)}
+.share-chip:hover{background:var(--tint);color:var(--ink)}
+.share-chip[aria-pressed="true"]{background:var(--tint);color:var(--ink-strong);border-color:var(--hairline-strong)}
+.share-num{width:4.4rem;height:30px;padding:0 9px;border-radius:99px;border:1px solid var(--hairline);
+  background:transparent;color:var(--ink-strong);font-size:11.5px;font-variant-numeric:tabular-nums}
+.share-num:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-bg)}
+.peruser{display:flex;align-items:baseline;flex-wrap:wrap;gap:5px;margin:9px 0 11px;
+  font-size:11px;color:var(--ink-muted)}
+.peruser .num{font-size:17px;font-weight:700;letter-spacing:-.02em}
+.peruser .num:nth-of-type(2){font-size:13px}
+.ctx{margin-bottom:12px}
+.legs{display:flex;flex-direction:column;gap:1px;margin-bottom:9px}
+.leg{display:grid;grid-template-columns:1fr auto auto;gap:9px;align-items:baseline;
+  font-size:11px;color:var(--ink);padding:3px 6px;border-radius:6px}
+.leg:nth-child(odd){background:var(--tint)}
+.leg .num{font-size:11.5px;font-weight:600}
+.leg .lneed{font-size:10px;color:var(--ink-muted);font-variant-numeric:tabular-nums}
+
+/* Mock player (V6a-video). Upgrades to the real clip if one is bundled. */
+.player{position:relative;aspect-ratio:16/9;border-radius:10px;overflow:hidden;
+  background:#090C10;border:1px solid var(--hairline);margin:2px 0 6px}
+.player video{width:100%;height:100%;object-fit:cover;display:block}
+.player-mock{position:absolute;inset:0;
+  background:radial-gradient(120% 90% at 30% 20%,#1B2430,#080B0F 70%)}
+.player-q{position:absolute;top:8px;left:8px;z-index:3;font-size:9.5px;font-weight:700;
+  letter-spacing:.12em;padding:2px 7px;border-radius:99px;background:rgba(0,0,0,.6);color:#E9EEF4}
+.player-spin{position:absolute;inset:0;z-index:4;display:none;place-items:center;background:rgba(0,0,0,.5)}
+.player[data-stalled="1"] .player-spin{display:grid}
+.player-spin i{width:22px;height:22px;border-radius:50%;
+  border:2px solid rgba(255,255,255,.22);border-top-color:#fff;animation:pspin .8s linear infinite}
+@keyframes pspin{to{transform:rotate(360deg)}}
+.player-bar{position:absolute;left:0;right:0;bottom:20px;height:3px;
+  background:rgba(255,255,255,.16);z-index:3}
+.player-bar > i{display:block;height:100%;background:#fff;width:0}
+.player-note{position:absolute;left:0;right:0;bottom:0;z-index:5;background:rgba(0,0,0,.66);
+  color:#E4EAF1;font-size:8.5px;line-height:1.4;padding:4px 7px}
+.player-stat{font-size:10.5px;color:var(--ink-muted);margin-bottom:9px;
+  font-variant-numeric:tabular-nums}
+.player-stat b{color:var(--ink-strong);font-weight:700}
+
+.verdict{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 12px;
+  border-radius:10px;margin-bottom:9px}
+.verdict .vbig{font-size:25px;font-weight:700;font-variant-numeric:tabular-nums;
+  letter-spacing:-.025em;color:var(--ink-strong)}
+.verdict .vu{font-size:12px;font-weight:600;margin-left:1px;color:var(--ink-muted)}
+.verdict .vsub{font-size:11px;color:var(--ink-muted);margin-top:2px}
+.vline{font-size:12.5px;color:var(--ink-strong);font-weight:600;margin:0 0 9px;line-height:1.4}
+.sim-foot{margin:6px 0 0;color:var(--ink-muted);font-size:11.5px}
+.verdict.safe{background:var(--safe-bg)}
+.verdict.warn{background:var(--warn-bg)}
+.verdict.neutral{background:var(--neutral-bg)}
+.verdict .vd{font-size:15px;font-weight:700}
+.verdict.safe .vd{color:var(--safe)} .verdict.warn .vd{color:var(--warn)} .verdict.neutral .vd{color:var(--neutral)}
+.verdict .vx{font-size:11px;color:var(--ink-muted);text-align:right;font-variant-numeric:tabular-nums}
+.tier-grid{display:flex;flex-direction:column;gap:1px;margin-bottom:10px}
+.tier-line{display:grid;grid-template-columns:3.1rem 1fr auto;align-items:center;gap:8px;
+  padding:5px 6px;border-radius:7px;font-size:11.5px;width:100%;text-align:left}
+.tier-line:hover{background:var(--tint)}
+.tier-line[aria-current="true"]{background:var(--tint)}
+.tier-line .tn{font-weight:600;color:var(--ink-strong);font-variant-numeric:tabular-nums}
+.tier-line .tb{height:4px;border-radius:99px;background:var(--track);overflow:hidden}
+.tier-line .tb > i{display:block;height:100%;border-radius:99px}
+.tier-line .tv{font-size:10.5px;font-weight:700}
+details.math{margin-top:2px}
+details.math summary{font-size:11px;color:var(--ink-muted);cursor:pointer;padding:4px 0;list-style:none}
+details.math summary::-webkit-details-marker{display:none}
+details.math summary::before{content:"▸ ";font-size:9px}
+details.math[open] summary::before{content:"▾ "}
+details.math .mathbody{font-size:11px;color:var(--ink-muted);font-variant-numeric:tabular-nums;
+  line-height:1.65;padding:6px 0 2px}
+details.math code{font-size:10.5px;color:var(--ink)}
+.disclaimer{font-size:11.5px;color:var(--ink-muted);line-height:1.5;
+  border-top:1px solid var(--hairline);margin-top:11px;padding-top:9px}
+.note{font-size:12.5px}
+.tile .micro{font-size:10px}
+.player-note{font-size:10px}
+.leg{font-size:11.5px}
+.leg .lneed{font-size:11px}
+.player-stat{font-size:11.5px}
+
+/* ══ 10. Rankings ══════════════════════════════════════════════════════════ */
+.rankings{position:absolute;inset:0;z-index:10;background:var(--bg);overflow-y:auto;
+  padding:20px 22px 28px;display:none}
+.rankings[data-open="1"]{display:block}
+.rk-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(9rem,1fr));gap:10px;margin-bottom:18px;max-width:56rem}
+.kpi{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--radius);padding:13px 14px}
+.kpi .micro{display:block;margin-bottom:5px}
+.kpi .v{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink-strong);letter-spacing:-.02em}
+.kpi .u{font-size:11px;color:var(--ink-muted);font-weight:500;margin-left:3px}
+/* Toolbar: search left, filter chips right. */
+.rk-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;
+  flex-wrap:wrap;margin-bottom:11px}
+.rk-search{max-width:18rem;height:34px;flex:0 1 18rem}
+.rk-chips{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.rk-chip{height:30px;padding:0 11px;border-radius:99px;border:1px solid var(--hairline);
+  font-size:11.5px;font-weight:600;color:var(--ink-muted);display:inline-flex;align-items:center;gap:6px}
+.rk-chip:hover{background:var(--tint);color:var(--ink)}
+.rk-chip[aria-pressed="true"]{background:var(--tint);color:var(--ink-strong);border-color:var(--hairline-strong)}
+.rk-chip.preset[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
+.rk-sep{width:1px;height:18px;background:var(--hairline);margin:0 3px}
+.rk-count{font-size:11.5px;color:var(--ink-muted);margin:0 0 9px;font-variant-numeric:tabular-nums}
+thead th[data-tip]{cursor:help}
+thead th.sortable{cursor:pointer;user-select:none}
+/* Explains what a column actually measures. Fixed-position so the table's
+   overflow:hidden cannot clip it, and typography reset out of the th. */
+.th-tip{position:fixed;z-index:60;max-width:21rem;padding:10px 12px;border-radius:10px;
+  background:var(--material-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid var(--hairline-strong);box-shadow:var(--shadow);
+  font-size:12px;line-height:1.5;color:var(--ink);text-transform:none;
+  letter-spacing:normal;font-weight:400;opacity:0;pointer-events:none;
+  transition:opacity .14s var(--ease)}
+.th-tip[data-show="1"]{opacity:1}
+thead th.sortable:hover{color:var(--ink-strong)}
+thead th .arw{margin-left:4px;opacity:.45;font-size:9px}
+thead th[data-active="1"]{color:var(--ink-strong)}
+thead th[data-active="1"] .arw{opacity:1}
+
+.table-wrap{border:1px solid var(--hairline);border-radius:var(--radius);overflow:hidden;background:var(--surface)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+thead th{font-size:10px;text-transform:uppercase;letter-spacing:.13em;color:var(--ink-muted);
+  font-weight:600;text-align:left;padding:11px 12px;border-bottom:1px solid var(--hairline);
+  white-space:nowrap;background:var(--surface);position:sticky;top:0;z-index:2}
+thead th.r,tbody td.r{text-align:right}
+tbody tr{border-bottom:1px solid var(--hairline);cursor:pointer}
+tbody tr:last-child{border-bottom:0}
+tbody tr:hover{background:var(--tint)}
+tbody td{padding:0 12px;height:44px;color:var(--ink);white-space:nowrap}
+tbody td.num,tbody td.r{font-variant-numeric:tabular-nums}
+tbody td.nm{color:var(--ink-strong);font-weight:500;max-width:13rem;overflow:hidden;text-overflow:ellipsis}
+tbody td .sub{color:var(--ink-muted);font-weight:400}
+.dipi-cell{display:inline-flex;align-items:center;gap:7px;font-weight:700}
+.dipi-cell .sw{width:8px;height:8px;border-radius:50%;flex:none}
+.qb-section{margin-top:20px;border:1px solid var(--hairline);border-radius:var(--radius);
+  background:var(--surface);overflow:hidden}
+.qb-summary{display:flex;align-items:center;gap:10px;padding:14px 16px;cursor:pointer;list-style:none}
+.qb-summary::-webkit-details-marker{display:none}
+.qb-summary::before{content:"▸";font-size:10px;color:var(--ink-muted)}
+details[open] .qb-summary::before{content:"▾"}
+.qb-summary .t{font-size:14px;font-weight:600;color:var(--ink-strong)}
+.empty{padding:34px 16px;text-align:center;color:var(--ink-muted);font-size:12.5px}
+
+/* ══ 11. Footer ════════════════════════════════════════════════════════════ */
+/* The contract sentence may never truncate. It refuses to shrink and wraps
+   whole; the credits are what give way, dropping to a second line. */
+.footer{display:flex;align-items:center;justify-content:space-between;gap:4px 18px;
+  flex-wrap:wrap;padding:9px 20px;border-top:1px solid var(--hairline);
+  background:var(--material-bg);backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);font-size:12px}
+.contract{color:var(--ink);flex:1 0 auto;font-weight:500;white-space:normal;overflow:visible}
+.credits{color:var(--ink-muted);font-size:10.5px;flex:1 1 18rem;min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right}
+
+.loading{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:var(--bg);
+  color:var(--ink-muted);font-size:12.5px;letter-spacing:.06em;transition:opacity .3s var(--ease)}
+.loading[hidden]{display:none}
+
+@media (max-width:1100px){
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .panel{width:20.5rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;transition-duration:.001ms !important}
+  button:active,a:active{transform:none}
+}
+</style>
+</head>
+<body>
+<div class="loading" id="loading">READING DATASET…</div>
+
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <!-- Both variants ship (15 KB total) and CSS picks one, so the logo
+           never flashes the wrong colour on a theme flip. -->
+      <img class="brand-logo dark-only" src="public/logo-nav-dark.png"
+           alt="Dino Slayer" width="389" height="96">
+      <img class="brand-logo light-only" src="public/logo-nav-light.png"
+           alt="Dino Slayer" width="389" height="96">
+      <span>Digital Inclusion Priority Index &middot; Sabah</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="ghost-btn" id="viewToggle" aria-pressed="false">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M2 4h12M2 8h12M2 12h8"/></svg>
+        Rankings
+      </button>
+      <button class="icon-btn" id="themeToggle" aria-label="Switch to light theme" title="Switch theme"></button>
+    </div>
+  </header>
+
+  <div class="body" id="body" data-rail="open">
+    <!-- ── Sidebar ─────────────────────────────────────────────────────── -->
+    <aside class="sidebar" id="sidebar">
+      <div class="group">
+        <span class="micro">Find</span>
+        <div class="search-wrap">
+          <input class="field" id="search" type="search" autocomplete="off" placeholder="Search settlement or ID…" aria-label="Search settlement">
+          <div class="results" id="results" role="listbox"></div>
+        </div>
+      </div>
+
+      <div class="group">
+        <span class="micro">Filters</span>
+        <select class="field" id="divisionSel" aria-label="Filter by division" style="margin-bottom:7px">
+          <option value="">All divisions</option>
+        </select>
+        <select class="field" id="districtSel" aria-label="Filter by district">
+          <option value="">All districts</option>
+        </select>
+      </div>
+
+      <div class="group grow">
+        <span class="micro">Top priority</span>
+        <div class="top-list" id="topList"></div>
+      </div>
+
+      <div class="group">
+        <span class="micro">Layers</span>
+        <label class="toggle-row" id="floodRow" data-on="0" title="Historical seasonal-water presence from JRC Global Surface Water. Includes coastal/tidal zones — shown as context, not scored.">
+          <input type="checkbox" id="floodToggle">
+          <span class="lbl">Seasonal water adjacency (context)
+            <span class="caption">Context only. Never scored.</span></span>
+        </label>
+        <label class="toggle-row">
+          <input type="checkbox" id="queueBToggle" checked>
+          <span class="lbl">Show evidence-gap communities
+            <span class="caption">334 settlements, unscored.</span></span>
+        </label>
+        <label class="toggle-row" id="facRow" data-on="0">
+          <input type="checkbox" id="facToggle">
+          <span class="lbl">Schools &amp; health facilities
+            <span class="caption">606 OSM points. Visible from mid-zoom.</span></span>
+        </label>
+        <!-- Only appears once a key is saved via ?setup=1. Off by default even
+             then, so nothing is ever billed without a deliberate click. -->
+        <label class="toggle-row" id="gRow" data-on="0" hidden>
+          <input type="checkbox" id="gToggle">
+          <span class="lbl">Google imagery
+            <span class="caption">Street View + Places photos, loaded per settlement.</span>
+            <span class="caption" id="gMeter"></span></span>
+        </label>
+        <div class="seg" role="group" aria-label="Basemap">
+          <button class="seg-btn" id="baseMapBtn" aria-pressed="true">Map</button>
+          <button class="seg-btn" id="baseSatBtn" aria-pressed="false">Satellite</button>
+        </div>
+      </div>
+
+      <details class="group wgroup">
+        <summary class="micro wsum">Explore weightings</summary>
+        <div id="weightBox"></div>
+        <button class="ghost-btn" id="wReset" style="width:100%;margin-top:4px;justify-content:center">
+          Reset to team default (40/25/15/20)</button>
+        <div id="wNote"></div>
+      </details>
+    </aside>
+
+    <!-- ── Stage ───────────────────────────────────────────────────────── -->
+    <main class="stage">
+      <div id="map"></div>
+      <div class="map-labels" id="mapLabels"></div>
+
+      <button class="rail-toggle" id="railToggle" aria-label="Collapse sidebar" title="Collapse sidebar">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M2 3h12M2 8h12M2 13h12"/></svg>
+      </button>
+
+      <!-- §D1: sparse areas are unmeasured, not uncovered. Says so, always. -->
+      <p class="map-note" id="mapNote">Blank areas ≠ no coverage — this layer shows settlement screening points only.</p>
+
+      <div class="legend" id="legend">
+        <span class="micro">DIPI &middot; priority score</span>
+        <div class="ramp" id="ramp"></div>
+        <div class="ramp-ends"><span>20 lower</span><span>higher 77</span></div>
+        <div class="legend-item"><span class="glyph lowev"></span>Low evidence</div>
+        <div class="legend-item"><span class="glyph queueb"></span>Evidence gap &middot; unscored</div>
+        <div class="legend-item"><span class="glyph sel"></span>Selected</div>
+        <div id="legendFlood"></div>
+      </div>
+
+      <aside class="fac-card" id="facCard" data-open="0" aria-label="Facility detail"></aside>
+
+      <div class="tooltip" id="tooltip"></div>
+
+      <!-- Validation report (Round 2 §E). Hidden unless the page is opened
+           with ?debug=1 — it must never appear during the pitch. -->
+      <aside class="debug" id="debugPanel" hidden></aside>
+
+      <!-- ── Rankings view ─────────────────────────────────────────────── -->
+      <section class="rankings" id="rankings" aria-label="Rankings">
+        <div class="rk-head">
+          <div>
+            <span class="eyebrow">Rankings</span>
+            <h1 class="sect-title" style="margin-top:6px">Screened settlements</h1>
+          </div>
+          <button class="ghost-btn" id="csvBtn">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M8 2v8m0 0L5 7m3 3l3-3M3 13h10"/></svg>
+            Download CSV
+          </button>
+        </div>
+        <div class="kpis" id="kpis"></div>
+        <div id="rkNote"></div>
+
+        <div class="rk-toolbar">
+          <input class="field rk-search" id="rkSearch" type="search" autocomplete="off"
+                 placeholder="Search settlements…" aria-label="Search the table">
+          <div class="rk-chips" id="rkChips"></div>
+        </div>
+        <div class="rk-count" id="rkCount"></div>
+        <div class="table-wrap">
+          <table id="rankTable">
+            <thead><tr>
+              <th class="r" data-tip="DIPI priority rank, 1 = assess first. Always the DIPI rank, whatever column the table is sorted by.">Rank</th>
+              <th data-tip="Settlement name from OpenStreetMap. 38 have no name and show their ID instead.">Settlement</th>
+              <th data-tip="GADM district. Derived at load by point-in-polygon — the dataset does not carry it.">District</th>
+              <th class="r sortable" data-sort="dipi" data-label="DIPI"
+                  data-tip="Digital Inclusion Priority Index, 0–100. The weighted sum of the four pillars. Higher = screen this settlement sooner. It is a screening score, not a coverage measurement.">DIPI</th>
+              <th class="r sortable" data-sort="p_connectivity" data-wcol="p_connectivity" data-label="Conn"
+                  data-tip="Connectivity need, 0–100. Higher = SLOWER measured network. Verified against the file: correlation with download speed is −0.89.">Conn</th>
+              <th class="r sortable" data-sort="p_population"   data-wcol="p_population"   data-label="Pop"
+                  data-tip="Population at stake, 0–100. Higher = more people living within 2 km, so a fix reaches more of them.">Pop</th>
+              <th class="r sortable" data-sort="p_institutions" data-wcol="p_institutions" data-label="Inst"
+                  data-tip="Institutions served, 0–100. Higher = more schools and clinics within 3 km depending on this connection.">Inst</th>
+              <th class="r sortable" data-sort="p_equity"       data-wcol="p_equity"       data-label="Equity"
+                  data-tip="Equity, 0–100. Higher = POORER area by Relative Wealth Index, where cost is a bigger barrier. Correlation with RWI is −0.97.">Equity</th>
+              <th class="r sortable" data-sort="dl_mbps"    data-label="Down (Mbps)"
+                  data-tip="Median download speed, Ookla crowdsourced tile aggregates 2025 Q1–Q4. Not a guaranteed or contracted speed.">Down</th>
+              <th class="r sortable" data-sort="latency_ms" data-label="Latency (ms)"
+                  data-tip="Median round-trip latency, 2025 Q1–Q4. Lower is better. Jitter and packet loss are not in this dataset.">Latency</th>
+              <th data-tip="How much measurement backs the row. Measured = enough samples to score confidently. Low evidence = scored, but prioritised for field validation.">Evidence</th>
+            </tr></thead>
+            <tbody id="rankBody"></tbody>
+          </table>
+        </div>
+        <details class="qb-section" id="qbSection">
+          <summary class="qb-summary">
+            <span class="t">Evidence-gap communities (unranked)</span>
+            <span class="chip neutral" id="qbCount"></span>
+          </summary>
+          <div class="table-wrap" style="border:0;border-radius:0;border-top:1px solid var(--hairline)">
+            <table>
+              <thead><tr>
+                <th>Settlement</th><th>District</th><th class="r">Stakes</th>
+                <th class="r">Population&nbsp;2km</th><th class="r">Schools</th>
+                <th class="r">Clinics</th><th>Evidence</th>
+              </tr></thead>
+              <tbody id="qbBody"></tbody>
+            </table>
+          </div>
+        </details>
+      </section>
+
+      <!-- ── Drill-down panel ──────────────────────────────────────────── -->
+      <aside class="panel" id="panel" aria-label="Settlement detail" data-open="0"></aside>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <span class="contract">Screening for further assessment — not a coverage determination.</span>
+    <span class="credits">Network performance © Ookla Speedtest Open Data (CC BY-NC-SA 4.0), quarterly tile aggregates 2025 Q1–Q4, accessed Aug 2026 · © OpenStreetMap contributors (ODbL) · Population © WorldPop (CC BY 4.0) · Surface water © EC JRC/Google · Relative Wealth Index © Meta Data for Good (CC BY 4.0) · Elevation: NASA SRTM · Boundaries: GADM · Basemap © CARTO</span>
+  </footer>
+</div>
+
+<!-- Column explainer. Outside .app so the table's overflow cannot clip it. -->
+<div class="th-tip" id="thTip" role="tooltip" data-show="0"></div>
+
+<script src="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.js"></script>
+<script>
+"use strict";
+/* ══════════════════════════════════════════════════════════════════════════
+   Constants. DIPI breaks are the quintiles of the 1,114 scored settlements,
+   computed from the file: below 40.0 / 46.7 / 53.9 / 60.3 and above.
+   ══════════════════════════════════════════════════════════════════════════ */
+const BREAKS = [40.0, 46.7, 53.9, 60.3];
+const RAMP = {
+  dark:  ["#992D00","#BF4922","#DE6640","#FE825C","#FFB6A0"],
+  light: ["#FF8D6A","#E96F49","#CD5630","#AE390C","#832500"]
+};
+// Light theme uses Voyager, not Positron: a map should look like a map —
+// blue sea, warm land, green vegetation — not a grey document.
+const BASEMAP = {
+  dark:  "https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
+  light: "https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
+  // §D2. Esri World Imagery is free to use with the attribution below.
+  satellite: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+};
+const ESRI_ATTRIB = "Imagery © Esri, Maxar, Earthstar Geographics, and the GIS User Community";
+/* Sabah's five official divisions (Bahagian), keyed on the actual NAME_2
+   strings in the GADM file. All 25 districts are assigned exactly once.
+   Telupid and Kalabakan are absent from GADM 4.1 — they were carved out of
+   Beluran and Tawau after it was published, so their land is still drawn
+   inside the parent districts and no territory goes unassigned. */
+const DIVISIONS = {
+  "West Coast": ["KotaKinabalu","Penampang","Putatan","Papar","Tuaran","KotaBelud","Ranau"],
+  "Kudat":      ["Kudat","KotaMarudu","Pitas"],
+  "Interior":   ["Beaufort","KualaPenyu","Sipitang","Tenom","Nabawan","Keningau","Tambunan"],
+  "Sandakan":   ["Sandakan","Beluran","Kinabatangan","Tongod"],
+  "Tawau":      ["Tawau","LahadDatu","Semporna","Kunak"]
+};
+/* Teal is the flood lens and nothing else: not a DIPI class, not an evidence
+   tier, and deliberately not the blue that would read as "good water". */
+const FLOOD_TEAL = "#2FB8B0";
+const DIVISION_OF = {};
+for (const [dv, ns] of Object.entries(DIVISIONS)) for (const n of ns) DIVISION_OF[n] = dv;
+
+// Land, boundary and label colours per theme. Land is lifted a few percent off
+// the basemap so every district reads as governed land, never as void.
+const MAPCOL = {
+  dark:  { land:"#E2EBF5", landOp:0.055, landSel:0.115, dline:"#7C8899", dlineOp:0.30,
+           vline:"#AEB9C7", vlineOp:0.50 },
+  // Voyager already separates land from sea by colour, so the light land fill
+  // is barely there — enough for the selected-division lift, not enough to
+  // dull Voyager's warmth.
+  light: { land:"#0F1928", landOp:0.016, landSel:0.055, dline:"#5A6675", dlineOp:0.40,
+           vline:"#33404F", vlineOp:0.48 },
+  // Imagery already shows the land, so no fill — only bright boundaries.
+  satellite: { land:"#FFFFFF", landOp:0, landSel:0.10, dline:"#FFFFFF", dlineOp:0.40,
+               vline:"#FFFFFF", vlineOp:0.78 }
+};
+const PILLARS = [
+  { key:"p_connectivity", label:"Connectivity need",  short:"Conn",   weight:40 },
+  { key:"p_population",   label:"Population at stake",short:"Pop",    weight:25 },
+  { key:"p_institutions", label:"Institutions served",short:"Inst",   weight:15 },
+  { key:"p_equity",       label:"Equity · wealth gap",short:"Equity", weight:20 }
+];
+const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ══ V6b — weightings ═════════════════════════════════════════════════════
+   The file's dipi is exactly Σwᵢpᵢ×100 at 40/25/15/20 rounded to 1 dp
+   (verified: max error 0.0499 across all 1,114 scored). So at the team
+   default we show the file's own dipi and rank untouched — nothing is
+   recomputed — and only derive values once a slider actually moves.
+   Queue B carries no pillar scores and is immune throughout.              */
+const W = {}; PILLARS.forEach(p => W[p.key] = p.weight);
+const wNorm = () => {                       // auto-normalised: always sums to 1
+  const s = PILLARS.reduce((a, p) => a + W[p.key], 0) || 1;
+  const o = {}; for (const p of PILLARS) o[p.key] = W[p.key] / s;
+  return o;
+};
+const isCustomW = () => {                   // 80/50/30/40 normalises to the default, and counts as default
+  const n = wNorm();
+  return PILLARS.some(p => Math.abs(n[p.key] - p.weight / 100) > 5e-4);
+};
+let RANKS = null;                           // id -> rank, only while custom
+const dipiOf = p => {
+  if (p.dipi === null || p.dipi === undefined) return null;
+  if (!isCustomW()) return p.dipi;
+  const n = wNorm();
+  return 100 * PILLARS.reduce((s, pl) => s + n[pl.key] * p[pl.key], 0);
+};
+const rankOf = p => (RANKS ? RANKS.get(p.settlement_id) : p.rank);
+const coordsOf = id => {
+  const f = FEATURES.find(x => x.properties.settlement_id === id);
+  return f ? f.geometry.coordinates : null;
+};
+function recomputeRanks() {
+  if (!isCustomW()) { RANKS = null; return; }
+  const arr = SCORED.map(f => ({ id:f.properties.settlement_id, v:dipiOf(f.properties), r:f.properties.rank }));
+  arr.sort((a, b) => b.v - a.v || a.r - b.r);   // ties keep the team ordering
+  RANKS = new Map(arr.map((o, i) => [o.id, i + 1]));
+}
+// Ties are real (999 of 1,114 share a DIPI at 1 dp), so the order among them
+// must be stable rather than whatever the sort happens to do — name breaks it.
+const scoredOrdered = () => [...SCORED].sort((a, b) =>
+  (rankOf(a.properties) - rankOf(b.properties)) ||
+  nameOf(a.properties).localeCompare(nameOf(b.properties)));
+
+/* ── Formatting. A null is never printed; it becomes a real sentence. ───── */
+const nf = (v, d) => Number(v).toLocaleString("en-US", { minimumFractionDigits:d, maximumFractionDigits:d });
+const num = (v, d = 1) => (v === null || v === undefined || Number.isNaN(Number(v))) ? null : nf(v, d);
+const int = v => (v === null || v === undefined) ? null : Number(v).toLocaleString("en-US");
+const nameOf = p => p.name || `Unnamed settlement (${p.settlement_id})`;
+const districtLabel = d => d ? d.replace(/([a-z])([A-Z])/g, "$1 $2") : "Outside district boundaries";
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
+const dipiClass = v => { let i = 0; while (i < BREAKS.length && v >= BREAKS[i]) i++; return i; };
+const dipiColor = v => RAMP[theme][dipiClass(v)];
+
+const EVIDENCE = {
+  measured:     { cls:"safe",    label:"Measured" },
+  low_evidence: { cls:"warn",    label:"Low evidence" },
+  insufficient: { cls:"neutral", label:"Insufficient evidence" }
+};
+
+/* ── State ─────────────────────────────────────────────────────────────── */
+let theme = "dark";
+let satelliteOn = false;
+let map = null;
+let mapReady = false;
+let FEATURES = [];              // every settlement, with _district injected
+let SCORED = [], QUEUE_B = [];
+let FACILITIES = [];            // 606 OSM schools + health points
+let selectedFacility = null;
+let selectedId = null;
+let simTask = "720p";
+let SABAH_MEDIAN = null;
+const el = id => document.getElementById(id);
+
+/* ══ Geometry: settlements carry no district field, so derive it once ═════
+   Ray casting against the 25 district MultiPolygons, bbox-prefiltered.     */
+function ringContains(ring, x, y) {
+  let inside = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const xi = ring[i][0], yi = ring[i][1], xj = ring[j][0], yj = ring[j][1];
+    if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+  }
+  return inside;
+}
+function polyContains(poly, x, y) {
+  if (!ringContains(poly[0], x, y)) return false;
+  for (let h = 1; h < poly.length; h++) if (ringContains(poly[h], x, y)) return false;
+  return true;
+}
+function buildDistrictIndex(districts) {
+  return districts.features.map(f => {
+    const polys = f.geometry.type === "Polygon" ? [f.geometry.coordinates] : f.geometry.coordinates;
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    for (const poly of polys) for (const [x, y] of poly[0]) {
+      if (x < minX) minX = x; if (x > maxX) maxX = x;
+      if (y < minY) minY = y; if (y > maxY) maxY = y;
+    }
+    return { name: f.properties.NAME_2, polys, bbox: [minX, minY, maxX, maxY] };
+  });
+}
+function districtOf(index, x, y) {
+  for (const d of index) {
+    if (x < d.bbox[0] || x > d.bbox[2] || y < d.bbox[1] || y > d.bbox[3]) continue;
+    for (const poly of d.polys) if (polyContains(poly, x, y)) return d.name;
+  }
+  return null;
+}
+/* A label anchor that is guaranteed to sit on land: the centroid of the
+   largest ring, or — where that ring is concave enough to throw its own
+   centroid into the sea — the inside grid point nearest to it. */
+function anchorOf(geom) {
+  const polys = geom.type === "Polygon" ? [geom.coordinates] : geom.coordinates;
+  let best = null, bestA = -1;
+  for (const p of polys) {
+    const r = p[0]; let a = 0;
+    for (let i = 0, j = r.length - 1; i < r.length; j = i++) a += r[j][0] * r[i][1] - r[i][0] * r[j][1];
+    a = Math.abs(a / 2);
+    if (a > bestA) { bestA = a; best = p; }
+  }
+  const r = best[0];
+  let x = 0, y = 0, A = 0;
+  for (let i = 0, j = r.length - 1; i < r.length; j = i++) {
+    const f = r[j][0] * r[i][1] - r[i][0] * r[j][1];
+    A += f; x += (r[j][0] + r[i][0]) * f; y += (r[j][1] + r[i][1]) * f;
+  }
+  A /= 2;
+  const c = Math.abs(A) > 1e-12 ? [x / (6 * A), y / (6 * A)] : r[0];
+  if (polyContains(best, c[0], c[1])) return c;
+  let mnX = Infinity, mnY = Infinity, mxX = -Infinity, mxY = -Infinity;
+  for (const [px, py] of r) {
+    mnX = Math.min(mnX, px); mxX = Math.max(mxX, px);
+    mnY = Math.min(mnY, py); mxY = Math.max(mxY, py);
+  }
+  let pick = c, bestD = Infinity;
+  for (let i = 1; i < 20; i++) for (let j = 1; j < 20; j++) {
+    const px = mnX + (mxX - mnX) * i / 20, py = mnY + (mxY - mnY) * j / 20;
+    if (!polyContains(best, px, py)) continue;
+    const d = (px - c[0]) ** 2 + (py - c[1]) ** 2;
+    if (d < bestD) { bestD = d; pick = [px, py]; }
+  }
+  return pick;
+}
+
+/* ══ Boot ════════════════════════════════════════════════════════════════ */
+(async function boot() {
+  let dipi, districts, divisions, facilities;
+  try {
+    [dipi, districts, divisions, facilities] = await Promise.all([
+      fetch("../dataset/web/dipi.geojson").then(r => r.json()),
+      fetch("../dataset/web/sabah_districts.geojson").then(r => r.json()),
+      fetch("../dataset/web/sabah_divisions.geojson").then(r => r.json()),
+      fetch("../dataset/web/facilities.geojson").then(r => r.json())
+    ]);
+  } catch (e) {
+    el("loading").textContent = "Could not read the dataset. Serve the repo with: python -m http.server "
+      + "from the repo root. If facilities.geojson is missing, run: python dataset/export_facilities.py";
+    return;
+  }
+
+  const index = buildDistrictIndex(districts);
+  // Reveal order: a radial sweep out of the middle of Sabah (showcase moment).
+  const cx = 116.8, cy = 5.3;
+  let maxD = 0;
+  for (const f of dipi.features) {
+    const [x, y] = f.geometry.coordinates;
+    f.properties._district = districtOf(index, x, y);
+    f.properties._division = DIVISION_OF[f.properties._district] || null;
+    f.properties._d = Math.hypot(x - cx, y - cy);
+    if (f.properties._d > maxD) maxD = f.properties._d;
+  }
+  for (const f of dipi.features) f.properties._rev = f.properties._d / maxD;
+  // Districts carry their division too, so one filter drives both layers.
+  for (const f of districts.features) f.properties._division = DIVISION_OF[f.properties.NAME_2] || null;
+
+  // Facilities: resolve district + division once at load, then cache. Same
+  // point-in-polygon the settlements use — no second source of truth.
+  FACILITIES = facilities.features;
+  for (const f of FACILITIES) {
+    const [x, y] = f.geometry.coordinates;
+    f.properties._district = districtOf(index, x, y);
+    f.properties._division = DIVISION_OF[f.properties._district] || null;
+  }
+
+  FEATURES = dipi.features;
+  SCORED  = FEATURES.filter(f => f.properties.evidence_tier !== "insufficient")
+                    .sort((a, b) => a.properties.rank - b.properties.rank);
+  QUEUE_B = FEATURES.filter(f => f.properties.evidence_tier === "insufficient")
+                    .sort((a, b) => a.properties.gap_rank - b.properties.gap_rank);
+
+  const sp = FEATURES.map(f => f.properties.dl_mbps).filter(v => v !== null).sort((a, b) => a - b);
+  SABAH_MEDIAN = sp.length ? sp[Math.floor(sp.length / 2)] : null;
+
+  el("divisionSel").insertAdjacentHTML("beforeend",
+    Object.keys(DIVISIONS).map(d => `<option value="${esc(d)}">${esc(d)} Division</option>`).join(""));
+  fillDistrictOptions("");
+
+  buildLabels(districts, divisions);
+  initMap(dipi, districts, divisions, facilities);
+  validateData();
+  renderLegend();
+  renderTopList();
+  renderRankings();
+  wireUI();
+})();
+
+/* ══ Map ═════════════════════════════════════════════════════════════════ */
+// Class breaks stay fixed at the approved quintiles while weights move — if
+// they re-quantised, the map would look identical at every weighting and the
+// whole point of dragging a slider would be invisible.
+const dipiValueExpr = () => {
+  if (!isCustomW()) return ["get", "dipi"];
+  const n = wNorm();
+  return ["*", 100, ["+", ...PILLARS.map(pl => ["*", n[pl.key], ["get", pl.key]])]];
+};
+const dipiColorExpr = () => {
+  const r = RAMP[theme];
+  return ["step", dipiValueExpr(), r[0], BREAKS[0], r[1], BREAKS[1], r[2], BREAKS[2], r[3], BREAKS[3], r[4]];
+};
+// Radius grows with population, but on a square root so a city never bullies
+// the map. Scales up with zoom so the dots stay readable when you fly in.
+// `add` is folded in here rather than wrapped in an ["+"] expression: a
+// ["zoom"] expression is only legal as the input to a TOP-LEVEL interpolate.
+const radiusExpr = (mult, add = 0) => {
+  const base = s => ["interpolate", ["linear"], ["sqrt", ["get", "pop_2km"]],
+    0, 2.4 * s + add, 25, 3.2 * s + add, 105, 5.2 * s + add, 275, 8.4 * s + add];
+  return ["interpolate", ["linear"], ["zoom"], 5, base(0.8 * mult), 8, base(1 * mult), 12, base(1.9 * mult)];
+};
+
+/* ══ §E — data validation, run once at boot ══════════════════════════════
+   Prints to the console always; renders into a panel only with ?debug=1.
+   It asserts against the file — it never repairs or hides anything.        */
+const SABAH_BBOX = [115.0, 4.0, 119.7, 7.6];
+
+function validateData() {
+  const L = [];
+  const add = (name, pass, detail) => L.push({ name, pass, detail });
+  const P = FEATURES.map(f => f.properties);
+
+  add("Feature count is 1,448", FEATURES.length === 1448, String(FEATURES.length));
+  const ids = new Set(P.map(p => p.settlement_id));
+  add("settlement_id is unique", ids.size === FEATURES.length, `${ids.size} unique ids`);
+
+  const tiers = {};
+  P.forEach(p => tiers[p.evidence_tier] = (tiers[p.evidence_tier] || 0) + 1);
+  const tierSum = Object.values(tiers).reduce((a, b) => a + b, 0);
+  add("Tiers partition the whole set", tierSum === FEATURES.length && Object.keys(tiers).length === 3,
+    Object.entries(tiers).map(([k, v]) => `${k} ${v}`).join(" · "));
+  add("Scored + gap reconcile", SCORED.length + QUEUE_B.length === 1448,
+    `${SCORED.length} scored + ${QUEUE_B.length} gap`);
+
+  let bad = 0, outside = 0;
+  for (const f of FEATURES) {
+    const c = f.geometry && f.geometry.coordinates;
+    if (!c || c.length !== 2 || !isFinite(c[0]) || !isFinite(c[1])) { bad++; continue; }
+    if (c[0] < SABAH_BBOX[0] || c[0] > SABAH_BBOX[2] || c[1] < SABAH_BBOX[1] || c[1] > SABAH_BBOX[3]) outside++;
+  }
+  add("Geometry present and finite", bad === 0, `${bad} invalid`);
+  add("Inside Sabah bbox", outside === 0, `${outside} outside 115.0–119.7 / 4.0–7.6`);
+  const lons = FEATURES.map(f => f.geometry.coordinates[0]);
+  const lats = FEATURES.map(f => f.geometry.coordinates[1]);
+  const mnLon = Math.min(...lons), mxLon = Math.max(...lons);
+  const mnLat = Math.min(...lats), mxLat = Math.max(...lats);
+  add("EPSG:4326 lon,lat order", mnLon > 100 && mxLat < 20,
+    `lon ${mnLon.toFixed(2)}–${mxLon.toFixed(2)} · lat ${mnLat.toFixed(2)}–${mxLat.toFixed(2)}`);
+
+  const noDistrict = P.filter(p => !p._district).length;
+  add("Every point lands in a district", noDistrict === 0, `${noDistrict} unassigned`);
+  const noDivision = P.filter(p => !p._division).length;
+  add("Every point lands in a division", noDivision === 0, `${noDivision} unassigned`);
+
+  // Filters must never silently drop a point: every district bucket, summed,
+  // has to give the whole set back.
+  const dsum = [...new Set(P.map(p => p._district))]
+    .reduce((s, d) => s + P.filter(p => p._district === d).length, 0);
+  const vsum = Object.keys(DIVISIONS)
+    .reduce((s, v) => s + P.filter(p => p._division === v).length, 0);
+  add("District filter round-trips to 1,448", dsum === 1448, String(dsum));
+  add("Division filter round-trips to 1,448", vsum === 1448, String(vsum));
+  const qbShown = P.filter(p => p.evidence_tier === "insufficient").length;
+  add("Queue B toggle covers exactly the gap", qbShown === QUEUE_B.length, `${qbShown} settlements`);
+
+  // Missing values must stay missing. A null coerced to 0 would read as
+  // "measured, and terrible" — the exact lie the contract sentence forbids.
+  const zeros = P.filter(p => p.dl_mbps === 0 || p.ul_mbps === 0).length;
+  add("Null speeds never coerced to 0", zeros === 0 && num(null) === null,
+    `${P.filter(p => p.dl_mbps === null).length} null speeds, ${zeros} zeros`);
+  add("Null wealth renders as a sentence", num(null, 2) === null,
+    `${P.filter(p => p.rwi === null).length} settlements with no RWI`);
+  add("Unnamed settlements get an id sentence", /^Unnamed settlement \(S\d{4}\)$/.test(nameOf({ name:null, settlement_id:"S0421" })),
+    `${P.filter(p => !p.name).length} unnamed`);
+
+  if (FACILITIES.length) {
+    const fOutside = FACILITIES.filter(f => {
+      const c = f.geometry.coordinates;
+      return c[0] < SABAH_BBOX[0] || c[0] > SABAH_BBOX[2] || c[1] < SABAH_BBOX[1] || c[1] > SABAH_BBOX[3];
+    }).length;
+    add("Facilities loaded and in bbox", FACILITIES.length === 606 && fOutside === 0,
+      `${FACILITIES.length} facilities · ${fOutside} outside`);
+  }
+
+  // Spot-render list for manual eyeballing.
+  const ordered = scoredOrdered();
+  const mid = Math.floor(ordered.length / 2);
+  const spot = [ordered[0], ordered[1], ordered[mid], ordered[mid + 1],
+                ordered[ordered.length - 2], ordered[ordered.length - 1],
+                QUEUE_B[0], QUEUE_B[1]].filter(Boolean);
+  const rows = spot.map(f => {
+    const p = f.properties, dv = dipiOf(p);
+    return {
+      id: p.settlement_id,
+      name: nameOf(p),
+      band: p.evidence_tier === "insufficient" ? "QUEUE B"
+          : dv >= BREAKS[3] ? "HIGH" : dv >= BREAKS[1] ? "MID" : "LOW",
+      dipi: dv === null ? "Not scored" : num(dv),
+      rank: p.evidence_tier === "insufficient" ? "—" : int(rankOf(p)),
+      down: num(p.dl_mbps) === null ? "Evidence needed" : num(p.dl_mbps) + " Mbps",
+      rwi: num(p.rwi, 2) === null ? "No wealth data" : num(p.rwi, 2),
+      evidence: EVIDENCE[p.evidence_tier].label
+    };
+  });
+
+  const failed = L.filter(x => !x.pass);
+  console.group(`Dino Slayer — data validation (${L.length - failed.length}/${L.length} passed)`);
+  L.forEach(x => console.log(`${x.pass ? "PASS" : "FAIL"}  ${x.name} — ${x.detail}`));
+  console.table(rows);
+  console.groupEnd();
+  if (failed.length) console.error("Validation FAILED:", failed.map(f => f.name));
+
+  if (new URLSearchParams(location.search).has("debug")) {
+    const panel = el("debugPanel");
+    panel.hidden = false;
+    panel.innerHTML = `<h3>Data validation · ${L.length - failed.length}/${L.length}</h3>` +
+      L.map(x => `<div class="dline"><span class="dtag ${x.pass ? "ok" : "no"}">${x.pass ? "PASS" : "FAIL"}</span>
+        <span><span class="dname">${esc(x.name)}</span><span class="ddet">${esc(x.detail)}</span></span></div>`).join("") +
+      `<pre>${esc(rows.map(r =>
+        `${r.band.padEnd(7)} ${r.id}  DIPI ${String(r.dipi).padStart(10)}  rank ${String(r.rank).padStart(5)}  ${r.down.padEnd(16)} rwi ${String(r.rwi).padStart(14)}  ${r.evidence}\n         ${r.name}`
+      ).join("\n"))}</pre>`;
+  }
+  return L;
+}
+
+/* ══ Division / district labels ══════════════════════════════════════════ */
+let LABELS = [];
+function fillDistrictOptions(division) {
+  const names = [...new Set(FEATURES.map(f => f.properties._district).filter(Boolean))]
+    .filter(n => !division || DIVISION_OF[n] === division).sort();
+  el("districtSel").innerHTML = `<option value="">All districts${division ? " in " + esc(division) : ""}</option>`
+    + names.map(n => `<option value="${esc(n)}">${esc(districtLabel(n))}</option>`).join("");
+}
+function buildLabels(districts, divisions) {
+  const host = el("mapLabels");
+  LABELS = [];
+  for (const f of divisions.features) {
+    LABELS.push({ kind:"division", key:f.properties.division,
+      at:[f.properties.lng, f.properties.lat], text:f.properties.division });
+  }
+  for (const f of districts.features) {
+    LABELS.push({ kind:"district", key:f.properties.NAME_2, division:f.properties._division,
+      at:anchorOf(f.geometry), text:districtLabel(f.properties.NAME_2) });
+  }
+  host.innerHTML = LABELS.map(l =>
+    `<div class="mlabel ${l.kind}" data-on="0">${esc(l.text)}</div>`).join("");
+  LABELS.forEach((l, i) => l.node = host.children[i]);
+}
+// Divisions read the territory at a glance; districts take over once you are
+// close enough for 25 names not to collide.
+function positionLabels() {
+  if (!map || !LABELS.length) return;
+  const z = map.getZoom(), canvas = map.getCanvas();
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  const showDiv = z < 8.4, showDist = z >= 8.4;
+  const div = el("divisionSel").value, dist = el("districtSel").value;
+  for (const l of LABELS) {
+    let on = l.kind === "division" ? showDiv : showDist;
+    if (on && l.kind === "district") {
+      if (dist) on = l.key === dist;
+      else if (div) on = l.division === div;
+    }
+    if (on && l.kind === "division" && div) on = l.key === div;
+    if (!on) { l.node.dataset.on = "0"; continue; }
+    const p = map.project(l.at);
+    if (p.x < -90 || p.y < -30 || p.x > w + 90 || p.y > h + 30) { l.node.dataset.on = "0"; continue; }
+    l.node.style.left = p.x + "px";
+    l.node.style.top = p.y + "px";
+    l.node.dataset.on = "1";
+  }
+}
+
+function initMap(dipi, districts, divisions, facilities) {
+  map = new maplibregl.Map({
+    container: "map",
+    center: [116.8, 5.3],
+    zoom: 6.8,
+    attributionControl: { compact: true },
+    style: {
+      version: 8,
+      sources: {
+        base_dark:  { type:"raster", tiles:[BASEMAP.dark],  tileSize:256, attribution:"© OpenStreetMap contributors © CARTO" },
+        base_light: { type:"raster", tiles:[BASEMAP.light], tileSize:256, attribution:"© OpenStreetMap contributors © CARTO" },
+        base_sat:   { type:"raster", tiles:[BASEMAP.satellite], tileSize:256, maxzoom:18, attribution:ESRI_ATTRIB },
+        districts:  { type:"geojson", data:districts },
+        divisions:  { type:"geojson", data:divisions },
+        facilities: { type:"geojson", data:facilities },
+        settlements:{ type:"geojson", data:dipi }
+      },
+      layers: [
+        { id:"base-dark",  type:"raster", source:"base_dark",  layout:{ visibility:"visible" } },
+        { id:"base-light", type:"raster", source:"base_light", layout:{ visibility:"none" } },
+        { id:"base-sat",   type:"raster", source:"base_sat",   layout:{ visibility:"none" } },
+        /* Every district gets a faint land fill, so no interior can read as
+           void. Ocean stays the bare basemap; land sits a few percent above. */
+        { id:"district-fill", type:"fill", source:"districts",
+          paint:{ "fill-color":MAPCOL.dark.land, "fill-opacity":MAPCOL.dark.landOp } },
+        /* The selected division lifts further, so the filter is legible. */
+        { id:"division-fill-sel", type:"fill", source:"divisions",
+          filter:["==",["get","division"],""],
+          paint:{ "fill-color":MAPCOL.dark.land, "fill-opacity":MAPCOL.dark.landSel } },
+        /* District hairlines, then stronger division boundaries above them. */
+        { id:"district-line", type:"line", source:"districts",
+          paint:{ "line-color":MAPCOL.dark.dline, "line-width":0.7, "line-opacity":MAPCOL.dark.dlineOp } },
+        { id:"division-line", type:"line", source:"divisions",
+          paint:{ "line-color":MAPCOL.dark.vline, "line-opacity":MAPCOL.dark.vlineOp,
+                  "line-width":["interpolate",["linear"],["zoom"], 5,1.1, 9,1.8, 12,2.4] } },
+        /* Flood context: a soft underglow beneath the dots. Context, never a
+           score — and teal, a hue used nowhere else in the product. */
+        { id:"flood-context", type:"circle", source:"settlements",
+          filter:["==",["get","flood_prone"],true], layout:{ visibility:"none" },
+          paint:{ "circle-radius":radiusExpr(2.4), "circle-color":FLOOD_TEAL, "circle-opacity":0.22,
+                  "circle-blur":0.6 } },
+        /* Queue B: hollow neutral rings. Visibly unscored, never a DIPI class. */
+        { id:"queueb", type:"circle", source:"settlements",
+          filter:["==",["get","evidence_tier"],"insufficient"],
+          paint:{ "circle-radius":radiusExpr(0.92), "circle-opacity":0,
+                  "circle-stroke-width":1.3, "circle-stroke-color":"#8B96A6", "circle-stroke-opacity":0.85 } },
+        /* Scored settlements, coloured by DIPI class. */
+        { id:"settlements", type:"circle", source:"settlements",
+          filter:["!=",["get","evidence_tier"],"insufficient"],
+          paint:{ "circle-radius":radiusExpr(1), "circle-color":dipiColorExpr(),
+                  "circle-opacity":0.92, "circle-stroke-width":0.6,
+                  "circle-stroke-color":"rgba(0,0,0,.45)" } },
+        /* Low evidence: a DETACHED ring with a basemap gap. Hue alone cannot
+           carry this — amber against the DIPI orange fails CVD separation. */
+        { id:"low-evidence", type:"circle", source:"settlements",
+          filter:["==",["get","evidence_tier"],"low_evidence"],
+          paint:{ "circle-radius":radiusExpr(1, 2), "circle-opacity":0,
+                  "circle-stroke-width":0.9, "circle-stroke-color":"#E3B341", "circle-stroke-opacity":0.55 } },
+        /* Facilities (§A). Monochrome ink, two shapes: schools are squares,
+           health points are circles with a cut-out. Small and deliberately
+           recessive — they annotate the DIPI layer, never compete with it.
+           Default OFF so the opening reveal stays clean. */
+        { id:"facility-school", type:"circle", source:"facilities",
+          filter:["==",["get","kind"],"school"], layout:{ visibility:"none" },
+          minzoom:8,
+          paint:{ "circle-radius":["interpolate",["linear"],["zoom"], 8,2.2, 12,4.4],
+                  "circle-color":"#7C8899", "circle-opacity":0.9,
+                  "circle-stroke-width":1, "circle-stroke-color":"rgba(0,0,0,.5)" } },
+        { id:"facility-health", type:"circle", source:"facilities",
+          filter:["==",["get","kind"],"health"], layout:{ visibility:"none" },
+          minzoom:8,
+          paint:{ "circle-radius":["interpolate",["linear"],["zoom"], 8,2.6, 12,5.2],
+                  "circle-color":"rgba(0,0,0,0)", "circle-opacity":1,
+                  "circle-stroke-width":1.6, "circle-stroke-color":"#B4BECB" } },
+        { id:"facility-selected", type:"circle", source:"facilities",
+          filter:["==",["get","facility_id"],""], minzoom:8,
+          paint:{ "circle-radius":["interpolate",["linear"],["zoom"], 8,6, 12,10],
+                  "circle-opacity":0, "circle-stroke-width":2, "circle-stroke-color":"#3FC7E8" } },
+        /* Flood focus ring — concentric OUTSIDE the low-evidence ring, so a
+           settlement carrying both shows both. Teal, never a DIPI class. */
+        { id:"flood-ring", type:"circle", source:"settlements",
+          filter:["==",["get","flood_prone"],true], layout:{ visibility:"none" },
+          paint:{ "circle-radius":radiusExpr(1, 4.5), "circle-opacity":0,
+                  "circle-stroke-width":1.6, "circle-stroke-color":FLOOD_TEAL, "circle-stroke-opacity":0.95 } },
+        /* Selected: the only accent on the map. */
+        { id:"selected", type:"circle", source:"settlements", filter:["==",["get","settlement_id"],""],
+          paint:{ "circle-radius":radiusExpr(1, 7), "circle-opacity":0,
+                  "circle-stroke-width":2, "circle-stroke-color":"#3FC7E8" } }
+      ]
+    }
+  });
+
+  window.__m = map;   // handle for automated screenshot/acceptance checks
+  map.addControl(new maplibregl.NavigationControl({ showCompass:false }), "bottom-right");
+  map.on("load", () => {
+    mapReady = true;
+    applyMapTheme();          // covers a theme toggled before the map was ready
+    el("loading").style.opacity = "0";
+    setTimeout(() => el("loading").hidden = true, 300);
+    revealLayer();
+    positionLabels();
+  });
+  map.on("move", positionLabels);
+  map.on("zoom", positionLabels);
+  map.on("resize", positionLabels);
+
+  const hit = ["settlements", "queueb"];
+  const facHit = ["facility-school", "facility-health"];
+  const layersNow = ls => ls.filter(l => map.getLayer(l));
+  map.on("mousemove", e => {
+    const fac = map.queryRenderedFeatures(e.point, { layers:layersNow(facHit) });
+    const fs = fac.length ? fac : map.queryRenderedFeatures(e.point, { layers:layersNow(hit) });
+    map.getCanvas().style.cursor = fs.length ? "pointer" : "";
+    if (!fs.length) { hideTooltip(); return; }
+    fac.length ? showFacilityTooltip(fs[0].properties, e.point)
+               : showTooltip(fs[0].properties, e.point);
+  });
+  map.on("mouseout", hideTooltip);
+  map.on("click", e => {
+    // Facilities sit above the dots, so they get first refusal on a click.
+    const fac = map.queryRenderedFeatures(e.point, { layers:layersNow(facHit) });
+    if (fac.length) { selectFacility(fac[0].properties.facility_id); return; }
+    const fs = map.queryRenderedFeatures(e.point, { layers:layersNow(hit) });
+    if (fs.length) select(fs[0].properties.settlement_id, false);
+  });
+}
+
+/* ══ FIX 6 — flood lens as a focus mode ══════════════════════════════════
+   On: flood_prone settlements gain a teal ring and underglow; everything
+   else drops to a quarter opacity so the pattern is unmissable. Off: instant
+   restore. District and division layers are untouched either way.          */
+const DOT_LAYERS = ["settlements","queueb","low-evidence"];
+const BASE_OP     = { settlements:0.92, queueb:0, "low-evidence":0 };
+const BASE_STROKE = { settlements:1,    queueb:0.85, "low-evidence":0.55 };
+let floodOn = false;
+const dimmed = base => floodOn
+  ? ["case", ["==", ["get","flood_prone"], true], base, base * 0.25]
+  : base;
+function applyFloodLens() {
+  if (!mapReady) return;
+  const vis = floodOn ? "visible" : "none";
+  map.setLayoutProperty("flood-context", "visibility", vis);
+  map.setLayoutProperty("flood-ring", "visibility", vis);
+  for (const id of DOT_LAYERS) {
+    map.setPaintProperty(id, "circle-opacity", dimmed(BASE_OP[id]));
+    map.setPaintProperty(id, "circle-stroke-opacity", dimmed(BASE_STROKE[id]));
+  }
+  el("floodRow").dataset.on = floodOn ? "1" : "0";
+  renderLegend();
+}
+
+/* THE showcase moment: Sabah lights up once, on first load. Never again. */
+function revealLayer() {
+  const layers = DOT_LAYERS;
+  const opacities = BASE_OP, strokes = BASE_STROKE;
+  if (REDUCED) return;
+  const DURATION = 800, start = performance.now();
+  const tick = now => {
+    const t = Math.min(1, (now - start) / DURATION);
+    // Each dot fades in when the wavefront (t) passes its distance from centre.
+    const ease = ["interpolate", ["linear"], ["-", t * 1.35, ["get", "_rev"]], 0, 0, 0.35, 1];
+    for (const id of layers) {
+      map.setPaintProperty(id, "circle-opacity", ["*", ease, opacities[id]]);
+      map.setPaintProperty(id, "circle-stroke-opacity", ["*", ease, strokes[id]]);
+    }
+    if (t < 1) requestAnimationFrame(tick);
+    else for (const id of layers) {
+      map.setPaintProperty(id, "circle-opacity", opacities[id]);
+      map.setPaintProperty(id, "circle-stroke-opacity", strokes[id]);
+    }
+  };
+  requestAnimationFrame(tick);
+}
+
+function showTooltip(p, pt) {
+  const t = el("tooltip");
+  const speed = num(p.dl_mbps);
+  const dv = dipiOf(p);
+  t.innerHTML =
+    `<div class="t-name">${esc(nameOf(p))}</div>
+     <div class="t-line">${speed ? speed + " Mbps download" : "No speed measurement"}
+       &middot; ${dv !== null ? "DIPI " + num(dv) : "Evidence needed"}</div>`;
+  t.style.left = pt.x + "px";
+  t.style.top = (pt.y - 12) + "px";
+  t.dataset.show = "1";
+}
+const hideTooltip = () => { el("tooltip").dataset.show = "0"; };
+
+function showFacilityTooltip(p, pt) {
+  const t = el("tooltip");
+  t.innerHTML =
+    `<div class="t-name">${esc(facilityName(p))}</div>
+     <div class="t-line">${esc(AMENITY[p.amenity])} &middot; ${esc(districtLabel(p._district))}</div>`;
+  t.style.left = pt.x + "px";
+  t.style.top = (pt.y - 12) + "px";
+  t.dataset.show = "1";
+}
+
+/* ══ Selection ═══════════════════════════════════════════════════════════ */
+function select(id, fly = true) {
+  const f = FEATURES.find(x => x.properties.settlement_id === id);
+  if (!f) return;
+  selectedId = id;
+  simTask = "720p";
+  map.setFilter("selected", ["==", ["get","settlement_id"], id]);
+  if (fly) map.flyTo({ center:f.geometry.coordinates, zoom:Math.max(map.getZoom(), 10.5), duration:REDUCED ? 0 : 1100 });
+  renderPanel(f.properties);
+  el("rankings").dataset.open = "0";
+  el("viewToggle").setAttribute("aria-pressed", "false");
+  document.querySelectorAll(".top-row").forEach(r =>
+    r.setAttribute("aria-current", String(r.dataset.id === id)));
+}
+function closePanel() {
+  stopPlayer();
+  selectedId = null;
+  el("panel").dataset.open = "0";
+  map.setFilter("selected", ["==", ["get","settlement_id"], ""]);
+  document.querySelectorAll(".top-row").forEach(r => r.setAttribute("aria-current","false"));
+}
+
+/* ══ Drill-down panel ════════════════════════════════════════════════════ */
+function renderPanel(p) {
+  const panel = el("panel");
+  const isQB = p.evidence_tier === "insufficient";
+  const ev = EVIDENCE[p.evidence_tier];
+  const dv = dipiOf(p);
+  const wn = wNorm(), custom = isCustomW();
+
+  const head = `
+    <div class="panel-head">
+      <div style="min-width:0">
+        <h2>${esc(nameOf(p))}</h2>
+        <div class="panel-meta">
+          <span class="chip plain">${esc(p.place)}</span>
+          <span class="chip plain">${esc(districtLabel(p._district))}</span>
+          ${isQB ? `<span class="chip neutral"><i class="dot"></i>Queue B · Evidence needed</span>`
+                 : `<span class="chip plain" id="rankChip">Rank ${int(rankOf(p))} of 1,114</span>`}
+        </div>
+      </div>
+      <button class="icon-btn" id="panelClose" aria-label="Close panel">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7">
+          <path d="M4 4l8 8M12 4l-8 8"/></svg>
+      </button>
+    </div>`;
+
+  const hero = isQB ? `
+    <div class="hero">
+      <div class="big num" style="color:var(--neutral);font-size:34px">Not scored</div>
+      <div class="side"><span class="micro">DIPI</span>
+        <div class="sub">Measurement needed first.</div></div>
+    </div>`
+    : `
+    <div class="hero">
+      <div class="big num" id="heroDipi" style="color:${dipiColor(dv)}">${num(dv)}</div>
+      <div class="side"><span class="micro">DIPI &middot; priority score</span>
+        <div class="sub" id="heroClass">Class ${dipiClass(dv) + 1} of 5 &middot; higher needs attention sooner</div>
+        <div class="sub" id="heroCustom" style="margin-top:3px;display:${custom ? "" : "none"}">Custom weighting, not the team default.</div></div>
+    </div>`;
+
+  const pillars = isQB ? "" : `
+    <div class="block">
+      <span class="micro">Why this score</span>
+      ${PILLARS.map(pl => {
+        const v = p[pl.key] * 100;
+        return `<div class="bar-row">
+          <div class="bar-head">
+            <span class="micro" data-plab="${pl.key}">${pl.label.toUpperCase()} &middot; ${nf(wn[pl.key] * 100, 0)}%</span>
+            <span class="num">${num(v)}</span>
+          </div>
+          <div class="track"><i data-w="${v}"></i></div>
+        </div>`;
+      }).join("")}
+    </div>`;
+
+  const tile = (label, value, unit, fallback) => `
+    <div class="tile"><span class="micro">${label}</span>
+      ${value !== null ? `<div class="v">${value}${unit ? `<span class="u">${unit}</span>` : ""}</div>`
+                       : `<div class="v small">${fallback}</div>`}</div>`;
+
+  const stats = isQB ? `
+    <div class="block">
+      <span class="micro">What is at stake here</span>
+      <div class="tiles">
+        ${tile("Stakes score", num(p.stakes_score), "", "No stakes score")}
+        ${tile("Gap rank", int(p.gap_rank), "of 334", "Unranked")}
+        ${tile("Population 2km", int(p.pop_2km), "", "No population data")}
+        ${tile("Schools 3km", int(p.n_schools_3km), "", "None")}
+        ${tile("Clinics 3km", int(p.n_clinics_3km), "", "None")}
+        ${tile("Wealth index", num(p.rwi, 2), "", "No wealth data")}
+      </div>
+      <p class="note" style="margin-top:11px">Not scored — measurement needed first.</p>
+    </div>`
+    : `
+    <div class="block">
+      <span class="micro">Crowdsourced quarterly aggregate</span>
+      <p class="caption" style="margin:-4px 0 9px">2025 Q1–Q4 median.</p>
+      <div class="tiles">
+        ${tile("Download", num(p.dl_mbps), "Mbps", "Evidence needed")}
+        ${tile("Upload", num(p.ul_mbps), "Mbps", "Evidence needed")}
+        ${tile("Latency", num(p.latency_ms, 0), "ms", "Evidence needed")}
+        ${tile("Population 2km", int(p.pop_2km), "", "No population data")}
+        ${tile("Schools 3km", int(p.n_schools_3km), "", "None")}
+        ${tile("Clinics 3km", int(p.n_clinics_3km), "", "None")}
+      </div>
+      <div class="tiles" style="grid-template-columns:1fr;margin-top:7px">
+        ${tile("Relative wealth index · negative is poorer", num(p.rwi, 2), "", "No wealth data")}
+      </div>
+    </div>`;
+
+  const evidence = `
+    <div class="block">
+      <span class="micro">How sure are we?</span>
+      <div class="evidence-block">
+        <span class="chip ${ev.cls}"><i class="dot"></i>${ev.label}${
+          p.evidence_tier === "insufficient" ? "" :
+          ` &middot; ${int(p.n_tests)} tests &middot; ${int(p.n_tiles)} tile${p.n_tiles === 1 ? "" : "s"}`}</span>
+        <div class="caption">${
+          p.evidence_tier === "measured"     ? "Enough crowdsourced samples to score this settlement with confidence."
+        : p.evidence_tier === "low_evidence" ? "Prioritised for field validation."
+        :                                      "Not scored. Measurement needed."}</div>
+      </div>
+    </div>`;
+
+  const flood = p.flood_prone ? `
+    <div class="block">
+      <span class="chip plain" title="Historical seasonal-water presence from JRC Global Surface Water. Includes coastal/tidal zones — shown as context, not scored.">
+        Seasonal water adjacency &middot; context, not scored</span>
+    </div>` : "";
+
+  panel.innerHTML = head + hero + pillars + stats + evidence + flood
+    + `<div class="block" id="simMount"></div>`
+    + localContextBlock(coordsOf(p.settlement_id));
+  panel.dataset.open = "1";
+  panel.scrollTop = 0;
+  el("panelClose").onclick = closePanel;
+  renderSim(p);
+  // Lazy, one settlement, only when the toggle is on. Cached per settlement.
+  if (GOOGLE.on()) loadGoogleContext(p.settlement_id, coordsOf(p.settlement_id));
+
+  // The pillar bars fill once, staggered. The decomposition making itself
+  // legible — not decoration.
+  requestAnimationFrame(() => {
+    panel.querySelectorAll(".track > i").forEach((bar, i) => {
+      const w = bar.dataset.w + "%";
+      if (REDUCED) { bar.style.width = w; return; }
+      setTimeout(() => { bar.style.width = w; }, 60 + i * 55);
+    });
+  });
+}
+
+/* ══ V6a — Experience Simulator ══════════════════════════════════════════
+   Every verdict is computed from the file's own values against published
+   thresholds. Nothing is imputed; nothing is invented.                     */
+const VIDEO_TIERS = [
+  { id:"360p",  label:"360p",  mbps:0.7 },
+  { id:"480p",  label:"480p",  mbps:1.1 },
+  { id:"720p",  label:"720p",  mbps:2.5 },
+  { id:"1080p", label:"1080p", mbps:5   },
+  { id:"4k",    label:"4K",    mbps:20  }
+];
+const TASKS = [
+  { id:"article", label:"Load article" },
+  { id:"photo",   label:"Upload photo" },
+  { id:"call",    label:"Video call" },
+  { id:"720p",    label:"Watch video" }
+];
+const V = { smooth:{cls:"safe",label:"Smooth"}, buffer:{cls:"warn",label:"May buffer"}, unlikely:{cls:"neutral",label:"Unlikely"} };
+/* One connection is rarely one person. Dividing the measured speed by the
+   number of people sharing it is plain arithmetic on the file's own number —
+   and the card says outright that the split is an assumption. */
+const SHARE = [{ n:1, label:"Just 1" }, { n:5, label:"Household (5)" }, { n:30, label:"Classroom (30)" }];
+let simUsers = 5;
+/* Bundled clip for the player. Left null so the CSS mock is the default and
+   the console stays clean — probing for the file logs a 404 that reads like a
+   bug. Once dashboard/media/sample_clip.mp4 is in place, change this one line
+   to "media/sample_clip.mp4" and the same computed pauses drive the real clip. */
+let CLIP_URL = null;
+let playerRAF = null;
+
+function tierVerdict(dl, mbps) {
+  if (dl >= mbps * 1.5) return "smooth";
+  if (dl >= mbps) return "buffer";
+  return "unlikely";
+}
+const perUser = p => ({
+  dl:  p.dl_mbps  === null ? null : p.dl_mbps  / simUsers,
+  ul:  p.ul_mbps  === null ? null : p.ul_mbps  / simUsers,
+  lat: p.latency_ms          // latency is not divided by people; it is a round trip
+});
+const shareLine = p => simUsers === 1 ? ""
+  : `<code>${num(p.dl_mbps)} Mbps ÷ ${simUsers} people = ${num(p.dl_mbps / simUsers, 2)} Mbps each</code><br>`;
+
+function simulate(p, task) {
+  const { dl, ul, lat } = perUser(p);
+  if (task === "article") {
+    if (dl === null || lat === null) return null;
+    const t = (2 * 8) / dl + (3 * lat) / 1000;
+    const vq = t <= 2 ? "" : t <= 5 ? " — slow" : " — very slow";
+    return { verdict: t <= 2 ? "smooth" : t <= 5 ? "buffer" : "unlikely",
+      seconds:t, unit:"s", sub:"2 MB article",
+      line: `Estimated load ${num(t)}s${vq}`,
+      math: `A 2 MB page is 16 Mb.<br>${shareLine(p)}
+             <code>16 Mb ÷ ${num(dl, 2)} Mbps = ${num((2 * 8) / dl)}s</code><br>
+             <code>+ 3 round trips × ${num(lat, 0)} ms = ${num((3 * lat) / 1000, 2)}s</code><br>
+             Total ${num(t)}s. Smooth ≤ 2s, may buffer ≤ 5s.` };
+  }
+  if (task === "photo") {
+    if (ul === null || lat === null) return null;
+    const t = (4 * 8) / ul + (2 * lat) / 1000;
+    return { verdict: t <= 10 ? "smooth" : t <= 30 ? "buffer" : "unlikely",
+      seconds:t, unit:"s", sub:"4 MB photo, upload",
+      line: `Estimated ${num(t)}s to upload a 4 MB photo`,
+      math: `A 4 MB photo is 32 Mb, and it goes UP.<br>
+             ${simUsers === 1 ? "" : `<code>${num(p.ul_mbps)} Mbps upload ÷ ${simUsers} = ${num(ul, 2)} Mbps each</code><br>`}
+             <code>32 Mb ÷ ${num(ul, 2)} Mbps = ${num((4 * 8) / ul)}s</code><br>
+             <code>+ 2 round trips × ${num(lat, 0)} ms = ${num((2 * lat) / 1000, 2)}s</code><br>
+             Total ${num(t)}s. Smooth ≤ 10s, may buffer ≤ 30s.` };
+  }
+  if (task === "call") {
+    if (dl === null || ul === null || lat === null) return null;
+    const ok = dl >= 3 && ul >= 3 && lat < 150;
+    const marginal = dl >= 1.5 && ul >= 1.5 && lat < 250;
+    // Upload is usually what breaks a call, so each leg is shown pass/fail.
+    const legs = [["Download", dl, 3, "Mbps"], ["Upload", ul, 3, "Mbps"]];
+    // Name the leg that actually fails — "upload-limited" is actionable in a
+    // way that "unstable" is not.
+    const limits = [];
+    if (ul < 3) limits.push("upload-limited");
+    if (dl < 3) limits.push("download-limited");
+    if (lat >= 150) limits.push("latency-limited");
+    const why = limits.length ? ` (${limits.join(", ")})` : "";
+    return { verdict: ok ? "smooth" : marginal ? "buffer" : "unlikely",
+      headline: ok ? "Two-way video holds" : marginal ? "Expect freezing" : "Voice only, realistically",
+      line: ok ? "Should be stable" : `May be unstable${why}`,
+      foot: "Jitter and packet loss are not measured in this dataset; call stability may differ.",
+      legs: legs.map(([n, v, need, u]) => ({ name:n, val:num(v, 2), need, u, pass:v >= need }))
+        .concat([{ name:"Latency", val:num(lat, 0), need:150, u:"ms", pass:lat < 150, invert:true }]),
+      math: `A call needs about 3 Mbps in BOTH directions and latency under 150 ms.<br>
+             ${shareLine(p)}
+             <code>down ${num(dl, 2)} · up ${num(ul, 2)} · latency ${num(lat, 0)} ms</code><br>
+             Upload is the leg that usually fails first.` };
+  }
+  const tier = VIDEO_TIERS.find(t => t.id === task);
+  if (!tier || dl === null) return null;
+  const verdict = tierVerdict(dl, tier.mbps);
+  const best = [...VIDEO_TIERS].reverse().find(t => tierVerdict(dl, t.mbps) === "smooth");
+  return { verdict, tier, ratio: dl / tier.mbps,
+    headline: verdict === "smooth" ? `${tier.label} plays clean`
+      : best ? `Smooth at ${best.label}` : "Below 360p — video is a struggle",
+    line: verdict === "smooth" ? `Plays clean at ${tier.label}`
+      : verdict === "buffer" ? `May buffer at ${tier.label}`
+      : best ? `Unlikely at ${tier.label} — may buffer at ${best.label}`
+             : `Unlikely at ${tier.label} — below 360p at this sharing level`,
+    foot: task === "4k" ? "YouTube's published recommendation ≈ 20 Mbps sustained." : null,
+    math: `${tier.label} needs a sustained ${nf(tier.mbps, 1)} Mbps.<br>${shareLine(p)}
+           <code>${num(dl, 2)} Mbps ÷ ${nf(tier.mbps, 1)} = ${num(dl / tier.mbps, 2)}× the threshold</code><br>
+           Smooth at ≥ 1.5×, may buffer from 1.0×.` };
+}
+
+/* ══ V6a-video — the mock player ═════════════════════════════════════════
+   A visualisation of the arithmetic above, and it says so permanently.
+   Stalls are injected only where the maths says the link cannot keep up:
+   below 1.0x, each 2 s of video takes 2/ratio seconds to arrive.          */
+function stopPlayer() { if (playerRAF) { cancelAnimationFrame(playerRAF); playerRAF = null; } }
+
+function runPlayer(ratio) {
+  stopPlayer();
+  const root = el("player");
+  if (!root) return;
+  const fill = root.querySelector(".player-bar > i");
+  const vid  = root.querySelector("video");
+  const DUR = 10, CHUNK = 2;
+
+  const seg = [];
+  let t = 0;
+  for (let at = 0; at < DUR; at += CHUNK) {
+    if (ratio < 1) {
+      const stall = CHUNK * (1 / ratio - 1);
+      seg.push({ type:"stall", from:t, to:t + stall, at });
+      t += stall;
+    }
+    seg.push({ type:"play", from:t, to:t + CHUNK, at });
+    t += CHUNK;
+  }
+  const total = t;
+  const stalled = +(total - DUR).toFixed(1);
+  const statEl = el("playerStat");
+  if (statEl) {
+    statEl.innerHTML = ratio >= 1
+      ? `10s of video arrives in 10s. No buffering at this quality.`
+      : `10s of video takes <b>${nf(total, 1)}s</b> to watch — <b>${nf(stalled, 1)}s</b> of it spent waiting.`;
+  }
+  if (REDUCED) {                       // land on the finished state, no motion
+    root.dataset.stalled = "0";
+    if (fill) fill.style.width = "100%";
+    return;
+  }
+  const start = performance.now();
+  const tick = now => {
+    const e = Math.min(total, (now - start) / 1000);
+    const s = seg.find(x => e >= x.from && e <= x.to) || seg[seg.length - 1];
+    const content = s.type === "stall" ? s.at : s.at + (e - s.from);
+    root.dataset.stalled = s.type === "stall" ? "1" : "0";
+    if (fill) fill.style.width = Math.min(100, (content / DUR) * 100) + "%";
+    if (vid) { if (s.type === "stall") vid.pause(); else if (vid.paused) vid.play().catch(() => {}); }
+    if (e < total) playerRAF = requestAnimationFrame(tick);
+    else { root.dataset.stalled = "0"; if (vid) vid.pause(); }
+  };
+  playerRAF = requestAnimationFrame(tick);
+}
+
+function renderSim(p) {
+  const mount = el("simMount");
+  const ev = EVIDENCE[p.evidence_tier];
+  const isTier = VIDEO_TIERS.some(t => t.id === simTask);
+  const r = simulate(p, simTask);
+  const { dl, ul } = perUser(p);
+  const hasSchool = p.n_schools_3km >= 1;
+
+  const basis = p.evidence_tier === "insufficient"
+    ? `<span class="chip neutral"><i class="dot"></i>Insufficient evidence</span>`
+    : `<span class="chip ${ev.cls}"><i class="dot"></i>Based on: ${ev.label} · ${int(p.n_tests)} tests · ${int(p.n_tiles)} tile${p.n_tiles === 1 ? "" : "s"}</span>`;
+
+  const presets = SHARE.map(s => {
+    const hi = s.n === 30 && hasSchool ? ' title="This settlement has a school within 3 km."' : "";
+    return `<button class="share-chip" data-n="${s.n}" aria-pressed="${simUsers === s.n}"${hi}>${s.label}</button>`;
+  }).join("");
+
+  // Context: the settlement against the province, so a deficit is visible even
+  // when the absolute verdicts all pass.
+  const med = SABAH_MEDIAN;
+  const pct = (p.dl_mbps !== null && med) ? (p.dl_mbps / med) * 100 : null;
+  const ctx = pct === null ? "" : `
+    <div class="ctx">
+      <div class="bar-head">
+        <span class="micro">vs Sabah median ${num(med)} Mbps</span>
+        <span class="num" style="font-size:12px">${nf(Math.round(pct), 0)}%</span>
+      </div>
+      <div class="track"><i style="width:${Math.max(1, Math.min(100, pct))}%;background:${
+        pct < 50 ? "var(--warn)" : "var(--bar)"}"></i></div>
+    </div>`;
+
+  const perUserLine = (dl === null) ? "" : `
+    <div class="peruser">
+      <span class="num">${num(dl, 2)}</span><span>Mbps down each</span>
+      <span class="num" style="font-size:13px">${num(ul, 2)}</span><span>up</span>
+    </div>`;
+
+  const player = (isTier && r) ? `
+    <div class="player" id="player" data-stalled="0">
+      ${CLIP_URL ? `<video src="${CLIP_URL}" muted playsinline preload="auto"></video>`
+                 : `<div class="player-mock"></div>`}
+      <span class="player-q">${r.tier.label}</span>
+      <div class="player-spin"><i></i></div>
+      <div class="player-bar"><i></i></div>
+      <div class="player-note">Simulated preview — visualisation of estimated experience, not a live network test.</div>
+    </div>
+    <div class="player-stat" id="playerStat"></div>` : "";
+
+  const legs = r && r.legs ? `<div class="legs">${r.legs.map(l =>
+    `<div class="leg"><span>${l.pass ? "✓" : "✗"} ${l.name}</span>
+       <span class="num">${l.val} ${l.u}</span>
+       <span class="lneed">${l.invert ? "under" : "needs"} ${l.need}</span></div>`).join("")}</div>` : "";
+
+  const body = !r
+    ? `<div class="verdict neutral"><span class="vd">Evidence needed</span>
+         <span class="vx">Cannot simulate</span></div>
+       <p class="caption">No measured speed for this settlement. Measurement needed before any estimate.</p>`
+    : `<div class="verdict ${V[r.verdict].cls}">
+         <div><span class="vd">${V[r.verdict].label}</span>
+           ${r.sub ? `<div class="vsub">${r.sub}</div>` : ""}</div>
+         ${r.seconds !== undefined
+            ? `<span class="vbig num">${num(r.seconds)}<span class="vu">${r.unit}</span></span>`
+            : `<span class="vx">${r.headline}</span>`}
+       </div>
+       ${r.line ? `<p class="vline">${esc(r.line)}</p>` : ""}
+       ${legs}
+       ${isTier ? `<div class="tier-grid">${VIDEO_TIERS.map(t => {
+          const vd = tierVerdict(dl, t.mbps);
+          const w = Math.max(3, Math.min(100, (dl / t.mbps) * 66));
+          const col = vd === "smooth" ? "var(--safe)" : vd === "buffer" ? "var(--warn)" : "var(--neutral)";
+          const hint = t.id === "4k" ? ' title="YouTube&apos;s published recommendation is about 20 Mbps sustained."' : "";
+          return `<button class="tier-line" data-tier="${t.id}" aria-current="${t.id === simTask}"${hint}>
+            <span class="tn">${t.label}</span>
+            <span class="tb"><i style="width:${w}%;background:${col}"></i></span>
+            <span class="tv" style="color:${col}">${V[vd].label}</span></button>`;
+       }).join("")}</div>` : ""}
+       ${player}
+       ${r.foot ? `<p class="caption sim-foot">${esc(r.foot)}</p>` : ""}
+       <details class="math"><summary>Show the maths</summary>
+         <div class="mathbody">${r.math}</div></details>`;
+
+  mount.innerHTML = `
+    <span class="micro">Experience simulator</span>
+    <div class="sim">
+      <p class="sim-q">What can people here actually do online?</p>
+
+      <span class="micro" style="display:block;margin-bottom:6px">People sharing this connection</span>
+      <div class="share">
+        ${presets}
+        <input class="share-num" id="shareNum" type="number" min="1" max="500" step="1"
+               value="${simUsers}" aria-label="Custom number of people sharing">
+      </div>
+      <p class="caption" style="margin:0 0 4px">Simplified equal-sharing model — an assumption, not a measurement.</p>
+      ${perUserLine}
+      ${ctx}
+
+      <div class="sim-tabs">
+        ${TASKS.map(t => {
+          const on = t.id === simTask || (t.id === "720p" && isTier);
+          return `<button class="sim-tab" data-task="${t.id}" aria-pressed="${on}">${t.label}</button>`;
+        }).join("")}
+      </div>
+      ${body}
+      <div style="margin-top:10px">${basis}</div>
+      <details class="math"><summary>Thresholds and sources</summary>
+        <div class="mathbody">
+          Video tiers use sustained-bitrate guidance of 0.7 / 1.1 / 2.5 / 5 / 20 Mbps
+          for 360p / 480p / 720p / 1080p / 4K. Video-call floors are ≈ 3 Mbps in both
+          directions with latency under 150 ms. Experience benchmarks are consistent
+          with Shayea et al. (IEEE Access, 2020/2021). Sharing divides the measured
+          speed equally between people; real routers do not share equally.
+        </div></details>
+      <p class="disclaimer">Indicative experience based on crowdsourced quarterly aggregates; actual performance varies by operator, device, time, congestion and weather.</p>
+    </div>`;
+
+  const rerender = () => renderSim(p);
+  mount.querySelectorAll(".sim-tab").forEach(b => b.onclick = () => { simTask = b.dataset.task; rerender(); });
+  mount.querySelectorAll(".tier-line").forEach(b => b.onclick = () => { simTask = b.dataset.tier; rerender(); });
+  mount.querySelectorAll(".share-chip").forEach(b => b.onclick = () => { simUsers = +b.dataset.n; rerender(); });
+  const sn = el("shareNum");
+  if (sn) sn.onchange = () => {
+    const v = Math.max(1, Math.min(500, Math.round(+sn.value || 1)));
+    sn.value = v;                     // show the clamped value even if nothing else changes
+    if (v === simUsers) return;
+    simUsers = v;
+    rerender();
+    // The re-render replaces this input, so hand focus back and select the
+    // value — otherwise a second custom number means re-clicking the box.
+    const again = el("shareNum");
+    if (again) { again.focus(); try { again.select(); } catch (e) {} }
+  };
+  if (isTier && r) runPlayer(r.ratio);
+}
+
+/* ══ §A — facilities ═════════════════════════════════════════════════════
+   606 OSM points. They annotate the screening layer; they are never scoring
+   evidence, and a facility missing from OSM is not proof none exists.       */
+const AMENITY = { school:"School", clinic:"Clinic", hospital:"Hospital", doctors:"Doctors" };
+const facilityName = p => p.name || `Unnamed ${p.amenity} (${p.facility_id})`;
+
+function havKm(a, b) {
+  const R = 6371, rad = d => d * Math.PI / 180;
+  const dLat = rad(b[1] - a[1]), dLon = rad(b[0] - a[0]);
+  const s = Math.sin(dLat / 2) ** 2 +
+            Math.cos(rad(a[1])) * Math.cos(rad(b[1])) * Math.sin(dLon / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(s));
+}
+const km = d => d < 1 ? `${Math.round(d * 1000)} m` : `${nf(d, 1)} km`;
+/* No API key, no billing, no demo risk — just a deep link the browser opens.
+   Searching by coordinate alone lands on a bare pin ("5°09'56.5\"N…"), so when
+   OSM gives us a real name we search THAT, centred on the point at zoom 17.
+   Google then resolves the actual listing, with its photos and reviews.
+   Nameless OSM rows still fall back to the coordinate. */
+const gmapsLink = (c, name) => name && name.trim()
+  ? `https://www.google.com/maps/search/${encodeURIComponent(name.trim())}/@${c[1]},${c[0]},17z`
+  : `https://www.google.com/maps/search/?api=1&query=${c[1]},${c[0]}`;
+
+function nearestScored(c) {
+  let best = null, bd = Infinity;
+  for (const f of SCORED) {
+    const d = havKm(c, f.geometry.coordinates);
+    if (d < bd) { bd = d; best = f; }
+  }
+  return best ? { f:best, d:bd } : null;
+}
+function nearestFacilities(c, n) {
+  return FACILITIES
+    .map(f => ({ f, d:havKm(c, f.geometry.coordinates) }))
+    .sort((a, b) => a.d - b.d)
+    .slice(0, n);
+}
+
+function setFacilitiesVisible(on) {
+  el("facToggle").checked = on;
+  el("facRow").dataset.on = on ? "1" : "0";
+  if (mapReady) {
+    const vis = on ? "visible" : "none";
+    map.setLayoutProperty("facility-school", "visibility", vis);
+    map.setLayoutProperty("facility-health", "visibility", vis);
+  }
+  if (!on) closeFacility();
+}
+
+function closeFacility() {
+  selectedFacility = null;
+  el("facCard").dataset.open = "0";
+  if (mapReady) map.setFilter("facility-selected", ["==", ["get","facility_id"], ""]);
+}
+
+function selectFacility(fid) {
+  const f = FACILITIES.find(x => x.properties.facility_id === fid);
+  if (!f) return;
+  selectedFacility = fid;
+  if (!el("facToggle").checked) setFacilitiesVisible(true);
+  map.setFilter("facility-selected", ["==", ["get","facility_id"], fid]);
+  map.flyTo({ center:f.geometry.coordinates, zoom:Math.max(map.getZoom(), 11.5),
+              duration:REDUCED ? 0 : 1000 });
+  renderFacilityCard(f);
+}
+
+function renderFacilityCard(f) {
+  const p = f.properties, c = f.geometry.coordinates;
+  const near = nearestScored(c);
+  const card = el("facCard");
+  card.innerHTML = `
+    <div class="panel-head" style="margin-bottom:9px">
+      <div style="min-width:0">
+        <h2 style="font-size:15px;margin-bottom:6px">${esc(facilityName(p))}</h2>
+        <div class="panel-meta">
+          <span class="chip plain">${esc(AMENITY[p.amenity])}</span>
+          <span class="chip plain">${esc(districtLabel(p._district))}</span>
+          ${p._division ? `<span class="chip plain">${esc(p._division)} Division</span>` : ""}
+        </div>
+      </div>
+      <button class="icon-btn" id="facClose" aria-label="Close facility card">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7">
+          <path d="M4 4l8 8M12 4l-8 8"/></svg>
+      </button>
+    </div>
+    ${near ? `<div class="note" style="margin-bottom:10px">
+        ${km(near.d)} from <b style="color:var(--ink-strong)">${esc(nameOf(near.f.properties))}</b> —
+        an area ranked <b style="color:var(--ink-strong)">#${int(rankOf(near.f.properties))}</b>
+        of 1,114 for screening priority (DIPI ${num(dipiOf(near.f.properties))}).
+      </div>` : ""}
+    ${GOOGLE.on() ? `<div class="g-mount" id="gFacMount" style="margin:0 0 10px"></div>` : ""}
+    <a class="ghost-btn" style="width:100%;justify-content:center" target="_blank" rel="noopener noreferrer"
+       href="${gmapsLink(c, p.name)}">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+        <path d="M6 2H3a1 1 0 00-1 1v10a1 1 0 001 1h10a1 1 0 001-1v-3M9.5 2H14v4.5M14 2L7 9"/></svg>
+      Open in Google Maps</a>
+    <p class="caption" style="margin-top:9px">Context only — not scoring evidence.</p>`;
+  card.dataset.open = "1";
+  el("facClose").onclick = closeFacility;
+  if (GOOGLE.on()) loadFacilityPhoto(p, c);
+}
+
+/* ══ §B — Local Context ══════════════════════════════════════════════════
+   Free tier, ships today, works offline: the three nearest points from OUR
+   facilities layer plus a Maps deep link each. The Google Places / Street
+   View path below is written but DISABLED — see GOOGLE_CFG.               */
+const GOOGLE = {
+  KEY: "dino.gmapsKey", FLAG: "dino.gmapsOn",
+  MAX_CALLS: 50,            // hard per-session ceiling; nothing can exceed it
+  calls: 0,
+  cache: new Map(),         // settlement_id -> rendered html, so re-opening is free
+  key()        { try { return localStorage.getItem(this.KEY) || ""; } catch (e) { return ""; } },
+  configured() { return this.key().length > 20; },
+  on()         { try { return this.configured() && localStorage.getItem(this.FLAG) === "1"; } catch (e) { return false; } },
+  setOn(v)     { try { localStorage.setItem(this.FLAG, v ? "1" : "0"); } catch (e) {} },
+  setKey(k)    { try { k ? localStorage.setItem(this.KEY, k.trim()) : localStorage.removeItem(this.KEY); } catch (e) {} },
+  left()       { return Math.max(0, this.MAX_CALLS - this.calls); },
+  spend(n)     { this.calls += n; updateGoogleMeter(); }
+};
+
+function updateGoogleMeter() {
+  const m = el("gMeter");
+  if (m) m.textContent = `${GOOGLE.calls} billable call${GOOGLE.calls === 1 ? "" : "s"} this session · ${GOOGLE.left()} left`;
+}
+
+/* Street View. The metadata endpoint is FREE and tells us whether imagery
+   exists, so the billable image is only ever requested for a location that
+   actually has one — no paying for grey "no imagery" tiles. */
+async function streetViewFor(coords) {
+  const [lng, lat] = coords;
+  const key = GOOGLE.key();
+  const meta = await fetch(
+    `https://maps.googleapis.com/maps/api/streetview/metadata?location=${lat},${lng}&radius=3000&key=${encodeURIComponent(key)}`
+  ).then(r => r.json());
+  // ZERO_RESULTS genuinely means no Street View car ever drove here — common
+  // in rural Sabah. Anything else is a CONFIG problem and must not be
+  // disguised as "no imagery", or we'd be reporting a broken key as a fact
+  // about the place.
+  if (meta.status === "ZERO_RESULTS") return { none:true };
+  if (meta.status !== "OK") return { error:meta.status, why:meta.error_message || "" };
+  GOOGLE.spend(1);
+  return { src: `https://maps.googleapis.com/maps/api/streetview?size=640x360&location=${lat},${lng}`
+       + `&radius=3000&fov=90&return_error_code=true&key=${encodeURIComponent(key)}` };
+}
+
+/* A photo of THIS facility, by name. Text Search resolves the exact building
+   far better than a nearby sweep, so clicking "Hospital Tambunan" shows that
+   hospital rather than whatever happens to sit closest to the pin. */
+async function facilityPhoto(name, coords) {
+  const [lng, lat] = coords;
+  const res = await fetch("https://places.googleapis.com/v1/places:searchText", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Goog-Api-Key": GOOGLE.key(),
+      "X-Goog-FieldMask": "places.displayName,places.photos,places.formattedAddress"
+    },
+    body: JSON.stringify({
+      textQuery: name,
+      maxResultCount: 1,
+      locationBias: { circle: { center: { latitude: lat, longitude: lng }, radius: 3000 } }
+    })
+  });
+  if (!res.ok) throw new Error("Places HTTP " + res.status);
+  const hit = (await res.json()).places?.[0];
+  if (!hit || !hit.photos?.length) { GOOGLE.spend(1); return null; }
+  GOOGLE.spend(2);                       // the search, plus the photo below
+  return {
+    name: hit.displayName?.text || name,
+    where: hit.formattedAddress || "",
+    src: `https://places.googleapis.com/v1/${hit.photos[0].name}/media`
+       + `?maxWidthPx=800&key=${encodeURIComponent(GOOGLE.key())}`
+  };
+}
+
+async function loadFacilityPhoto(p, coords) {
+  const mount = el("gFacMount");
+  if (!mount || !GOOGLE.on()) return;
+  const cacheKey = "fac:" + p.facility_id;
+  if (GOOGLE.cache.has(cacheKey)) { mount.innerHTML = GOOGLE.cache.get(cacheKey); return; }
+  if (GOOGLE.left() <= 0) { mount.innerHTML = `<p class="caption">Session budget reached.</p>`; return; }
+  if (!p.name) {                        // nothing to search on; don't burn a call
+    mount.innerHTML = `<p class="caption">This point has no name in OpenStreetMap, so there is nothing
+      to look up. The map pin is still exact.</p>`;
+    return;
+  }
+  mount.innerHTML = `<p class="caption">Loading photo…</p>`;
+  let html = "";
+  try {
+    const ph = await facilityPhoto(p.name, coords);
+    html = ph
+      ? `<figure class="g-hero"><img src="${ph.src}" alt="${esc(ph.name)}" loading="lazy"
+           onerror="this.closest('figure').remove()">
+         <figcaption>${esc(ph.name)}${ph.where ? " · " + esc(ph.where) : ""}</figcaption></figure>`
+      : `<p class="caption">No photo published for this facility.</p>`;
+  } catch (e) {
+    html = `<p class="caption g-err">Photo unavailable (${esc(String(e.message || e))}).</p>`;
+  }
+  // No "context only" line here — the card already carries one at its foot.
+  GOOGLE.cache.set(cacheKey, html);
+  mount.innerHTML = html;
+}
+
+/* Places (New). One nearby search, minimal field mask, at most 3 results. */
+async function placePhotosFor(coords) {
+  const [lng, lat] = coords;
+  const res = await fetch("https://places.googleapis.com/v1/places:searchNearby", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Goog-Api-Key": GOOGLE.key(),
+      "X-Goog-FieldMask": "places.displayName,places.photos,places.primaryTypeDisplayName"
+    },
+    body: JSON.stringify({
+      includedTypes: ["school", "hospital", "primary_school", "secondary_school"],
+      maxResultCount: 3,
+      locationRestriction: { circle: { center: { latitude: lat, longitude: lng }, radius: 5000 } }
+    })
+  });
+  if (!res.ok) throw new Error("Places HTTP " + res.status);
+  const data = await res.json();
+  const hits = (data.places || []).filter(p => p.photos && p.photos.length).slice(0, 3);
+  // 1 for the search itself, plus 1 per photo — each <img> below is its own
+  // billable Places Photo request, so the meter must count them too.
+  GOOGLE.spend(1 + hits.length);
+  return hits.map(p => ({
+    name: p.displayName?.text || "Unnamed place",
+    type: p.primaryTypeDisplayName?.text || "",
+    src: `https://places.googleapis.com/v1/${p.photos[0].name}/media`
+       + `?maxWidthPx=800&skipHttpRedirect=false&key=${encodeURIComponent(GOOGLE.key())}`
+  }));
+}
+
+/* Fired ONLY from an open drill-down panel, for that ONE settlement, and only
+   when the toggle is on. Never at boot, never across all 1,448. */
+async function loadGoogleContext(settlementId, coords) {
+  const mount = el("gMount");
+  if (!mount || !GOOGLE.on()) return;
+  if (GOOGLE.cache.has(settlementId)) { mount.innerHTML = GOOGLE.cache.get(settlementId); return; }
+  if (GOOGLE.left() <= 0) {
+    mount.innerHTML = `<p class="caption">Session budget reached (${GOOGLE.MAX_CALLS} calls). Reload to reset.</p>`;
+    return;
+  }
+  mount.innerHTML = `<p class="caption">Loading imagery…</p>`;
+  let html = "";
+  try {
+    const sv = await streetViewFor(coords);
+    if (sv.src) {
+      html += `<figure class="g-hero"><img src="${sv.src}" alt="Street View near this settlement" loading="lazy"
+             onerror="this.closest('figure').innerHTML='<p class=&quot;caption&quot;>Street View image failed to load.</p>'">
+         <figcaption>Street View, nearest panorama within 3 km</figcaption></figure>`;
+    } else if (sv.none) {
+      html += `<p class="caption">No Street View here — no imagery has ever been captured at this
+               location. That says nothing about the settlement itself.</p>`;
+    } else {
+      html += `<p class="caption g-err">Street View request refused: <b>${esc(sv.error)}</b>.
+               ${esc(sv.why)} This is a key or API-enablement problem, not a fact about this place.</p>`;
+    }
+  } catch (e) {
+    html += `<p class="caption g-err">Street View unavailable (${esc(String(e.message || e))}).</p>`;
+  }
+  try {
+    const photos = await placePhotosFor(coords);
+    if (photos.length) {
+      const [lead, ...rest] = photos;
+      html += `<figure class="g-hero"><img src="${lead.src}" alt="${esc(lead.name)}" loading="lazy"
+           onerror="this.closest('figure').remove()">
+         <figcaption>${esc(lead.name)}${lead.type ? " · " + esc(lead.type) : ""}</figcaption></figure>`;
+      if (rest.length) html += `<div class="g-photos">${rest.map(p =>
+        `<figure><img src="${p.src}" alt="${esc(p.name)}" loading="lazy"
+           onerror="this.closest('figure').remove()">
+         <figcaption>${esc(p.name)}</figcaption></figure>`).join("")}</div>`;
+    } else {
+      html += `<p class="caption">No nearby places with photos.</p>`;
+    }
+  } catch (e) {
+    html += `<p class="caption g-err">Places photos unavailable (${esc(String(e.message || e))}).</p>`;
+  }
+  html += `<p class="caption g-cap">Context only — not scoring evidence. Absence of imagery is not
+           evidence that a place lacks facilities.</p>`;
+  GOOGLE.cache.set(settlementId, html);
+  mount.innerHTML = html;
+}
+
+/* Setup screen: ?setup=1. The key lives in this browser's localStorage and
+   never enters the repo, so it cannot leak through git. */
+function renderGoogleSetup() {
+  if (!new URLSearchParams(location.search).has("setup")) return;
+  const p = el("debugPanel");
+  p.hidden = false;
+  p.classList.add("setup");
+  p.innerHTML = `
+    <button class="icon-btn setup-x" id="gDone" aria-label="Close setup">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7">
+        <path d="M4 4l8 8M12 4l-8 8"/></svg></button>
+    <h3>Google imagery setup</h3>
+    <p class="caption">Stored in this browser only (localStorage). Never written to the repo.
+      Use an HTTP-referrer-restricted browser key.</p>
+    <input class="field" id="gKeyInput" type="password" placeholder="Paste API key"
+           value="${esc(GOOGLE.key())}" style="margin:10px 0 8px" autocomplete="off">
+    <div style="display:flex;gap:6px">
+      <button class="ghost-btn" id="gSave" style="flex:1;justify-content:center">Save key</button>
+      <button class="ghost-btn" id="gClear" style="flex:1;justify-content:center">Clear key</button>
+    </div>
+    <p class="caption" style="margin-top:10px">Status: <b>${GOOGLE.configured() ? "key present" : "no key"}</b>
+      · imagery <b>${GOOGLE.on() ? "ON" : "OFF"}</b> · cap ${GOOGLE.MAX_CALLS} calls/session.</p>
+    <p class="caption">Toggle it on and off any time from the sidebar under LAYERS.</p>`;
+  // Saving drops you back on the normal dashboard, so the setup card can never
+  // sit on top of the drill-down panel once you are done with it.
+  el("gSave").onclick = () => { GOOGLE.setKey(el("gKeyInput").value); location.href = location.pathname; };
+  el("gClear").onclick = () => { GOOGLE.setKey(""); GOOGLE.setOn(false); location.search = "?setup=1"; };
+  el("gDone").onclick = () => { location.href = location.pathname; };
+}
+
+function renderGoogleToggle() {
+  const row = el("gRow");
+  if (!GOOGLE.configured()) { row.hidden = true; return; }
+  row.hidden = false;
+  el("gToggle").checked = GOOGLE.on();
+  row.dataset.on = GOOGLE.on() ? "1" : "0";
+  updateGoogleMeter();
+}
+
+function localContextBlock(coords) {
+  const near = nearestFacilities(coords, 3);
+  if (!near.length) return "";
+  return `
+    <div class="block">
+      <span class="micro">Local context</span>
+      <div class="fac-list">
+        ${near.map(({ f, d }) => {
+          const p = f.properties;
+          return `<div class="fac-row">
+            <span class="fac-kind" data-kind="${p.kind}"></span>
+            <span class="fac-nm"><b>${esc(facilityName(p))}</b>
+              <small>${esc(AMENITY[p.amenity])} &middot; ${esc(districtLabel(p._district))}</small></span>
+            <span class="fac-d num">${km(d)}</span>
+            <a class="fac-link" target="_blank" rel="noopener noreferrer" href="${gmapsLink(f.geometry.coordinates, p.name)}"
+               title="Open in Google Maps" aria-label="Open ${esc(facilityName(p))} in Google Maps">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+                <path d="M6 2H3a1 1 0 00-1 1v10a1 1 0 001 1h10a1 1 0 001-1v-3M9.5 2H14v4.5M14 2L7 9"/></svg></a>
+          </div>`;
+        }).join("")}
+      </div>
+      <p class="caption" style="margin-top:8px">Nearest points from OpenStreetMap. Context only — not scoring
+        evidence, and an absent facility is not proof none exists.</p>
+      ${GOOGLE.on() ? `<div class="g-mount" id="gMount"></div>` : ""}
+    </div>`;
+}
+
+/* ══ Sidebar lists ═══════════════════════════════════════════════════════ */
+function renderLegend() {
+  el("ramp").innerHTML = RAMP[theme].map(c => `<i style="background:${c}"></i>`).join("");
+  el("legendFlood").innerHTML = floodOn
+    ? `<div class="legend-item" style="margin-top:8px;padding-top:8px;border-top:1px solid var(--hairline)">
+         <span class="glyph flood"></span>💧 Seasonal water adjacency</div>`
+    : "";
+}
+function renderTopList() {
+  el("topList").innerHTML = scoredOrdered().slice(0, 20).map(f => {
+    const p = f.properties, dv = dipiOf(p);
+    return `<button class="top-row" data-id="${p.settlement_id}" aria-current="${p.settlement_id === selectedId}">
+      <span class="rk">${int(rankOf(p))}</span>
+      <span class="nm"><b>${esc(nameOf(p))}</b><small>${esc(districtLabel(p._district))}</small></span>
+      <span class="dv" style="color:${dipiColor(dv)}">${num(dv)}</span>
+    </button>`;
+  }).join("");
+  el("topList").querySelectorAll(".top-row").forEach(r => r.onclick = () => select(r.dataset.id));
+}
+
+/* ══ V6b — the sliders ═══════════════════════════════════════════════════ */
+let rankingsDirty = false;
+
+function renderWeights() {
+  el("weightBox").innerHTML = PILLARS.map(pl => `
+    <div class="wrow">
+      <div class="bar-head">
+        <span class="micro" data-wlab="${pl.key}"></span>
+      </div>
+      <input class="wslider" type="range" min="0" max="100" step="1" value="${W[pl.key]}"
+             data-k="${pl.key}" aria-label="${pl.label} weight">
+    </div>`).join("");
+  // Listeners bind once; drags only ever update text, never rebuild these
+  // inputs — rebuilding mid-drag would drop the pointer capture.
+  el("weightBox").querySelectorAll(".wslider").forEach(s =>
+    s.addEventListener("input", () => { W[s.dataset.k] = +s.value; applyWeights(); }));
+  updateWeightLabels();
+}
+
+function updateWeightLabels() {
+  const wn = wNorm();
+  el("weightBox").querySelectorAll("[data-wlab]").forEach(sp => {
+    const pl = PILLARS.find(x => x.key === sp.dataset.wlab);
+    sp.innerHTML = pl.label.toUpperCase() + " &middot; " + nf(wn[pl.key] * 100, 0) + "%";
+  });
+  el("wNote").innerHTML = isCustomW()
+    ? `<p class="note" style="margin-top:9px">Custom weighting. Evidence-gap communities are
+       unaffected — they carry no pillar scores to reweight.</p>`
+    : "";
+}
+
+function updatePanelWeights() {
+  if (!selectedId) return;
+  const f = FEATURES.find(x => x.properties.settlement_id === selectedId);
+  if (!f) return;
+  const p = f.properties, dv = dipiOf(p), wn = wNorm();
+  const h = el("heroDipi");
+  if (h) { h.textContent = num(dv); h.style.color = dipiColor(dv); }           // absent on Queue B
+  const hc = el("heroClass");
+  if (hc) hc.innerHTML = `Class ${dipiClass(dv) + 1} of 5 &middot; higher needs attention sooner`;
+  const cu = el("heroCustom");
+  if (cu) cu.style.display = isCustomW() ? "" : "none";
+  const rc = el("rankChip");
+  if (rc) rc.textContent = `Rank ${int(rankOf(p))} of 1,114`;
+  document.querySelectorAll("[data-plab]").forEach(sp => {
+    const pl = PILLARS.find(x => x.key === sp.dataset.plab);
+    sp.innerHTML = pl.label.toUpperCase() + " &middot; " + nf(wn[pl.key] * 100, 0) + "%";
+  });
+}
+
+function applyWeights() {
+  recomputeRanks();
+  updateWeightLabels();
+  updatePanelWeights();
+  if (map && map.isStyleLoaded()) map.setPaintProperty("settlements", "circle-color", dipiColorExpr());
+  renderTopList();
+  // 1,114 table rows are far too heavy to rebuild on every drag frame.
+  if (el("rankings").dataset.open === "1") renderRankings(); else rankingsDirty = true;
+}
+
+/* ══ Filters ═════════════════════════════════════════════════════════════ */
+function currentFilter() {
+  const d = el("districtSel").value, v = el("divisionSel").value;
+  return f => (d ? f.properties._district === d : (!v || f.properties._division === v));
+}
+function applyFilters() {
+  const d = el("districtSel").value, v = el("divisionSel").value;
+  const showQB = el("queueBToggle").checked;
+  // District wins when set; otherwise the division scopes everything.
+  const dist = d ? [["==", ["get","_district"], d]]
+                 : v ? [["==", ["get","_division"], v]] : [];
+  map.setFilter("division-fill-sel", ["==", ["get","division"], v || ""]);
+  positionLabels();
+  map.setFilter("settlements",  ["all", ["!=",["get","evidence_tier"],"insufficient"], ...dist]);
+  map.setFilter("low-evidence", ["all", ["==",["get","evidence_tier"],"low_evidence"], ...dist]);
+  map.setFilter("queueb",       showQB ? ["all", ["==",["get","evidence_tier"],"insufficient"], ...dist]
+                                       : ["==", ["get","settlement_id"], ""]);
+  map.setFilter("flood-context",["all", ["==",["get","flood_prone"],true], ...dist]);
+  map.setFilter("flood-ring",   ["all", ["==",["get","flood_prone"],true], ...dist]);
+  renderRankings();
+}
+
+/* ══ V4 Rankings ═════════════════════════════════════════════════════════
+   Sorting NEVER renumbers the rank column: rank is the DIPI priority rank and
+   nothing else, so a planner cannot mistake "row 1 when sorted by latency" for
+   "the top-priority settlement".                                            */
+const rkSort = { col:null, dir:"desc" };
+const rkF = { q:"", evidence:"", place:"", school:false, clinic:false, flood:false };
+
+const RK_LABEL = { dipi:"DIPI", p_connectivity:"Connectivity", p_population:"Population",
+  p_institutions:"Institutions", p_equity:"Equity", dl_mbps:"Download", latency_ms:"Latency" };
+
+function rkMatch(f) {
+  const p = f.properties;
+  if (rkF.q) {
+    const q = rkF.q.toLowerCase();
+    if (!((p.name && p.name.toLowerCase().includes(q)) || p.settlement_id.toLowerCase().includes(q))) return false;
+  }
+  if (rkF.evidence && p.evidence_tier !== rkF.evidence) return false;
+  if (rkF.place && p.place !== rkF.place) return false;
+  if (rkF.school && !(p.n_schools_3km >= 1)) return false;
+  if (rkF.clinic && !(p.n_clinics_3km >= 1)) return false;
+  if (rkF.flood && !p.flood_prone) return false;
+  return true;
+}
+function rkSorted(rows) {
+  if (!rkSort.col) return rows;                       // default: DIPI rank order
+  const k = rkSort.col, s = rkSort.dir === "asc" ? 1 : -1;
+  return [...rows].sort((a, b) => {
+    const av = k === "dipi" ? dipiOf(a.properties) : a.properties[k];
+    const bv = k === "dipi" ? dipiOf(b.properties) : b.properties[k];
+    if (av === null || av === undefined) return 1;    // missing values sink
+    if (bv === null || bv === undefined) return -1;
+    return (av - bv) * s || (rankOf(a.properties) - rankOf(b.properties));
+  });
+}
+function visibleRows() { return rkSorted(scoredOrdered().filter(currentFilter()).filter(rkMatch)); }
+
+function renderRkChips() {
+  const c = (id, label, on, cls) =>
+    `<button class="rk-chip ${cls || ""}" data-chip="${id}" aria-pressed="${on}">${label}</button>`;
+  const schoolPreset = rkF.school && rkSort.col === "dipi" && rkSort.dir === "desc";
+  el("rkChips").innerHTML =
+    c("ev:measured", "Measured", rkF.evidence === "measured") +
+    c("ev:low_evidence", "Low evidence", rkF.evidence === "low_evidence") +
+    `<span class="rk-sep"></span>` +
+    ["city","town","village","hamlet"].map(pl =>
+      c("pl:" + pl, pl[0].toUpperCase() + pl.slice(1), rkF.place === pl)).join("") +
+    `<span class="rk-sep"></span>` +
+    c("school", "Has school", rkF.school) +
+    c("clinic", "Has clinic", rkF.clinic) +
+    c("flood", "Flood context", rkF.flood) +
+    `<span class="rk-sep"></span>` +
+    c("preset", "School-priority view", schoolPreset, "preset");
+
+  el("rkChips").querySelectorAll(".rk-chip").forEach(b => b.onclick = () => {
+    const id = b.dataset.chip;
+    if (id.startsWith("ev:"))      rkF.evidence = rkF.evidence === id.slice(3) ? "" : id.slice(3);
+    else if (id.startsWith("pl:")) rkF.place    = rkF.place    === id.slice(3) ? "" : id.slice(3);
+    else if (id === "preset") {
+      if (schoolPreset) { rkF.school = false; rkSort.col = null; }
+      else { rkF.school = true; rkSort.col = "dipi"; rkSort.dir = "desc"; }
+    } else rkF[id] = !rkF[id];
+    renderRankings();
+  });
+}
+
+function renderRkHeaders() {
+  const wn = wNorm();
+  document.querySelectorAll("#rankTable thead th").forEach(th => {
+    const key = th.dataset.sort;
+    let label = th.dataset.label || th.textContent;
+    if (th.dataset.wcol) {
+      const pl = PILLARS.find(x => x.key === th.dataset.wcol);
+      label = pl.short + "&nbsp;" + nf(wn[pl.key] * 100, 0) + "%";
+    }
+    if (!key) return;
+    const active = rkSort.col === key;
+    th.dataset.active = active ? "1" : "0";
+    th.innerHTML = label + `<span class="arw">${active ? (rkSort.dir === "asc" ? "▲" : "▼") : "▲▼"}</span>`;
+    th.setAttribute("aria-sort", active ? (rkSort.dir === "asc" ? "ascending" : "descending") : "none");
+    th.onclick = () => {
+      if (rkSort.col === key) rkSort.dir = rkSort.dir === "asc" ? "desc" : "asc";
+      else { rkSort.col = key; rkSort.dir = key === "latency_ms" ? "asc" : "desc"; }
+      renderRankings();
+    };
+  });
+}
+
+function renderRankings() {
+  const keep = currentFilter();
+  const scored = visibleRows();
+  const qb = QUEUE_B.filter(keep).filter(rkMatch);
+  const wn = wNorm();
+
+  renderRkChips();
+  renderRkHeaders();
+  const notes = [];
+  if (isCustomW()) notes.push(`Custom weighting · ${PILLARS.map(pl => nf(wn[pl.key] * 100, 0)).join(" / ")}
+    — not the team default. DIPI and ranks below are recomputed live from the file's pillar scores.`);
+  if (rkSort.col && rkSort.col !== "dipi")
+    notes.push(`Sorted by ${RK_LABEL[rkSort.col]} · DIPI rank preserved in first column.`);
+  el("rkNote").innerHTML = notes.length
+    ? `<p class="note" style="margin:-6px 0 12px">${notes.join("<br>")}</p>` : "";
+
+  const speeds = [...scored, ...qb].map(f => f.properties.dl_mbps).filter(v => v !== null).sort((a, b) => a - b);
+  const median = speeds.length ? speeds[Math.floor(speeds.length / 2)] : null;
+  el("kpis").innerHTML = [
+    ["Settlements screened", int(scored.length + qb.length), ""],
+    ["Scored", int(scored.length), ""],
+    ["Evidence gap", int(qb.length), ""],
+    ["Median download", median !== null ? num(median) : "—", median !== null ? "Mbps" : ""]
+  ].map(([l, v, u]) => `<div class="kpi"><span class="micro">${l}</span>
+      <div class="v">${v}${u ? `<span class="u">${u}</span>` : ""}</div></div>`).join("");
+
+  const cell = (v, fb) => v !== null ? v : `<span class="sub">${fb}</span>`;
+  el("rankBody").innerHTML = scored.length ? scored.map(f => {
+    const p = f.properties, ev = EVIDENCE[p.evidence_tier];
+    return `<tr data-id="${p.settlement_id}">
+      <td class="r num">${int(rankOf(p))}</td>
+      <td class="nm">${esc(nameOf(p))} <span class="sub">${esc(p.place)}</span></td>
+      <td>${esc(districtLabel(p._district))}</td>
+      <td class="r"><span class="dipi-cell num"><span class="sw" style="background:${dipiColor(dipiOf(p))}"></span>${num(dipiOf(p))}</span></td>
+      <td class="r num">${num(p.p_connectivity * 100)}</td>
+      <td class="r num">${num(p.p_population * 100)}</td>
+      <td class="r num">${num(p.p_institutions * 100)}</td>
+      <td class="r num">${num(p.p_equity * 100)}</td>
+      <td class="r num">${cell(num(p.dl_mbps), "Evidence needed")}</td>
+      <td class="r num">${cell(num(p.latency_ms, 0), "—")}</td>
+      <td><span class="chip ${ev.cls}"><i class="dot"></i>${ev.label}</span></td>
+    </tr>`;
+  }).join("") : `<tr><td colspan="11"><div class="empty">No scored settlements in this district.</div></td></tr>`;
+
+  el("qbCount").textContent = `${int(qb.length)} settlements`;
+  el("qbBody").innerHTML = qb.length ? qb.map(f => {
+    const p = f.properties;
+    return `<tr data-id="${p.settlement_id}">
+      <td class="nm">${esc(nameOf(p))} <span class="sub">${esc(p.place)}</span></td>
+      <td>${esc(districtLabel(p._district))}</td>
+      <td class="r num">${cell(num(p.stakes_score), "No stakes score")}</td>
+      <td class="r num">${int(p.pop_2km)}</td>
+      <td class="r num">${int(p.n_schools_3km)}</td>
+      <td class="r num">${int(p.n_clinics_3km)}</td>
+      <td><span class="chip neutral"><i class="dot"></i>Insufficient evidence</span></td>
+    </tr>`;
+  }).join("") : `<tr><td colspan="7"><div class="empty">No evidence-gap communities in this district.</div></td></tr>`;
+
+  const totalScored = SCORED.filter(keep).length;
+  el("rkCount").textContent = scored.length === totalScored
+    ? `${int(scored.length)} settlements`
+    : `${int(scored.length)} of ${int(totalScored)} settlements match · CSV exports what you see`;
+
+  document.querySelectorAll("#rankBody tr[data-id], #qbBody tr[data-id]")
+    .forEach(tr => tr.onclick = () => select(tr.dataset.id));
+}
+
+function downloadCSV() {
+  // Exactly the rows on screen, in the order shown — chips, search, sort and
+  // the district filter all apply.
+  const keep = currentFilter();
+  const rows = [...visibleRows(), ...QUEUE_B.filter(keep).filter(rkMatch)];
+  const cols = ["settlement_id","name","place","_district","dipi","rank","p_connectivity","p_population",
+    "p_institutions","p_equity","dl_mbps","ul_mbps","latency_ms","n_tests","n_tiles","evidence_tier",
+    "pop_2km","n_schools_3km","n_clinics_3km","rwi","flood_prone","stakes_score","gap_rank"];
+  // The export states which weighting produced it, so a downloaded file can
+  // never be mistaken for the team default once someone has moved a slider.
+  const wn = wNorm();
+  const stamp = PILLARS.map(pl => nf(wn[pl.key] * 100, 0)).join("/");
+  const head = cols.map(c => c === "_district" ? "district" : c).join(",") + ",weighting";
+  const body = rows.map(f => cols.map(c => {
+    let v = f.properties[c];
+    if (c === "dipi") v = dipiOf(f.properties);
+    if (c === "rank") v = f.properties.dipi === null ? null : rankOf(f.properties);
+    if (v === null || v === undefined) return "";
+    if (c === "dipi") v = nf(v, 1);
+    return /[",\n]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : v;
+  }).join(",") + "," + stamp).join("\n");
+  const blob = new Blob([head + "\n" + body], { type:"text/csv;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "dino-slayer-dipi.csv";
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+/* ══ V5 Theme ════════════════════════════════════════════════════════════ */
+const SUN = `<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+  <circle cx="8" cy="8" r="3.1"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3 3l1.2 1.2M11.8 11.8L13 13M13 3l-1.2 1.2M4.2 11.8L3 13"/></svg>`;
+const MOON = `<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+  <path d="M13.4 9.6A5.8 5.8 0 016.4 2.6a5.8 5.8 0 107 7z"/></svg>`;
+
+/* Applied on load AND on every toggle. Gated on a mapReady flag set by the
+   load event — NOT on isStyleLoaded(), which reports false while the GeoJSON
+   sources are still parsing and would silently skip the entire map repaint. */
+function applyMapTheme() {
+  if (mapReady) {
+    const sat = satelliteOn;
+    map.setLayoutProperty("base-dark",  "visibility", (!sat && theme === "dark")  ? "visible" : "none");
+    map.setLayoutProperty("base-light", "visibility", (!sat && theme === "light") ? "visible" : "none");
+    map.setLayoutProperty("base-sat",   "visibility", sat ? "visible" : "none");
+    document.documentElement.setAttribute("data-basemap", sat ? "satellite" : "map");
+    map.setPaintProperty("settlements", "circle-color", dipiColorExpr());
+    // Imagery is busy: dots need a heavier dark halo to hold their edge.
+    // On Voyager's cream land a thin dark outline does the same job; a white
+    // one would disappear.
+    map.setPaintProperty("settlements", "circle-stroke-color",
+      sat ? "rgba(0,0,0,.78)" : theme === "dark" ? "rgba(0,0,0,.45)" : "rgba(18,26,38,.55)");
+    map.setPaintProperty("settlements", "circle-stroke-width", sat ? 1.2 : theme === "dark" ? 0.6 : 0.8);
+    map.setPaintProperty("queueb", "circle-stroke-width", sat ? 1.8 : 1.3);
+    map.setPaintProperty("low-evidence", "circle-stroke-opacity", sat ? 0.85 : 0.55);
+    map.setPaintProperty("queueb", "circle-stroke-color", theme === "dark" ? "#8B96A6" : "#6B7787");
+    map.setPaintProperty("low-evidence", "circle-stroke-color", theme === "dark" ? "#E3B341" : "#9A6B00");
+    map.setPaintProperty("selected", "circle-stroke-color", theme === "dark" ? "#3FC7E8" : "#0B7E9E");
+    const c = satelliteOn ? MAPCOL.satellite : MAPCOL[theme];
+    map.setPaintProperty("district-fill", "fill-color", c.land);
+    map.setPaintProperty("district-fill", "fill-opacity", c.landOp);
+    map.setPaintProperty("division-fill-sel", "fill-color", c.land);
+    map.setPaintProperty("division-fill-sel", "fill-opacity", c.landSel);
+    map.setPaintProperty("district-line", "line-color", c.dline);
+    map.setPaintProperty("district-line", "line-opacity", c.dlineOp);
+    map.setPaintProperty("division-line", "line-color", c.vline);
+    map.setPaintProperty("division-line", "line-opacity", c.vlineOp);
+  }
+}
+
+function setTheme(next) {
+  theme = next;
+  document.documentElement.setAttribute("data-theme", theme);
+  el("themeToggle").innerHTML = theme === "dark" ? SUN : MOON;
+  el("themeToggle").setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} theme`);
+  applyMapTheme();
+  renderLegend();
+  renderTopList();
+  renderRankings();
+  if (selectedId) {
+    const f = FEATURES.find(x => x.properties.settlement_id === selectedId);
+    if (f) renderPanel(f.properties);
+  }
+}
+
+/* ══ Wiring ══════════════════════════════════════════════════════════════ */
+function wireUI() {
+  el("themeToggle").innerHTML = SUN;
+  el("themeToggle").onclick = () => setTheme(theme === "dark" ? "light" : "dark");
+
+  el("railToggle").onclick = () => {
+    const b = el("body");
+    const collapsed = b.dataset.rail === "collapsed";
+    b.dataset.rail = collapsed ? "open" : "collapsed";
+    setTimeout(() => map.resize(), 240);
+  };
+
+  el("viewToggle").onclick = () => {
+    const open = el("rankings").dataset.open === "1";
+    el("rankings").dataset.open = open ? "0" : "1";
+    el("viewToggle").setAttribute("aria-pressed", String(!open));
+    if (!open) {
+      closePanel();
+      if (rankingsDirty) { renderRankings(); rankingsDirty = false; }
+    }
+  };
+
+  renderWeights();
+  el("wReset").onclick = () => {
+    PILLARS.forEach(pl => W[pl.key] = pl.weight);
+    el("weightBox").querySelectorAll(".wslider").forEach(s => s.value = W[s.dataset.k]);
+    applyWeights();
+  };
+
+  const zoomTo = pred => {
+    const pts = FEATURES.filter(pred).map(f => f.geometry.coordinates);
+    if (!pts.length) { map.flyTo({ center:[116.8, 5.3], zoom:6.8, duration:REDUCED ? 0 : 900 }); return; }
+    const b = pts.reduce((acc, c) => acc.extend(c), new maplibregl.LngLatBounds(pts[0], pts[0]));
+    map.fitBounds(b, { padding:70, duration:REDUCED ? 0 : 900 });
+  };
+  el("divisionSel").onchange = () => {
+    const v = el("divisionSel").value;
+    fillDistrictOptions(v);          // district list narrows to this division
+    applyFilters();
+    if (!v) { map.flyTo({ center:[116.8, 5.3], zoom:6.8, duration:REDUCED ? 0 : 900 }); return; }
+    zoomTo(f => f.properties._division === v);
+  };
+  el("districtSel").onchange = () => {
+    applyFilters();
+    const d = el("districtSel").value, v = el("divisionSel").value;
+    if (!d) { v ? zoomTo(f => f.properties._division === v)
+                : map.flyTo({ center:[116.8, 5.3], zoom:6.8, duration:REDUCED ? 0 : 900 }); return; }
+    zoomTo(f => f.properties._district === d);
+  };
+  el("queueBToggle").onchange = applyFilters;
+  el("floodToggle").onchange = e => { floodOn = e.target.checked; applyFloodLens(); };
+
+  el("facToggle").onchange = e => setFacilitiesVisible(e.target.checked);
+
+  const setBasemap = sat => {
+    satelliteOn = sat;
+    el("baseMapBtn").setAttribute("aria-pressed", String(!sat));
+    el("baseSatBtn").setAttribute("aria-pressed", String(sat));
+    applyMapTheme();
+  };
+  el("baseMapBtn").onclick = () => setBasemap(false);
+  el("baseSatBtn").onclick = () => setBasemap(true);
+
+  // §A2 — one box, two kinds of result, grouped and labelled.
+  const search = el("search"), results = el("results");
+  search.oninput = () => {
+    const q = search.value.trim().toLowerCase();
+    if (q.length < 2) { results.innerHTML = ""; return; }
+    const sHits = FEATURES.filter(f => {
+      const p = f.properties;
+      return (p.name && p.name.toLowerCase().includes(q)) || p.settlement_id.toLowerCase().includes(q);
+    }).slice(0, 8);
+    const fHits = FACILITIES.filter(f => {
+      const p = f.properties;
+      return (p.name && p.name.toLowerCase().includes(q)) || p.facility_id.toLowerCase().includes(q);
+    }).slice(0, 8);
+
+    let html = "";
+    if (sHits.length) html += `<div class="res-head">Settlements</div>` + sHits.map(f => {
+      const p = f.properties;
+      return `<button class="result-row" data-id="${p.settlement_id}">${esc(nameOf(p))}
+        <small>${esc(districtLabel(p._district))} &middot; ${dipiOf(p) !== null ? "DIPI " + num(dipiOf(p)) : "Evidence needed"}</small></button>`;
+    }).join("");
+    if (fHits.length) html += `<div class="res-head">Facilities</div>` + fHits.map(f => {
+      const p = f.properties;
+      return `<button class="result-row" data-fid="${p.facility_id}">${esc(facilityName(p))}
+        <small>${esc(AMENITY[p.amenity])} &middot; ${esc(districtLabel(p._district))}</small></button>`;
+    }).join("");
+    results.innerHTML = html || `<div class="result-row" style="color:var(--ink-muted)">Nothing matches that.</div>`;
+
+    results.querySelectorAll(".result-row[data-id]").forEach(r => r.onclick = () => {
+      select(r.dataset.id); results.innerHTML = ""; search.value = "";
+    });
+    results.querySelectorAll(".result-row[data-fid]").forEach(r => r.onclick = () => {
+      selectFacility(r.dataset.fid); results.innerHTML = ""; search.value = "";
+    });
+  };
+  document.addEventListener("click", e => {
+    if (!e.target.closest(".search-wrap")) results.innerHTML = "";
+  });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") { closePanel(); results.innerHTML = ""; } });
+
+  el("csvBtn").onclick = downloadCSV;
+
+  // Delegated, so it survives every header re-render.
+  const tip = el("thTip"), rkTable = el("rankTable");
+  const showTip = th => {
+    tip.textContent = th.dataset.tip;
+    tip.dataset.show = "1";
+    const r = th.getBoundingClientRect(), tw = tip.offsetWidth;
+    tip.style.left = Math.max(10, Math.min(r.left + r.width / 2 - tw / 2, innerWidth - tw - 10)) + "px";
+    tip.style.top = (r.bottom + 8) + "px";
+  };
+  rkTable.addEventListener("mouseover", e => {
+    const th = e.target.closest("th[data-tip]");
+    if (th) showTip(th);
+  });
+  rkTable.addEventListener("mouseout", e => {
+    if (e.target.closest("th[data-tip]")) tip.dataset.show = "0";
+  });
+  // Keyboard parity: tab to a header and the same text appears.
+  rkTable.addEventListener("focusin", e => {
+    const th = e.target.closest("th[data-tip]");
+    if (th) showTip(th);
+  });
+  rkTable.addEventListener("focusout", () => { tip.dataset.show = "0"; });
+
+  let rkDebounce = null;
+  el("rkSearch").oninput = e => {
+    clearTimeout(rkDebounce);
+    const v = e.target.value.trim();
+    rkDebounce = setTimeout(() => { rkF.q = v; renderRankings(); }, 180);
+  };
+
+  renderGoogleToggle();
+  renderGoogleSetup();
+  el("gToggle").onchange = e => {
+    GOOGLE.setOn(e.target.checked);
+    el("gRow").dataset.on = e.target.checked ? "1" : "0";
+    if (selectedId) {           // re-render so the mount appears or disappears
+      const f = FEATURES.find(x => x.properties.settlement_id === selectedId);
+      if (f) renderPanel(f.properties);
+    }
+  };
+}
+</script>
+</body>
+</html>
