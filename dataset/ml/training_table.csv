@@ -1,0 +1,1449 @@
+settlement_id,name,lon,lat,district,division,pop_2km,n_schools_3km,n_clinics_3km,rwi,elevation_m,seasonal_water_px,flood_prone,place,dl_mbps,split,evidence_tier_REFERENCE_ONLY
+S0000,Kota Kinabalu,116.0728988,5.9780066,KotaKinabalu,West Coast,43163,15,14,1.0655,11.0,241,True,city,210.1005,train,measured
+S0004,Telaga,117.0723261,6.839631,Pitas,Kudat,1367,0,0,0.1205,7.0,75,True,village,47.646,validate,low_evidence
+S0007,Mangkubau Laut,117.1307734,6.976774,Pitas,Kudat,0,0,0,-0.55,19.0,14,True,village,3.619,validate,low_evidence
+S0009,Sikuati,116.7130317,6.8919254,Kudat,Kudat,11259,0,0,0.27266666666666667,13.0,14,True,village,31.381,train,measured
+S0010,Nangka,116.7951724,6.7891331,Kudat,Kudat,1394,0,0,0.3895,19.0,10,True,village,37.869,train,measured
+S0011,Bangau,116.7259494,6.9552111,Kudat,Kudat,981,0,0,-0.1215,15.0,6,True,village,29.5945,train,measured
+S0012,Kampung Gumandang,116.7894383,6.9675791,Kudat,Kudat,815,0,0,-0.34975,22.0,0,False,hamlet,36.368,train,measured
+S0015,Langkon,116.7030749,6.5323956,KotaMarudu,Kudat,1151,0,0,0.1195,12.0,0,False,village,25.863,train,measured
+S0016,Kampung Bintasan,116.7052836,6.5708761,KotaMarudu,Kudat,5296,1,0,0.3323333333333333,29.0,0,False,village,32.534,train,measured
+S0017,Kampung Tanjung Batu Laut,116.8545206,6.5872942,KotaMarudu,Kudat,542,0,0,0.13,8.0,54,True,village,83.571,train,measured
+S0018,Senaija,117.0437707,6.7412585,Pitas,Kudat,3974,0,0,0.289,0.0,44,True,village,38.971,train,measured
+S0019,Dandong,117.0170646,6.6590911,Pitas,Kudat,420,0,0,-0.5203333333333333,11.0,83,True,village,26.4225,train,measured
+S0020,Pingan Pingan,116.936608,6.665972,Pitas,Kudat,5724,0,0,-0.05466666666666666,9.0,83,True,village,37.223,train,measured
+S0021,Bukah,116.7630174,6.6659879,Kudat,Kudat,370,0,0,-0.18475,18.0,50,True,village,9.176,validate,low_evidence
+S0022,Kampung Marimbau,116.6511044,6.7316162,Kudat,Kudat,1594,0,0,-0.22266666666666668,15.0,46,True,village,30.4765,validate,low_evidence
+S0023,Kg. Maliau,117.1513112,5.6223063,Beluran,Sandakan,3905,1,1,0.607,118.0,77,True,village,44.5995,train,measured
+S0024,Kampung Tenghilan,116.3176665,6.2583153,Tuaran,West Coast,2432,3,0,-0.16166666666666665,13.0,0,False,village,114.8565,train,measured
+S0026,Kg. Bautu,117.2023793,5.6587226,Beluran,Sandakan,773,0,0,-0.02475,63.0,113,True,village,84.557,train,measured
+S0028,Kampung Karagasan,117.0088319,6.1142294,Ranau,West Coast,84,1,0,-0.19,77.0,57,True,village,129.836,validate,low_evidence
+S0029,Kg. Matopang,116.9626671,5.716389,Ranau,West Coast,402,0,0,-0.3,186.0,66,True,village,61.945,validate,low_evidence
+S0030,Salulong,117.0946702,6.1063726,Ranau,West Coast,207,0,0,-0.489,56.0,77,True,village,100.991,train,measured
+S0033,Talas,116.8436982,6.4764024,KotaMarudu,Kudat,1538,2,0,-0.14366666666666666,15.0,1,False,village,11.38,train,measured
+S0034,Kampung Taginambor,116.7474934,6.4741058,KotaMarudu,Kudat,8906,0,0,-0.09066666666666667,17.0,1,False,village,51.661,train,measured
+S0035,Kampung Sualog,117.3784228,5.8825565,Beluran,Sandakan,706,0,0,-0.6386666666666666,10.0,45,True,hamlet,10.45,train,measured
+S0036,Kampung Kukut,116.5506256,6.5248946,KotaBelud,West Coast,578,0,0,0.354,50.0,0,False,village,43.668,train,measured
+S0037,Kg. Baring,116.6551009,6.4354356,KotaMarudu,Kudat,34,0,0,-0.5675,365.0,0,False,village,236.017,validate,low_evidence
+S0038,Kampung K. Rampayan,116.5023056,6.5228172,KotaBelud,West Coast,1860,1,0,0.463,13.0,101,True,village,21.983,train,measured
+S0040,Kg. Tamau,116.415399,6.4203023,KotaBelud,West Coast,2863,1,0,0.102,13.0,65,True,village,45.661,train,measured
+S0041,Kampung Keguraan,116.5024247,6.4565219,KotaBelud,West Coast,1075,1,0,0.119,11.0,0,False,village,49.1735,validate,low_evidence
+S0042,Pauh,116.4101726,5.3132388,Keningau,Interior,683,1,1,-0.32075,395.0,0,False,village,41.56,train,measured
+S0044,Kampung Delayan,116.3580845,5.2313137,Keningau,Interior,1149,0,0,-0.26333333333333336,374.0,0,False,village,39.563,validate,low_evidence
+S0045,Kg. Kiabau,117.2233007,5.8223381,Beluran,Sandakan,0,0,0,-0.285,35.0,17,True,hamlet,95.64,validate,low_evidence
+S0048,Kobuh Baru,116.7709674,5.9303108,Ranau,West Coast,1977,0,0,-0.2733333333333334,380.0,0,False,village,25.0595,train,measured
+S0049,Simpang 4 Kasabug,116.3747193,5.2732968,Keningau,Interior,861,0,0,-0.4256666666666667,375.0,0,False,village,34.294,train,measured
+S0050,Kampung Tomis,116.4829642,5.9938105,Tuaran,West Coast,255,1,0,0.155,700.0,0,False,village,24.6535,train,measured
+S0051,Kampung Bayangan,116.2032784,5.3736221,Keningau,Interior,9593,2,1,0.2645,288.0,203,True,village,66.7105,train,measured
+S0052,Kampung Lokos,116.4646417,5.9653342,Tuaran,West Coast,244,1,0,-0.339,923.0,0,False,village,18.521,validate,low_evidence
+S0053,Senagang,116.0344046,5.2908601,Keningau,Interior,986,0,0,0.0045,301.0,0,False,village,81.2385,validate,low_evidence
+S0054,Kampung Sandatan,116.5069201,5.9292235,Ranau,West Coast,169,0,0,-0.484,1326.0,0,False,village,7.246,train,measured
+S0055,Kampung Lanas,116.4967452,5.3270294,Keningau,Interior,208,0,0,-0.3626666666666667,374.0,20,True,village,27.957,validate,low_evidence
+S0056,Kampung Bedukan,116.6548454,5.8982444,Ranau,West Coast,91,0,0,-0.2565,384.0,13,True,village,22.563,train,measured
+S0057,Kampung Kuangoh,116.209765,5.4228974,Keningau,Interior,2855,2,0,-0.00025,334.0,0,False,village,55.4915,train,measured
+S0058,Murud Kurud,116.932569,6.1573849,Ranau,West Coast,296,0,0,-0.2345,123.0,107,True,village,77.87,validate,low_evidence
+S0059,Pinipi,116.4944629,5.3422686,Keningau,Interior,293,0,0,0.017,379.0,1,False,village,27.957,validate,low_evidence
+S0060,Merungin,116.8611805,6.1135252,Ranau,West Coast,846,0,0,-0.061,168.0,11,True,village,21.818,train,measured
+S0062,Kampung Apin Apin,116.2736526,5.4587899,Keningau,Interior,8158,0,0,0.152,329.0,61,True,village,38.7115,train,measured
+S0063,Kg. Tinutuan,116.8184033,6.108734,Ranau,West Coast,742,0,0,-0.3545,212.0,27,True,village,156.145,train,measured
+S0066,Mampisas,116.5084813,5.4146548,Tongod,Sandakan,1509,0,0,0.09333333333333334,425.0,3,False,village,42.037,validate,low_evidence
+S0069,Kg. Tombovo,116.056044,5.8611682,Putatan,West Coast,21350,0,0,0.743,14.0,0,False,village,207.845,train,measured
+S0070,Kg. Tampasak,116.059748,5.8112171,Papar,West Coast,5249,2,0,0.5135,12.0,0,False,village,128.054,train,measured
+S0072,Kampung Kuala,115.9573292,5.6381844,Papar,West Coast,2957,0,0,0.196,11.0,0,False,village,94.179,train,measured
+S0073,Benoni,115.9243582,5.6917133,Papar,West Coast,7480,2,0,0.54,10.0,69,True,village,126.2115,train,measured
+S0074,Kayau,116.0294256,5.6803176,Papar,West Coast,720,0,0,-0.004,17.0,47,True,village,23.349,train,measured
+S0075,Tompios,116.8410683,5.7022944,Ranau,West Coast,298,0,0,-0.426,196.0,48,True,village,30.793,train,measured
+S0076,Kampung Paginatan,116.8311165,5.7500197,Ranau,West Coast,214,0,0,-0.4535,197.0,71,True,village,43.9125,validate,low_evidence
+S0077,Kampung Matopang,116.8168422,5.7908133,Ranau,West Coast,928,0,0,0.1965,206.0,69,True,village,18.067,train,measured
+S0078,Kampung Nibalayan,116.5839984,5.8641269,Ranau,West Coast,692,0,0,0.1035,702.0,0,False,village,10.3225,train,measured
+S0079,Kampung Kituntul,116.3838417,5.7127093,Tambunan,Interior,5684,3,0,0.44733333333333336,631.0,0,False,village,42.376,train,measured
+S0080,,116.4468761,5.7636797,Tambunan,Interior,925,0,0,-0.078,842.0,0,False,village,75.92,train,measured
+S0081,Kampung Kerokot Laut,116.5062278,5.8131708,Tambunan,Interior,0,0,0,-0.057,1024.0,0,False,village,43.668,validate,low_evidence
+S0082,Kampung Tempurong,115.5611542,5.5420109,KualaPenyu,Interior,849,0,0,0.2315,23.0,0,False,village,43.4135,train,measured
+S0083,Kg. Kota Klias,115.6245849,5.4526327,Beaufort,Interior,989,0,0,-0.035,6.0,31,True,village,35.459,train,measured
+S0084,Kampung Binsuluk,115.6926781,5.525775,Beaufort,Interior,759,0,0,0.516,8.0,78,True,village,42.745,train,measured
+S0085,Kampung Sawangan,115.6114373,5.6147787,KualaPenyu,Interior,896,0,0,0.317,69.0,7,True,village,23.061,train,measured
+S0086,Kampung Balibatu,115.7509543,5.3251135,Beaufort,Interior,1912,5,1,0.177,135.0,0,False,village,185.791,train,measured
+S0087,Melalap,115.9956357,5.243595,Tenom,Interior,6916,0,0,0.045,201.0,2,False,village,24.579,train,measured
+S0088,Kg.Malabau,115.6728513,5.4071403,Beaufort,Interior,2683,0,0,0.08933333333333333,22.0,0,False,village,49.007,train,measured
+S0089,Kg. Limbawang,115.7063199,5.3639501,Beaufort,Interior,3472,3,0,0.431,12.0,70,True,village,44.228,train,measured
+S0090,Kg. Gading,115.918146,5.4941292,Papar,West Coast,450,0,0,-0.4653333333333333,36.0,0,False,village,46.028,train,measured
+S0091,Bongawan,115.8558147,5.5402815,Papar,West Coast,5463,1,0,0.6086666666666667,8.0,18,True,town,36.362,train,measured
+S0092,Kampung Jawa,115.9125468,5.622376,Papar,West Coast,3744,0,0,0.3236666666666667,8.0,0,False,village,96.608,train,measured
+S0093,Kampung Ulu Kimanis,115.9623713,5.5693002,Papar,West Coast,1099,0,0,0.069,24.0,0,False,village,55.007,train,measured
+S0094,Kampung Pimping,115.7525025,5.5110905,Beaufort,Interior,1020,0,0,0.115,15.0,0,False,village,40.849,train,measured
+S0095,Membakut,115.8034703,5.4752882,Beaufort,Interior,6398,0,0,0.6173333333333334,10.0,0,False,town,39.673,train,measured
+S0096,Kemabong,115.9178894,4.9137172,Tenom,Interior,6117,0,0,0.526,236.0,51,True,town,41.189,train,measured
+S0098,Kampung Pantai,115.5391794,5.0091398,Sipitang,Interior,6108,0,1,0.6123333333333334,46.0,0,False,village,49.449,train,measured
+S0099,Masapol,115.5918648,5.1071138,Sipitang,Interior,1030,0,0,0.051666666666666666,21.0,2,False,town,57.374,train,measured
+S0101,Kampung Malintatan,115.5455903,5.0480446,Sipitang,Interior,3026,1,1,0.523,26.0,0,False,village,34.871,train,measured
+S0102,Kampung Layon,116.2648504,4.8583807,Nabawan,Interior,0,2,0,-0.1785,479.0,0,False,hamlet,45.58,train,measured
+S0104,Kampung Palakat,115.557134,5.117332,Sipitang,Interior,541,0,0,0.901,20.0,117,True,village,69.132,train,measured
+S0105,Mentalik,115.9693573,5.0730539,Tenom,Interior,455,0,0,0.19225,188.0,79,True,town,42.222,train,measured
+S0107,Kampung Lingkungan,115.6362248,5.2010737,Beaufort,Interior,220,0,0,0.154,20.0,0,False,village,73.569,train,measured
+S0109,Kampung Malana,115.6429305,5.1247727,Sipitang,Interior,192,0,0,0.299,26.0,4,False,village,78.3625,train,measured
+S0111,Kampung Paal,115.9059101,5.0186735,Tenom,Interior,1260,0,1,-0.374,231.0,0,False,village,58.644,train,measured
+S0113,Kampung Gadong,115.6085704,5.3493525,Beaufort,Interior,1627,0,0,0.359,14.0,170,True,village,22.896,train,measured
+S0114,Sook,116.289617,5.1423979,Keningau,Interior,2119,0,1,-0.17166666666666666,355.0,2,False,town,37.442,train,measured
+S0115,Kampung Laboi,115.6539176,5.2330561,Beaufort,Interior,823,0,0,0.067,27.0,0,False,village,41.3065,train,measured
+S0116,Nabawan,116.4258286,5.0397345,Nabawan,Interior,14132,2,1,0.143,462.0,0,False,town,60.082,train,measured
+S0117,Weston,115.6057549,5.2125971,Beaufort,Interior,876,0,0,0.708,6.0,56,True,town,66.649,validate,low_evidence
+S0118,Kampung Lobou,116.430182,5.0539935,Nabawan,Interior,11267,2,1,0.022,605.0,0,False,village,64.85,train,measured
+S0119,Kampung Padas Damit,115.563127,5.3315352,Beaufort,Interior,722,0,0,0.044,17.0,0,False,village,48.824,train,measured
+S0121,Kampung Agis,116.4509623,4.5985524,Nabawan,Interior,217,1,0,,152.0,76,True,hamlet,0.359,validate,low_evidence
+S0124,Maligan,115.7073142,4.6792068,Sipitang,Interior,45,0,0,-0.3455,607.0,11,True,village,42.14,validate,low_evidence
+S0125,Labiron,115.7376574,4.6710384,Sipitang,Interior,76,0,0,-0.545,581.0,1,False,village,80.366,validate,low_evidence
+S0126,Paitan,117.3972184,6.4068083,Beluran,Sandakan,362,1,0,-0.16233333333333333,11.0,63,True,town,51.1225,train,measured
+S0130,Balaron,116.4422487,4.7181021,Nabawan,Interior,546,0,0,,286.0,59,True,village,111.298,validate,low_evidence
+S0131,Menggatal,116.1580498,6.0301847,KotaKinabalu,West Coast,43833,1,0,1.1395,14.0,7,True,town,165.457,train,measured
+S0132,Kampung Kiulu,116.2835896,6.0508758,Tuaran,West Coast,1127,0,0,0.03075,187.0,28,True,village,25.944,train,measured
+S0133,Kampung Kamarin,116.3122994,5.9920618,Tuaran,West Coast,405,0,0,0.1005,170.0,5,True,village,83.3665,validate,low_evidence
+S0134,Kionsom,116.1813025,5.9647408,KotaKinabalu,West Coast,3868,0,0,0.513,198.0,0,False,village,76.955,train,measured
+S0135,Kampung Wangkang,115.5361321,5.5142364,KualaPenyu,Interior,568,1,0,0.11233333333333334,28.0,0,False,village,33.535,train,measured
+S0137,Kampung Dudar,116.5675257,6.59418,KotaBelud,West Coast,319,0,1,0.25633333333333336,15.0,0,False,village,61.428,validate,low_evidence
+S0138,Surusop,116.2403592,6.2478396,Tuaran,West Coast,2784,0,0,-0.22633333333333336,4.0,51,True,village,182.105,train,measured
+S0139,Kampung Bolong,116.192204,6.2031481,Tuaran,West Coast,6513,0,0,0.5246666666666666,13.0,49,True,village,117.739,train,measured
+S0140,Tuaran,116.2328137,6.1762851,Tuaran,West Coast,10485,9,1,0.6533333333333333,15.0,86,True,town,168.913,train,measured
+S0141,Kampung Berungis,116.2214943,6.1511982,Tuaran,West Coast,13214,7,3,0.867,11.0,0,False,village,185.632,train,measured
+S0145,Kg. Saguan,116.8381955,5.2551994,Tongod,Sandakan,272,0,0,-0.345,65.0,0,False,village,272.083,validate,low_evidence
+S0149,Kampung Bangsai,115.5327708,5.4716727,KualaPenyu,Interior,2226,0,0,0.182,17.0,16,True,village,21.6925,train,measured
+S0150,Kalugus,115.4466707,5.4206631,KualaPenyu,Interior,274,0,0,-0.1535,37.0,0,False,town,12.521,train,measured
+S0151,Kampung Kuala Karamuak,117.2104656,5.2870807,Tongod,Sandakan,533,0,0,-0.256,49.0,78,True,village,25.3025,validate,low_evidence
+S0152,Beaufort,115.7430094,5.3470611,Beaufort,Interior,11328,10,4,0.6766666666666667,14.0,67,True,town,102.916,train,measured
+S0153,Tenom,115.941709,5.1213163,Tenom,Interior,11127,7,2,0.7623333333333333,181.0,32,True,town,44.436,train,measured
+S0154,Keningau,116.1523241,5.3316751,Keningau,Interior,25763,12,1,0.64375,279.0,8,True,city,174.0235,train,measured
+S0155,Tambunan,116.3655408,5.6688001,Tambunan,Interior,8245,5,2,0.9615,562.0,4,False,town,44.162,train,measured
+S0156,Papar,115.9320971,5.7330227,Papar,West Coast,14514,14,1,1.1513333333333333,8.0,108,True,town,145.484,train,measured
+S0157,Sungai Sungai,117.3697621,6.2510893,Beluran,Sandakan,106,1,0,0.04,17.0,128,True,village,19.5155,validate,low_evidence
+S0158,Sipitang,115.5494493,5.0763734,Sipitang,Interior,4159,1,1,0.568,8.0,63,True,town,90.916,train,measured
+S0159,Kampung Mempakul,115.3584871,5.2967088,KualaPenyu,Interior,2340,0,0,0.4315,16.0,53,True,village,33.5005,train,measured
+S0160,Kuala Penyu,115.6008534,5.5675507,KualaPenyu,Interior,3204,0,0,0.734,11.0,144,True,town,36.001,train,measured
+S0162,Sapulut,116.4807819,4.7053675,Nabawan,Interior,624,0,0,-0.10666666666666665,312.0,52,True,village,20.0265,validate,low_evidence
+S0164,Pinangah,116.8352431,5.2113004,Tongod,Sandakan,1336,0,0,-0.092,68.0,100,True,village,32.637,train,measured
+S0165,Kudat,116.8494435,6.8824598,Kudat,Kudat,31537,8,0,0.774,10.0,49,True,city,147.232,train,measured
+S0166,Kanibongan,117.2077305,6.661511,Pitas,Kudat,1426,0,0,-0.3246666666666667,16.0,0,False,village,33.5495,train,measured
+S0168,Ranau,116.6662881,5.9511437,Ranau,West Coast,17657,7,3,0.736,543.0,0,False,town,81.871,train,measured
+S0169,Kota Belud,116.4292891,6.3497629,KotaBelud,West Coast,15322,10,6,1.1153333333333333,19.0,2,False,town,131.656,train,measured
+S0170,Donggongon,116.0890694,5.906508,Penampang,West Coast,42897,3,4,0.9036666666666666,15.0,3,False,town,230.705,train,measured
+S0171,Pitas,117.054365,6.7303182,Pitas,Kudat,11078,0,0,0.42925,10.0,43,True,town,42.092,train,measured
+S0172,Matunggong,116.7225425,6.7151333,Kudat,Kudat,909,0,0,0.106,30.0,0,False,town,22.479,train,measured
+S0173,Kota Marudu,116.7617535,6.4951419,KotaMarudu,Kudat,16822,3,0,0.43025,13.0,0,False,town,115.304,train,measured
+S0174,Tawau,117.885331,4.2435206,Tawau,Tawau,40114,7,4,1.093,16.0,165,True,city,205.814,train,measured
+S0175,Sandakan,118.1158598,5.8391274,Sandakan,Sandakan,25562,12,3,1.337,8.0,61,True,city,220.974,train,measured
+S0176,Semporna,118.6118806,4.4790651,Semporna,Tawau,41050,3,2,0.986,10.0,513,True,town,128.873,train,measured
+S0177,Lahad Datu,118.3275533,5.0215726,LahadDatu,Tawau,27807,6,4,1.1026666666666667,4.0,178,True,town,179.325,train,measured
+S0178,Kampung Betotai,116.2825212,6.2383709,Tuaran,West Coast,828,0,0,-0.476,9.0,95,True,village,63.5045,validate,low_evidence
+S0179,Kg. Kelawat,116.3743229,6.3240036,KotaBelud,West Coast,756,1,0,-0.11833333333333333,87.0,150,True,village,53.1925,train,measured
+S0180,Kampung Tembayang,115.3863577,5.3947301,KualaPenyu,Interior,557,0,0,-0.11366666666666665,20.0,8,True,village,64.6085,validate,low_evidence
+S0181,Kampung Kuala Sapi,117.4379987,5.8241814,Beluran,Sandakan,784,0,0,-0.555,10.0,87,True,village,28.704,train,measured
+S0182,Kampung Bilit,118.2079604,5.4999089,Kinabatangan,Sandakan,561,0,0,-0.22233333333333336,27.0,86,True,hamlet,42.174,train,measured
+S0183,Sukau,118.2869938,5.5097346,Kinabatangan,Sandakan,248,1,1,0.09666666666666668,16.0,60,True,village,25.876,train,measured
+S0184,Kundasang,116.5744809,5.9857273,Ranau,West Coast,10147,0,1,0.916,1280.0,0,False,town,26.026,train,measured
+S0185,Pekan Nabalu,116.4629369,6.0282512,Tuaran,West Coast,657,0,1,-0.109,1011.0,0,False,town,32.747,train,measured
+S0186,Kampung Kabatu,115.6876589,5.3968433,Beaufort,Interior,2300,0,0,0.0355,14.0,5,True,village,48.509,train,measured
+S0187,Kampung Kabidang,115.6848433,5.4023466,Beaufort,Interior,2406,0,0,0.0355,10.0,0,False,village,47.935,train,measured
+S0188,Kampung Klias Kecil,115.6382102,5.44141,Beaufort,Interior,1010,0,0,-0.0475,10.0,7,True,village,53.425,train,measured
+S0189,Kampung Melabu,115.6640257,5.4223745,Beaufort,Interior,1762,0,0,-0.036,21.0,0,False,village,47.361,train,measured
+S0190,Kg. Nukahan,115.5891481,5.4619507,Beaufort,Interior,1190,0,0,-0.364,6.0,0,False,village,133.1085,train,measured
+S0191,Kampung Takuli,115.6768857,5.4164768,Beaufort,Interior,2053,0,0,-0.079,14.0,0,False,village,49.007,train,measured
+S0192,Kampung Kiau Nuluh,116.4962608,6.0467225,KotaBelud,West Coast,453,0,0,-0.041,981.0,0,False,village,55.622,validate,low_evidence
+S0193,Kampung Berhala Darat,118.1307628,5.8502094,Sandakan,Sandakan,20059,8,1,1.337,1.0,191,True,village,244.315,train,measured
+S0194,Kampung Air Sim Sim,118.1288334,5.857127,Sandakan,Sandakan,25398,9,3,1.308,1.0,193,True,village,244.315,train,measured
+S0195,Kampung Batu Putih,118.0377354,5.9145208,Sandakan,Sandakan,6810,1,0,0.2776666666666667,6.0,124,True,hamlet,172.761,train,measured
+S0196,Kampung Sentosa,118.014302,5.9479941,Sandakan,Sandakan,939,0,0,0.2285,11.0,0,False,hamlet,90.946,train,measured
+S0197,Kg. Tinusa 2,118.091217,5.8883739,Sandakan,Sandakan,17790,4,0,1.0933333333333335,0.0,268,True,village,124.872,train,measured
+S0198,Kampung Botol,118.1058852,5.8519963,Sandakan,Sandakan,57596,16,4,1.12125,37.0,0,False,hamlet,189.728,train,measured
+S0199,Kampung Pukat,118.0874576,5.8291432,Sandakan,Sandakan,13696,8,0,0.7455,0.0,85,True,hamlet,202.9565,train,measured
+S0200,Batu Sapi,118.0445333,5.8037817,Sandakan,Sandakan,22216,3,0,1.006,2.0,47,True,village,214.23,train,measured
+S0201,Kg. Tinangol,116.7038484,6.7723729,Kudat,Kudat,1786,0,0,-0.1203333333333333,23.0,0,False,village,38.834,train,measured
+S0202,Kg Mengaris,117.9501832,5.4070377,Kinabatangan,Sandakan,1069,2,1,0.461,7.0,157,True,village,53.272,train,measured
+S0203,Kg. Gum Gum,117.9209983,5.8933391,Sandakan,Sandakan,8559,2,0,0.3933333333333333,7.0,0,False,village,70.779,train,measured
+S0205,Kampung Dandulit,117.9102422,5.9696538,Sandakan,Sandakan,781,0,0,0.039,4.0,98,True,village,107.4605,validate,low_evidence
+S0207,Abai,118.3830886,5.687723,Kinabatangan,Sandakan,149,2,0,-0.385,-2.0,129,True,village,34.872,validate,low_evidence
+S0208,Inanam,116.135958,5.9922378,KotaKinabalu,West Coast,53612,14,3,0.6915,11.0,29,True,village,198.1335,train,measured
+S0209,Kampung Sungai Kayu,118.0637551,5.9040503,Sandakan,Sandakan,24672,10,2,0.6895,12.0,59,True,hamlet,127.355,train,measured
+S0210,Kampung Lupak Meluas,118.0666249,5.8089058,Sandakan,Sandakan,23311,6,0,1.168,6.0,80,True,hamlet,157.6135,train,measured
+S0211,Kampung Air,118.0825228,5.8148658,Sandakan,Sandakan,17278,5,0,0.822,2.0,114,True,hamlet,106.203,train,measured
+S0212,Kampung Merintanam,115.546489,5.039118,Sipitang,Interior,2325,1,1,0.523,24.0,0,False,village,30.534,train,measured
+S0213,Kampung Pirasan,116.43065,6.3329745,KotaBelud,West Coast,8071,9,6,0.58375,27.0,75,True,village,179.927,train,measured
+S0214,Kampung Rangalau,116.4403454,6.3056896,KotaBelud,West Coast,2101,2,0,-0.054,32.0,113,True,village,63.7675,train,measured
+S0215,Kampung Rajunah,116.453604,6.283342,KotaBelud,West Coast,2595,1,0,-0.2205,50.0,121,True,village,24.276,train,measured
+S0216,Kampung Gaur,116.457519,6.281577,KotaBelud,West Coast,2735,1,0,-0.2205,47.0,124,True,village,22.867,train,measured
+S0217,Tanjung Aru,116.0557423,5.9533677,KotaKinabalu,West Coast,48593,20,10,0.9586666666666667,10.0,95,True,village,204.746,train,measured
+S0218,Kampung Hungab,116.096415,5.9094814,Penampang,West Coast,48297,3,4,1.101,12.0,1,False,village,226.883,train,measured
+S0219,Kg. Balung,118.1039281,4.3654738,Tawau,Tawau,16957,0,0,0.326,60.0,2,False,village,167.625,train,measured
+S0220,Kampung Mandawang,116.6231166,6.66726,KotaMarudu,Kudat,212,0,0,-0.273,11.0,24,True,hamlet,9.88,validate,low_evidence
+S0221,Kg. Dambai Papar,115.9549736,5.7427164,Papar,West Coast,9530,7,1,0.9786666666666667,27.0,0,False,village,111.392,train,measured
+S0222,Kampung Bokara,118.0807131,5.8124591,Sandakan,Sandakan,17200,4,0,0.822,1.0,120,True,hamlet,129.739,train,measured
+S0223,Segaliud,117.8201327,5.7308288,Sandakan,Sandakan,1988,0,0,-0.0255,9.0,21,True,village,18.5885,train,measured
+S0224,Kampung Lot M,117.8303446,5.6433749,Kinabatangan,Sandakan,3234,0,0,-0.124,19.0,4,False,village,74.1935,train,measured
+S0225,Kinabatangan,117.8466525,5.588993,Kinabatangan,Sandakan,17701,0,1,0.5133333333333333,34.0,0,False,town,59.735,train,measured
+S0226,Kg. Nelayan Tengah,118.0173564,5.9210819,Sandakan,Sandakan,8760,1,0,0.41375,5.0,49,True,village,153.052,train,measured
+S0227,Kampung Bahagia,118.0276899,5.7919259,Sandakan,Sandakan,13747,2,0,0.757,0.0,97,True,village,217.0815,train,measured
+S0229,Telupid,117.1307798,5.6272326,Beluran,Sandakan,10998,1,1,1.0225,102.0,43,True,town,67.156,train,measured
+S0230,Kg. Jaya Baru,117.9061674,5.5718621,Kinabatangan,Sandakan,2167,0,0,0.02066666666666667,12.0,0,False,village,99.939,train,measured
+S0231,Tongod,116.9687321,5.2681386,Tongod,Sandakan,8454,0,0,-0.5706666666666668,62.0,123,True,town,83.593,train,measured
+S0232,Kg. Balaban,117.5770708,5.8342116,Beluran,Sandakan,146,0,0,-0.4,17.0,0,False,village,24.08,train,measured
+S0233,Kg. Jaya Bakti,117.7092373,5.7681783,Sandakan,Sandakan,2147,0,0,-0.28275,15.0,0,False,village,23.922,train,measured
+S0234,Kampung Kawang,116.0176734,5.773031,Papar,West Coast,3986,0,0,0.35075,5.0,2,False,village,59.1765,train,measured
+S0235,Kawang,116.0205166,5.7756548,Papar,West Coast,4161,0,0,0.388,39.0,2,False,hamlet,58.632,train,measured
+S0239,Saliwangan,115.8016325,5.272817,Beaufort,Interior,739,0,0,-0.493,29.0,129,True,village,43.6895,validate,low_evidence
+S0240,Kampung Sambah,116.2902122,6.2443677,Tuaran,West Coast,623,0,0,-0.476,11.0,88,True,village,11.518,validate,low_evidence
+S0241,Kampung Suromboton,116.3520719,6.2646388,Tuaran,West Coast,4436,6,0,0.029666666666666657,19.0,11,True,village,96.222,train,measured
+S0242,Kampung Marak Parak,116.7332936,6.3120478,KotaMarudu,Kudat,1729,1,0,-0.26266666666666666,144.0,1,False,village,26.093,validate,low_evidence
+S0243,Kampung Sunsui,116.7747033,6.3871847,KotaMarudu,Kudat,1115,1,0,-0.05,68.0,62,True,village,24.482,train,measured
+S0244,Kampung Sorinsim,116.7116806,6.2934576,KotaMarudu,Kudat,194,0,0,-0.422,180.0,0,False,village,96.0,validate,low_evidence
+S0245,Badukan,116.6661539,5.9157822,Ranau,West Coast,6364,0,0,0.088,431.0,1,False,village,93.152,train,measured
+S0246,Kampung Buang Sayang 2,115.9358337,5.738405,Papar,West Coast,14381,13,1,1.1256666666666668,12.0,72,True,village,154.438,train,measured
+S0247,Kampung Melugus,115.9321537,5.7435936,Papar,West Coast,12879,11,1,1.1256666666666668,9.0,51,True,village,145.484,train,measured
+S0248,Kampung Laut Papar,115.9254799,5.7357576,Papar,West Coast,14364,11,1,1.2445,8.0,91,True,village,139.9475,train,measured
+S0249,Kampung Pengalat Kecil,115.9437611,5.7499957,Papar,West Coast,8718,9,0,1.0366666666666666,6.0,26,True,village,128.062,train,measured
+S0250,Kampung Pengalat Besar,115.9629088,5.7599899,Papar,West Coast,8448,1,0,0.3605,8.0,42,True,village,201.652,train,measured
+S0251,Kampung Baun,115.9479992,5.7456679,Papar,West Coast,10642,10,0,0.956,10.0,12,True,village,134.411,train,measured
+S0252,Kampung Bundusan,115.9397509,5.7611763,Papar,West Coast,4056,3,0,0.925,10.0,67,True,village,155.201,train,measured
+S0253,Kampung Sumbiling,115.9497501,5.7417086,Papar,West Coast,11054,13,1,0.956,8.0,4,False,village,115.626,train,measured
+S0254,Kampung Berundong,115.9191936,5.726764,Papar,West Coast,11299,12,1,1.0065,9.0,1,False,village,134.411,train,measured
+S0255,Kampung Tenggilung,115.557874,5.5010953,KualaPenyu,Interior,3636,3,0,0.477,14.0,0,False,village,45.574,train,measured
+S0256,Kampung Kayul,115.5463513,5.4994293,KualaPenyu,Interior,2417,3,0,0.318,22.0,0,False,village,36.3415,train,measured
+S0257,Menumbok,115.3690652,5.3040795,KualaPenyu,Interior,2184,0,0,-0.1165,8.0,71,True,town,32.161,train,measured
+S0258,Kg. Bakalau,115.731229,5.3511344,Beaufort,Interior,12761,11,4,0.6035,16.0,76,True,village,89.477,train,measured
+S0259,Kg. Gadung,115.6941463,5.3761581,Beaufort,Interior,3265,0,0,0.37133333333333335,14.0,32,True,village,45.8765,train,measured
+S0260,Simpang Tiga,118.3834193,5.6960434,Kinabatangan,Sandakan,344,2,0,-0.385,-1.0,136,True,village,34.872,validate,low_evidence
+S0261,Kg Mengaris2,117.9516956,5.4061473,Kinabatangan,Sandakan,865,2,1,0.2933333333333334,9.0,172,True,village,53.272,train,measured
+S0262,Kampung Batu Puteh.,117.9418331,5.4200674,Kinabatangan,Sandakan,509,2,1,0.505,9.0,152,True,village,65.446,train,measured
+S0263,Kampung Ranggal,117.2216046,6.5973275,Pitas,Kudat,0,0,0,-0.331,14.0,0,False,village,46.124,validate,low_evidence
+S0265,,116.8067359,5.2248916,Tongod,Sandakan,381,0,0,-0.17733333333333332,81.0,116,True,village,81.4825,validate,low_evidence
+S0266,,116.8014009,5.2387729,Tongod,Sandakan,381,0,0,-0.2215,74.0,0,False,village,108.737,validate,low_evidence
+S0267,,116.8549486,5.2445209,Tongod,Sandakan,47,0,0,-0.30466666666666664,76.0,98,True,village,346.169,validate,low_evidence
+S0269,Pensiangan,116.3117345,4.5384978,Nabawan,Interior,0,1,1,,172.0,66,True,town,43.784,validate,low_evidence
+S0272,Kalabakan,117.4905986,4.4144005,Tawau,Tawau,5598,1,0,0.111,9.0,138,True,town,96.812,train,measured
+S0273,Sungai Rakit,116.8012118,6.4544107,KotaMarudu,Kudat,1816,0,0,0.06,18.0,56,True,village,15.276,train,measured
+S0274,Rampayan Ulu,116.5176299,6.5215802,KotaBelud,West Coast,2111,0,0,0.4575,15.0,84,True,village,35.6665,train,measured
+S0275,,116.5497762,6.5807904,KotaBelud,West Coast,1021,0,1,0.066,14.0,174,True,hamlet,29.4075,train,measured
+S0276,,116.5866787,6.6128756,KotaBelud,West Coast,221,0,0,-0.1235,15.0,0,False,village,70.205,train,measured
+S0277,,116.580574,6.6178259,KotaBelud,West Coast,194,0,0,-0.1235,16.0,0,False,village,70.205,train,measured
+S0279,,116.6805184,6.8828641,Kudat,Kudat,1832,0,0,0.3505,17.0,104,True,village,30.123,train,measured
+S0280,,116.6760968,6.8728835,Kudat,Kudat,653,0,0,0.576,14.0,21,True,hamlet,31.684,train,measured
+S0281,,116.3463728,6.3847972,KotaBelud,West Coast,1188,0,0,0.11866666666666666,10.0,144,True,village,57.3,train,measured
+S0282,Kampung Sri Ganda,118.5611896,5.5073945,Kinabatangan,Sandakan,197,1,0,-0.5373333333333333,4.0,93,True,village,212.3815,validate,low_evidence
+S0284,Togop Laut,116.7975091,6.1615009,Ranau,West Coast,871,0,0,-0.49,223.0,0,False,village,104.417,train,measured
+S0285,,116.8102657,6.1657463,Ranau,West Coast,392,0,0,-0.44775,204.0,2,False,village,115.142,validate,low_evidence
+S0287,,116.8997656,6.1841248,Ranau,West Coast,0,0,0,-0.431,224.0,1,False,village,161.854,train,measured
+S0289,Pinampadan,116.8718096,6.1492245,Ranau,West Coast,382,0,0,0.054,144.0,45,True,village,21.813,validate,low_evidence
+S0290,Kampung Kaingaran,116.97026,6.0921074,Ranau,West Coast,407,1,0,-0.286,96.0,97,True,village,82.127,train,measured
+S0291,Tinaom,116.9572312,6.1112469,Ranau,West Coast,155,1,0,-0.15733333333333333,104.0,89,True,village,100.4,train,measured
+S0293,,116.9497291,6.1649276,Ranau,West Coast,340,0,0,-0.0955,116.0,0,False,village,46.3835,train,measured
+S0294,Mantub,116.9525025,6.1755676,Ranau,West Coast,194,0,0,-0.297,122.0,0,False,village,53.667,train,measured
+S0295,Sumbilingon,116.9592348,6.1856954,Ranau,West Coast,0,0,0,-0.3125,128.0,0,False,village,53.667,train,measured
+S0296,Nasakot,116.961343,6.1992709,Ranau,West Coast,0,0,0,-0.392,129.0,0,False,village,93.5085,train,measured
+S0297,,116.9567672,6.2026547,Ranau,West Coast,0,0,0,-0.392,136.0,0,False,village,93.5085,train,measured
+S0298,Kimanis,115.8951324,5.6138322,Papar,West Coast,7097,1,0,0.374,6.0,35,True,village,182.268,train,measured
+S0300,Putatan,116.05,5.8833333,Putatan,West Coast,25152,5,4,1.0173333333333334,9.0,114,True,town,200.378,train,measured
+S0301,Kunak,118.2475984,4.6838807,Kunak,Tawau,30634,8,5,0.8215,14.0,114,True,town,84.056,train,measured
+S0302,Beluran,117.5598077,5.8979788,Beluran,Sandakan,13195,3,2,0.2485,5.0,51,True,town,48.049,train,measured
+S0307,Kampung Sumbilingan,116.3458603,6.3129372,KotaBelud,West Coast,1986,0,0,-0.045,11.0,64,True,village,47.221,train,measured
+S0308,Batu Payung,117.992711,4.228356,Tawau,Tawau,947,0,0,0.403,130.0,58,True,village,38.497,validate,low_evidence
+S0309,Tinagat,117.9670708,4.240154,Tawau,Tawau,6620,2,0,0.334,10.0,173,True,village,160.025,train,measured
+S0310,Kg Dagat Lama,118.7752305,5.3665927,Kinabatangan,Sandakan,0,0,0,-0.487,9.0,13,True,village,6.1105,validate,low_evidence
+S0311,Kampung Damai SFI,115.5350166,5.0208115,Sipitang,Interior,6469,0,1,0.4665,51.0,2,False,village,49.092,train,measured
+S0312,Kampung Molosok,116.1217083,5.0176067,Keningau,Interior,274,1,1,-0.409,373.0,0,False,hamlet,50.076,validate,low_evidence
+S0313,Kampung Dalit Station,116.1260882,5.0204538,Keningau,Interior,189,1,1,-0.49425,373.0,0,False,hamlet,50.076,validate,low_evidence
+S0314,Kampung Kahaba,116.1084747,5.0094591,Keningau,Interior,139,1,1,-0.0905,379.0,0,False,hamlet,50.076,validate,low_evidence
+S0315,Kampung Tambulaung,116.4551222,6.2285288,KotaBelud,West Coast,2808,4,3,0.17375,92.0,74,True,village,44.857,train,measured
+S0316,Kampung Taginambur,116.4491033,6.2251585,KotaBelud,West Coast,2687,4,3,0.30833333333333335,96.0,51,True,village,50.3815,train,measured
+S0317,Kampung Podos,116.4848625,6.223804,KotaBelud,West Coast,261,2,0,-0.163,138.0,0,False,village,37.547,train,measured
+S0318,Kampung Soronsob,116.4523971,6.2186365,KotaBelud,West Coast,2345,4,3,0.3085,101.0,62,True,village,48.818,train,measured
+S0319,Kampung Tamalang,116.4494384,6.2360746,KotaBelud,West Coast,2923,4,3,0.236,106.0,85,True,village,47.124,train,measured
+S0320,Kampung Bahab,116.4515128,6.2137719,KotaBelud,West Coast,2249,4,3,0.12,129.0,92,True,village,59.751,train,measured
+S0321,Kampung Bayayat,116.4454789,6.2065818,KotaBelud,West Coast,1459,4,3,0.1865,168.0,75,True,village,59.751,train,measured
+S0322,Kampung Sogoh,116.4466573,6.1992736,KotaBelud,West Coast,1206,4,0,0.03933333333333333,160.0,41,True,village,47.384,train,measured
+S0323,Kampung Tinata,116.4687633,6.2138754,KotaBelud,West Coast,437,5,3,-0.154,224.0,0,False,village,55.649,train,measured
+S0324,Kampung Nopungguk,116.4881866,6.2021431,KotaBelud,West Coast,141,2,0,-0.505,388.0,0,False,village,3.381,train,measured
+S0325,Kampung Gansurai,116.4712732,6.1953094,KotaBelud,West Coast,125,1,0,-0.5355,170.0,0,False,village,6.437,train,measured
+S0326,Kampung Melangkap Noriou,116.4849272,6.1792216,KotaBelud,West Coast,218,2,0,-0.2803333333333333,409.0,0,False,village,25.061,train,measured
+S0327,Kampung Melangkap Tiong,116.4822091,6.1682574,KotaBelud,West Coast,240,1,0,-0.07666666666666666,278.0,10,True,village,33.3475,train,measured
+S0328,Kampung Melangkap Baru,116.4742672,6.1658929,KotaBelud,West Coast,240,1,0,-0.1435,224.0,6,True,village,33.3475,train,measured
+S0329,Kampung Melangkap Kapa,116.5123489,6.1519023,KotaBelud,West Coast,0,0,0,-0.414,663.0,0,False,village,99.455,validate,low_evidence
+S0330,Kampung Lobong-Lobong,116.4639483,6.0677167,KotaBelud,West Coast,426,1,0,-0.23733333333333337,529.0,0,False,village,27.109,train,measured
+S0331,Kampung Kaung Ulu,116.4597571,6.078188,KotaBelud,West Coast,421,1,0,-0.23733333333333337,425.0,0,False,village,29.024,train,measured
+S0332,Kampung Kaung,116.4578722,6.0753764,KotaBelud,West Coast,442,1,0,-0.23733333333333337,381.0,0,False,village,29.024,train,measured
+S0333,Kampung Tambatuon,116.4532593,6.1239943,KotaBelud,West Coast,950,2,0,-0.1925,230.0,2,False,village,91.158,train,measured
+S0334,Kampung Lingkubang,116.445671,6.1466984,KotaBelud,West Coast,622,2,0,0.053666666666666675,203.0,2,False,village,91.158,train,measured
+S0335,Kampung Kebayau,116.4610807,6.1579797,KotaBelud,West Coast,198,2,0,0.02666666666666669,440.0,2,False,village,48.8865,train,measured
+S0336,Kampung Melangkap Tomis,116.4840244,6.1460017,KotaBelud,West Coast,19,1,0,-0.2745,467.0,0,False,village,28.835,train,measured
+S0337,Kampung Purak Ogis,116.4459051,6.163235,KotaBelud,West Coast,462,2,0,-0.002,169.0,35,True,village,62.557,train,measured
+S0338,Kampung Narinang,116.4455836,6.1852478,KotaBelud,West Coast,866,2,0,-0.333,139.0,117,True,village,46.817,train,measured
+S0339,Kampung Taginambur Jaya,116.4525488,6.2473825,KotaBelud,West Coast,2809,4,3,0.0025,71.0,79,True,village,31.098,train,measured
+S0340,Kampung Bukit Bendera,116.451671,6.2495427,KotaBelud,West Coast,2856,4,3,0.0025,92.0,73,True,village,30.251,train,measured
+S0341,Kampung Mengkulat,116.4754237,6.2491271,KotaBelud,West Coast,797,4,0,-0.2285,122.0,0,False,village,15.943,train,measured
+S0342,Kampung Pinolobu,116.4921853,6.2586505,KotaBelud,West Coast,203,2,0,-0.38,262.0,0,False,village,14.021,validate,low_evidence
+S0343,Kampung Ratau,116.4596676,6.2556724,KotaBelud,West Coast,2444,3,0,-0.09933333333333333,64.0,108,True,village,22.9225,train,measured
+S0344,Kampung Tamu Darat,116.4537819,6.2647561,KotaBelud,West Coast,2988,2,0,-0.12725,80.0,54,True,village,24.276,train,measured
+S0345,Kampung Bokilong,116.4473655,6.2888642,KotaBelud,West Coast,2524,3,0,-0.09333333333333334,50.0,76,True,village,30.015,train,measured
+S0346,Kampung Tuguson,116.4347245,6.2399444,KotaBelud,West Coast,1155,4,3,0.092,107.0,0,False,village,47.124,train,measured
+S0348,Kampung Kaung Melawan,116.4612922,6.2514125,KotaBelud,West Coast,2805,4,0,0.0025,88.0,114,True,village,21.271,train,measured
+S0349,Kampung Piasau,116.4384731,6.3298703,KotaBelud,West Coast,5608,10,2,0.338,22.0,69,True,village,149.308,train,measured
+S0350,Kampung Tambulion,116.4703028,6.3436836,KotaBelud,West Coast,6017,2,0,-0.255,29.0,58,True,village,67.958,train,measured
+S0351,Kampung Nahaba,116.5161892,6.2917772,KotaBelud,West Coast,2314,2,0,-0.005,106.0,13,True,village,43.851,train,measured
+S0352,Kampung Tegudon,116.5213042,6.2893898,KotaBelud,West Coast,2136,2,0,-0.005,101.0,10,True,village,43.045,train,measured
+S0353,Kampung Terintidon,116.5406989,6.2405329,KotaBelud,West Coast,215,1,0,0.077,237.0,0,False,village,24.769,validate,low_evidence
+S0354,Kampung Sayap,116.5563737,6.2077042,KotaBelud,West Coast,565,1,0,-0.0445,476.0,0,False,village,35.439,train,measured
+S0355,Poring,116.7087175,6.0412176,Ranau,West Coast,581,0,0,-0.233,498.0,0,False,village,73.606,train,measured
+S0356,Kampung Tiong Kamburaon,116.4135535,6.2265366,Tuaran,West Coast,20,0,0,-0.30533333333333335,535.0,0,False,village,11.608,train,measured
+S0357,Kampung Lasau Tintapon,116.4217135,6.2861672,KotaBelud,West Coast,337,1,0,-0.4605,65.0,0,False,village,113.3735,train,measured
+S0358,Bahagia,116.4409293,5.092138,Nabawan,Interior,468,1,0,-0.3546666666666667,470.0,20,True,village,67.236,validate,low_evidence
+S0359,Riah,116.4527953,5.0755521,Nabawan,Interior,230,1,1,-0.14333333333333334,462.0,9,True,village,77.7015,train,measured
+S0360,Kampung Mandap,116.3868016,6.3219835,KotaBelud,West Coast,2076,2,0,-0.10533333333333332,56.0,0,False,village,44.511,train,measured
+S0361,Kampung Mandap Doluoh,116.397505,6.3249904,KotaBelud,West Coast,3569,2,0,-0.15433333333333335,34.0,0,False,village,76.686,train,measured
+S0362,Kampung Kinasaraban,116.4035949,6.3325058,KotaBelud,West Coast,6342,7,1,0.14466666666666667,58.0,5,True,village,104.361,train,measured
+S0363,Kampung Gandukut,116.5421541,6.3061273,KotaBelud,West Coast,336,1,0,-0.197,133.0,0,False,village,45.933,train,measured
+S0364,Kampung Nanamun,116.4939753,6.4821376,KotaBelud,West Coast,541,1,0,-0.088,15.0,45,True,village,103.057,validate,low_evidence
+S0365,Kampung Kayu Putih,116.4878031,6.4635833,KotaBelud,West Coast,1176,1,0,0.2425,9.0,0,False,village,49.1735,validate,low_evidence
+S0366,Kampung Pomotodon,116.4428194,6.2218072,KotaBelud,West Coast,2449,4,3,0.14,141.0,8,True,village,53.85,train,measured
+S0367,Kampung Kayangat,116.3768638,6.252582,Tuaran,West Coast,338,1,0,-0.225,232.0,0,False,village,27.3935,train,measured
+S0368,Kampung Tomboilik,116.3851612,6.2499739,Tuaran,West Coast,296,1,0,-0.3136666666666667,380.0,0,False,village,21.959,validate,low_evidence
+S0369,Kampung Monggis,116.3836377,6.242519,Tuaran,West Coast,277,1,0,-0.225,305.0,0,False,village,21.428,validate,low_evidence
+S0370,Kampung Rani,116.3584221,6.2567051,Tuaran,West Coast,3428,6,0,-0.08566666666666667,18.0,10,True,village,66.028,train,measured
+S0371,Tenghilan,116.3360379,6.2576835,Tuaran,West Coast,5629,5,0,0.13733333333333334,11.0,9,True,town,168.589,train,measured
+S0372,Pekan Taginambur,116.4499,6.2275471,KotaBelud,West Coast,2788,4,3,0.17375,94.0,66,True,town,47.124,train,measured
+S0373,Kampung Molisou,116.3327042,6.2626966,Tuaran,West Coast,4992,5,0,-0.2886666666666667,10.0,7,True,village,155.135,train,measured
+S0374,Kampung Kolapis,117.6190252,5.8967747,Beluran,Sandakan,618,1,0,-0.1735,4.0,86,True,village,54.947,validate,low_evidence
+S0375,Toruntungan,116.7735199,6.1940804,Ranau,West Coast,1097,0,0,-0.168,274.0,0,False,village,73.6995,validate,low_evidence
+S0377,Kampung Melangkap,116.7860054,6.2846871,KotaMarudu,Kudat,332,1,0,-0.2245,178.0,0,False,village,39.9055,train,measured
+S0378,Kampung Kias,116.6694093,6.3167607,KotaMarudu,Kudat,30,0,0,-0.8275,561.0,0,False,village,150.576,train,measured
+S0379,Kampung Pongoputan Baru,116.7327757,6.3363692,KotaMarudu,Kudat,1297,1,0,-0.3136666666666667,158.0,0,False,village,19.13,train,measured
+S0380,Kampung Tangkol,116.740202,6.3424779,KotaMarudu,Kudat,1651,1,0,-0.35225,129.0,1,False,village,16.451,train,measured
+S0383,Kampung Mimpas,116.7597414,6.3795511,KotaMarudu,Kudat,946,1,0,-0.169,118.0,3,False,village,24.482,train,measured
+S0384,Kampung Timbang Batu 2,116.8076006,6.4390311,KotaMarudu,Kudat,1113,0,0,-0.194,186.0,0,False,village,11.707,train,measured
+S0386,Kampung Kadayan,117.2187561,6.6178113,Pitas,Kudat,222,0,0,-0.056,12.0,0,False,village,8.025,train,measured
+S0387,Kampung Pinangkau,117.2968925,6.5245184,Beluran,Sandakan,47,1,0,-0.408,16.0,1,False,village,111.479,train,measured
+S0388,Kampung Tanjung Nipis,117.4287888,6.433885,Beluran,Sandakan,496,1,0,-0.3515,8.0,209,True,village,116.994,validate,low_evidence
+S0389,Kampung Kobambangan,117.3832823,6.3928187,Beluran,Sandakan,501,1,0,-0.17633333333333334,10.0,133,True,village,57.511,train,measured
+S0390,Kampung Kabuluh,117.385528,6.3981983,Beluran,Sandakan,648,1,0,-0.17633333333333334,13.0,118,True,village,52.115,train,measured
+S0391,Kampung Tiampus,117.3687466,6.3121771,Beluran,Sandakan,96,0,0,-0.5913333333333334,38.0,0,False,village,190.5575,validate,low_evidence
+S0392,Kampung Binsulung,117.3159962,6.2799021,Beluran,Sandakan,0,1,0,-0.3443333333333333,22.0,3,False,village,79.59,validate,low_evidence
+S0393,Kampung Rosok,116.5293282,6.4023072,KotaBelud,West Coast,1160,2,0,-0.2795,15.0,0,False,village,19.597,train,measured
+S0394,Kampung Kawang-Kawang,116.5127843,6.4442068,KotaBelud,West Coast,981,1,0,-0.07666666666666667,9.0,5,True,village,31.022,validate,low_evidence
+S0395,Kampung Bugaron,116.5214103,6.4237159,KotaBelud,West Coast,1367,0,0,-0.337,6.0,24,True,village,11.513,train,measured
+S0396,Kampung Gentuong,116.5106171,6.4268077,KotaBelud,West Coast,1436,1,0,-0.1965,11.0,24,True,village,8.4635,train,measured
+S0397,Kampung Sukang Sugut,117.2912211,6.2553756,Beluran,Sandakan,495,0,0,-0.2525,23.0,0,False,village,118.04,train,measured
+S0399,Kampung Lingkabau,117.1970902,6.1661628,Beluran,Sandakan,126,1,0,-0.3665,44.0,84,True,village,33.094,train,measured
+S0400,Kampung Timbulus Sugut,117.2293145,6.1709476,Beluran,Sandakan,102,0,0,-0.212,50.0,140,True,village,67.247,train,measured
+S0401,Kampung Salan,117.2246773,6.1630737,Beluran,Sandakan,184,1,0,-0.3506666666666667,89.0,87,True,village,63.5965,train,measured
+S0402,Kampung Basai Baru,117.3250145,6.0533295,Beluran,Sandakan,169,1,0,-0.5215,13.0,39,True,village,21.992,train,measured
+S0403,Kampung Tudan,116.4626154,6.2493073,KotaBelud,West Coast,2663,4,3,0.05133333333333332,77.0,107,True,village,26.003,train,measured
+S0404,Kampung Pompod Kelawat,116.3515484,6.3239734,KotaBelud,West Coast,1550,0,0,-0.08633333333333333,18.0,314,True,village,50.602,train,measured
+S0405,Kampung Pituru Laut,116.3291819,6.3380572,KotaBelud,West Coast,621,0,0,-0.026,6.0,40,True,village,22.222,validate,low_evidence
+S0406,Kampung Pituru Darat,116.3431186,6.3394007,KotaBelud,West Coast,679,0,0,-0.1775,9.0,82,True,village,28.427,train,measured
+S0407,Kampung Ambong,116.3280651,6.3064939,KotaBelud,West Coast,900,0,0,-0.189,9.0,86,True,village,24.594,train,measured
+S0410,Kampung Tolus,116.328518,6.3000554,KotaBelud,West Coast,699,0,0,-0.2065,3.0,43,True,village,18.241,train,measured
+S0411,Kampung Sungai Rungus,117.3436035,6.0597478,Beluran,Sandakan,309,1,0,0.019666666666666676,11.0,42,True,village,17.6095,train,measured
+S0412,Kampung Botition,117.342902,6.0519836,Beluran,Sandakan,351,1,0,0.205,16.0,71,True,village,14.231,train,measured
+S0413,Kampung Bundu Paka,116.4522523,6.1388087,KotaBelud,West Coast,1019,2,0,-0.081,196.0,4,False,village,91.158,train,measured
+S0414,,117.8093302,5.2000209,LahadDatu,Tawau,713,0,0,-0.037,135.0,5,True,hamlet,37.408,train,measured
+S0416,Kampung Simpangan Lama,116.4514073,6.0490023,Tuaran,West Coast,385,1,1,-0.164,810.0,0,False,village,18.2495,train,measured
+S0417,Kampung Taginambur Kiulu,116.4434492,6.0279292,Tuaran,West Coast,682,0,1,-0.146,725.0,0,False,village,26.5635,train,measured
+S0418,Kampung Bongol,116.422528,6.1050483,Tuaran,West Coast,84,0,0,0.315,655.0,0,False,village,12.6155,train,measured
+S0419,Kampung Kiau Taburi,116.4855496,6.0325619,KotaBelud,West Coast,864,0,0,0.1695,939.0,0,False,village,56.444,train,measured
+S0420,Kampung Tomis Jaya,116.4791545,6.0132916,KotaBelud,West Coast,518,0,0,0.28733333333333333,1044.0,0,False,village,56.399,train,measured
+S0421,Kampung Tiong Gondohon,116.4919792,5.9862679,Tuaran,West Coast,166,1,0,0.155,993.0,0,False,village,23.039,train,measured
+S0422,Kampung Tiong Simpodon,116.4897362,5.9793058,Tuaran,West Coast,265,1,0,0.155,844.0,0,False,village,23.381,validate,low_evidence
+S0423,Kampung Tiong Temburung,116.4782993,5.9684582,Tuaran,West Coast,294,1,0,-0.18933333333333335,890.0,0,False,village,24.562,validate,low_evidence
+S0424,Kampung Sinulihan,116.4541415,5.9777981,Tuaran,West Coast,119,0,0,-0.392,857.0,0,False,village,20.8025,validate,low_evidence
+S0428,Kampung Bukid Rantai,116.4862425,6.2720373,KotaBelud,West Coast,110,2,0,-0.576,80.0,0,False,village,13.73,validate,low_evidence
+S0429,Bandar Sahabat,119.072572,5.0761557,LahadDatu,Tawau,11444,1,0,0.4965,16.0,25,True,town,56.233,train,measured
+S0430,Karamatoi Laut,116.2128929,5.0746583,Keningau,Interior,83,0,0,-0.6216666666666667,353.0,0,False,village,39.409,train,measured
+S0432,,115.8777495,4.8645291,Tenom,Interior,638,0,0,-0.107,233.0,63,True,village,9.638,train,measured
+S0433,Kalibatang Baru,115.8897693,4.8621763,Tenom,Interior,1220,0,0,0.04,221.0,10,True,village,9.89,train,measured
+S0434,,115.8564889,4.6532652,Tenom,Interior,0,0,0,-0.3495,489.0,0,False,hamlet,83.873,train,measured
+S0443,,116.0084657,4.8282742,Tenom,Interior,0,0,0,-0.5515,648.0,0,False,hamlet,5.455,validate,low_evidence
+S0444,Long Pasia,115.7306191,4.4057457,Sipitang,Interior,296,0,0,-0.25733333333333336,1007.0,2,False,village,40.307,validate,low_evidence
+S0445,Sigatal Lama,116.4068733,4.4996579,Nabawan,Interior,0,1,1,-0.044,141.0,36,True,village,7.898,validate,low_evidence
+S0449,Bandar Cendrawasih,119.0040353,5.1534359,LahadDatu,Tawau,2202,0,0,-0.0007499999999999729,20.0,0,False,town,59.732,train,measured
+S0450,Bandar Kembara Sakti,119.0576001,5.3267574,Kinabatangan,Sandakan,4204,0,0,-0.3735,15.0,0,False,village,33.338,train,measured
+S0453,Kampung Taka,117.0366875,6.7223006,Pitas,Kudat,14100,1,1,0.19,10.0,1,False,hamlet,25.0065,train,measured
+S0455,Kampung Tolutu,117.1108963,6.6620093,Pitas,Kudat,0,0,0,-0.32575,20.0,0,False,hamlet,12.827,train,measured
+S0456,Kampung Sulakalung,117.2073658,6.6648177,Pitas,Kudat,549,0,0,-0.3246666666666667,10.0,0,False,hamlet,33.483,train,measured
+S0459,Lumiri Tengah,116.1882313,4.8704023,Nabawan,Interior,77,1,0,-0.221,541.0,0,False,village,4.594,validate,low_evidence
+S0460,Kampung Likowon,116.1737353,4.9472712,Keningau,Interior,28,0,0,,400.0,0,False,hamlet,4.951,validate,low_evidence
+S0462,,116.9434523,5.5578962,Tongod,Sandakan,226,0,0,-0.5325,158.0,0,False,village,295.836,validate,low_evidence
+S0463,,116.9321331,5.5532167,Tongod,Sandakan,226,0,0,-0.5325,175.0,0,False,village,295.836,validate,low_evidence
+S0464,Entilibon,117.0466103,5.536651,Tongod,Sandakan,1569,0,0,-0.10566666666666667,87.0,3,False,town,63.145,train,measured
+S0465,,117.4017668,5.7577913,Beluran,Sandakan,571,0,0,-0.277,11.0,65,True,village,68.771,train,measured
+S0466,,117.4367943,5.8344594,Beluran,Sandakan,784,0,0,-0.6076666666666667,2.0,74,True,hamlet,28.704,train,measured
+S0470,Tamparuli,116.2689572,6.1358087,Tuaran,West Coast,6403,4,1,0.7525,19.0,69,True,town,169.1005,train,measured
+S0471,Kampung Sungai Obar,118.0747863,5.9001938,Sandakan,Sandakan,23210,6,1,0.8563333333333333,1.0,23,True,village,110.5845,train,measured
+S0472,Kampung Sunsuron,116.3775895,5.7427156,Tambunan,Interior,3265,2,0,0.0055,771.0,0,False,village,38.432,train,measured
+S0474,Kuala Sibangali,116.2618059,4.5115641,Nabawan,Interior,0,1,0,-0.585,177.0,10,True,village,36.896,validate,low_evidence
+S0475,Simohong,116.2509063,4.5244609,Nabawan,Interior,0,1,0,-0.379,194.0,22,True,village,36.896,validate,low_evidence
+S0476,Dubolon,116.2585347,4.5031205,Nabawan,Interior,0,1,0,-0.585,177.0,4,False,village,36.896,validate,low_evidence
+S0477,Sakali,116.318066,4.5443369,Nabawan,Interior,0,1,1,,167.0,104,True,village,43.784,validate,low_evidence
+S0487,Mambu,116.3247487,4.5395013,Nabawan,Interior,0,1,1,,165.0,75,True,village,43.784,validate,low_evidence
+S0488,Salinatan,116.274039,4.5737515,Nabawan,Interior,0,1,0,-0.013,185.0,5,True,village,48.119,validate,low_evidence
+S0490,Karampalon,116.2491903,4.5257517,Nabawan,Interior,0,1,0,-0.379,185.0,12,True,village,36.896,validate,low_evidence
+S0492,Sigatal Baru,116.4080811,4.4972934,Nabawan,Interior,0,1,1,-0.044,137.0,38,True,village,7.898,validate,low_evidence
+S0493,Babayasing,116.2767396,4.5114004,Nabawan,Interior,0,1,0,-0.585,177.0,21,True,village,36.896,validate,low_evidence
+S0495,Pilanas,116.3201796,4.5431997,Nabawan,Interior,0,1,1,,168.0,105,True,village,43.784,validate,low_evidence
+S0496,Loporon,116.2837855,4.5093988,Nabawan,Interior,0,1,0,-0.585,170.0,30,True,village,36.896,validate,low_evidence
+S0497,Buntung,116.414451,4.4978305,Nabawan,Interior,0,1,1,-0.044,144.0,69,True,village,7.898,validate,low_evidence
+S0499,Pulutan,116.4768348,5.1009999,Nabawan,Interior,342,0,0,-0.2595,463.0,0,False,village,49.669,validate,low_evidence
+S0500,Kampung Malampoi,116.4624744,4.9834634,Nabawan,Interior,4400,0,0,0.1615,447.0,1,False,hamlet,46.532,train,measured
+S0501,Kalas,116.4392451,5.062023,Nabawan,Interior,3638,2,1,-0.15133333333333332,465.0,0,False,village,69.844,train,measured
+S0503,Loboh,116.4468573,5.0583799,Nabawan,Interior,3360,2,1,-0.285,463.0,0,False,village,60.082,train,measured
+S0504,Anambai Baru,116.4150992,5.0316751,Nabawan,Interior,6064,2,0,-0.0215,463.0,4,False,village,70.6685,train,measured
+S0505,Mangkulasing,116.4082824,5.066398,Nabawan,Interior,85,0,0,-0.789,471.0,4,False,village,176.381,validate,low_evidence
+S0506,Loboh Baru,116.4027383,5.0421848,Nabawan,Interior,1086,0,0,-0.309,465.0,0,False,village,119.854,train,measured
+S0507,Enam,116.3998576,5.0456436,Nabawan,Interior,234,0,0,-0.726,468.0,0,False,village,121.086,train,measured
+S0508,Sarikan A,116.4544907,5.0364277,Nabawan,Interior,4185,2,1,0.33,458.0,6,True,village,57.6905,train,measured
+S0509,Kampung Saupi,116.4678111,4.9883122,Nabawan,Interior,3427,0,0,-0.04066666666666666,454.0,0,False,hamlet,42.5725,validate,low_evidence
+S0510,Kampung Koyoon,116.4992281,4.705042,Nabawan,Interior,404,0,0,-0.329,291.0,12,True,hamlet,15.2085,validate,low_evidence
+S0511,Sarikan B,116.4562941,5.0315794,Nabawan,Interior,2033,2,1,0.14733333333333332,460.0,7,True,village,31.396,train,measured
+S0512,Kabangawong,116.4597964,5.0185581,Nabawan,Interior,906,0,0,-0.078,453.0,1,False,village,93.211,validate,low_evidence
+S0513,Tetagas,116.4677671,4.9952745,Nabawan,Interior,2697,0,0,-0.08966666666666667,454.0,0,False,village,42.5725,validate,low_evidence
+S0515,Kampung Takul,116.4589427,4.96891,Nabawan,Interior,3386,0,0,-0.233,446.0,5,True,hamlet,35.737,train,measured
+S0516,Nakuyung,116.4159212,5.0280363,Nabawan,Interior,5005,2,0,-0.0215,464.0,4,False,village,68.262,train,measured
+S0533,Sinsingon,116.47698,4.7154608,Nabawan,Interior,835,0,0,-0.024,391.0,0,False,village,20.0265,validate,low_evidence
+S0539,Kantin Tibow,116.7751948,4.6247278,Nabawan,Interior,0,0,0,-0.212,410.0,2,False,village,111.439,validate,low_evidence
+S0540,Kampung Tataluan,116.6119324,4.655439,Nabawan,Interior,134,1,0,0.0935,298.0,7,True,hamlet,61.2115,validate,low_evidence
+S0544,Kuala Sumatalun,116.4359632,4.4794641,Nabawan,Interior,0,1,1,-0.3046666666666667,135.0,69,True,village,7.898,validate,low_evidence
+S0546,Mangkam,116.4269281,4.4853151,Nabawan,Interior,0,1,1,-0.3046666666666667,141.0,79,True,village,7.898,validate,low_evidence
+S0547,Kampung Sumakiuakiu,116.4231275,4.4892674,Nabawan,Interior,0,1,1,-0.1195,145.0,84,True,hamlet,7.898,validate,low_evidence
+S0550,Kampung Sasandukon,116.4986324,4.4792804,Nabawan,Interior,0,1,0,-0.711,169.0,1,False,hamlet,69.322,train,measured
+S0551,Silungai,116.4289534,4.4802108,Nabawan,Interior,0,1,1,-0.3046666666666667,141.0,99,True,village,7.898,validate,low_evidence
+S0552,Simpang Pagalungan,116.4776807,4.4966222,Nabawan,Interior,0,0,0,-0.896,172.0,0,False,village,76.8765,validate,low_evidence
+S0553,Padang,116.4598441,4.7138076,Nabawan,Interior,807,0,0,0.072,277.0,141,True,village,27.604,validate,low_evidence
+S0554,Sabuluh,116.4538711,4.6034614,Nabawan,Interior,284,1,0,,164.0,92,True,village,0.359,validate,low_evidence
+S0555,Pulungan A,116.4472719,4.7247292,Nabawan,Interior,546,0,0,,312.0,45,True,village,111.066,validate,low_evidence
+S0556,Panawan,116.4669454,4.7125431,Nabawan,Interior,1006,0,0,0.044,282.0,91,True,village,24.5675,validate,low_evidence
+S0558,Kampung Sumolombom,116.4305049,4.516878,Nabawan,Interior,0,1,1,,144.0,65,True,hamlet,18.6675,validate,low_evidence
+S0559,Lotong,116.4513129,4.7157558,Nabawan,Interior,715,0,0,0.072,276.0,154,True,village,111.066,validate,low_evidence
+S0560,Kampung Tikandis,116.4525067,4.5860558,Nabawan,Interior,113,1,0,-0.903,154.0,76,True,hamlet,0.359,validate,low_evidence
+S0561,Pulungan B,116.4512771,4.7319888,Nabawan,Interior,210,0,0,,293.0,47,True,village,111.066,validate,low_evidence
+S0562,Balaron Kecil,116.4331616,4.7213504,Nabawan,Interior,129,0,0,,297.0,0,False,village,111.298,validate,low_evidence
+S0563,Kampung Romol Saliku Sepulut,116.4777631,4.6744271,Nabawan,Interior,79,0,0,-0.577,303.0,82,True,hamlet,34.45,validate,low_evidence
+S0564,Kampung Sinikaluan,116.4468932,4.5665416,Nabawan,Interior,34,1,0,-0.903,149.0,85,True,hamlet,0.359,validate,low_evidence
+S0565,Kuala Sabinait,116.4303639,4.5287441,Nabawan,Interior,0,0,0,,160.0,73,True,village,29.437,validate,low_evidence
+S0566,Ligs,116.4449967,4.600797,Nabawan,Interior,181,1,0,,308.0,33,True,village,0.359,validate,low_evidence
+S0567,Kampung Balantos,116.4555304,4.5857371,Nabawan,Interior,113,1,0,-0.903,159.0,69,True,hamlet,0.359,validate,low_evidence
+S0569,Kampung Sejahtera Pangkalan Salung,116.4552115,4.5798155,Nabawan,Interior,109,1,0,-0.903,145.0,65,True,hamlet,0.359,validate,low_evidence
+S0571,Kampung Kuala Salung,116.4574199,4.5794693,Nabawan,Interior,76,1,0,-0.903,149.0,59,True,hamlet,0.359,validate,low_evidence
+S0573,Kampung Kuyoh,116.4407408,4.536212,Nabawan,Interior,0,0,0,,138.0,61,True,hamlet,29.437,validate,low_evidence
+S0576,Kampung Nangkawangan,116.2429462,4.8510777,Nabawan,Interior,0,1,0,-0.508,484.0,0,False,hamlet,52.182,validate,low_evidence
+S0587,Mamagon,116.1755479,4.8774018,Keningau,Interior,179,1,0,-0.221,557.0,0,False,village,4.594,validate,low_evidence
+S0590,Kampung Dalit Gana,116.1193329,5.0208777,Keningau,Interior,274,1,1,-0.409,371.0,0,False,hamlet,50.076,validate,low_evidence
+S0592,Kampung Dalit Laut,116.1296499,5.0245621,Keningau,Interior,189,1,1,-0.49425,381.0,0,False,hamlet,50.076,validate,low_evidence
+S0595,Kalampun,116.1252112,5.0702193,Keningau,Interior,306,1,0,-0.29975,404.0,0,False,village,73.754,train,measured
+S0596,Punggol,116.1194208,5.0625149,Keningau,Interior,113,1,0,-0.31666666666666665,413.0,0,False,village,73.754,train,measured
+S0597,Kuala Aging,116.2208995,5.0937645,Keningau,Interior,231,0,0,-0.5206666666666667,347.0,0,False,village,32.6435,train,measured
+S0599,Tuaran Baru,116.3409302,5.0954389,Keningau,Interior,685,0,0,-0.489,370.0,0,False,village,184.723,validate,low_evidence
+S0602,Malilia,116.1997654,5.0653616,Keningau,Interior,82,0,0,-0.489,353.0,0,False,village,51.8295,train,measured
+S0603,Sakikilo,116.2381905,5.1778704,Keningau,Interior,534,1,0,-0.4805,415.0,0,False,village,48.551,validate,low_evidence
+S0605,Kampung Kebulu,116.2315424,5.1621456,Keningau,Interior,1181,1,0,-0.17166666666666666,382.0,0,False,hamlet,47.4075,validate,low_evidence
+S0607,Kobosion,116.2404752,5.1486648,Keningau,Interior,445,1,0,-0.27266666666666667,386.0,0,False,village,47.4075,validate,low_evidence
+S0608,Barasanon,116.1825533,5.1868176,Keningau,Interior,769,0,0,-0.38366666666666666,353.0,16,True,village,43.795,validate,low_evidence
+S0610,Mapila,116.2515992,5.1648379,Keningau,Interior,474,1,0,-0.359,394.0,1,False,village,90.635,validate,low_evidence
+S0611,Mansiat,116.5605112,5.4505072,Tongod,Sandakan,671,0,1,-0.358,494.0,0,False,village,88.6465,validate,low_evidence
+S0612,Tuawon,116.5730592,5.4702116,Tongod,Sandakan,254,1,1,-0.0865,542.0,0,False,village,69.559,validate,low_evidence
+S0614,Nandagan,116.5207264,5.4257658,Tongod,Sandakan,1091,0,0,-0.12933333333333333,442.0,0,False,village,103.814,validate,low_evidence
+S0615,Sinaron,116.5778618,5.4604329,Tongod,Sandakan,313,1,1,-0.0865,505.0,0,False,village,69.559,validate,low_evidence
+S0617,Lalapakon,116.5546504,5.448024,Tongod,Sandakan,648,0,1,-0.358,481.0,0,False,village,101.525,validate,low_evidence
+S0618,Mampisas,116.4863082,5.4025431,Keningau,Interior,1503,0,0,0.0815,405.0,0,False,village,22.052,validate,low_evidence
+S0620,Sosolungon,116.5366919,5.4312578,Tongod,Sandakan,809,0,0,-0.4355,484.0,2,False,village,122.476,validate,low_evidence
+S0623,Sinulihan Baru,116.3884042,5.292031,Keningau,Interior,1334,0,0,-0.37175,383.0,9,True,village,34.294,train,measured
+S0624,Seri Aman,116.4916394,5.3388353,Keningau,Interior,267,0,0,-0.1815,374.0,1,False,village,27.957,validate,low_evidence
+S0627,Batu Lunguyan,116.4395412,5.3433622,Keningau,Interior,889,1,1,-0.465,417.0,0,False,village,27.909,train,measured
+S0628,Dumbun,116.4349919,5.2702003,Keningau,Interior,208,0,0,-0.4975,408.0,0,False,village,42.684,train,measured
+S0629,Kindasan,116.4157143,5.3214327,Keningau,Interior,927,1,1,0.1125,402.0,0,False,village,30.9165,train,measured
+S0630,Mantanid,116.4347658,5.2226438,Keningau,Interior,168,0,0,-0.23475,388.0,0,False,village,90.02,validate,low_evidence
+S0631,Kiulu Baru,116.3959753,5.3030662,Keningau,Interior,1136,0,0,-0.31333333333333335,388.0,0,False,village,48.4615,train,measured
+S0632,Rampayan,116.379809,5.2832779,Keningau,Interior,1477,0,0,-0.24066666666666667,387.0,0,False,village,24.4,train,measured
+S0633,Lipasu,116.391897,5.1739474,Keningau,Interior,546,0,0,-0.5225,369.0,0,False,village,51.512,train,measured
+S0634,Kampung Tiong,116.3810541,5.2882954,Keningau,Interior,1473,0,0,-0.316,387.0,9,True,hamlet,24.4,train,measured
+S0635,Poring Simbuan,116.4309013,5.249051,Keningau,Interior,228,0,0,-0.48325,390.0,0,False,village,92.1485,train,measured
+S0636,Mailu,116.3911099,5.1225003,Keningau,Interior,908,0,0,-0.0365,376.0,0,False,village,87.969,validate,low_evidence
+S0637,Kabuan,116.3999474,5.1920657,Keningau,Interior,793,0,0,-0.589,386.0,0,False,village,27.371,train,measured
+S0638,Kabatang Baru,116.3734017,5.2601226,Keningau,Interior,845,0,0,-0.5826666666666667,374.0,0,False,village,58.469,train,measured
+S0639,Kipaliu,116.3756262,5.2593984,Keningau,Interior,758,0,0,-0.5826666666666667,372.0,0,False,village,58.469,train,measured
+S0640,Rancangan Belia Tiulon,116.3997097,5.1615888,Keningau,Interior,32,0,0,-0.507,371.0,0,False,village,53.7145,train,measured
+S0643,Kawakahan,116.4096448,5.1975798,Keningau,Interior,99,0,0,-0.4075,388.0,0,False,village,23.2375,train,measured
+S0644,Binuou Ulu,116.405383,5.1624431,Keningau,Interior,32,0,0,-0.534,372.0,0,False,village,53.7145,train,measured
+S0645,Pulutan,116.4086948,5.2649882,Keningau,Interior,292,0,0,-0.455,393.0,0,False,village,25.683,validate,low_evidence
+S0646,Mototou,116.4152898,5.2071051,Keningau,Interior,101,0,0,-0.364,382.0,0,False,village,20.1305,validate,low_evidence
+S0648,Sinar Harapan,116.3564896,5.1481891,Keningau,Interior,2981,0,0,-0.15,368.0,0,False,village,15.515,train,measured
+S0650,Binuou Tengah,116.3648085,5.1626227,Keningau,Interior,774,0,0,-0.33525,365.0,0,False,village,21.424,validate,low_evidence
+S0651,Mustika,116.3678933,5.1459778,Keningau,Interior,1956,0,0,0.019,363.0,0,False,village,39.1355,train,measured
+S0652,Meserui,116.3846677,5.173388,Keningau,Interior,481,0,0,-0.5173333333333333,369.0,0,False,village,53.7145,train,measured
+S0653,Binuou Laut,116.3188922,5.1415185,Keningau,Interior,3825,0,1,-0.014666666666666661,357.0,0,False,village,41.3125,train,measured
+S0654,Karanaan Baru,116.3337432,5.1518875,Keningau,Interior,1824,0,1,0.14,356.0,0,False,village,29.552,train,measured
+S0655,Ambual,116.2302142,5.3736023,Keningau,Interior,3001,0,0,-0.08425,298.0,0,False,village,27.2885,train,measured
+S0656,Panagatan Laut,116.1995303,5.3409493,Keningau,Interior,1779,0,0,0.27266666666666667,285.0,145,True,village,45.831,train,measured
+S0657,Bomboi,116.1897857,5.3356719,Keningau,Interior,3322,3,0,0.2125,286.0,111,True,village,56.432,train,measured
+S0658,Panagatan Ulu,116.2097255,5.3467074,Keningau,Interior,869,0,0,-0.074,282.0,0,False,village,32.918,train,measured
+S0659,Marapok,116.2340885,5.3797614,Keningau,Interior,2346,0,0,-0.08425,294.0,1,False,village,24.448,train,measured
+S0660,Kasugui,116.2129939,5.3629756,Keningau,Interior,1956,0,0,0.02,284.0,189,True,village,23.947,train,measured
+S0661,Magatang,116.219394,5.3621802,Keningau,Interior,1638,0,0,-0.094,284.0,0,False,village,32.841,train,measured
+S0662,Pantai Baru,116.2269125,5.3844904,Keningau,Interior,3714,0,0,-0.05266666666666667,294.0,142,True,village,25.993,train,measured
+S0663,Panui,116.240027,5.3891572,Keningau,Interior,1625,0,0,0.2663333333333333,302.0,1,False,village,24.7315,train,measured
+S0664,Pekan Baru,116.2578834,5.4542071,Keningau,Interior,7863,0,0,0.465,349.0,4,False,village,35.0155,train,measured
+S0665,Linsudan,116.2561088,5.4183322,Keningau,Interior,1694,0,0,0.23375,320.0,132,True,village,30.8255,train,measured
+S0666,Pangas Ulu,116.3020496,5.4751335,Keningau,Interior,379,0,0,-0.362,410.0,0,False,village,149.444,train,measured
+S0667,Mararagang,116.2752866,5.4797716,Keningau,Interior,3890,0,0,-0.030333333333333323,413.0,0,False,village,54.708,train,measured
+S0668,Sungoi,116.2702798,5.4489856,Keningau,Interior,6967,0,0,0.016,318.0,42,True,village,27.689,train,measured
+S0669,Mailo,116.2381822,5.3997077,Keningau,Interior,2305,2,0,0.25425,301.0,99,True,village,22.163,train,measured
+S0670,Takad,116.2654893,5.4728503,Keningau,Interior,5331,0,0,0.15933333333333333,361.0,1,False,village,47.861,train,measured
+S0671,Luanti Baru,116.2475115,5.4044747,Keningau,Interior,1611,1,0,0.161,312.0,45,True,village,19.108,train,measured
+S0672,Sodomon,116.235405,5.3968478,Keningau,Interior,3118,1,0,0.25425,299.0,136,True,village,28.387,train,measured
+S0673,Marasak,116.2424715,5.3940265,Keningau,Interior,1420,0,0,0.2663333333333333,309.0,0,False,village,28.7665,train,measured
+S0674,Kampung Kapayan Baru,116.2688726,5.4455835,Keningau,Interior,6394,0,0,0.36,325.0,57,True,hamlet,28.288,train,measured
+S0675,Samangkok,116.2659994,5.4585487,Keningau,Interior,8584,0,0,0.48466666666666663,334.0,8,True,village,40.632,train,measured
+S0676,Kapayan Lama,116.267259,5.4464732,Keningau,Interior,6673,0,0,0.3486666666666667,321.0,55,True,village,28.288,train,measured
+S0677,Nuntunan,116.2690947,5.4816186,Keningau,Interior,4117,0,0,0.0235,356.0,1,False,village,52.869,train,measured
+S0678,Gasabon,116.2733047,5.4582441,Keningau,Interior,8261,0,0,0.152,330.0,60,True,village,38.7115,train,measured
+S0679,Liau Laut,116.2334792,5.4190511,Keningau,Interior,2532,2,0,0.4005,320.0,55,True,village,41.449,train,measured
+S0680,Pangas Laut,116.2811304,5.4623131,Keningau,Interior,5271,0,0,0.0795,341.0,84,True,village,45.081,train,measured
+S0681,Umpason,116.2803596,5.4719211,Keningau,Interior,3694,0,0,0.193,378.0,51,True,village,52.306,train,measured
+S0682,Kilambang,116.2391342,5.426731,Keningau,Interior,2890,2,0,0.4613333333333333,341.0,0,False,village,48.699,train,measured
+S0683,Ritting,116.2678351,5.4676301,Keningau,Interior,7032,0,0,0.564,351.0,20,True,village,46.385,train,measured
+S0684,Ranggom,116.2639664,5.455013,Keningau,Interior,8784,0,0,0.48466666666666663,333.0,13,True,village,36.791,train,measured
+S0685,Kirokot Baru,116.2568816,5.451431,Keningau,Interior,7124,0,0,0.465,346.0,1,False,village,42.4975,train,measured
+S0686,Tohan Baru,116.2497626,5.4356626,Keningau,Interior,3407,2,0,0.26833333333333337,343.0,5,True,village,36.004,train,measured
+S0687,Lambanga,116.2570889,5.4457484,Keningau,Interior,6390,0,0,0.35225,342.0,1,False,village,34.622,train,measured
+S0688,Pagansangan,116.2278076,5.4307567,Keningau,Interior,1684,2,0,0.16333333333333333,341.0,0,False,village,37.4365,train,measured
+S0689,Tagai,116.227837,5.4176834,Keningau,Interior,2948,2,0,0.413,336.0,0,False,village,41.449,train,measured
+S0690,Nukakatan Baru,116.359591,5.1964629,Keningau,Interior,842,0,0,-0.3606666666666667,364.0,0,False,village,29.424,train,measured
+S0693,Bonod Batu 7,116.344786,5.2181166,Keningau,Interior,682,0,0,-0.4795,375.0,0,False,village,30.2115,train,measured
+S0696,Sondukut Baru,116.20469,5.233424,Keningau,Interior,464,0,0,-0.58,474.0,0,False,village,12.2715,validate,low_evidence
+S0697,Delayan Baru,116.3674556,5.2419511,Keningau,Interior,916,0,0,-0.44175,380.0,0,False,village,34.2025,train,measured
+S0699,Terolobou Baru,116.3504924,5.1807118,Keningau,Interior,504,0,0,-0.32066666666666666,362.0,0,False,village,29.424,train,measured
+S0700,Kionsom Baru,116.3720737,5.2314063,Keningau,Interior,997,0,0,-0.4566666666666667,374.0,0,False,village,14.203,validate,low_evidence
+S0701,Johan Jaya,116.3527253,5.1863236,Keningau,Interior,540,0,0,-0.32066666666666666,362.0,0,False,village,30.2115,train,measured
+S0702,Delayan Lama,116.358671,5.2312481,Keningau,Interior,1237,0,0,-0.26333333333333336,371.0,0,False,village,39.563,validate,low_evidence
+S0703,Tanggulon Jaya,116.3539969,5.2413062,Keningau,Interior,739,0,0,-0.623,391.0,0,False,village,34.2025,validate,low_evidence
+S0704,Papar Baru,116.3375423,5.1940724,Keningau,Interior,279,0,0,-0.27033333333333337,363.0,0,False,village,31.402,train,measured
+S0705,Bunang Laut,116.3223902,5.1890418,Keningau,Interior,0,0,0,0.006,370.0,0,False,village,54.7805,train,measured
+S0706,Suan,116.163248,5.254836,Keningau,Interior,5100,0,0,0.1875,282.0,0,False,village,39.42,train,measured
+S0707,Kukub,116.0350168,5.3012077,Keningau,Interior,1020,0,0,-0.22066666666666668,328.0,0,False,village,81.2385,validate,low_evidence
+S0708,Libodon Baru,116.1393509,5.2780362,Keningau,Interior,1231,0,0,0.315,402.0,0,False,village,17.681,validate,low_evidence
+S0709,Biah Batu 4,116.1619546,5.2829698,Keningau,Interior,6263,1,0,0.5086666666666667,299.0,0,False,village,153.6685,train,measured
+S0710,Singgah Mata,116.1251851,5.2703372,Keningau,Interior,1035,0,0,-0.27325,266.0,2,False,village,28.538,train,measured
+S0712,Sigapon,116.0586064,5.2658182,Keningau,Interior,55,0,0,-0.2955,571.0,0,False,village,22.494,validate,low_evidence
+S0713,Biah Tengah,116.1624208,5.2798188,Keningau,Interior,7008,1,0,0.5086666666666667,279.0,0,False,village,153.6685,train,measured
+S0714,Damai,116.0623524,5.3047058,Keningau,Interior,523,0,0,-0.207,554.0,0,False,village,45.6285,validate,low_evidence
+S0715,Biah Skim,116.1968127,5.2806717,Keningau,Interior,871,0,0,-0.126,303.0,0,False,village,18.881,validate,low_evidence
+S0716,Meninpir Lama,116.0891985,5.3158088,Keningau,Interior,951,0,0,-0.06,472.0,4,False,village,44.921,train,measured
+S0717,Baitah,116.1951081,5.2992524,Keningau,Interior,279,0,0,-0.2275,334.0,0,False,village,61.772,train,measured
+S0719,Titimbangon,116.06291,5.3363217,Keningau,Interior,234,0,0,-0.402,862.0,0,False,village,29.058,validate,low_evidence
+S0720,Ansip Tengah,116.1215895,5.2787276,Keningau,Interior,1192,0,0,0.05433333333333334,248.0,27,True,village,32.024,train,measured
+S0721,Pagalungan,116.1196595,5.2778914,Keningau,Interior,1199,0,0,0.05433333333333334,246.0,20,True,village,30.281,train,measured
+S0723,Ansip Laut,116.131931,5.2759528,Keningau,Interior,1056,0,0,-0.088,334.0,2,False,village,26.191,train,measured
+S0724,Kitong,116.0926618,5.3403046,Keningau,Interior,853,0,0,0.194,467.0,18,True,village,19.798,train,measured
+S0725,Mempulut Kolobot,116.1311946,5.2523622,Keningau,Interior,760,1,0,-0.49,299.0,0,False,village,34.649,validate,low_evidence
+S0726,Rimbayan,116.1040048,5.265156,Keningau,Interior,298,0,0,-0.49475,279.0,4,False,village,21.231,train,measured
+S0732,Mempulut,116.1385903,5.2485711,Keningau,Interior,1342,1,0,-0.09733333333333334,265.0,2,False,village,31.352,validate,low_evidence
+S0733,Mongitom Baru,116.2000632,5.472185,Keningau,Interior,690,0,0,-0.502,478.0,0,False,village,38.7045,train,measured
+S0734,Belinin,116.0760473,5.1067837,Keningau,Interior,210,0,0,-0.42,466.0,0,False,village,36.65,train,measured
+S0735,Tonobon Baru,116.2149548,5.4612709,Keningau,Interior,903,0,0,-0.32,421.0,0,False,village,45.4655,train,measured
+S0736,Seri Lalang,116.1592878,5.2815115,Keningau,Interior,6388,1,0,0.5086666666666667,288.0,0,False,village,71.753,train,measured
+S0740,Kuala Punteh,116.1437518,5.2381576,Keningau,Interior,1036,1,0,-0.3056666666666667,266.0,1,False,village,37.946,validate,low_evidence
+S0742,Lubong,116.0663811,5.3252927,Keningau,Interior,345,0,0,-0.37433333333333335,598.0,2,False,village,37.502,train,measured
+S0743,Mantatap,116.0939588,5.3048064,Keningau,Interior,418,0,0,-0.03233333333333334,430.0,0,False,village,62.961,train,measured
+S0744,Suan Ulu,116.1765327,5.2605311,Keningau,Interior,2397,0,0,0.17733333333333334,342.0,0,False,village,44.753,train,measured
+S0746,Keritan Laut,116.0470604,5.3050012,Keningau,Interior,726,0,0,-0.25733333333333336,347.0,0,False,village,72.596,validate,low_evidence
+S0747,Membulu,116.1357927,5.2383302,Keningau,Interior,822,1,0,-0.3205,267.0,0,False,village,53.443,validate,low_evidence
+S0748,Inandung,116.0714289,5.06463,Keningau,Interior,167,0,0,-0.393,450.0,0,False,village,65.8625,validate,low_evidence
+S0750,Kampung Malidang,116.2115667,5.4792463,Keningau,Interior,805,0,0,-0.405,510.0,0,False,hamlet,38.994,train,measured
+S0751,Meninpir,116.0864757,5.3175429,Keningau,Interior,952,0,0,-0.06,472.0,4,False,village,44.921,train,measured
+S0752,Alab,116.0349977,5.2886435,Keningau,Interior,955,0,0,0.0045,298.0,0,False,village,26.201,validate,low_evidence
+S0753,Kodop Baru,116.2108043,5.4643992,Keningau,Interior,936,0,0,-0.32,439.0,0,False,village,38.994,train,measured
+S0754,Bunga Raya,116.2123797,5.4632208,Keningau,Interior,990,0,0,-0.32,437.0,0,False,village,41.4735,train,measured
+S0755,Naaba,116.2091656,5.4692707,Keningau,Interior,912,0,0,-0.4083333333333334,445.0,0,False,village,41.4735,train,measured
+S0756,Kumawanan,116.2061383,5.4159956,Keningau,Interior,5408,2,0,-0.061,329.0,0,False,village,53.7375,train,measured
+S0757,Bandukan Lama,116.1633328,5.4407769,Keningau,Interior,3122,0,0,-0.1145,375.0,0,False,village,75.095,train,measured
+S0758,Kampung Baru,116.1878393,5.4385565,Keningau,Interior,1409,0,0,-0.418,383.0,0,False,hamlet,159.456,train,measured
+S0759,Liawan Ulu,116.1341623,5.3937999,Keningau,Interior,1026,0,0,-0.18533333333333332,443.0,0,False,village,76.507,train,measured
+S0760,Bunsit,116.1695534,5.4347935,Keningau,Interior,3482,0,0,-0.1145,381.0,0,False,village,125.1595,train,measured
+S0761,Kampung Masak,116.1403108,5.3462317,Keningau,Interior,17188,11,0,0.6736666666666666,314.0,0,False,hamlet,151.877,train,measured
+S0762,Kampung Patikang Laut,116.138969,5.337168,Keningau,Interior,19596,10,0,0.6853333333333333,315.0,0,False,hamlet,172.043,train,measured
+S0763,Sandapak,116.1855543,5.4130498,Keningau,Interior,7810,0,0,0.21966666666666668,331.0,14,True,village,100.057,train,measured
+S0764,Kampung Skim Pamalan,116.1619016,5.3861206,Keningau,Interior,7047,2,1,0.5555,353.0,0,False,hamlet,79.811,train,measured
+S0765,Kampung Tudan Baru,116.1797005,5.3781619,Keningau,Interior,12580,3,1,0.7535,312.0,0,False,hamlet,105.6805,train,measured
+S0766,Antolob,116.1679577,5.4292397,Keningau,Interior,4013,0,0,0.161,390.0,0,False,village,129.5005,train,measured
+S0767,Bariawa Ulu,116.1283877,5.3801016,Keningau,Interior,3122,0,0,-0.00725,488.0,0,False,village,39.014,train,measured
+S0768,Kampung Agudon,116.1209827,5.3606088,Keningau,Interior,9219,1,0,0.19166666666666665,384.0,0,False,hamlet,122.7325,train,measured
+S0769,Berungis,116.1968184,5.4328911,Keningau,Interior,1381,0,0,-0.3236666666666667,371.0,0,False,village,165.538,train,measured
+S0770,Tangkungon,116.1788536,5.4283273,Keningau,Interior,3814,0,0,0.2643333333333333,348.0,0,False,village,159.1255,train,measured
+S0771,Bandukan Baru,116.1767865,5.4064258,Keningau,Interior,6417,0,0,0.194,338.0,0,False,village,59.784,train,measured
+S0772,Bingkor Lama,116.1990116,5.4102348,Keningau,Interior,8735,0,0,0.023333333333333317,322.0,14,True,village,60.8855,train,measured
+S0773,Sasaie,116.1865803,5.3984425,Keningau,Interior,12544,0,0,0.3675,326.0,2,False,village,60.8855,train,measured
+S0774,Tuntumulud,116.1779527,5.4168717,Keningau,Interior,4868,0,0,0.04733333333333332,345.0,0,False,village,82.888,train,measured
+S0775,Kampung Indah,116.119851,5.3928004,Keningau,Interior,916,0,0,-0.0435,696.0,0,False,hamlet,41.51,train,measured
+S0776,Minansut,116.183479,5.4231379,Keningau,Interior,4280,0,0,0.004,337.0,0,False,village,121.394,train,measured
+S0777,Buang Sayang,116.1820449,5.4159915,Keningau,Interior,6139,0,0,0.268,338.0,0,False,village,92.312,train,measured
+S0778,Linsosod,116.1417781,5.3908583,Keningau,Interior,1227,0,0,0.117,434.0,0,False,village,76.728,train,measured
+S0779,Kampung Singga Mata,116.1828558,5.3825626,Keningau,Interior,11743,3,1,0.626,311.0,0,False,hamlet,93.398,train,measured
+S0780,Kampung Patikang Ulu,116.129265,5.3436045,Keningau,Interior,12977,6,0,0.577,340.0,0,False,hamlet,99.769,train,measured
+S0781,Kampung Bulu Silou,116.132852,5.3495657,Keningau,Interior,14187,4,0,0.6296666666666667,331.0,0,False,hamlet,149.075,train,measured
+S0792,Mongorimot,116.5639703,5.454468,Tongod,Sandakan,728,0,1,-0.2645,486.0,0,False,village,75.768,validate,low_evidence
+S0796,Batu 11,116.1946742,5.2210728,Keningau,Interior,778,0,0,-0.25975,488.0,0,False,village,14.424,validate,low_evidence
+S0797,Kuala Biah,116.1462074,5.2616082,Keningau,Interior,4641,0,0,0.11175,272.0,0,False,village,38.683,train,measured
+S0798,Batu 12,116.1942804,5.2096144,Keningau,Interior,589,0,0,-0.4035,480.0,0,False,village,15.619,validate,low_evidence
+S0799,Naukab,116.2312844,5.5453248,Keningau,Interior,301,0,0,-0.3433333333333333,555.0,0,False,village,78.328,train,measured
+S0800,Kitou,116.2746708,5.5195286,Tambunan,Interior,402,1,0,-0.2806666666666667,515.0,0,False,village,45.1505,validate,low_evidence
+S0801,Tiga,116.217958,5.5641094,Keningau,Interior,344,0,0,-0.581,603.0,0,False,village,94.594,train,measured
+S0803,Bagian,116.2851388,5.5282671,Tambunan,Interior,512,1,0,-0.34325,737.0,0,False,village,45.1505,validate,low_evidence
+S0804,Sri Menanti,116.2542252,5.5431534,Tambunan,Interior,385,0,0,-0.4053333333333333,710.0,0,False,village,37.925,train,measured
+S0805,Rompon Scheme II,116.2810617,5.5411224,Tambunan,Interior,538,0,0,-0.4395,757.0,0,False,village,31.888,validate,low_evidence
+S0808,Tenderung Gayo,116.196676,5.579333,Keningau,Interior,0,0,0,,975.0,0,False,village,76.3195,validate,low_evidence
+S0809,Tuad,116.2345707,5.5474574,Keningau,Interior,325,0,0,-0.4715,545.0,0,False,village,70.7465,train,measured
+S0813,Purutan Ulu,116.2419076,5.5584849,Tambunan,Interior,597,0,0,-0.554,822.0,0,False,village,82.7985,train,measured
+S0814,Borolungan,116.2901683,5.6053843,Tambunan,Interior,391,0,0,-0.146,520.0,0,False,village,43.978,validate,low_evidence
+S0815,Tikolod Ulu,116.2778346,5.6394475,Tambunan,Interior,570,0,0,-0.405,596.0,0,False,village,123.119,validate,low_evidence
+S0816,Purutan,116.3007588,5.5883975,Tambunan,Interior,638,0,0,-0.12125,688.0,0,False,village,33.832,train,measured
+S0817,Lotong Ulu,116.3163541,5.6305007,Tambunan,Interior,3275,1,0,0.006666666666666654,554.0,0,False,village,42.081,train,measured
+S0818,Purutan Laut,116.288603,5.5814325,Tambunan,Interior,118,0,0,-0.183,664.0,0,False,village,31.941,validate,low_evidence
+S0819,Tikolod,116.2959576,5.6206223,Tambunan,Interior,694,0,0,-0.15966666666666665,544.0,0,False,village,42.081,train,measured
+S0820,Kuala Monsok,116.3212195,5.5897802,Tambunan,Interior,868,0,0,-0.2365,468.0,4,False,village,33.832,train,measured
+S0822,Ligs Sosopon,116.3286917,5.602903,Tambunan,Interior,1226,0,0,-0.2823333333333333,639.0,0,False,village,61.857,train,measured
+S0823,Monsorulung,116.3074828,5.602858,Tambunan,Interior,810,0,0,-0.11966666666666666,482.0,0,False,village,42.081,train,measured
+S0824,Monsokito,116.3491459,5.6047413,Tambunan,Interior,0,0,0,-0.6365,518.0,0,False,village,96.968,validate,low_evidence
+S0825,Pupuluton,116.3264611,5.6159659,Tambunan,Interior,2082,1,0,-0.062,500.0,9,True,village,45.52,train,measured
+S0826,Mangkataie,116.3045859,5.6363052,Tambunan,Interior,869,1,0,-0.261,581.0,0,False,village,30.9755,train,measured
+S0828,Kiawayan,116.3263736,5.634058,Tambunan,Interior,4925,2,2,0.224,541.0,0,False,village,41.7035,train,measured
+S0829,Tiong,116.5548544,5.8282254,Ranau,West Coast,53,1,0,-0.28,1143.0,0,False,village,150.656,validate,low_evidence
+S0831,Tariwad,116.5365456,5.8661453,Tambunan,Interior,514,0,0,0.3445,675.0,0,False,village,50.19,train,measured
+S0832,Tontolob Liwan,116.5296853,5.8668869,Tambunan,Interior,462,0,0,0.005,665.0,0,False,village,13.934,train,measured
+S0833,Tuhan,116.4834597,5.855436,Tambunan,Interior,441,0,0,0.103,801.0,0,False,village,46.6065,train,measured
+S0834,Garas,116.4973945,5.8713255,Tambunan,Interior,722,0,0,-0.028,809.0,0,False,village,35.9835,validate,low_evidence
+S0835,Tinompok Liwan,116.508647,5.857918,Tambunan,Interior,375,0,0,-0.217,861.0,0,False,village,40.225,train,measured
+S0836,Ulu Kumawanan,116.4580331,5.8566688,Tambunan,Interior,160,0,0,-0.337,898.0,0,False,village,52.162,train,measured
+S0837,Pialungan,116.5478328,5.8500234,Ranau,West Coast,47,1,0,-0.005,836.0,0,False,village,87.496,train,measured
+S0839,Tiang 1,116.4734878,5.7916927,Tambunan,Interior,750,0,0,-0.4485,938.0,0,False,village,90.36,validate,low_evidence
+S0840,Punti Ngabai,116.4818104,5.8053237,Tambunan,Interior,649,0,0,-0.13466666666666666,964.0,1,False,village,72.873,validate,low_evidence
+S0841,Kodop Baru,116.7356666,5.6978502,Ranau,West Coast,0,0,0,-0.615,632.0,0,False,village,1.206,validate,low_evidence
+S0843,Kirokot,116.4918697,5.8232124,Tambunan,Interior,159,0,0,0.493,770.0,0,False,village,47.7855,train,measured
+S0845,Rumuyuh,116.5007533,5.8723062,Tambunan,Interior,583,0,0,-0.01475,808.0,0,False,village,23.252,validate,low_evidence
+S0846,Minonun,116.4696292,5.7986386,Tambunan,Interior,750,0,0,-0.4485,927.0,1,False,village,45.546,validate,low_evidence
+S0847,Taba,116.8609613,5.6917486,Ranau,West Coast,0,0,0,-0.5756666666666667,296.0,0,False,village,40.2295,validate,low_evidence
+S0848,Tonop,116.4760797,5.8093182,Tambunan,Interior,442,0,0,-0.13466666666666666,984.0,1,False,village,63.552,validate,low_evidence
+S0849,Tampasak Liwan,116.5019652,5.8087207,Tambunan,Interior,0,0,0,-0.057,922.0,0,False,village,63.552,validate,low_evidence
+S0850,Nunuk Ragang,116.8635256,5.7147142,Ranau,West Coast,179,0,0,-0.228,205.0,118,True,village,28.065,train,measured
+S0851,Maringkan Baru,116.8553777,5.7240714,Ranau,West Coast,179,0,0,-0.26225,221.0,119,True,village,28.065,train,measured
+S0852,Kumawanan,116.4741407,5.855142,Tambunan,Interior,300,0,0,0.103,850.0,0,False,village,52.162,train,measured
+S0854,Pahu,116.4912239,5.8545828,Tambunan,Interior,582,0,0,0.323,804.0,0,False,village,41.843,train,measured
+S0856,Bunakon,116.811607,5.7919059,Ranau,West Coast,928,0,0,-0.11133333333333333,213.0,56,True,village,18.067,train,measured
+S0857,Seborong,116.8300843,5.7523675,Ranau,West Coast,373,0,0,-0.4535,204.0,68,True,village,25.13,train,measured
+S0858,Sagindai Lama,116.818188,5.834748,Ranau,West Coast,254,0,0,0.1055,243.0,59,True,village,24.736,validate,low_evidence
+S0860,Bitoon,116.8284711,5.6987582,Ranau,West Coast,270,0,0,-0.49075,198.0,42,True,village,30.076,train,measured
+S0861,Tinanom,116.7206049,5.6823073,Ranau,West Coast,0,0,0,-0.2815,288.0,0,False,village,1.775,validate,low_evidence
+S0862,Matupang,116.8189854,5.797142,Ranau,West Coast,991,0,0,0.1965,215.0,63,True,village,21.011,train,measured
+S0863,Wakaku,116.797663,5.6970714,Ranau,West Coast,277,0,0,-0.466,319.0,1,False,village,38.9815,train,measured
+S0864,Muruk,116.7545236,5.9551434,Ranau,West Coast,883,0,0,0.1515,363.0,0,False,village,41.8365,train,measured
+S0865,Bolisuk Baru,116.8501607,5.7273222,Ranau,West Coast,179,0,0,-0.26225,218.0,61,True,village,28.065,train,measured
+S0866,Toporoh,116.8265456,5.7303973,Ranau,West Coast,30,0,0,-0.53775,304.0,9,True,village,33.71,validate,low_evidence
+S0867,Paginatan,116.822488,5.7678718,Ranau,West Coast,471,0,0,-0.13866666666666666,210.0,78,True,village,23.636,train,measured
+S0868,Takurik,116.6733088,5.9588355,Ranau,West Coast,15493,8,3,0.548,520.0,0,False,village,65.202,train,measured
+S0870,Minihas,116.8179208,5.788846,Ranau,West Coast,896,0,0,0.1965,209.0,72,True,village,22.3235,train,measured
+S0871,Segindai Baru,116.8141675,5.8445935,Ranau,West Coast,254,0,0,0.1055,234.0,57,True,village,24.736,validate,low_evidence
+S0872,Nalapak,116.7797184,5.9384793,Ranau,West Coast,2005,0,0,0.021,366.0,0,False,village,25.0595,train,measured
+S0873,Kinapulidan,116.682421,5.9170408,Ranau,West Coast,3636,0,0,0.028666666666666656,480.0,4,False,village,89.208,train,measured
+S0874,Silou,116.673658,5.9288172,Ranau,West Coast,12631,5,3,0.154,480.0,8,True,village,93.152,train,measured
+S0875,Torikon,116.8143039,5.7984346,Ranau,West Coast,991,0,0,0.1965,230.0,61,True,village,20.659,train,measured
+S0876,Lungkidau,116.8137508,5.768832,Ranau,West Coast,471,0,0,-0.31375,209.0,51,True,village,12.181,train,measured
+S0879,Kigiok,116.6766684,5.913365,Ranau,West Coast,3788,0,0,0.028666666666666656,489.0,2,False,village,93.152,train,measured
+S0881,Rangko,116.6650711,5.943377,Ranau,West Coast,18873,6,3,0.8025,534.0,0,False,village,97.7085,train,measured
+S0882,Kandawayon,116.6495962,5.923018,Ranau,West Coast,4249,2,0,-0.033,649.0,0,False,village,120.758,train,measured
+S0883,Kampung Kimolohing,116.6627282,5.9568254,Ranau,West Coast,13717,7,3,0.426,539.0,0,False,hamlet,79.248,train,measured
+S0885,Kituntul Baru,116.6798494,5.9273279,Ranau,West Coast,8493,3,0,0.29633333333333334,470.0,6,True,village,79.424,train,measured
+S0886,Luanti Baru,116.7695968,5.9452917,Ranau,West Coast,2321,0,0,0.144,342.0,0,False,village,30.261,train,measured
+S0887,Rugading,116.6933878,5.89555,Ranau,West Coast,141,0,0,-0.178,608.0,0,False,village,103.689,validate,low_evidence
+S0888,Namaus,117.0066397,6.1128722,Ranau,West Coast,84,1,0,-0.19,88.0,58,True,village,161.8735,validate,low_evidence
+S0889,Lipoi,116.6844362,5.919847,Ranau,West Coast,3582,0,0,0.1795,465.0,4,False,village,84.7295,train,measured
+S0890,Matan,116.6682464,5.9394339,Ranau,West Coast,19099,6,3,0.6523333333333333,520.0,6,True,village,100.794,train,measured
+S0891,Puru-Puru,116.6734967,5.9532487,Ranau,West Coast,17670,7,3,0.839,505.0,0,False,village,75.35,train,measured
+S0892,Kituntul Lama,116.6877712,5.9324806,Ranau,West Coast,6001,1,0,0.1795,466.0,2,False,village,68.533,train,measured
+S0893,Kampung Rapak,116.6774517,5.9598816,Ranau,West Coast,14032,8,3,0.48975,505.0,0,False,hamlet,61.761,train,measured
+S0894,Tiang Baru,116.6593729,5.9343748,Ranau,West Coast,14221,6,3,0.4803333333333333,558.0,0,False,village,107.386,train,measured
+S0895,Pasir Putih,116.6589887,5.9379386,Ranau,West Coast,16126,6,3,0.4803333333333333,553.0,0,False,village,100.794,train,measured
+S0896,Lingkudau,116.6721673,5.9484432,Ranau,West Coast,19313,7,3,0.64,516.0,2,False,village,82.389,train,measured
+S0897,Paka 2,116.6684622,5.9474853,Ranau,West Coast,19068,6,3,0.736,533.0,2,False,village,82.571,train,measured
+S0898,Kologon,116.6567443,5.9416958,Ranau,West Coast,14854,6,3,0.4195,626.0,0,False,village,113.65,train,measured
+S0899,Giman,116.6632738,5.9619833,Ranau,West Coast,12348,8,3,0.5205,651.0,0,False,village,74.2605,train,measured
+S0900,Gusi,117.0953603,6.10603,Ranau,West Coast,207,0,0,-0.489,60.0,74,True,village,100.991,train,measured
+S0902,Pugi,116.9159277,6.2108327,Ranau,West Coast,0,0,0,-0.357,223.0,0,False,village,151.4915,train,measured
+S0903,Manikulau,116.9440347,6.070614,Ranau,West Coast,275,0,0,-0.462,104.0,0,False,village,136.692,train,measured
+S0904,Kiwakau,117.0084853,6.116152,Ranau,West Coast,84,1,0,-0.19,86.0,50,True,village,161.8735,validate,low_evidence
+S0905,Pamaitan,116.9879866,6.0959129,Ranau,West Coast,378,1,0,-0.37275,98.0,42,True,village,85.282,train,measured
+S0906,Tundangon,117.0372115,6.1071192,Ranau,West Coast,0,0,0,-0.509,83.0,72,True,village,109.705,validate,low_evidence
+S0907,Karagasan,117.0094102,6.114858,Ranau,West Coast,84,1,0,-0.19,75.0,63,True,village,129.836,validate,low_evidence
+S0908,Botung,116.9956752,6.1078613,Ranau,West Coast,84,2,0,-0.19,130.0,92,True,village,129.836,validate,low_evidence
+S0909,Lunsiu,116.9742026,6.1041794,Ranau,West Coast,407,1,0,-0.23633333333333337,107.0,82,True,village,85.282,train,measured
+S0910,Pinitudahan,116.9682867,6.1001746,Ranau,West Coast,407,1,0,-0.184,114.0,47,True,village,85.282,train,measured
+S0912,Puralai,116.9574731,6.06162,Ranau,West Coast,275,0,0,-0.462,170.0,0,False,village,136.692,train,measured
+S0914,Meridi,116.9734444,6.0951114,Ranau,West Coast,407,1,0,-0.286,88.0,103,True,village,82.127,train,measured
+S0915,Lobou Baru,116.863994,6.126042,Ranau,West Coast,1034,0,0,-0.16833333333333333,160.0,0,False,village,21.818,train,measured
+S0916,Paka,116.9409276,6.0582367,Ranau,West Coast,275,0,0,-0.462,105.0,0,False,village,136.692,train,measured
+S0917,Pupuan,116.972556,6.0789621,Ranau,West Coast,378,1,0,-0.135,86.0,0,False,village,88.437,train,measured
+S0918,Kilanas,116.9474774,6.0739994,Ranau,West Coast,247,0,0,-0.462,117.0,0,False,village,136.692,train,measured
+S0919,Tagibang,116.936323,6.2312313,Ranau,West Coast,0,0,0,-0.607,244.0,0,False,village,144.9045,train,measured
+S0920,Giring,116.9494928,6.0640973,Ranau,West Coast,275,0,0,-0.462,100.0,0,False,village,136.692,train,measured
+S0921,Molinsau,116.9520933,6.163694,Ranau,West Coast,340,0,0,-0.22766666666666668,113.0,0,False,village,46.3835,train,measured
+S0922,Kawiyan,116.9433461,6.0642153,Ranau,West Coast,275,0,0,-0.462,94.0,0,False,village,136.692,train,measured
+S0924,Linapasan,116.9633332,6.171814,Ranau,West Coast,167,0,0,-0.233,124.0,0,False,village,53.0465,train,measured
+S0925,Nawanon,116.9051814,6.2019449,Ranau,West Coast,0,0,0,-0.5125,180.0,0,False,village,161.854,train,measured
+S0926,Wayan,116.9494127,6.141252,Ranau,West Coast,266,0,0,-0.136,125.0,112,True,village,77.87,validate,low_evidence
+S0927,Mokodou,116.9328793,6.1576467,Ranau,West Coast,296,0,0,-0.2345,123.0,107,True,village,77.87,validate,low_evidence
+S0928,Tinutuan,116.8182326,6.1095094,Ranau,West Coast,742,0,0,-0.3545,218.0,27,True,village,156.145,train,measured
+S0929,Tanid,116.9462711,6.1617573,Ranau,West Coast,390,0,0,-0.14766666666666667,121.0,63,True,village,46.3835,train,measured
+S0930,Daramakan,116.8346982,6.1620568,Ranau,West Coast,0,0,0,-0.31525,177.0,1,False,village,91.889,train,measured
+S0931,Timbua B,116.863674,6.1160327,Ranau,West Coast,981,0,0,-0.061,165.0,16,True,village,21.818,train,measured
+S0934,Lobou Timbua,116.8496786,6.0977074,Ranau,West Coast,377,0,0,-0.379,172.0,49,True,village,70.192,train,measured
+S0936,Lobou Kiyip,116.89535,6.1899187,Ranau,West Coast,0,0,0,-0.431,166.0,0,False,village,171.44,train,measured
+S0938,Togop Darat,116.8111433,6.1655933,Ranau,West Coast,308,0,0,-0.44775,199.0,2,False,village,115.142,validate,low_evidence
+S0939,Kantas,116.9017807,6.211838,Ranau,West Coast,0,0,0,-0.5125,226.0,0,False,village,161.854,train,measured
+S0940,Pinawantai,116.7789947,6.15882,Ranau,West Coast,1202,0,0,-0.4463333333333333,271.0,0,False,village,74.037,train,measured
+S0941,Tarawas,116.7986317,6.119726,Ranau,West Coast,1031,0,0,-0.2815,263.0,0,False,village,206.3515,train,measured
+S0942,Morungin 1,116.8755335,6.1275936,Ranau,West Coast,455,0,0,-0.1705,147.0,51,True,village,9.791,train,measured
+S0943,Monggis,116.7656937,6.20053,Ranau,West Coast,1234,0,0,-0.403,300.0,0,False,village,81.411,validate,low_evidence
+S0944,Timbua A,116.8612539,6.1141163,Ranau,West Coast,846,0,0,-0.061,168.0,8,True,village,21.818,train,measured
+S0945,Morungin 2,116.8671691,6.133676,Ranau,West Coast,455,0,0,-0.12066666666666669,152.0,40,True,village,13.051,train,measured
+S0946,Perancangan,116.7974408,6.0692593,Ranau,West Coast,1155,0,1,-0.18633333333333332,254.0,2,False,village,28.066,train,measured
+S0949,Lutut,116.7930835,6.006978,Ranau,West Coast,669,0,0,-0.17266666666666666,255.0,0,False,village,149.4875,train,measured
+S0950,Langsat,116.7978462,6.0481787,Ranau,West Coast,311,0,1,-0.5255,225.0,4,False,village,37.197,train,measured
+S0951,Takutan,116.7732327,6.0886156,Ranau,West Coast,518,1,0,-0.237,292.0,0,False,village,48.459,validate,low_evidence
+S0952,Togis,116.7758169,6.0724026,Ranau,West Coast,1244,1,1,-0.3396666666666666,253.0,4,False,village,28.957,train,measured
+S0953,Kirokot,116.8330692,6.0626507,Ranau,West Coast,287,0,0,-0.316,259.0,0,False,village,20.278,train,measured
+S0954,Singgaron Baru,116.7983156,6.02306,Ranau,West Coast,443,0,0,-0.3295,245.0,8,True,village,179.188,train,measured
+S0955,Waluhu,116.7998473,5.98922,Ranau,West Coast,0,0,0,-0.615,264.0,0,False,village,179.188,train,measured
+S0956,Bongkud,116.7563363,6.0214701,Ranau,West Coast,4327,0,0,-0.03,318.0,1,False,village,73.744,train,measured
+S0957,Dobut,116.8001574,6.0633286,Ranau,West Coast,1167,0,1,-0.4286666666666667,259.0,3,False,village,29.7345,train,measured
+S0958,Lasing,116.6782755,5.9641354,Ranau,West Coast,11751,7,3,0.48975,512.0,0,False,village,52.368,train,measured
+S0959,Rondogung Baru,116.7379799,6.016495,Ranau,West Coast,5708,0,0,0.32666666666666666,349.0,14,True,village,63.6895,train,measured
+S0960,Nampasan Baru,116.7251583,6.0293568,Ranau,West Coast,766,0,0,-0.009333333333333341,442.0,0,False,village,57.137,train,measured
+S0961,Nopung 2,116.7574738,6.044906,Ranau,West Coast,1758,0,0,-0.3425,313.0,0,False,village,51.725,train,measured
+S0962,Narawang,116.7805573,6.0064741,Ranau,West Coast,474,0,0,-0.206,271.0,20,True,village,161.3925,train,measured
+S0963,Kokob,116.7029234,5.9741689,Ranau,West Coast,472,2,0,-0.036,544.0,0,False,village,24.26,train,measured
+S0964,Namaus,116.7599998,6.0185567,Ranau,West Coast,3941,0,0,0.03966666666666666,306.0,1,False,village,76.925,train,measured
+S0965,Nopung 1,116.7431299,6.0459598,Ranau,West Coast,1322,0,0,-0.5145,328.0,0,False,village,45.791,validate,low_evidence
+S0966,Simpang Poring,116.7371689,6.0247047,Ranau,West Coast,2810,0,0,-0.02366666666666667,334.0,3,False,village,62.32,train,measured
+S0967,Tanah Merah,116.6891078,5.9803374,Ranau,West Coast,5397,4,0,0.053333333333333344,541.0,3,False,village,21.91,train,measured
+S0968,Lohan Ulu,116.7027903,5.9946501,Ranau,West Coast,5259,4,0,0.14333333333333334,525.0,0,False,village,24.153,train,measured
+S0969,Kilimu,116.6819428,5.9799267,Ranau,West Coast,5576,4,0,0.032,584.0,0,False,village,24.151,train,measured
+S0970,Kinasaraban Baru,116.7284581,6.0010386,Ranau,West Coast,4697,1,0,0.399,404.0,0,False,village,41.049,train,measured
+S0971,Koligan,116.7244884,5.9984402,Ranau,West Coast,4412,2,0,0.3795,425.0,0,False,village,37.538,train,measured
+S0972,Sosopon,116.7268438,6.0157129,Ranau,West Coast,3612,1,0,0.306,382.0,5,True,village,55.285,train,measured
+S0973,Marakau,116.6861618,5.9497387,Ranau,West Coast,9586,5,3,0.4775,486.0,5,True,village,63.6765,train,measured
+S0974,Lohan 1,116.7290995,6.0048282,Ranau,West Coast,4700,1,0,0.306,395.0,2,False,village,46.0475,train,measured
+S0975,Minihas,116.7348747,6.0014372,Ranau,West Coast,4781,0,0,0.223,380.0,3,False,village,57.137,train,measured
+S0976,Bahab,116.6959888,5.9602901,Ranau,West Coast,3793,2,1,0.12375,500.0,6,True,village,41.77,train,measured
+S0977,Silad,116.7445306,6.0029139,Ranau,West Coast,4699,0,0,0.19966666666666666,354.0,9,True,village,65.755,train,measured
+S0978,Sinorut,116.6712662,5.9631933,Ranau,West Coast,13370,8,3,0.48975,553.0,0,False,village,69.6555,train,measured
+S0979,Tudangan,116.7028808,5.9698134,Ranau,West Coast,461,2,0,-0.036,553.0,0,False,village,21.623,train,measured
+S0980,Lukapon,116.6806532,5.9708827,Ranau,West Coast,7619,6,3,0.29466666666666663,546.0,0,False,village,37.7665,train,measured
+S0981,Libang,116.6945286,5.958544,Ranau,West Coast,4495,4,1,0.155,503.0,9,True,village,44.8955,train,measured
+S0982,Togudon Baru,116.6774701,5.9628827,Ranau,West Coast,12703,8,3,0.48975,516.0,0,False,village,52.368,train,measured
+S0983,Kauluan,116.5975738,5.9873179,Ranau,West Coast,3264,0,1,0.276,1288.0,0,False,village,22.025,train,measured
+S0984,Kampung Dumpiring Atas,116.5734337,5.9805142,Ranau,West Coast,9576,0,1,0.9766666666666667,1300.0,0,False,hamlet,30.838,train,measured
+S0985,Kampung Desa Aman,116.5703944,5.9863327,Ranau,West Coast,9724,0,1,0.9235,1304.0,0,False,hamlet,24.937,train,measured
+S0986,Gana-Gana,116.6532332,5.8952062,Ranau,West Coast,91,0,0,-0.2565,470.0,9,True,village,22.418,train,measured
+S0987,Suminimpod,116.6426676,5.8869947,Ranau,West Coast,333,1,0,-0.4376666666666667,834.0,0,False,village,18.808,train,measured
+S0988,Mumpoit,116.5672761,5.8670441,Ranau,West Coast,662,0,0,0.3865,890.0,0,False,village,36.7275,train,measured
+S0989,Kampung Mesilau,116.5971418,6.0127686,Ranau,West Coast,4592,0,0,0.368,1480.0,0,False,hamlet,28.435,train,measured
+S0990,Monguwou,116.650652,5.9164702,Ranau,West Coast,2649,0,0,-0.033,580.0,0,False,village,73.619,train,measured
+S0991,Kampung Lembah Permai,116.5756531,5.9917774,Ranau,West Coast,9494,0,1,0.916,1221.0,0,False,hamlet,24.926,train,measured
+S0992,Kampung Kinasaraban,116.558964,5.9813703,Ranau,West Coast,5826,0,1,1.027,1381.0,0,False,hamlet,30.838,train,measured
+S0993,Somuru,116.5955176,5.9610547,Ranau,West Coast,1353,0,0,0.13766666666666666,1145.0,0,False,village,32.626,train,measured
+S0994,Kampung Dumpiring Bawah,116.5716004,5.9795071,Ranau,West Coast,9326,0,1,0.9766666666666667,1253.0,0,False,hamlet,29.689,train,measured
+S0995,Kampung Cinta Mata,116.5815896,6.0040373,Ranau,West Coast,7197,0,1,0.14566666666666667,1327.0,0,False,hamlet,24.1315,train,measured
+S0996,Kampung Sinisian,116.5780289,5.9827035,Ranau,West Coast,10044,0,1,0.7523333333333334,1284.0,0,False,hamlet,30.653,train,measured
+S0997,Mohimboyon Lama,116.5742441,5.9490421,Ranau,West Coast,943,0,0,-0.3333333333333333,944.0,0,False,village,47.193,train,measured
+S0998,Kampung Nampasan Lama,116.6548254,5.87496,Ranau,West Coast,23,1,0,-0.465,732.0,0,False,hamlet,39.198,train,measured
+S1000,Mohimboyon Baru,116.5879609,5.942872,Ranau,West Coast,517,0,0,-0.12775,814.0,0,False,village,40.735,train,measured
+S1002,Gondohon,116.5294,5.9726888,Ranau,West Coast,2669,0,0,0.2505,1058.0,0,False,village,34.208,train,measured
+S1003,Pinausuk,116.6005266,5.9715748,Ranau,West Coast,1844,0,0,0.23566666666666666,1073.0,0,False,village,28.725,train,measured
+S1004,Bundu Tuhan Sokid,116.5288336,5.9855495,Ranau,West Coast,3306,0,0,0.479,1209.0,0,False,village,30.3175,train,measured
+S1005,Bundu Tuhan Sibah,116.5296757,5.9767187,Ranau,West Coast,2897,0,0,0.417,1035.0,0,False,village,34.1195,train,measured
+S1006,Tinompok,116.5315391,6.0042032,Ranau,West Coast,1847,0,0,0.369,1510.0,0,False,village,30.094,train,measured
+S1007,Kampung Kinandusan,116.5822124,5.9655513,Ranau,West Coast,3319,0,1,0.408,1223.0,0,False,hamlet,32.866,train,measured
+S1008,Lagkau,116.578317,5.864768,Ranau,West Coast,747,0,0,0.1035,891.0,0,False,village,10.3225,train,measured
+S1010,Naradau,116.610333,5.9699241,Ranau,West Coast,859,0,0,0.226,1009.0,0,False,village,27.148,train,measured
+S1011,Tungou,116.5484932,5.8686007,Tambunan,Interior,203,0,0,0.086,823.0,0,False,village,50.19,train,measured
+S1015,Narambai,116.5993356,5.868776,Ranau,West Coast,248,0,0,-0.4493333333333333,843.0,0,False,village,9.895,validate,low_evidence
+S1016,Kopongian,116.6364847,5.884974,Ranau,West Coast,311,1,0,-0.371,932.0,0,False,village,10.7785,train,measured
+S1018,Poropot,116.6024693,5.8939654,Ranau,West Coast,239,0,0,-0.06333333333333334,701.0,0,False,village,16.2525,train,measured
+S1019,Komburongoh,116.5523936,5.9148989,Ranau,West Coast,1256,1,0,-0.14033333333333334,830.0,0,False,village,18.924,train,measured
+S1020,Rondogung,116.5840241,5.8730698,Ranau,West Coast,724,0,0,-0.14425,873.0,0,False,village,10.3225,train,measured
+S1021,Kosisingon,116.5708248,5.8880026,Ranau,West Coast,454,0,0,-0.15833333333333333,728.0,0,False,village,22.976,train,measured
+S1022,Karanaan,116.5383608,5.9289554,Ranau,West Coast,482,1,0,-0.23433333333333337,746.0,0,False,village,18.924,train,measured
+S1023,Soyod,116.5524134,5.9285252,Ranau,West Coast,1154,1,0,-0.16666666666666666,780.0,0,False,village,18.924,train,measured
+S1024,Pahu,116.5545268,5.9428587,Ranau,West Coast,813,1,0,-0.0815,1063.0,0,False,village,26.2775,train,measured
+S1025,Mogoho,116.5622378,5.9272681,Ranau,West Coast,853,1,0,-0.26925,822.0,0,False,village,20.9925,train,measured
+S1026,Maukab,116.5572532,5.898538,Ranau,West Coast,1342,1,0,-0.2843333333333333,950.0,0,False,village,22.3385,train,measured
+S1027,Pangasaan,116.6025198,5.923704,Ranau,West Coast,210,0,0,0.07825,913.0,0,False,village,32.588,train,measured
+S1028,Tudan,116.4894282,5.9358347,Ranau,West Coast,433,0,0,-0.4025,1277.0,0,False,village,7.246,train,measured
+S1029,Kiwawoi,116.5957405,5.9051146,Ranau,West Coast,379,0,0,-0.14066666666666666,687.0,0,False,village,21.2995,train,measured
+S1030,Piasau,116.5389621,5.9197567,Ranau,West Coast,994,1,0,-0.1925,1003.0,0,False,village,18.346,train,measured
+S1031,Sosondoton,116.5094692,5.9339827,Ranau,West Coast,184,0,0,-0.5463333333333333,1123.0,0,False,village,7.246,train,measured
+S1032,Ratau,116.5201453,5.9432846,Ranau,West Coast,251,0,0,-0.29625,945.0,0,False,village,26.195,validate,low_evidence
+S1033,Nagaya,116.4979724,5.9200367,Ranau,West Coast,198,0,0,-0.36575,1164.0,0,False,village,5.087,train,measured
+S1034,Sumalang,116.5573592,5.9048187,Ranau,West Coast,1425,1,0,-0.289,1041.0,0,False,village,29.643,train,measured
+S1035,Sarapong,116.6376991,5.9159618,Ranau,West Coast,159,0,0,-0.207,605.0,0,False,village,10.253,train,measured
+S1036,Noluoh,116.6076652,5.9124034,Ranau,West Coast,236,0,0,0.072,768.0,0,False,village,23.6335,train,measured
+S1037,Liposu Baru,116.6325077,5.9781873,Ranau,West Coast,497,0,0,-0.268,932.0,0,False,village,8.783,train,measured
+S1038,Waang,116.6017936,5.9222387,Ranau,West Coast,210,0,0,0.07825,893.0,0,False,village,25.835,train,measured
+S1039,Tambiau,116.6212631,5.9216559,Ranau,West Coast,135,0,0,-0.0605,752.0,0,False,village,25.835,train,measured
+S1040,Liposu Lama,116.6271793,5.9776888,Ranau,West Coast,562,0,0,-0.268,900.0,0,False,village,8.596,train,measured
+S1041,Ruhukon,116.6317392,5.9616214,Ranau,West Coast,1096,0,0,-0.0255,802.0,0,False,village,19.999,train,measured
+S1042,Batu 5,116.6312945,5.9490482,Ranau,West Coast,1031,0,0,0.09525,789.0,0,False,village,19.259,train,measured
+S1043,Purak Pogis,116.6275559,5.9360702,Ranau,West Coast,865,0,0,0.048,674.0,0,False,village,26.504,train,measured
+S1044,Koporingan Lama,116.6218703,5.9398281,Ranau,West Coast,865,0,0,0.048,791.0,0,False,village,24.5965,train,measured
+S1045,Tinatasan,116.500596,5.9494673,Ranau,West Coast,257,0,0,-0.5463333333333333,1074.0,0,False,village,6.1665,validate,low_evidence
+S1046,Koporingan Baru,116.6217402,5.9431707,Ranau,West Coast,867,0,0,0.154,844.0,0,False,village,22.902,train,measured
+S1047,Tamalang,116.6315073,5.967166,Ranau,West Coast,540,0,0,-0.0255,808.0,0,False,village,19.999,train,measured
+S1048,Paka 1,116.6394034,5.9577252,Ranau,West Coast,1030,3,2,-0.010666666666666677,660.0,0,False,village,19.999,train,measured
+S1049,Kibbas,116.6327509,5.945148,Ranau,West Coast,1011,1,0,0.09525,800.0,0,False,village,21.4505,train,measured
+S1050,Pulutan,116.5420322,5.9480847,Ranau,West Coast,1205,0,0,-0.107,1117.0,0,False,village,26.2775,train,measured
+S1052,Toboh Lama,116.5001558,5.9462983,Ranau,West Coast,315,0,0,-0.5463333333333333,1026.0,0,False,village,6.1665,validate,low_evidence
+S1053,Togudon Lama,116.5351745,5.9458883,Ranau,West Coast,1117,0,0,-0.11466666666666665,1154.0,0,False,village,26.2775,train,measured
+S1054,Himbaan,116.5476671,5.9577048,Ranau,West Coast,1053,0,0,0.36766666666666675,1252.0,0,False,village,34.031,train,measured
+S1055,Binanding,116.424063,4.502049,Nabawan,Interior,0,1,1,-0.044,162.0,80,True,village,7.898,validate,low_evidence
+S1059,Piowou,116.3081253,4.5261095,Nabawan,Interior,0,1,1,,168.0,13,True,village,43.784,validate,low_evidence
+S1060,Kampung Muhibbah,116.1423074,5.3309455,Keningau,Interior,21025,12,0,0.64375,296.0,0,False,hamlet,153.3985,train,measured
+S1064,Tulir,116.2857169,4.5600478,Nabawan,Interior,0,1,0,,178.0,10,True,village,48.119,validate,low_evidence
+S1066,Kampung Tuarid Taud,116.181591,5.3458817,Keningau,Interior,11763,7,2,0.678,271.0,23,True,hamlet,99.213,train,measured
+S1067,Kampung Toboh Baru,116.186841,5.3697845,Keningau,Interior,11181,3,2,0.555,301.0,1,False,hamlet,100.244,train,measured
+S1068,Kampung Bakiau,116.1502831,5.3176349,Keningau,Interior,17720,9,0,0.733,260.0,61,True,hamlet,136.223,train,measured
+S1069,Kampung Baginda,116.205764,5.3781368,Keningau,Interior,10982,2,1,0.154,294.0,132,True,hamlet,53.078,train,measured
+S1070,Kampung Awas Awas,116.2108103,5.4027902,Keningau,Interior,10552,2,0,0.16125,306.0,0,False,hamlet,33.309,train,measured
+S1071,Kampung Banjar,116.139442,5.3129571,Keningau,Interior,11297,6,0,0.5843333333333334,262.0,63,True,hamlet,103.1,train,measured
+S1072,Kampung Baitah,116.2019406,5.3003001,Keningau,Interior,164,0,0,-0.223,330.0,0,False,hamlet,72.2335,train,measured
+S1073,Kampung Tiulon,116.3860528,5.1234242,Keningau,Interior,908,0,0,-0.0365,379.0,0,False,hamlet,85.283,validate,low_evidence
+S1074,Kampung Babason,116.2829209,5.1381847,Keningau,Interior,1923,0,0,-0.0085,355.0,0,False,hamlet,52.024,train,measured
+S1076,Skim Bumburing,116.2331743,5.4127509,Keningau,Interior,2486,2,0,0.413,311.0,263,True,village,27.598,train,measured
+S1078,Kampung Tigot,116.1956928,5.3655019,Keningau,Interior,8063,2,1,0.58,288.0,191,True,hamlet,87.4265,train,measured
+S1079,Kampung Tetiku Pamalan,116.1685997,5.3832728,Keningau,Interior,10201,3,1,0.6403333333333333,324.0,1,False,hamlet,82.8005,train,measured
+S1080,Kampung Toboh Laut,116.186148,5.3493578,Keningau,Interior,8380,5,2,0.678,278.0,0,False,hamlet,84.715,train,measured
+S1081,Kampung Samalang,116.1512737,5.3700486,Keningau,Interior,11677,4,1,0.717,366.0,2,False,hamlet,104.14,train,measured
+S1083,Kampung Tanah Merah,116.1526828,5.3975112,Keningau,Interior,1329,0,0,-0.01075,401.0,0,False,hamlet,63.041,train,measured
+S1091,Liu,117.0956768,6.9036909,Pitas,Kudat,429,0,0,-0.407,11.0,0,False,village,42.4025,train,measured
+S1092,Polod 1,117.1804086,6.7793551,Pitas,Kudat,429,0,0,-0.355,16.0,0,False,village,47.566,validate,low_evidence
+S1093,Kapok,117.1101539,6.9152911,Pitas,Kudat,0,0,0,-0.4195,11.0,0,False,village,33.309,train,measured
+S1094,Polod 2,117.1779827,6.7857478,Pitas,Kudat,0,0,0,-0.2045,20.0,0,False,village,47.566,validate,low_evidence
+S1097,Liu Darat,117.0938266,6.9042192,Pitas,Kudat,429,0,0,-0.407,29.0,0,False,village,42.4025,train,measured
+S1102,Bolouh,117.1625517,6.8333174,Pitas,Kudat,1664,1,0,0.149,15.0,0,False,village,46.396,train,measured
+S1103,Ungkup,117.1323231,6.8362972,Pitas,Kudat,0,0,0,-0.168,9.0,0,False,village,45.963,validate,low_evidence
+S1106,Mangkapon Radap,117.1860354,6.763685,Pitas,Kudat,429,0,0,-0.4116666666666666,13.0,0,False,village,58.232,validate,low_evidence
+S1110,Maringgan,117.1951715,6.945283,Pitas,Kudat,141,0,0,-0.446,15.0,0,False,village,128.643,validate,low_evidence
+S1114,Mangkapon Darat,117.1809015,6.7677394,Pitas,Kudat,429,0,0,-0.355,30.0,0,False,village,47.566,validate,low_evidence
+S1115,Bawing,117.1150191,6.9391582,Pitas,Kudat,78,0,0,-0.042,5.0,13,True,village,95.123,validate,low_evidence
+S1116,Kodong,117.0945086,6.8921416,Pitas,Kudat,429,0,0,-0.501,19.0,0,False,village,68.1605,validate,low_evidence
+S1117,Jambu,117.0976262,6.8692151,Pitas,Kudat,0,0,0,-0.412,47.0,0,False,village,14.9,validate,low_evidence
+S1118,Gumpa,117.108642,6.8584471,Pitas,Kudat,0,0,0,-0.36,21.0,0,False,village,14.9,validate,low_evidence
+S1119,Pungitan Polod,117.179138,6.7816121,Pitas,Kudat,368,0,0,-0.284,19.0,0,False,village,47.566,validate,low_evidence
+S1120,Lukan,117.1725364,6.7771882,Pitas,Kudat,306,0,0,-0.284,16.0,0,False,village,47.566,validate,low_evidence
+S1121,Mangkapon Laut,117.1866501,6.7660043,Pitas,Kudat,429,0,0,-0.4116666666666666,13.0,0,False,village,86.04,validate,low_evidence
+S1122,Lumat,115.7447944,5.4027212,Beaufort,Interior,3227,0,0,0.183,14.0,9,True,village,32.098,train,measured
+S1127,Kinarut,116.0431553,5.8244279,Papar,West Coast,19199,3,0,1.1475,10.0,0,False,town,190.7475,train,measured
+S1128,Kampung Mapat,117.2958457,6.5922825,Beluran,Sandakan,0,0,0,-0.4625,19.0,0,False,hamlet,193.5095,validate,low_evidence
+S1130,Kampung Maidan,117.3195892,6.5793823,Beluran,Sandakan,0,0,0,-0.7005,17.0,0,False,hamlet,164.434,validate,low_evidence
+S1133,Kampung Kaung Lapai,116.4384247,6.0807034,Tuaran,West Coast,156,1,0,0.145,794.0,0,False,village,12.257,validate,low_evidence
+S1135,Wallace Bay,117.6629814,4.2441691,Tawau,Tawau,0,0,0,,22.0,29,True,village,92.392,validate,low_evidence
+S1136,Solibog,116.3369158,5.6235719,Tambunan,Interior,4281,2,2,-0.12233333333333336,520.0,7,True,village,41.6815,train,measured
+S1137,Nupakan,116.4716169,5.6435725,Tambunan,Interior,124,0,0,-0.3425,876.0,0,False,village,10.528,validate,low_evidence
+S1138,Lalapakon,116.3473513,5.6357365,Tambunan,Interior,4341,3,2,0.35775,531.0,0,False,village,37.879,train,measured
+S1139,Kampung Air,116.0731772,5.9779635,KotaKinabalu,West Coast,43737,16,14,1.0655,12.0,238,True,village,210.1005,train,measured
+S1140,Likas,116.1023998,5.9876497,KotaKinabalu,West Coast,49988,22,6,0.9863333333333334,9.0,125,True,village,222.048,train,measured
+S1141,Serudong Laut,117.4338135,4.2530081,Tawau,Tawau,66,0,0,-0.4905,6.0,53,True,village,72.805,train,measured
+S1142,Kampung Penampang Proper,116.1044142,5.9053514,Penampang,West Coast,39846,3,0,0.91075,14.0,2,False,village,230.071,train,measured
+S1143,Sembulan,116.0672468,5.9583428,KotaKinabalu,West Coast,68654,19,19,1.0816666666666668,6.0,22,True,village,224.4295,train,measured
+S1144,Kampung Seng Kee,118.0917576,5.8318673,Sandakan,Sandakan,14277,9,1,0.669,3.0,88,True,hamlet,210.473,train,measured
+S1145,Kampung Garinono,117.8167543,5.8244287,Sandakan,Sandakan,421,0,0,0.1105,56.0,0,False,village,34.9495,train,measured
+S1146,Kampung Iran,117.5604771,5.8808116,Beluran,Sandakan,23375,3,2,0.15066666666666664,23.0,1,False,village,52.0395,train,measured
+S1147,Kampung Lintuhun,116.3657838,5.6723615,Tambunan,Interior,8654,5,2,0.9615,580.0,2,False,village,42.746,train,measured
+S1148,Kampung Timbou,116.3762806,5.6971603,Tambunan,Interior,6761,0,1,0.29733333333333334,614.0,0,False,village,34.769,train,measured
+S1149,Kampung Papar,116.3609761,5.6770722,Tambunan,Interior,8193,4,2,0.675,590.0,0,False,village,42.746,train,measured
+S1150,Kampung Tombotuon,116.4038244,5.7241723,Tambunan,Interior,5177,4,0,-0.019,648.0,0,False,village,40.429,train,measured
+S1151,Kampung Kipaku,116.4067157,5.7396865,Tambunan,Interior,2175,4,0,-0.25433333333333336,666.0,0,False,village,57.034,train,measured
+S1152,Kampung Pantai,116.3969058,5.7268046,Tambunan,Interior,6032,4,0,0.2803333333333334,668.0,0,False,village,42.551,train,measured
+S1153,Kampung Jawa Uloi,115.9560133,5.1444047,Tenom,Interior,4071,7,2,0.29133333333333333,194.0,0,False,village,36.387,train,measured
+S1154,Kampung Bunut,115.9511845,5.1227783,Tenom,Interior,9633,6,2,0.834,179.0,37,True,village,43.003,train,measured
+S1155,Kampung Mantailang,115.9586872,5.1692031,Tenom,Interior,5120,2,0,-0.042,233.0,0,False,village,27.303,train,measured
+S1156,Kampung Masjid Keningau,116.1524864,5.3308276,Keningau,Interior,25639,11,0,0.64375,280.0,8,True,hamlet,176.004,train,measured
+S1157,Kampung Limbawan,116.1528422,5.3283971,Keningau,Interior,24648,12,0,0.64375,270.0,8,True,hamlet,171.093,train,measured
+S1158,Kampung Mottou,116.1463312,5.3405593,Keningau,Interior,23933,11,1,0.643,300.0,6,True,hamlet,180.654,train,measured
+S1159,Kampung Sondoton Baru,116.1696882,5.3668672,Keningau,Interior,19794,6,2,0.906,329.0,6,True,hamlet,119.901,train,measured
+S1160,Kampung Istimewa,118.0531029,5.8077405,Sandakan,Sandakan,25494,5,0,1.1305,4.0,56,True,hamlet,177.614,train,measured
+S1161,Kampung Gas Baru,118.033886,5.7933484,Sandakan,Sandakan,19454,2,0,1.1355,0.0,99,True,hamlet,196.248,train,measured
+S1162,Kampung Gas,118.0351893,5.7962612,Sandakan,Sandakan,21787,2,0,1.1355,4.0,81,True,hamlet,196.248,train,measured
+S1163,Kampung Desa Permai,118.0381552,5.7991646,Sandakan,Sandakan,23462,2,0,1.1355,9.0,63,True,hamlet,203.507,train,measured
+S1164,Kampung Tabah Baru,118.0694752,5.8070579,Sandakan,Sandakan,22115,5,0,0.822,-1.0,83,True,hamlet,157.6135,train,measured
+S1165,Kampung Karamunting Lama,118.0742504,5.8111522,Sandakan,Sandakan,20286,4,0,0.822,5.0,93,True,hamlet,137.613,train,measured
+S1166,Park Residence,116.0904479,5.8733347,Penampang,West Coast,16269,0,0,0.9213333333333334,11.0,3,False,village,232.059,train,measured
+S1167,Sugud,116.1000824,5.8759415,Penampang,West Coast,16310,0,0,0.68175,10.0,5,True,town,237.862,train,measured
+S1168,Bukit Padang,116.1080861,5.9547841,KotaKinabalu,West Coast,46671,12,11,0.9375,19.0,42,True,village,202.161,train,measured
+S1169,Minintod,116.121068,5.9437289,Penampang,West Coast,22581,7,1,0.8525,19.0,0,False,village,169.645,train,measured
+S1170,Api-Api Centre,116.0692906,5.9751759,KotaKinabalu,West Coast,46058,13,15,1.044,18.0,243,True,village,208.9715,train,measured
+S1171,Lido,116.0673379,5.9358749,Penampang,West Coast,67718,15,16,0.778,10.0,0,False,village,231.39,train,measured
+S1172,Kepayan,116.0585403,5.9238375,Penampang,West Coast,51024,7,9,0.692,7.0,81,True,village,208.768,train,measured
+S1173,Lintas,116.0786247,5.9429606,KotaKinabalu,West Coast,74688,19,21,0.903,4.0,0,False,village,223.11,train,measured
+S1174,Kolombong,116.118493,5.9832534,KotaKinabalu,West Coast,65181,30,5,0.9116666666666666,5.0,31,True,village,220.971,train,measured
+S1175,Karamunsing,116.074655,5.9708543,KotaKinabalu,West Coast,62928,17,17,1.0123333333333333,20.0,142,True,village,208.145,train,measured
+S1176,Damai,116.0903835,5.9697232,KotaKinabalu,West Coast,67207,28,20,1.0466666666666666,32.0,0,False,village,219.791,train,measured
+S1177,Luyang,116.0896432,5.9607598,KotaKinabalu,West Coast,70890,27,19,0.9546666666666667,9.0,4,False,village,220.114,train,measured
+S1178,Kampung Setinggan Sembulan,116.0680273,5.9672262,KotaKinabalu,West Coast,59310,22,16,1.044,2.0,129,True,village,219.679,train,measured
+S1179,Kampung Sembulan Lama,116.0687301,5.966714,KotaKinabalu,West Coast,61286,22,16,1.044,2.0,117,True,village,217.895,train,measured
+S1180,Bundusan,116.1034512,5.9469302,KotaKinabalu,West Coast,51347,10,11,0.956,16.0,21,True,village,216.866,train,measured
+S1181,Kampung Forest,118.1136084,5.8685825,Sandakan,Sandakan,41122,13,2,1.2395,1.0,256,True,hamlet,170.88,train,measured
+S1182,Kampung Lingkudau,116.1620455,5.3313818,Keningau,Interior,24024,11,1,0.5725,270.0,29,True,hamlet,186.434,train,measured
+S1183,Kampung Kauran,116.1317302,5.3163558,Keningau,Interior,7831,6,0,0.461,263.0,4,False,village,80.3635,train,measured
+S1184,Kampung Ria,116.1657528,5.3400169,Keningau,Interior,24649,10,1,0.7526666666666667,283.0,5,True,hamlet,157.8685,train,measured
+S1185,Kampung Minawo Laut,116.1815292,5.3168613,Keningau,Interior,3398,1,0,-0.068,315.0,0,False,village,133.622,train,measured
+S1186,Kampung Minawo Ulu,116.1933541,5.3178138,Keningau,Interior,1253,0,0,-0.205,335.0,0,False,village,129.126,train,measured
+S1187,Kampung Pasir Putih,116.1652611,5.3728182,Keningau,Interior,15895,4,2,0.73075,336.0,6,True,hamlet,106.3275,train,measured
+S1188,Kampung Labak,116.0664603,5.8225766,Papar,West Coast,4888,1,0,0.5753333333333334,13.0,0,False,village,161.205,train,measured
+S1189,Kampung Paung Maragang,115.8534799,5.4683256,Beaufort,Interior,389,0,0,-0.402,26.0,0,False,village,9.631,validate,low_evidence
+S1190,Salimandut,116.8662016,6.4860679,KotaMarudu,Kudat,1744,1,0,-0.3243333333333333,19.0,0,False,village,19.577,train,measured
+S1191,Teringai Darat,116.6673028,6.6674862,KotaMarudu,Kudat,380,1,0,-0.075,44.0,0,False,village,89.53,train,measured
+S1192,Teringai Laut,116.6347475,6.674904,KotaMarudu,Kudat,188,0,0,-0.183,26.0,0,False,village,14.5925,train,measured
+S1193,Samparita,116.9378807,6.5352261,KotaMarudu,Kudat,206,1,0,-0.5155,56.0,46,True,village,93.215,train,measured
+S1194,Dombotuon,116.6304968,5.9126995,Ranau,West Coast,144,0,0,-0.2285,626.0,0,False,village,23.715,train,measured
+S1195,Kampung Tinusa 1,118.0826422,5.8950994,Sandakan,Sandakan,21694,4,0,0.8563333333333333,9.0,47,True,hamlet,79.845,train,measured
+S1198,Soniton Ulu,116.9936642,6.5230887,Pitas,Kudat,0,0,0,-0.4535,62.0,0,False,village,34.7085,validate,low_evidence
+S1203,Bambanagan 1,117.0632897,6.4738447,Pitas,Kudat,0,0,0,-0.605,152.0,0,False,village,272.22,validate,low_evidence
+S1205,Nabongan,116.9866071,6.526204,Pitas,Kudat,0,0,0,-0.4963333333333333,192.0,0,False,village,39.271,validate,low_evidence
+S1207,Longgom,117.1052237,6.6638091,Pitas,Kudat,0,0,0,-0.0765,23.0,0,False,village,10.378,train,measured
+S1208,Pakagaya,117.0300315,6.576136,Pitas,Kudat,0,0,0,-0.3066666666666667,171.0,0,False,village,40.508,train,measured
+S1209,Marang Parang,117.0458134,6.5841352,Pitas,Kudat,0,0,0,-0.5163333333333334,80.0,0,False,village,40.508,train,measured
+S1210,Manggis,117.0429938,6.5769116,Pitas,Kudat,0,0,0,-0.5163333333333334,38.0,0,False,village,45.861,train,measured
+S1211,Bambangan Ulu,117.0279207,6.5885598,Pitas,Kudat,0,0,0,-0.2345,56.0,43,True,village,26.839,train,measured
+S1212,Salungkapit,117.014599,6.6435091,Pitas,Kudat,420,0,0,-0.6885,68.0,37,True,village,25.97,train,measured
+S1213,Singgah Mata,117.0855448,6.6776111,Pitas,Kudat,1142,0,0,0.116,11.0,0,False,village,14.115,validate,low_evidence
+S1214,Rinasuk Bai,117.0750177,6.6688346,Pitas,Kudat,899,0,0,-0.12566666666666665,25.0,0,False,village,14.565,validate,low_evidence
+S1215,Nibang,116.9956722,6.5488135,Pitas,Kudat,132,0,0,-0.6305,45.0,70,True,village,46.8605,validate,low_evidence
+S1216,Mandurian Ulu,117.0030458,6.595605,Pitas,Kudat,0,0,0,-0.54475,85.0,0,False,village,18.2315,train,measured
+S1217,Sumbilingon,117.0000869,6.5471766,Pitas,Kudat,66,0,0,-0.6305,183.0,53,True,village,46.8605,validate,low_evidence
+S1220,Bilangau Besar,116.9990688,6.6662192,Pitas,Kudat,0,0,0,-0.451,14.0,0,False,village,27.9525,train,measured
+S1221,Soniton Laut,116.9890607,6.559648,Pitas,Kudat,132,0,0,-0.6305,49.0,48,True,village,46.8605,validate,low_evidence
+S1222,Dandun Darat,117.0287968,6.6601369,Pitas,Kudat,420,0,0,-0.38175,15.0,0,False,village,22.916,train,measured
+S1223,Sosop Bai,117.0744373,6.6433712,Pitas,Kudat,79,0,0,-0.49725,59.0,0,False,village,22.489,train,measured
+S1224,Mandamai Bai,117.0724613,6.6384114,Pitas,Kudat,158,0,0,-0.49725,32.0,0,False,village,65.1415,validate,low_evidence
+S1226,Pampang Minalad,117.0150969,6.5857086,Pitas,Kudat,0,0,0,-0.022,34.0,48,True,village,20.976,train,measured
+S1227,Dowokon,117.0399886,6.6011253,Pitas,Kudat,0,0,0,-0.5635,36.0,0,False,village,21.109,train,measured
+S1228,Pinapak,117.0263623,6.5975969,Pitas,Kudat,0,0,0,-0.45925,21.0,74,True,village,21.109,train,measured
+S1229,Perupuk,117.0328854,6.6113481,Pitas,Kudat,0,0,0,-0.679,42.0,88,True,village,19.083,train,measured
+S1230,Kedundung,117.0081844,6.5813559,Pitas,Kudat,66,0,0,-0.5816666666666667,74.0,77,True,village,11.9435,validate,low_evidence
+S1231,Tutuwoon,117.0464107,6.6560888,Pitas,Kudat,139,0,0,-0.27466666666666667,11.0,0,False,village,20.8355,validate,low_evidence
+S1232,Pandan,117.0340874,6.6366443,Pitas,Kudat,0,0,0,-0.6883333333333334,18.0,52,True,village,20.102,validate,low_evidence
+S1233,Sapatalang,117.004257,6.6611144,Pitas,Kudat,420,0,0,-0.451,39.0,0,False,village,24.535,train,measured
+S1235,Sosop,117.0696958,6.659862,Pitas,Kudat,228,0,0,-0.16325,39.0,0,False,village,35.306,train,measured
+S1236,Lugu,117.0450732,6.6349887,Pitas,Kudat,0,0,0,-0.652,23.0,80,True,village,20.102,validate,low_evidence
+S1238,Kibulu,117.0904352,6.6726134,Pitas,Kudat,899,0,0,-0.02333333333333333,12.0,0,False,village,10.378,validate,low_evidence
+S1240,Maliau Layung,117.0419798,6.5802325,Pitas,Kudat,0,0,0,-0.5163333333333334,32.0,0,False,village,45.861,train,measured
+S1241,Rukom Laut,117.0920842,6.6941191,Pitas,Kudat,244,0,0,0.060666666666666674,30.0,14,True,village,39.916,train,measured
+S1242,Pandan Mandamai,117.0477281,6.6406578,Pitas,Kudat,0,0,0,-0.558,21.0,60,True,village,20.8355,validate,low_evidence
+S1243,Rukom Darat,117.1039099,6.6774993,Pitas,Kudat,0,0,0,-0.31033333333333335,17.0,3,False,village,12.827,train,measured
+S1244,Layang,117.1326059,6.651337,Pitas,Kudat,0,0,0,-0.41,21.0,0,False,village,10.045,validate,low_evidence
+S1245,Layong,117.1209852,6.6856458,Pitas,Kudat,0,0,0,-0.378,13.0,0,False,village,20.551,train,measured
+S1247,Dandun Laut,117.0157769,6.6626223,Pitas,Kudat,420,0,0,-0.4895,14.0,86,True,village,26.4225,train,measured
+S1248,Bitulung,117.0158056,6.6674992,Pitas,Kudat,420,0,0,-0.4895,19.0,78,True,village,19.262,train,measured
+S1249,Dandun Pusat,117.0194912,6.6589988,Pitas,Kudat,420,0,0,-0.5203333333333333,15.0,81,True,village,26.4225,train,measured
+S1250,Bawang,117.0465576,6.6751967,Pitas,Kudat,450,0,0,-0.1595,11.0,56,True,village,13.09,train,measured
+S1251,Tumbalang Kimbalang,117.1479476,6.7035443,Pitas,Kudat,0,0,0,-0.454,11.0,0,False,village,19.618,validate,low_evidence
+S1252,Kusilad,117.0783703,6.6949553,Pitas,Kudat,400,0,0,-0.05733333333333331,8.0,100,True,village,35.306,train,measured
+S1253,Kinangoh,117.1241957,6.7303801,Pitas,Kudat,0,0,0,-0.4905,13.0,0,False,village,14.351,validate,low_evidence
+S1254,Gambir,117.123128,6.7174121,Pitas,Kudat,0,0,0,-0.642,10.0,0,False,village,19.618,validate,low_evidence
+S1255,Ladap,117.1212654,6.7146886,Pitas,Kudat,0,0,0,-0.642,23.0,0,False,village,19.618,validate,low_evidence
+S1256,Andap,117.1182113,6.7137465,Pitas,Kudat,0,0,0,-0.642,10.0,0,False,village,19.618,validate,low_evidence
+S1257,Marais,115.8774283,4.8602808,Tenom,Interior,1350,0,0,-0.04266666666666665,227.0,99,True,village,11.212,train,measured
+S1259,Mogunsop,115.8778796,4.6649757,Tenom,Interior,0,0,0,-0.2,476.0,0,False,village,83.873,train,measured
+S1262,Belumbong,115.9165432,4.9498512,Tenom,Interior,1360,0,0,0.1785,203.0,136,True,village,14.5345,train,measured
+S1263,Mansasoh,115.9085547,5.0311813,Tenom,Interior,95,0,0,-0.341,233.0,0,False,village,39.242,validate,low_evidence
+S1264,Maanas,115.8888462,4.8380444,Tenom,Interior,1085,0,0,0.057,233.0,0,False,village,13.422,train,measured
+S1265,Katambalang,115.8820235,4.8489683,Tenom,Interior,1575,0,0,0.03975,225.0,96,True,village,11.212,train,measured
+S1266,Abul,115.8990228,4.9000969,Tenom,Interior,758,0,0,0.14866666666666667,250.0,0,False,village,31.606,train,measured
+S1267,Maugus,115.9287947,4.9567649,Tenom,Interior,1244,0,0,0.15675,197.0,220,True,village,12.0275,train,measured
+S1268,Batu-Batu,115.9677481,5.0300298,Tenom,Interior,720,0,0,0.2575,214.0,0,False,village,25.095,train,measured
+S1270,Bangkulin,115.9010094,4.8751133,Tenom,Interior,1026,0,0,0.19933333333333336,251.0,41,True,village,10.781,train,measured
+S1271,Malutut,115.8645618,4.6754545,Tenom,Interior,0,0,0,-0.3126666666666667,430.0,0,False,village,49.11,train,measured
+S1272,Alutok,115.8593433,4.6599606,Tenom,Interior,0,0,0,-0.3495,457.0,0,False,village,83.873,train,measured
+S1273,Mamaitom,115.9076972,4.8816281,Tenom,Interior,872,0,0,0.1045,282.0,10,True,village,15.2435,train,measured
+S1274,Namatutan,115.9099937,4.8905928,Tenom,Interior,1187,0,0,0.145,316.0,0,False,village,50.7315,train,measured
+S1275,Kauran,115.9278051,4.9389728,Tenom,Interior,506,0,0,0.0485,201.0,108,True,village,15.251,train,measured
+S1278,Nanturaan,115.8686313,4.781721,Tenom,Interior,652,0,0,-0.242,479.0,0,False,village,74.9245,validate,low_evidence
+S1279,Kemabong Baru,115.9145524,4.9003822,Tenom,Interior,5514,0,0,0.16833333333333336,246.0,15,True,village,41.9395,train,measured
+S1282,Masanoi Ulu,115.8933589,4.9714154,Tenom,Interior,517,0,0,0.0655,271.0,0,False,village,30.112,train,measured
+S1283,Kuala Rolok,115.8960283,4.8274087,Tenom,Interior,105,0,0,0.287,269.0,0,False,village,20.308,validate,low_evidence
+S1286,Sumandalom,115.9389239,5.01491,Tenom,Interior,1944,0,1,0.0555,189.0,152,True,village,20.987,train,measured
+S1287,Kalibatang Lama,115.8968561,4.8626957,Tenom,Interior,710,0,0,0.232,220.0,71,True,village,9.638,train,measured
+S1288,Mailo Malalaat,115.8918758,4.9828339,Tenom,Interior,566,0,0,0.0655,303.0,0,False,village,45.868,train,measured
+S1289,Kungkular,115.8746945,4.7973202,Tenom,Interior,1323,0,0,-0.323,452.0,0,False,village,77.686,validate,low_evidence
+S1290,Kuala Tomani Scheme,115.8824868,4.8455687,Tenom,Interior,1514,0,0,0.03975,269.0,64,True,village,11.212,train,measured
+S1291,Ulu Sugiang,115.8871329,4.9171306,Tenom,Interior,416,0,0,-0.3435,286.0,0,False,village,15.296,train,measured
+S1292,Sugiang Lama,115.9209908,4.931657,Tenom,Interior,2679,0,0,0.17866666666666667,201.0,85,True,village,34.4755,train,measured
+S1293,Kuala Tolokoson,115.9234644,4.8786559,Tenom,Interior,711,0,0,-0.066,232.0,95,True,village,16.6355,validate,low_evidence
+S1294,Enubah,115.9218609,5.009984,Tenom,Interior,2706,0,1,0.311,196.0,99,True,village,36.2545,train,measured
+S1295,Sibulu,115.9239912,4.8950427,Tenom,Interior,2476,0,0,0.02075,215.0,93,True,village,54.913,train,measured
+S1296,Pemaluyan,115.9189645,4.9424497,Tenom,Interior,909,0,0,0.20966666666666667,197.0,136,True,village,16.264,train,measured
+S1297,Kaparungan,115.8841145,4.8680918,Tenom,Interior,698,0,0,-0.0615,250.0,0,False,village,9.1145,train,measured
+S1299,Belumbong Baru,115.9099196,4.9725045,Tenom,Interior,822,0,0,0.03666666666666668,218.0,0,False,village,15.041,train,measured
+S1300,Baru Jumpa,115.8993904,4.9350834,Tenom,Interior,1259,0,0,-0.017,265.0,0,False,village,15.251,train,measured
+S1302,Ulu Mansasoh,115.9024713,5.0292796,Tenom,Interior,95,0,0,-0.374,318.0,0,False,village,39.242,validate,low_evidence
+S1304,Sugiang Baru,115.9008991,4.9193841,Tenom,Interior,3393,0,0,0.09125,243.0,0,False,village,19.668,train,measured
+S1305,Mampusuh,115.8780063,4.9719694,Tenom,Interior,31,0,0,-0.107,499.0,0,False,village,61.5205,validate,low_evidence
+S1306,Sindungon Laut,115.9826051,5.0668444,Tenom,Interior,76,0,0,-0.28,221.0,0,False,village,41.407,train,measured
+S1307,Mailo,115.8942416,4.9820097,Tenom,Interior,639,0,0,0.0655,274.0,0,False,village,49.711,train,measured
+S1308,Angalor,115.9377015,4.9617425,Tenom,Interior,598,0,0,0.135,212.0,193,True,village,13.818,train,measured
+S1309,Batu,115.9343143,4.9686314,Tenom,Interior,762,0,0,0.007333333333333321,203.0,232,True,village,8.603,train,measured
+S1310,Lalandang,115.9360104,5.0057309,Tenom,Interior,2158,0,1,0.045666666666666654,190.0,111,True,village,27.436,train,measured
+S1311,Sungei Api,115.8990804,5.0199503,Tenom,Interior,376,0,0,-0.39233333333333326,266.0,0,False,village,37.262,train,measured
+S1312,Mile 14,115.9182353,4.955506,Tenom,Interior,1209,0,0,0.005,196.0,147,True,village,13.818,train,measured
+S1313,Sindungon Panjang,115.9475247,5.0073294,Tenom,Interior,1411,0,1,-0.148,226.0,26,True,village,8.718,train,measured
+S1314,Mandalom Baru,115.9695325,5.0691297,Tenom,Interior,458,0,0,0.19225,188.0,75,True,village,41.9745,train,measured
+S1315,Blok 5,116.0012316,5.122124,Tenom,Interior,672,0,0,-0.08033333333333333,256.0,0,False,village,9.823,train,measured
+S1316,Ingatan Baru,115.929199,5.0042828,Tenom,Interior,2902,0,1,0.1505,192.0,116,True,village,33.885,train,measured
+S1317,Sindungon,115.9217612,5.03185,Tenom,Interior,210,0,0,-0.15,200.0,0,False,village,6.1865,train,measured
+S1318,Makakumpai,115.966963,5.117836,Tenom,Interior,2196,5,2,0.149,182.0,91,True,village,36.769,train,measured
+S1319,Kampung Cina,115.7459965,5.3475809,Beaufort,Interior,10315,9,4,0.6766666666666667,18.0,54,True,village,101.86,train,measured
+S1320,Kampung Muhibbah,115.7411739,5.3861222,Beaufort,Interior,3881,1,0,0.4955,12.0,8,True,village,36.404,train,measured
+S1321,Bandar Embara Budi,119.1443099,5.1656349,LahadDatu,Tawau,1895,0,0,-0.192,25.0,0,False,town,46.623,train,measured
+S1323,Bandar Gemala Pura,119.214677,5.2775082,Kinabatangan,Sandakan,2074,0,0,-0.5413333333333333,28.0,0,False,town,38.948,validate,low_evidence
+S1324,Hamparan Badai,119.2047753,5.3663703,Kinabatangan,Sandakan,1646,0,0,0.28,47.0,21,True,village,46.691,train,measured
+S1325,Felda Anjung Teduh,118.9142663,5.0627134,LahadDatu,Tawau,4069,0,0,-0.09825,22.0,0,False,village,39.0595,validate,low_evidence
+S1326,Felda Gugusan Umas,117.6581544,4.4777903,Tawau,Tawau,12538,2,0,0.20875,30.0,0,False,village,139.1355,train,measured
+S1327,Kampung Pasir Putih,117.8634798,4.2962761,Tawau,Tawau,31372,1,0,0.8783333333333334,9.0,81,True,village,177.162,train,measured
+S1328,Kampung Kau Sing,117.9691932,4.2588628,Tawau,Tawau,15138,3,0,0.57925,35.0,0,False,hamlet,165.374,train,measured
+S1329,Kampung Jaya Baru,118.2512359,4.6806536,Kunak,Tawau,25201,7,5,0.8215,13.0,110,True,village,84.7535,train,measured
+S1330,Kampung JKR Lama,118.2489301,4.6865665,Kunak,Tawau,28255,8,5,1.095,12.0,189,True,village,85.451,train,measured
+S1331,Kampung Sungai Atas,118.251426,4.669873,Kunak,Tawau,17220,6,5,0.8215,18.0,1,False,village,74.296,train,measured
+S1332,Kampung Sungai Langgas,118.2373642,4.6657885,Kunak,Tawau,16548,6,5,0.2785,30.0,0,False,village,69.786,train,measured
+S1333,Kampung Telaga Tujuh,118.2607451,4.6544051,Kunak,Tawau,916,3,0,-0.10966666666666665,23.0,12,True,village,44.838,train,measured
+S1334,Kampung Pangi Laut,118.2888423,4.6596024,Kunak,Tawau,2267,2,1,-0.204,7.0,106,True,village,37.904,train,measured
+S1335,Kampung Pangi Sungai Duyung,118.2946921,4.6530187,Kunak,Tawau,1929,2,1,-0.204,17.0,134,True,village,37.904,train,measured
+S1336,Kampung Pangi Hujung,118.2945101,4.6562419,Kunak,Tawau,1953,2,1,-0.204,7.0,116,True,village,37.904,train,measured
+S1337,Kampung Hampilan,118.2787498,4.6596061,Kunak,Tawau,2401,2,1,-0.309,9.0,59,True,village,59.825,train,measured
+S1338,Kampung Kasnuri,118.2701645,4.6567709,Kunak,Tawau,1903,2,1,-0.414,11.0,54,True,village,69.3555,train,measured
+S1339,Kampung Kunak Jaya,118.2379935,4.6907123,Kunak,Tawau,29398,8,5,0.9085,20.0,40,True,village,94.574,train,measured
+S1340,Kampung Buang Sayang,118.2416671,4.7000384,Kunak,Tawau,17758,8,5,0.8305,5.0,90,True,village,85.451,train,measured
+S1341,Kampung Buang Sayang,118.2374481,4.7017439,Kunak,Tawau,14215,8,5,0.7943333333333333,14.0,90,True,village,77.691,train,measured
+S1342,Kampung Cina,118.2327822,4.6819223,Kunak,Tawau,33464,8,5,0.6086666666666666,22.0,0,False,village,84.7535,train,measured
+S1343,Kampung Putra Jaya,118.2264649,4.7015676,Kunak,Tawau,9909,4,1,0.644,11.0,37,True,village,63.3955,train,measured
+S1344,Kampung Kabog,118.2202747,4.6987884,Kunak,Tawau,7168,3,1,0.457,28.0,0,False,village,50.9075,train,measured
+S1345,Kampung Madai,118.1892659,4.7240551,Kunak,Tawau,1768,3,0,-0.21625,8.0,28,True,village,27.367,train,measured
+S1346,Kampung Dasar,118.2130149,4.7108573,Kunak,Tawau,1227,2,0,0.3245,19.0,0,False,village,27.085,train,measured
+S1347,KAMPUNG LORMALONG,118.2035741,4.7042168,Kunak,Tawau,1179,3,0,0.033666666666666636,26.0,0,False,village,27.226,train,measured
+S1348,Taman Sri Idaman Kunak,118.2142042,4.6737847,Kunak,Tawau,16801,1,1,0.19925,61.0,0,False,village,169.658,train,measured
+S1349,Kampung Sri Bahagia,118.1992386,4.6666644,Kunak,Tawau,9228,1,0,-0.11066666666666669,141.0,11,True,village,291.62,train,measured
+S1350,Kampung Simpang Empat,118.2152212,4.6796406,Kunak,Tawau,16930,2,1,0.19925,44.0,0,False,village,153.621,train,measured
+S1351,Kampung Kadazan,118.2086639,4.6682041,Kunak,Tawau,14712,1,1,0.025,120.0,11,True,village,238.599,train,measured
+S1352,Kampung Wawasan,118.2143669,4.6832651,Kunak,Tawau,13885,2,1,0.061,46.0,0,False,village,112.5915,train,measured
+S1353,PPR Sri Pangkalan,118.2135657,4.6656399,Kunak,Tawau,15282,1,1,0.3115,95.0,0,False,village,221.679,train,measured
+S1354,Kampung Mostyn Lama,118.1979179,4.6644704,Kunak,Tawau,7453,1,0,0.108,152.0,10,True,village,312.688,train,measured
+S1355,Kampung Cenderawasih Kunak,118.2055371,4.6503874,Kunak,Tawau,6578,1,0,0.141,156.0,4,False,village,229.446,train,measured
+S1356,Kg. Kotog Ulu Sugut,116.9724739,6.085687,Ranau,West Coast,407,1,0,-0.4585,85.0,59,True,village,88.437,train,measured
+S1357,Kampung Nusa-Nusa,117.1329206,7.3278736,Kudat,Kudat,86,0,0,0.0045,11.0,125,True,hamlet,164.7355,validate,low_evidence
+S1359,Kampung Cenderamata,118.0600098,5.8076773,Sandakan,Sandakan,26583,5,0,1.0276666666666667,1.0,69,True,hamlet,196.0515,train,measured
+S1361,Kampung Ulu Memanjang,117.5756268,5.7182772,Beluran,Sandakan,4605,0,0,0.12333333333333334,41.0,19,True,hamlet,32.8465,train,measured
+S1364,Ladang Chu Lip Keong,117.9461519,5.9950993,Sandakan,Sandakan,118,0,0,-0.128,16.0,0,False,village,27.844,validate,low_evidence
+S1365,Kampung Sentosa,118.0140645,5.9484425,Sandakan,Sandakan,888,0,0,0.2285,10.0,0,False,hamlet,91.54,train,measured
+S1366,Kampung Dandulit,117.9113975,5.9945988,Sandakan,Sandakan,657,0,0,0.039,18.0,60,True,hamlet,112.59,train,measured
+S1367,Kampung Banting,117.9376049,6.002548,Sandakan,Sandakan,58,0,0,0.042,14.0,58,True,hamlet,47.7895,train,measured
+S1370,Kampung Gua Madai,118.1537403,4.7189589,Kunak,Tawau,138,0,0,-0.3065,52.0,0,False,hamlet,93.835,validate,low_evidence
+S1372,Kampung Kabog Baru,118.2283772,4.6964535,Kunak,Tawau,15350,7,5,0.7943333333333333,23.0,19,True,village,69.656,train,measured
+S1373,Kampung Bayangan,116.1943262,5.3812208,Keningau,Interior,14068,2,1,0.3446666666666667,313.0,1,False,hamlet,79.3505,train,measured
+S1374,Pekan Lama Kota Marudu,116.7520247,6.5225146,KotaMarudu,Kudat,873,3,0,0.30833333333333335,8.0,5,True,village,32.251,train,measured
+S1375,Kampung Kokol,116.1981364,6.0192661,KotaKinabalu,West Coast,1863,0,0,0.05566666666666667,477.0,0,False,hamlet,22.113,train,measured
+S1376,Pagalungan,116.4218735,4.4994724,Nabawan,Interior,0,1,1,-0.044,154.0,93,True,town,7.898,validate,low_evidence
+S1377,Tungku,118.8891255,5.0205336,LahadDatu,Tawau,3334,0,0,-0.112,8.0,50,True,town,26.282,train,measured
+S1378,Tandek,116.8482926,6.5309639,KotaMarudu,Kudat,2193,0,0,-0.172,11.0,0,False,town,37.812,train,measured
+S1379,"KAMPUNG SINASAK BATU PITAS, 89100, KOTA MARUDU, SABAH.",117.0707405,6.71689,Pitas,Kudat,4999,0,0,0.0605,6.0,90,True,village,33.325,train,measured
+S1380,Taun Gusi,116.4357307,6.3789754,KotaBelud,West Coast,10336,4,4,0.65125,12.0,3,False,village,79.966,train,measured
+S1381,Kampung Panandawan,116.2370789,6.2377035,Tuaran,West Coast,3489,0,0,0.1785,6.0,14,True,hamlet,78.444,train,measured
+S1382,Tamonong,116.2167048,6.2253902,Tuaran,West Coast,2834,0,0,0.36366666666666664,7.0,20,True,hamlet,168.5525,train,measured
+S1383,Kampung Labuaya,116.2285802,6.1930248,Tuaran,West Coast,8584,9,1,0.686,14.0,124,True,hamlet,165.689,train,measured
+S1384,Kampung Pukak,116.2262805,6.2022815,Tuaran,West Coast,6576,5,0,0.548,5.0,65,True,hamlet,151.9705,train,measured
+S1385,Kampung Raun,116.2392354,6.1935899,Tuaran,West Coast,7132,9,1,0.44733333333333336,8.0,64,True,hamlet,174.6795,train,measured
+S1386,Pekan Kiulu,116.282368,6.0582824,Tuaran,West Coast,1220,0,0,0.03075,60.0,60,True,town,25.944,train,measured
+S1387,Kampung Simpangan,116.2054181,6.2116368,Tuaran,West Coast,5383,0,0,0.6616666666666666,9.0,81,True,village,108.3525,train,measured
+S1388,Kampung Sudot Simpangan,116.2079286,6.2185695,Tuaran,West Coast,3847,0,0,0.449,8.0,1,False,hamlet,123.9305,train,measured
+S1389,Kampung Simpangan Kuala,116.2203741,6.2122767,Tuaran,West Coast,4411,0,0,0.5466666666666667,10.0,2,False,hamlet,143.1025,train,measured
+S1390,Kampung Trang Belud,116.2206638,6.2252622,Tuaran,West Coast,2894,0,0,0.36366666666666664,6.0,20,True,hamlet,149.879,train,measured
+S1391,Kampung Tajau,116.239973,6.2200467,Tuaran,West Coast,3682,0,0,0.261,9.0,66,True,village,190.9105,train,measured
+S1392,Kampung Tambalang,116.1975914,6.1822089,Tuaran,West Coast,8260,0,0,0.617,9.0,26,True,hamlet,132.797,train,measured
+S1393,Kampung Dungun,116.2166834,6.1621876,Tuaran,West Coast,11545,10,3,0.794,11.0,9,True,hamlet,183.28,train,measured
+S1394,Kampung Tagas,116.2231207,6.1568115,Tuaran,West Coast,13474,10,3,0.9003333333333333,11.0,0,False,hamlet,185.632,train,measured
+S1395,Kampung Marabahai,116.2267685,6.1672543,Tuaran,West Coast,12222,10,3,0.732,10.0,42,True,hamlet,157.496,train,measured
+S1396,Kampung Nong Koulod,116.2104571,6.128139,Tuaran,West Coast,9884,3,2,0.92,16.0,118,True,village,190.1305,train,measured
+S1397,Kampung Malalin,116.2121527,6.1365721,Tuaran,West Coast,9663,1,2,0.8846666666666666,18.0,84,True,hamlet,199.124,train,measured
+S1398,Kampung Kauluan,116.2392569,6.1248417,Tuaran,West Coast,1505,1,0,0.23,17.0,10,True,hamlet,226.74,train,measured
+S1399,Kampung Panjut,116.2262,6.153,Tuaran,West Coast,12350,9,3,0.9123333333333333,10.0,0,False,hamlet,180.9115,train,measured
+S1400,Kampung Tambalugu,116.2297618,6.1449124,Tuaran,West Coast,10193,2,2,0.8966666666666666,15.0,46,True,hamlet,212.242,train,measured
+S1401,Kampung Telibong,116.247518,6.1391467,Tuaran,West Coast,7372,4,1,0.4085,16.0,25,True,hamlet,225.899,train,measured
+S1402,Kampung Dansangai,116.2403083,6.1135339,Tuaran,West Coast,1772,1,0,0.15766666666666665,22.0,0,False,hamlet,106.795,train,measured
+S1403,Kampung Rugading,116.1944854,6.1159982,Tuaran,West Coast,18440,3,0,0.388,10.0,46,True,village,116.3735,train,measured
+S1404,Kampung Karambunai,116.1331057,6.1079279,KotaKinabalu,West Coast,7656,1,0,0.692,9.0,58,True,hamlet,165.392,train,measured
+S1405,Kampung Gayang,116.149199,6.1367039,Tuaran,West Coast,4604,0,0,0.19266666666666665,9.0,94,True,village,162.648,train,measured
+S1406,Kampung Piniang,116.1805862,6.1232895,KotaKinabalu,West Coast,9065,0,0,0.178,10.0,2,False,hamlet,97.348,train,measured
+S1407,Kampung Giling,116.2052679,6.1184304,Tuaran,West Coast,12655,2,0,0.808,15.0,52,True,hamlet,129.7755,train,measured
+S1408,Kampung Mengkabong,116.203959,6.1455524,Tuaran,West Coast,7376,1,2,0.867,11.0,102,True,village,195.747,train,measured
+S1409,Kampung Raganan,116.208111,6.1510513,Tuaran,West Coast,10311,1,2,0.867,5.0,56,True,village,185.157,train,measured
+S1410,Telipok,116.1961913,6.0901069,KotaKinabalu,West Coast,28200,5,0,0.9776666666666666,16.0,4,False,town,113.546,train,measured
+S1411,Kampung Tambulaung,116.2318513,6.0962064,Tuaran,West Coast,1314,3,0,-0.046,62.0,2,False,hamlet,65.844,train,measured
+S1412,Kampung Ulu Telipok,116.2202722,6.0959584,Tuaran,West Coast,5199,4,0,0.6375,125.0,0,False,hamlet,111.7315,train,measured
+S1413,Kampung Bongalio,116.2487948,6.1010524,Tuaran,West Coast,1463,2,0,-0.12233333333333334,357.0,0,False,hamlet,46.1855,train,measured
+S1414,Kampung Lokbuno,116.1292165,6.091099,KotaKinabalu,West Coast,10650,3,0,0.275,11.0,62,True,village,105.795,train,measured
+S1415,Kampung Besabak,116.0973304,6.0953983,KotaKinabalu,West Coast,4733,1,0,0.2955,10.0,23,True,hamlet,258.072,validate,low_evidence
+S1416,Kampung Lapasan,116.1488664,6.0945288,KotaKinabalu,West Coast,29174,3,0,0.7626666666666666,14.0,63,True,hamlet,218.901,train,measured
+S1417,Kampung Tobobon,116.1663692,6.0514943,KotaKinabalu,West Coast,42821,0,0,0.87225,15.0,1,False,village,144.681,train,measured
+S1418,Kampung Ratu,116.1690232,6.056506,KotaKinabalu,West Coast,39508,0,0,0.87225,15.0,0,False,hamlet,135.5375,train,measured
+S1419,Kampung Bendolan,116.1568567,6.0588158,KotaKinabalu,West Coast,41370,2,0,1.085,32.0,1,False,hamlet,135.357,train,measured
+S1420,Kampung Locob,116.1446017,6.0674896,KotaKinabalu,West Coast,28753,2,1,0.7146666666666667,24.0,56,True,hamlet,137.4685,train,measured
+S1421,Kampung Tampulan,116.2132233,6.0579997,KotaKinabalu,West Coast,1467,0,0,0.0805,380.0,0,False,hamlet,7.757,train,measured
+S1422,Kampung Kabayau,116.2285495,6.0665881,Tuaran,West Coast,619,0,0,-0.315,361.0,0,False,hamlet,14.003,train,measured
+S1423,Kampung Lakau,116.2373578,6.0810601,Tuaran,West Coast,1264,0,0,-0.32375,509.0,0,False,hamlet,34.846,train,measured
+S1424,Kampung Timbok,116.2068343,6.0742909,KotaKinabalu,West Coast,8028,2,0,0.309,42.0,2,False,hamlet,66.243,train,measured
+S1425,Kampung Layan,116.1093789,6.0273363,KotaKinabalu,West Coast,22543,11,5,1.1295,9.0,28,True,hamlet,167.101,train,measured
+S1426,Kampung Pulutan,116.1691868,6.0103502,KotaKinabalu,West Coast,10664,0,0,0.23975,23.0,0,False,hamlet,142.8665,train,measured
+S1427,Kampung Lumpugo,116.1856985,6.0079335,KotaKinabalu,West Coast,3815,0,0,-0.028,151.0,0,False,hamlet,30.814,train,measured
+S1428,Kampung Bangkud,116.2380284,6.0023531,KotaKinabalu,West Coast,931,0,0,-0.12566666666666668,198.0,0,False,hamlet,20.35,train,measured
+S1435,Kampung Bait,118.5381889,4.5357708,Semporna,Tawau,247,1,0,-0.031,13.0,65,True,hamlet,32.824,validate,low_evidence
+S1436,Kampung Limau Limau,118.527149,4.5323189,Semporna,Tawau,247,1,0,,5.0,36,True,hamlet,32.824,validate,low_evidence
+S1437,Kampung Tanjung Kapur,118.5328191,4.5209604,Semporna,Tawau,247,1,0,0.572,9.0,45,True,hamlet,71.021,train,measured
+S1441,Kampung Tagasan Tani,118.5525656,4.4224915,Semporna,Tawau,8525,1,0,0.06,18.0,0,False,hamlet,303.734,train,measured
+S1442,Kampung Gading Gading,118.3606267,4.6296769,Semporna,Tawau,1182,0,0,-0.415,21.0,39,True,village,48.725,validate,low_evidence
+S1443,Kampung Melati,117.8130913,4.3745678,Tawau,Tawau,3573,0,0,0.1865,6.0,144,True,hamlet,328.6405,train,measured
+S1444,Kampung Kelapa,117.7907485,4.3921384,Tawau,Tawau,1082,0,0,0.514,18.0,5,True,hamlet,75.38,train,measured
+S1446,Kampung Nipan,117.8313008,4.3299656,Tawau,Tawau,5091,0,0,0.26266666666666666,11.0,39,True,hamlet,247.8285,train,measured
+S1447,Merotai Besar,117.7759373,4.4175388,Tawau,Tawau,7775,0,0,0.57275,20.0,0,False,village,102.766,train,measured
+S0001,Kampung Menyangit,117.0679083,7.2888051,Kudat,Kudat,0,0,0,-0.8,16.0,56,True,village,46.108,check,insufficient
+S0002,Kampung Selamat,116.9266558,7.2550643,Kudat,Kudat,0,0,0,,19.0,0,False,village,,predict,insufficient
+S0003,Kampung Dogoton,117.2784103,7.3464873,Kudat,Kudat,0,0,0,-0.433,7.0,54,True,village,,predict,insufficient
+S0005,Turong Puteh,117.0579151,6.9627193,Pitas,Kudat,113,0,0,,8.0,80,True,hamlet,,predict,insufficient
+S0006,Karakit,117.0841255,7.1101449,Kudat,Kudat,1437,0,0,0.418,16.0,103,True,town,86.693,check,insufficient
+S0008,Kampung Kalutan,116.8673747,7.1981843,Kudat,Kudat,97,0,0,-0.202,14.0,53,True,village,,predict,insufficient
+S0013,Kampung Pamanuhan,117.0156305,6.786092,Pitas,Kudat,0,0,0,,9.0,96,True,village,,predict,insufficient
+S0014,Lokapas,117.2469219,6.8606122,Pitas,Kudat,193,0,0,-0.367,13.0,68,True,village,,predict,insufficient
+S0025,Kampung Pengkalan Peturu,116.3214984,6.3432786,KotaBelud,West Coast,343,0,0,-0.026,60.0,144,True,village,11.579,check,insufficient
+S0027,Nakadong,117.0647585,6.2959391,Beluran,Sandakan,0,0,0,,179.0,0,False,hamlet,,predict,insufficient
+S0031,Kg. Budu,117.2003781,5.750838,Beluran,Sandakan,329,0,0,-0.39,45.0,64,True,village,155.3115,check,insufficient
+S0032,Kg. Kapoi,117.1348698,5.7523221,Beluran,Sandakan,101,0,0,-0.7255,64.0,0,False,hamlet,201.4165,check,insufficient
+S0039,Botitian,117.312438,6.0493527,Beluran,Sandakan,124,1,0,-0.234,24.0,79,True,hamlet,53.671,check,insufficient
+S0043,Kg. Pinuanakan,117.2469804,5.8688397,Beluran,Sandakan,240,0,0,-0.4455,31.0,0,False,hamlet,,predict,insufficient
+S0046,Nabutan Baru,116.799061,5.8802415,Ranau,West Coast,80,0,0,-0.1505,280.0,34,True,village,,predict,insufficient
+S0047,Kampung Membulu,116.1212014,5.2052634,Keningau,Interior,54,0,0,-0.5945,349.0,0,False,village,,predict,insufficient
+S0061,Kampung Monggis,116.7677359,6.2072984,Ranau,West Coast,1369,0,0,-0.403,294.0,0,False,hamlet,67.9185,check,insufficient
+S0064,Kampung Rompon,116.3233754,5.5091912,Tambunan,Interior,741,0,0,-0.5175,438.0,6,True,village,216.1025,check,insufficient
+S0065,Suroh Suroh,117.1757298,6.0327756,Beluran,Sandakan,0,0,0,-0.33166666666666667,53.0,21,True,hamlet,,predict,insufficient
+S0067,Basai,117.2390266,6.0379927,Beluran,Sandakan,215,0,0,0.07266666666666667,42.0,57,True,hamlet,163.7445,check,insufficient
+S0068,Kampung Ulu Monsok,116.3886553,5.5492439,Tambunan,Interior,75,0,0,-1.077,643.0,0,False,village,,predict,insufficient
+S0071,Kg. Ponobukan,116.1921266,5.7743233,Penampang,West Coast,300,0,0,-0.634,269.0,2,False,hamlet,1.137,check,insufficient
+S0097,Malaing,116.1150432,4.9451215,Keningau,Interior,206,0,0,,405.0,0,False,hamlet,,predict,insufficient
+S0100,Kampung Pohon Batu,116.1886423,4.7903003,Nabawan,Interior,0,1,0,,537.0,0,False,hamlet,,predict,insufficient
+S0103,Tataluan,116.4924831,4.8853486,Nabawan,Interior,89,0,0,-0.2955,444.0,0,False,hamlet,128.582,check,insufficient
+S0106,Susul,116.6665974,4.9062971,Tongod,Sandakan,0,0,0,-0.025,191.0,1,False,hamlet,,predict,insufficient
+S0108,Kampung Dumiri,116.6890821,4.9369742,Tongod,Sandakan,0,0,0,,185.0,0,False,hamlet,,predict,insufficient
+S0110,Kampung Lotung,116.8574793,5.0044727,Tongod,Sandakan,41,0,0,0.309,127.0,129,True,village,,predict,insufficient
+S0112,Pahetowai,116.8625477,5.0096023,Tongod,Sandakan,41,0,0,0.309,133.0,102,True,village,,predict,insufficient
+S0120,Pandawan,116.4932214,4.9116486,Nabawan,Interior,1207,0,0,-0.2775,437.0,0,False,hamlet,128.582,check,insufficient
+S0122,Kampung Sosogoh,116.4406405,4.5622237,Nabawan,Interior,34,1,0,,151.0,76,True,hamlet,,predict,insufficient
+S0123,Dolamos,117.3361572,6.3082139,Beluran,Sandakan,99,0,0,-0.38,26.0,0,False,village,,predict,insufficient
+S0127,Kampung Tonomon,116.5239177,4.6820484,Nabawan,Interior,0,0,0,0.0655,290.0,7,True,hamlet,,predict,insufficient
+S0128,Salarom Taka,116.6034504,4.6724662,Nabawan,Interior,810,2,0,-0.33525,309.0,4,False,village,113.0415,check,insufficient
+S0129,Kampung Salarom Lama,116.1604985,4.5381511,Nabawan,Interior,0,0,0,-0.438,282.0,13,True,hamlet,,predict,insufficient
+S0136,Kampung Simbulon,116.3542796,5.9251226,Tuaran,West Coast,228,0,0,-0.194,614.0,0,False,village,22.76,check,insufficient
+S0142,,116.927504,5.2877832,Tongod,Sandakan,38,0,0,-0.814,75.0,0,False,village,,predict,insufficient
+S0143,Kampung Sinarupa,117.0357363,5.2470262,Tongod,Sandakan,0,0,0,,123.0,0,False,village,,predict,insufficient
+S0144,Kampung Adian,117.123845,5.2495224,Tongod,Sandakan,0,0,0,,57.0,8,True,village,,predict,insufficient
+S0146,Kg. Limpada,116.7273727,5.2344907,Tongod,Sandakan,0,0,0,-0.618,87.0,42,True,hamlet,,predict,insufficient
+S0147,Kg.Pingas,116.6980751,5.168687,Tongod,Sandakan,0,0,0,,111.0,8,True,hamlet,,predict,insufficient
+S0148,Kampung Intutan,116.8737008,5.0644994,Tongod,Sandakan,88,0,0,-0.2865,135.0,36,True,village,,predict,insufficient
+S0161,Ulu Tomani,115.8694316,4.694062,Tenom,Interior,162,0,0,-0.317,402.0,0,False,village,38.605,check,insufficient
+S0163,Tangkulap,117.2839792,5.2929123,Tongod,Sandakan,0,0,0,-0.398,199.0,0,False,village,,predict,insufficient
+S0167,Kampung Delima,117.2420296,6.6873606,Pitas,Kudat,0,0,0,-0.443,13.0,97,True,village,,predict,insufficient
+S0204,Kampung Samawang,117.7734137,5.9063528,Sandakan,Sandakan,0,0,0,-0.486,6.0,72,True,village,125.708,check,insufficient
+S0206,Kampung Tabanka,118.0399306,6.0192756,Sandakan,Sandakan,71,0,0,-0.476,6.0,86,True,village,,predict,insufficient
+S0228,Kg. Perpaduan Datok Moh,117.952007,5.4472156,Kinabatangan,Sandakan,128,0,1,-0.236,12.0,0,False,village,91.6935,check,insufficient
+S0236,Pangi,115.8645731,5.1391058,Tenom,Interior,1004,0,0,-0.2753333333333333,101.0,85,True,village,79.188,check,insufficient
+S0237,Halogilat,115.8315613,5.2550808,Beaufort,Interior,282,0,0,-0.351,34.0,86,True,hamlet,7.918,check,insufficient
+S0238,Rayoh,115.8804136,5.2094947,Tenom,Interior,466,0,0,-0.6545,55.0,65,True,village,2.056,check,insufficient
+S0264,,117.240836,6.5782977,Pitas,Kudat,0,0,0,-0.5485,22.0,0,False,village,,predict,insufficient
+S0268,Melubang,117.0601432,6.9584961,Pitas,Kudat,113,0,0,,8.0,58,True,village,,predict,insufficient
+S0270,Rundum Highland,116.0437506,4.7862009,Tenom,Interior,28,0,0,-0.226,1217.0,0,False,village,2.485,check,insufficient
+S0271,,116.007746,4.9162543,Tenom,Interior,62,0,0,-0.136,658.0,0,False,village,,predict,insufficient
+S0278,,116.6695267,6.8236007,Kudat,Kudat,0,0,0,-0.327,13.0,143,True,village,32.7285,check,insufficient
+S0283,Tibabar,116.8606428,6.165634,Ranau,West Coast,140,0,0,0.084,160.0,2,False,village,57.823,check,insufficient
+S0286,Lobou Lama,116.8757116,6.176349,Ranau,West Coast,56,0,0,-0.181,141.0,1,False,village,57.823,check,insufficient
+S0288,Tumbalang,116.8898098,6.1544674,Ranau,West Coast,0,0,0,-0.211,193.0,84,True,village,25.9695,check,insufficient
+S0292,Mangkapoh,116.9506451,6.1293593,Ranau,West Coast,295,0,0,-0.0175,99.0,136,True,village,156.018,check,insufficient
+S0299,Kampung Paka Kiulu,116.3930816,5.994343,Tuaran,West Coast,22,0,0,-0.4725,333.0,0,False,village,,predict,insufficient
+S0303,,117.317854,7.2318714,Kudat,Kudat,0,0,0,-0.341,15.0,124,True,hamlet,,predict,insufficient
+S0304,,117.3195224,7.2333988,Kudat,Kudat,0,0,0,-0.341,0.0,125,True,hamlet,,predict,insufficient
+S0305,,117.3236288,7.2213103,Kudat,Kudat,0,0,0,-0.341,3.0,83,True,hamlet,,predict,insufficient
+S0306,,117.3112692,7.2083514,Kudat,Kudat,0,0,0,-0.341,7.0,135,True,hamlet,,predict,insufficient
+S0347,Kampung Puhus,116.3904003,6.2594075,Tuaran,West Coast,278,1,0,-0.4485,470.0,0,False,village,13.434,check,insufficient
+S0376,Kampung Tinindukan,116.760687,6.2961999,KotaMarudu,Kudat,498,1,0,-0.4836666666666667,170.0,0,False,village,,predict,insufficient
+S0381,Kampung Pompodon,116.7548147,6.3629363,KotaMarudu,Kudat,827,0,0,-0.385,90.0,13,True,village,4.4765,check,insufficient
+S0382,Kampung Talamason,116.7450321,6.36331,KotaMarudu,Kudat,1061,0,0,-0.4165,168.0,0,False,village,4.4765,check,insufficient
+S0385,Kampung Sungai,116.6393698,6.4858096,KotaMarudu,Kudat,67,0,0,-0.782,142.0,0,False,village,,predict,insufficient
+S0398,Kampung Melapi Sugut,117.2550722,6.2182436,Beluran,Sandakan,0,0,0,-0.525,48.0,110,True,village,98.612,check,insufficient
+S0408,Kampung Lok Nunuk,116.2814788,6.2974555,Tuaran,West Coast,531,0,0,0.217,5.0,31,True,village,,predict,insufficient
+S0409,Kampung Baru-Baru,116.2939116,6.3040075,Tuaran,West Coast,550,0,0,0.217,8.0,72,True,village,,predict,insufficient
+S0415,Kampung Tinagalan Ulu,116.3036642,5.0925878,Keningau,Interior,170,0,0,-0.8126666666666665,356.0,0,False,hamlet,5.395,check,insufficient
+S0425,Kampung Kotunuan Lama,116.4677881,5.9529605,Tuaran,West Coast,74,0,0,-0.37,861.0,0,False,village,,predict,insufficient
+S0426,Kampung Pahu,116.4136636,5.9881479,Tuaran,West Coast,89,0,0,-0.5493333333333333,306.0,0,False,village,7.89,check,insufficient
+S0427,Genting,118.025088,5.6487938,Sandakan,Sandakan,71,0,0,-1.1205,16.0,0,False,hamlet,,predict,insufficient
+S0431,Ahuron,115.9881993,4.9004996,Tenom,Interior,61,0,0,-0.359,650.0,0,False,hamlet,,predict,insufficient
+S0435,Siwanal,116.2493722,4.669841,Nabawan,Interior,0,0,0,,273.0,0,False,village,,predict,insufficient
+S0436,Kampung Sumbiling,116.2290797,4.7552757,Nabawan,Interior,0,0,0,,350.0,0,False,hamlet,,predict,insufficient
+S0437,Kampung Sumbiling,116.2043332,4.7713788,Nabawan,Interior,0,1,0,-0.481,446.0,0,False,hamlet,,predict,insufficient
+S0438,,116.3107345,4.855817,Nabawan,Interior,0,0,0,,467.0,3,False,hamlet,,predict,insufficient
+S0439,Kampung Pangaraan,116.2210614,4.7340001,Nabawan,Interior,161,0,0,,314.0,0,False,hamlet,,predict,insufficient
+S0440,,117.0584809,4.5419028,Tongod,Sandakan,0,0,0,-0.036,385.0,0,False,hamlet,65.269,check,insufficient
+S0441,,116.1490975,4.812528,Nabawan,Interior,0,0,0,,714.0,0,False,hamlet,,predict,insufficient
+S0442,Kampung Binanun,116.2220216,4.8291202,Nabawan,Interior,41,1,0,-0.788,497.0,0,False,hamlet,,predict,insufficient
+S0446,Sikalabaan,116.3716693,4.5447525,Nabawan,Interior,0,0,0,,155.0,66,True,village,,predict,insufficient
+S0447,Lirung,116.3691243,4.5442058,Nabawan,Interior,0,0,0,,154.0,66,True,village,,predict,insufficient
+S0448,Tinanduk,116.3893246,4.521986,Nabawan,Interior,0,1,0,,154.0,18,True,village,12.465,check,insufficient
+S0451,Lampas Sabinait,116.3323844,4.5999402,Nabawan,Interior,319,0,0,,398.0,0,False,village,,predict,insufficient
+S0452,,116.2234837,4.8135645,Nabawan,Interior,0,1,0,-0.788,494.0,0,False,hamlet,,predict,insufficient
+S0454,Kampung Tampakahu,117.1000351,6.7420564,Pitas,Kudat,0,0,0,-0.25866666666666666,21.0,0,False,hamlet,15.986,check,insufficient
+S0457,Kampung Tukar,117.130745,6.6118072,Pitas,Kudat,0,0,0,-0.396,41.0,0,False,hamlet,,predict,insufficient
+S0458,Kampung Katalirus,116.2654705,4.9489458,Nabawan,Interior,40,0,0,-0.08,489.0,0,False,hamlet,,predict,insufficient
+S0461,,116.140719,4.9560925,Keningau,Interior,561,0,0,-1.122,389.0,0,False,hamlet,,predict,insufficient
+S0467,,116.2593003,4.9030559,Nabawan,Interior,90,1,0,-0.8,480.0,0,False,hamlet,,predict,insufficient
+S0468,Kawanahon,116.656846,5.569785,Ranau,West Coast,0,0,0,-0.182,819.0,0,False,village,,predict,insufficient
+S0469,Kilo,116.4916732,5.3798794,Keningau,Interior,160,0,0,-0.179,399.0,0,False,village,,predict,insufficient
+S0473,Kasumunsong,116.2453914,4.5947758,Nabawan,Interior,0,0,0,,204.0,13,True,village,,predict,insufficient
+S0478,Sabungo,116.246149,4.6231884,Nabawan,Interior,0,0,0,,227.0,2,False,hamlet,,predict,insufficient
+S0479,Sabibingkol,116.4019799,4.5014035,Nabawan,Interior,0,2,1,,152.0,39,True,village,7.3215,check,insufficient
+S0480,Saliku Pensiangan,116.2504104,4.4883584,Nabawan,Interior,77,1,0,,188.0,0,False,village,,predict,insufficient
+S0481,Siatu,116.2861901,4.508139,Nabawan,Interior,0,1,0,-0.585,183.0,19,True,village,,predict,insufficient
+S0482,Malilia,116.2221474,4.4124156,Nabawan,Interior,159,1,0,-0.611,299.0,0,False,village,,predict,insufficient
+S0483,Sumabi,116.3431227,4.5377171,Nabawan,Interior,0,0,0,,157.0,115,True,village,,predict,insufficient
+S0484,Kabu,116.1441448,4.3546763,Nabawan,Interior,0,0,0,,270.0,19,True,village,,predict,insufficient
+S0485,Saliliran,116.220992,4.4040113,Nabawan,Interior,203,1,0,-0.611,304.0,0,False,village,,predict,insufficient
+S0486,Sinapar,116.2356067,4.4643636,Nabawan,Interior,0,0,0,-0.547,214.0,0,False,village,,predict,insufficient
+S0489,Takilis,116.2466333,4.5846859,Nabawan,Interior,37,0,0,,197.0,8,True,village,,predict,insufficient
+S0491,Siwalor,116.3365666,4.5372132,Nabawan,Interior,0,1,1,,158.0,96,True,village,,predict,insufficient
+S0494,Sipuok,116.3473394,4.5442903,Nabawan,Interior,0,0,0,,156.0,80,True,village,,predict,insufficient
+S0498,Bansuit,116.4216381,5.1110583,Keningau,Interior,0,0,0,-0.454,486.0,0,False,village,177.868,check,insufficient
+S0502,Kampung Labug,116.4137783,4.9545612,Nabawan,Interior,93,0,0,-0.472,459.0,0,False,hamlet,8.236,check,insufficient
+S0514,Kampung Langkukuk,116.4924187,4.9163016,Nabawan,Interior,927,0,0,-0.2775,476.0,0,False,hamlet,128.582,check,insufficient
+S0517,Kampung Ulu Mosopoh,116.3714226,4.9703642,Nabawan,Interior,47,0,0,-0.691,481.0,0,False,hamlet,,predict,insufficient
+S0518,Kampung Pamunterian,116.4295071,4.9565949,Nabawan,Interior,93,0,0,-0.482,453.0,1,False,hamlet,,predict,insufficient
+S0519,Kampung Tampusison,116.4956051,4.8604172,Nabawan,Interior,565,0,0,-0.174,428.0,11,True,hamlet,60.207,check,insufficient
+S0520,Kampung Tataluan Pandiwan,116.4895586,4.894948,Nabawan,Interior,2265,0,0,-0.2955,438.0,0,False,hamlet,128.582,check,insufficient
+S0521,Bigor,116.5048718,4.7016332,Nabawan,Interior,38,0,0,-0.17966666666666667,298.0,12,True,village,,predict,insufficient
+S0522,Simatuoh,116.5554716,4.673865,Nabawan,Interior,0,1,0,0.023,279.0,12,True,village,18.585,check,insufficient
+S0523,Kampung Sandukan,116.611379,4.6745323,Nabawan,Interior,810,1,0,-0.33525,291.0,4,False,hamlet,113.0415,check,insufficient
+S0524,Kampung Kaingalan Sapulut,116.5009599,4.7000775,Nabawan,Interior,77,0,0,-0.23675,282.0,10,True,hamlet,,predict,insufficient
+S0525,Sungai Matoi,116.4925306,4.8856602,Nabawan,Interior,89,0,0,-0.2955,445.0,0,False,village,128.582,check,insufficient
+S0526,Salarom Baru,116.3856184,4.9674178,Nabawan,Interior,47,0,0,-0.691,468.0,0,False,village,,predict,insufficient
+S0527,Kampung Hinalung Pampalang,116.5058991,4.7050295,Nabawan,Interior,38,0,0,-0.17966666666666667,274.0,12,True,hamlet,,predict,insufficient
+S0528,Kampung Liningkar,116.5740374,4.6851771,Nabawan,Interior,0,2,0,,284.0,3,False,hamlet,18.585,check,insufficient
+S0529,Kampung Pandiwan,116.4809914,4.9371194,Nabawan,Interior,777,0,0,-0.43825,440.0,0,False,hamlet,182.5305,check,insufficient
+S0530,Kampung Kagasa,116.506165,4.8079887,Nabawan,Interior,256,0,0,-0.203,427.0,2,False,hamlet,41.355,check,insufficient
+S0531,Kampung Panganitan,116.4941122,4.8181232,Nabawan,Interior,0,0,0,-0.203,436.0,0,False,hamlet,,predict,insufficient
+S0532,Kampung Solog,116.4998657,4.8375779,Nabawan,Interior,113,0,0,-0.015,431.0,0,False,hamlet,60.207,check,insufficient
+S0534,Tampulos,116.5467065,4.6836561,Nabawan,Interior,0,1,0,0.0175,282.0,0,False,village,18.585,check,insufficient
+S0535,Kampung Naaturan,116.5932197,4.7003011,Nabawan,Interior,43,1,0,-0.365,289.0,7,True,hamlet,19.736,check,insufficient
+S0536,Kampung Labang,116.5961855,4.6976439,Nabawan,Interior,43,1,0,-0.365,288.0,10,True,hamlet,19.736,check,insufficient
+S0537,Kampung Mawantul,116.5948824,4.6730583,Nabawan,Interior,810,2,0,-0.365,328.0,0,False,hamlet,58.206,check,insufficient
+S0538,Kampung Samuran,116.6096772,4.6867419,Nabawan,Interior,810,2,0,-0.764,292.0,10,True,hamlet,19.736,check,insufficient
+S0541,Kampung Bangau,116.6072803,4.6656659,Nabawan,Interior,810,1,0,0.0935,295.0,0,False,hamlet,113.0415,check,insufficient
+S0542,Sibuah,116.5775013,4.4660748,Nabawan,Interior,0,1,0,-0.428,215.0,0,False,village,46.4705,check,insufficient
+S0543,Saliha B,116.8608804,4.4236685,Nabawan,Interior,0,0,0,-0.122,409.0,0,False,village,,predict,insufficient
+S0545,Kampung Saliku,116.5913152,4.4589444,Nabawan,Interior,0,1,0,-0.428,217.0,0,False,hamlet,46.4705,check,insufficient
+S0548,Kem Tentera Sri Saliku,116.5859965,4.4565717,Nabawan,Interior,0,1,0,-0.428,230.0,0,False,village,46.4705,check,insufficient
+S0549,Kakutar,116.6071402,4.4675735,Nabawan,Interior,127,1,0,-0.631,226.0,0,False,village,45.831,check,insufficient
+S0557,Pampangon,116.4647651,4.6153187,Nabawan,Interior,208,0,0,,182.0,52,True,village,,predict,insufficient
+S0568,Kuala Tumalasak,116.4340548,4.4549054,Nabawan,Interior,0,1,0,-0.631,139.0,101,True,village,,predict,insufficient
+S0570,Kampung Saliman,116.4344732,4.4161324,Nabawan,Interior,0,0,0,-0.47866666666666663,120.0,107,True,hamlet,,predict,insufficient
+S0572,Kuala Sumaralang,116.4325699,4.4612017,Nabawan,Interior,0,1,0,-0.631,147.0,95,True,village,,predict,insufficient
+S0574,Buntulon,116.4324428,4.4539427,Nabawan,Interior,0,1,0,-0.631,134.0,105,True,village,,predict,insufficient
+S0575,Bantul,116.4268698,4.3399317,Nabawan,Interior,0,0,0,-0.717,127.0,88,True,village,,predict,insufficient
+S0577,Kampung Babalitan,116.4340996,4.449385,Nabawan,Interior,0,1,0,-0.631,128.0,91,True,hamlet,,predict,insufficient
+S0578,Lumpagas,116.4324312,4.3985325,Nabawan,Interior,0,0,0,-0.6705,118.0,98,True,village,,predict,insufficient
+S0579,Inakaak,116.4318441,4.4265259,Nabawan,Interior,0,1,0,-0.4755,127.0,95,True,village,,predict,insufficient
+S0580,Sumbiling,116.22469,4.7818892,Nabawan,Interior,0,0,0,,440.0,0,False,village,,predict,insufficient
+S0581,Tatapu,116.2576357,4.8993161,Nabawan,Interior,90,1,0,-0.572,473.0,0,False,village,,predict,insufficient
+S0582,Tatalaan Ulu,116.2229043,4.8544087,Nabawan,Interior,0,2,0,-0.343,511.0,1,False,village,,predict,insufficient
+S0583,Panarakan,116.2604083,4.9018965,Nabawan,Interior,90,1,0,-0.572,477.0,0,False,village,,predict,insufficient
+S0584,Kampung Ponontomon,116.2643473,4.88108,Nabawan,Interior,256,1,0,-0.118,463.0,0,False,hamlet,45.58,check,insufficient
+S0585,Susuon,116.2613119,4.8916374,Nabawan,Interior,347,1,0,-0.572,476.0,0,False,village,,predict,insufficient
+S0586,Kalabi,116.2621641,4.8930202,Nabawan,Interior,347,1,0,-0.572,489.0,0,False,village,,predict,insufficient
+S0588,Malaing Ulu,116.1395051,4.9564866,Keningau,Interior,621,0,0,-1.122,392.0,0,False,village,,predict,insufficient
+S0589,Kampung Bonor,116.1805099,4.9690669,Keningau,Interior,337,0,0,-0.959,373.0,0,False,hamlet,1.221,check,insufficient
+S0591,Karamatoi Ulu,116.1372203,4.9489947,Keningau,Interior,29,0,0,-1.122,391.0,0,False,village,,predict,insufficient
+S0593,Binakaan,116.3432834,5.117645,Keningau,Interior,574,0,0,-0.321,376.0,0,False,village,,predict,insufficient
+S0594,Seri Menanti,116.2749919,5.2023035,Keningau,Interior,323,0,0,-0.726,419.0,0,False,village,31.461,check,insufficient
+S0598,Sanang,116.1705088,5.0503345,Keningau,Interior,170,0,0,-0.28,364.0,0,False,village,,predict,insufficient
+S0600,Namadan Baru,116.2055431,5.1331074,Keningau,Interior,213,0,0,-0.25233333333333335,386.0,0,False,village,,predict,insufficient
+S0601,Lintuhun Baru,116.2102068,5.1431533,Keningau,Interior,586,0,0,-0.323,382.0,0,False,village,,predict,insufficient
+S0604,Bangawong,116.3290819,5.0815603,Keningau,Interior,435,0,0,-0.5176666666666666,359.0,0,False,village,,predict,insufficient
+S0606,Susulat Baru,116.367318,5.1117207,Keningau,Interior,64,0,0,-0.2435,375.0,0,False,village,87.969,check,insufficient
+S0609,Totogop,116.1801678,5.2268314,Keningau,Interior,1513,0,0,-0.2115,300.0,16,True,village,8.6595,check,insufficient
+S0613,Sinaron Tengah,116.5938172,5.4544754,Tongod,Sandakan,320,0,0,-0.345,550.0,0,False,village,9.142,check,insufficient
+S0616,Sinua,116.5790393,5.4821092,Tongod,Sandakan,29,1,0,-0.3303333333333333,542.0,0,False,village,62.774,check,insufficient
+S0619,Kompartment 50,116.5496793,5.3074959,Keningau,Interior,1613,0,0,,401.0,0,False,village,,predict,insufficient
+S0621,Kompartment 86,116.5601736,5.2718184,Tongod,Sandakan,92,0,0,,391.0,9,True,village,,predict,insufficient
+S0622,Kompartment 148,116.6209573,5.2696191,Tongod,Sandakan,0,0,0,,536.0,0,False,village,,predict,insufficient
+S0625,Pioh,116.496168,5.2717183,Keningau,Interior,28,0,0,0.104,410.0,0,False,village,,predict,insufficient
+S0626,Wawasan,116.5307635,5.2707586,Keningau,Interior,315,0,0,-0.1565,415.0,0,False,village,,predict,insufficient
+S0641,Sasagahan,116.4306414,5.2077032,Keningau,Interior,99,0,0,-0.17833333333333334,384.0,0,False,village,26.066,check,insufficient
+S0642,Pengaradan,116.3977252,5.2560354,Keningau,Interior,181,0,0,-0.4703333333333333,409.0,0,False,village,25.366,check,insufficient
+S0647,Maatol,116.43553,5.215325,Keningau,Interior,67,0,0,-0.26366666666666666,387.0,0,False,village,,predict,insufficient
+S0649,Mokotog,116.4247876,5.2835791,Keningau,Interior,618,0,0,-0.49066666666666664,394.0,0,False,village,59.4315,check,insufficient
+S0691,Bukit Indah,116.2799224,5.2656225,Keningau,Interior,31,0,0,-0.6695,565.0,0,False,village,,predict,insufficient
+S0692,Mesej Bunang,116.2666274,5.2576841,Keningau,Interior,0,0,0,-0.609,555.0,0,False,village,,predict,insufficient
+S0694,Mansiang,116.228125,5.2554901,Keningau,Interior,93,0,0,-0.42,416.0,0,False,village,9.265,check,insufficient
+S0695,Kilugus,116.2849091,5.2812117,Keningau,Interior,63,0,0,-0.6406666666666666,547.0,0,False,village,,predict,insufficient
+S0698,Sondukut,116.2219378,5.2311401,Keningau,Interior,90,0,0,-0.6676666666666667,496.0,0,False,village,6.7515,check,insufficient
+S0711,Antabakan,116.141912,5.1377532,Keningau,Interior,493,0,0,-0.565,418.0,0,False,village,,predict,insufficient
+S0718,Gaulan,116.0534426,5.3025712,Keningau,Interior,542,0,0,-0.263,401.0,0,False,village,72.596,check,insufficient
+S0722,Kaliwot,116.1025982,5.2344101,Keningau,Interior,88,0,0,-0.548,424.0,0,False,village,,predict,insufficient
+S0727,Ulu Senagang,116.0302665,5.3443873,Keningau,Interior,93,0,0,-0.7193333333333333,467.0,0,False,village,121.7915,check,insufficient
+S0728,Kuala Tigasa,116.1358732,5.2114388,Keningau,Interior,460,1,0,-0.5945,296.0,0,False,village,,predict,insufficient
+S0729,Mongitom Ulu,116.186367,5.4910984,Keningau,Interior,226,0,0,-0.7055,685.0,0,False,village,17.406,check,insufficient
+S0730,Belinin Division,116.0789466,5.1702445,Keningau,Interior,111,0,0,,548.0,0,False,village,,predict,insufficient
+S0731,Bandukan Ulu,116.1569642,5.4716419,Keningau,Interior,298,0,0,-0.339,806.0,0,False,village,,predict,insufficient
+S0737,Tataluan,116.1245859,5.1089378,Keningau,Interior,296,0,0,-0.255,430.0,0,False,village,,predict,insufficient
+S0738,Estet Sri Padasa,116.1279678,5.1913399,Keningau,Interior,342,0,0,-0.982,418.0,0,False,village,,predict,insufficient
+S0739,Dimpangoh,116.1147343,5.1542775,Keningau,Interior,1187,0,0,-0.6025,433.0,0,False,village,,predict,insufficient
+S0741,Ulu Keritan,116.0423502,5.3308299,Keningau,Interior,94,0,0,-0.7025,468.0,0,False,village,16.513,check,insufficient
+S0745,Sri Telipok Baru,116.0472387,5.3545134,Keningau,Interior,154,0,0,-0.5265,595.0,0,False,village,227.07,check,insufficient
+S0749,Bina Baru,116.1254003,5.185274,Keningau,Interior,342,0,0,-0.622,445.0,0,False,village,,predict,insufficient
+S0782,Kompartment 149/145,116.6742641,5.2521739,Tongod,Sandakan,45,0,0,,307.0,0,False,village,,predict,insufficient
+S0783,Kompartment 152,116.6267962,5.2251505,Tongod,Sandakan,0,0,0,,480.0,0,False,village,,predict,insufficient
+S0784,Kompartment 154,116.6599246,5.2389983,Tongod,Sandakan,45,0,0,,311.0,0,False,village,,predict,insufficient
+S0785,Kompartment 162,116.6951096,5.2191704,Tongod,Sandakan,0,0,0,,231.0,0,False,village,,predict,insufficient
+S0786,Kompartment 125,116.6700893,5.2914368,Tongod,Sandakan,46,0,0,-0.18,523.0,0,False,village,,predict,insufficient
+S0787,Kompartment 147,116.6442341,5.2443623,Tongod,Sandakan,0,0,0,,376.0,0,False,village,,predict,insufficient
+S0788,Pingas Camp Kompartment 144,116.6667287,5.2777254,Tongod,Sandakan,46,0,0,-0.18,370.0,0,False,village,92.221,check,insufficient
+S0789,Kompartment 82,116.6524192,5.2982556,Tongod,Sandakan,122,0,0,,396.0,0,False,village,92.221,check,insufficient
+S0790,Kompartment 155,116.6815193,5.2390515,Tongod,Sandakan,45,0,0,,274.0,0,False,village,,predict,insufficient
+S0791,Kompartment 143,116.670471,5.2825763,Tongod,Sandakan,46,0,0,-0.18,436.0,0,False,village,92.221,check,insufficient
+S0793,Kompartment 123,116.6656873,5.2980372,Tongod,Sandakan,0,0,0,-0.18,368.0,0,False,village,,predict,insufficient
+S0794,Kaimadang,116.2773773,5.3599854,Keningau,Interior,0,0,0,-0.712,444.0,0,False,village,22.609,check,insufficient
+S0795,Kiporing,116.257985,5.3306312,Keningau,Interior,61,0,0,-0.6135,471.0,0,False,village,22.609,check,insufficient
+S0802,Ulu Monsorulung,116.2321878,5.5999573,Tambunan,Interior,165,0,0,-0.368,775.0,0,False,village,,predict,insufficient
+S0806,Tajur,116.3589258,5.5201275,Tambunan,Interior,0,0,0,,591.0,0,False,village,,predict,insufficient
+S0807,Rompon,116.3176526,5.5197756,Tambunan,Interior,859,0,0,-0.4775,411.0,20,True,village,216.1025,check,insufficient
+S0810,Susuon Baru,116.3654918,5.5563637,Tambunan,Interior,0,0,0,-0.804,784.0,0,False,village,,predict,insufficient
+S0811,Monsok Ulu,116.3749004,5.558876,Tambunan,Interior,0,0,0,-0.804,574.0,0,False,village,,predict,insufficient
+S0812,Monsok Tengah,116.358018,5.5700501,Tambunan,Interior,23,0,0,-0.531,573.0,0,False,village,,predict,insufficient
+S0821,Kitoring,116.3436675,5.5739764,Tambunan,Interior,23,0,0,-0.3705,759.0,0,False,village,,predict,insufficient
+S0827,Bolotikon,116.2711104,5.638746,Tambunan,Interior,437,0,0,-0.666,631.0,0,False,village,,predict,insufficient
+S0830,Widu,116.5895682,5.8040982,Ranau,West Coast,0,0,0,-0.616,795.0,0,False,village,,predict,insufficient
+S0838,Kigiwit,116.7264859,5.7170949,Ranau,West Coast,21,0,0,-0.636,741.0,0,False,village,,predict,insufficient
+S0842,Minduhuaon Baru,116.8002752,5.8715374,Ranau,West Coast,80,0,0,-0.25433333333333336,323.0,18,True,village,,predict,insufficient
+S0844,Paus,116.7864316,5.6861462,Ranau,West Coast,277,0,0,-0.549,222.0,25,True,village,199.833,check,insufficient
+S0853,Toupos,116.8833001,5.6769714,Ranau,West Coast,24,0,0,-0.084,403.0,0,False,village,,predict,insufficient
+S0855,Walou,116.7408226,5.6653588,Ranau,West Coast,0,0,0,-0.582,397.0,0,False,village,28.838,check,insufficient
+S0859,Panulangon,116.7210878,5.6603136,Ranau,West Coast,0,0,0,-0.428,568.0,0,False,village,2.483,check,insufficient
+S0869,Mansalu,117.0320814,6.0856557,Ranau,West Coast,0,0,0,-0.621,158.0,0,False,village,,predict,insufficient
+S0877,Sungangon,116.8053771,5.8622468,Ranau,West Coast,52,0,0,-0.15166666666666667,247.0,11,True,village,60.947,check,insufficient
+S0878,Bereing,116.7861553,5.9026773,Ranau,West Coast,24,0,0,-0.387,506.0,0,False,village,12.0085,check,insufficient
+S0880,Mapad,116.7159365,5.8672493,Ranau,West Coast,0,0,0,-0.585,466.0,0,False,village,,predict,insufficient
+S0884,Kampung Sedul,116.7685302,5.9809394,Ranau,West Coast,123,0,0,-0.213,295.0,0,False,hamlet,53.909,check,insufficient
+S0901,Agan,117.0701728,6.1254207,Ranau,West Coast,0,0,0,-0.511,77.0,0,False,village,,predict,insufficient
+S0911,Patau,116.9769462,6.0551107,Ranau,West Coast,0,0,0,,111.0,0,False,village,,predict,insufficient
+S0913,Tinindoi,116.9808099,6.1512347,Ranau,West Coast,0,0,0,-0.379,224.0,0,False,village,,predict,insufficient
+S0923,Sinurai,116.9619601,6.117644,Ranau,West Coast,252,0,0,-0.15733333333333333,110.0,72,True,village,90.631,check,insufficient
+S0932,Kopuakan,116.9097353,6.1740036,Ranau,West Coast,73,0,0,-0.371,150.0,45,True,village,,predict,insufficient
+S0933,Garong,116.9715973,6.2312546,Ranau,West Coast,0,0,0,,238.0,0,False,village,,predict,insufficient
+S0935,Pahu Sasapan,116.7745909,6.13671,Ranau,West Coast,695,0,0,-0.5095,286.0,0,False,village,53.711,check,insufficient
+S0937,Kawasan Pertanian Kisagut,116.8909304,6.1035086,Ranau,West Coast,0,0,0,,251.0,0,False,village,,predict,insufficient
+S0947,Nalumad,116.7459246,6.1000667,Ranau,West Coast,78,1,0,-0.38833333333333336,331.0,0,False,village,,predict,insufficient
+S0948,Dantayon,116.7390666,6.101652,Ranau,West Coast,25,1,0,-0.38833333333333336,448.0,0,False,village,,predict,insufficient
+S0999,Niasan,116.6353208,5.8525814,Ranau,West Coast,0,0,0,-0.724,752.0,0,False,village,,predict,insufficient
+S1001,Tiang Lama,116.6029261,5.7859487,Ranau,West Coast,0,0,0,-0.6615,996.0,0,False,village,,predict,insufficient
+S1009,Togoyog,116.6694741,5.8309801,Ranau,West Coast,0,0,0,-0.619,817.0,0,False,village,,predict,insufficient
+S1012,Kampung Gaur,116.6670815,5.8697799,Ranau,West Coast,23,1,0,-0.49133333333333334,610.0,0,False,hamlet,30.953,check,insufficient
+S1013,Kitaih,116.6501005,5.8106471,Ranau,West Coast,0,0,0,-0.2795,980.0,0,False,village,,predict,insufficient
+S1014,Bayag,116.6582476,5.8464074,Ranau,West Coast,0,1,0,-0.809,665.0,0,False,village,16.17,check,insufficient
+S1017,Longut Lama,116.591478,5.8442575,Ranau,West Coast,27,0,0,-0.166,813.0,0,False,village,,predict,insufficient
+S1051,Torolobou,116.5096727,5.949506,Ranau,West Coast,152,0,0,-0.46,926.0,0,False,village,15.079,check,insufficient
+S1056,Sikalabot,116.3966688,4.5119873,Nabawan,Interior,0,1,0,,151.0,41,True,village,12.465,check,insufficient
+S1057,Kampung Sumantakawan,116.3001806,4.5132001,Nabawan,Interior,0,0,0,,178.0,11,True,hamlet,,predict,insufficient
+S1058,Payaton,116.2278355,4.438534,Nabawan,Interior,0,0,0,,304.0,0,False,village,,predict,insufficient
+S1061,Kampung Sabungo,116.2361497,4.6180976,Nabawan,Interior,0,0,0,,243.0,0,False,hamlet,,predict,insufficient
+S1062,Kampung Sasalap,116.2370054,4.5473904,Nabawan,Interior,0,0,0,-0.379,229.0,15,True,hamlet,,predict,insufficient
+S1063,Samali,116.2373956,4.5415904,Nabawan,Interior,0,0,0,-0.379,237.0,14,True,village,,predict,insufficient
+S1065,Kampung Haungan,116.1969706,4.5580668,Nabawan,Interior,0,0,0,,284.0,19,True,hamlet,,predict,insufficient
+S1075,Kampung Tatalaan Ulu,116.2101493,5.0489146,Keningau,Interior,0,0,0,-1.156,363.0,0,False,hamlet,,predict,insufficient
+S1077,Balai Budaya Totogop,116.175459,5.2283683,Keningau,Interior,1480,0,0,-0.233,306.0,17,True,village,8.6595,check,insufficient
+S1082,Kampung Sendukut,116.2286355,5.253915,Keningau,Interior,93,0,0,-0.5873333333333334,440.0,0,False,hamlet,9.265,check,insufficient
+S1084,Kampung Tinagalan Laut,116.3006846,5.100738,Keningau,Interior,553,0,0,-0.9025,358.0,0,False,hamlet,5.395,check,insufficient
+S1085,Mangkubau Darat,117.1426333,6.9546045,Pitas,Kudat,0,0,0,-0.2976666666666667,9.0,0,False,village,2.304,check,insufficient
+S1086,Serupil,117.1761723,6.8976509,Pitas,Kudat,150,0,0,-0.447,30.0,0,False,village,,predict,insufficient
+S1087,Mangkubau Laut,117.1327988,6.9959767,Pitas,Kudat,111,0,0,-0.581,13.0,84,True,village,76.6355,check,insufficient
+S1088,Tanggui,117.1379384,6.9722254,Pitas,Kudat,0,0,0,-0.4546666666666666,13.0,0,False,village,2.304,check,insufficient
+S1089,Dallas,117.1133348,6.9742438,Pitas,Kudat,0,0,0,-0.4503333333333333,36.0,0,False,village,6.453,check,insufficient
+S1090,Estet Kakarangan,117.2052235,6.8596406,Pitas,Kudat,0,0,0,,25.0,0,False,village,,predict,insufficient
+S1095,Pituru,117.2063034,6.7780476,Pitas,Kudat,0,0,0,-0.389,9.0,25,True,village,99.547,check,insufficient
+S1096,Mapan-Mapan,117.2464376,6.8622992,Pitas,Kudat,193,0,0,-0.367,9.0,79,True,village,,predict,insufficient
+S1098,Lok Kapas,117.242507,6.8677008,Pitas,Kudat,193,0,0,-0.367,10.0,43,True,village,,predict,insufficient
+S1099,Mantaya,117.1409317,6.9612125,Pitas,Kudat,0,0,0,-0.4546666666666666,9.0,0,False,village,2.304,check,insufficient
+S1100,Tanjung Malawali,117.3025683,7.0451884,Kudat,Kudat,0,0,0,,55.0,0,False,village,,predict,insufficient
+S1101,Kandinga,117.2403773,6.8554142,Pitas,Kudat,193,0,0,-0.367,3.0,75,True,village,,predict,insufficient
+S1104,Tanjung Berungus,117.0320892,6.9481337,Pitas,Kudat,0,0,0,-0.627,13.0,48,True,village,,predict,insufficient
+S1105,Malubang,117.0584738,6.9627435,Pitas,Kudat,113,0,0,,11.0,80,True,village,,predict,insufficient
+S1107,Tiga Tarok,117.0731101,6.9803126,Pitas,Kudat,245,0,0,-0.663,7.0,49,True,village,,predict,insufficient
+S1108,Pancuran,117.0578355,6.9647854,Pitas,Kudat,113,0,0,,11.0,69,True,village,,predict,insufficient
+S1109,Kampung Naruntung,117.1599113,7.0024141,Pitas,Kudat,432,0,0,,10.0,111,True,hamlet,1.423,check,insufficient
+S1111,Kipahung,117.1327134,6.920408,Pitas,Kudat,0,0,0,-0.284,12.0,0,False,village,,predict,insufficient
+S1112,Suangbat,117.1174777,6.9811597,Pitas,Kudat,0,0,0,-0.128,39.0,14,True,village,6.453,check,insufficient
+S1113,Sawangon,117.0333464,6.9306229,Pitas,Kudat,0,0,0,-0.6045,11.0,96,True,village,,predict,insufficient
+S1123,Ulu Angkarut,116.0516406,4.4436134,Nabawan,Interior,0,0,0,,1140.0,0,False,village,,predict,insufficient
+S1124,Salang,116.0150935,4.4504276,Nabawan,Interior,0,0,0,,934.0,0,False,village,,predict,insufficient
+S1125,Namalasakan Butul,116.0233674,4.4712404,Nabawan,Interior,0,0,0,,813.0,0,False,village,,predict,insufficient
+S1126,Pengolobon,116.0101889,4.5309324,Tenom,Interior,0,0,0,,1201.0,0,False,village,,predict,insufficient
+S1129,Kampung Simpang Tiga,117.2494648,6.5611914,Beluran,Sandakan,0,0,0,,30.0,0,False,hamlet,,predict,insufficient
+S1131,Kampung Babagoh,117.5029371,6.5952007,Beluran,Sandakan,0,0,0,-0.609,4.0,25,True,hamlet,,predict,insufficient
+S1132,Bakungan,118.1174268,6.1850273,Sandakan,Sandakan,45,1,0,,7.0,66,True,hamlet,,predict,insufficient
+S1134,,118.2784148,5.8179655,Sandakan,Sandakan,0,0,0,-0.179,2.0,160,True,hamlet,,predict,insufficient
+S1196,,115.7159811,4.7860492,Sipitang,Interior,9,0,0,-0.1855,759.0,0,False,village,,predict,insufficient
+S1197,Kem Sinar 9,117.2092509,6.5016492,Beluran,Sandakan,47,0,0,-0.649,204.0,0,False,village,,predict,insufficient
+S1199,AFC Coupe 3,117.0775157,6.5108546,Pitas,Kudat,0,0,0,,348.0,0,False,village,,predict,insufficient
+S1200,Jesselton Estate,117.081689,6.4730173,Pitas,Kudat,0,0,0,,234.0,0,False,village,,predict,insufficient
+S1201,AFC Coupe 8,117.1686621,6.4773921,Beluran,Sandakan,0,0,0,,72.0,0,False,village,,predict,insufficient
+S1202,AFC Coupe 2,117.1084812,6.4757033,Pitas,Kudat,0,0,0,,290.0,0,False,village,,predict,insufficient
+S1204,Mantalang,117.1012896,6.4744786,Pitas,Kudat,0,0,0,,314.0,0,False,village,,predict,insufficient
+S1206,Mangkabusu,117.0030656,6.5692272,Pitas,Kudat,132,0,0,-0.8615,25.0,46,True,village,48.373,check,insufficient
+S1218,Lokos,116.9967224,6.5726607,Pitas,Kudat,132,0,0,-0.8615,156.0,42,True,village,48.373,check,insufficient
+S1219,Sinanggip,116.9869236,6.6103905,Pitas,Kudat,0,0,0,-0.6735,262.0,0,False,village,8.034,check,insufficient
+S1225,Vunoi,116.9968887,6.5811176,Pitas,Kudat,132,0,0,-0.5816666666666667,29.0,64,True,village,,predict,insufficient
+S1234,Tukar,117.0918455,6.6266504,Pitas,Kudat,158,0,0,-0.7243333333333334,26.0,0,False,village,,predict,insufficient
+S1237,Bambangan Sook,117.0101601,6.6388479,Pitas,Kudat,0,0,0,-0.8213333333333334,106.0,0,False,village,23.63,check,insufficient
+S1239,Mandurian Laut,117.0206976,6.629788,Pitas,Kudat,0,0,0,-0.7236666666666666,23.0,53,True,village,,predict,insufficient
+S1246,Kem Polai,117.1017769,6.6343091,Pitas,Kudat,0,0,0,-0.5643333333333334,126.0,0,False,village,,predict,insufficient
+S1258,Ulu Patian,115.9701832,4.8889332,Tenom,Interior,86,0,0,-0.6165,627.0,0,False,village,,predict,insufficient
+S1260,Sumambu,115.9927541,4.7707803,Tenom,Interior,30,0,0,-0.57,698.0,0,False,village,,predict,insufficient
+S1261,Tinura,115.8893519,4.6969219,Tenom,Interior,62,0,0,-0.3285,469.0,0,False,village,38.605,check,insufficient
+S1269,Sosopon,115.8610354,4.7570931,Tenom,Interior,28,0,0,-0.0735,548.0,0,False,village,57.609,check,insufficient
+S1276,Ripanon,115.9132903,4.8238348,Tenom,Interior,0,0,0,,362.0,0,False,village,,predict,insufficient
+S1277,Lohot,115.8676654,4.7691,Tenom,Interior,364,0,0,-0.0735,471.0,0,False,village,77.686,check,insufficient
+S1280,Titikom,116.0409093,4.7655482,Tenom,Interior,0,0,0,,1196.0,0,False,village,,predict,insufficient
+S1281,Masanoi,115.9558461,4.9660872,Tenom,Interior,84,0,0,0.612,575.0,0,False,village,,predict,insufficient
+S1284,Tilis,115.9005547,4.7737699,Tenom,Interior,220,0,0,-0.475,401.0,0,False,village,,predict,insufficient
+S1285,Titiku,116.0182134,4.7560232,Tenom,Interior,0,0,0,,1013.0,0,False,village,,predict,insufficient
+S1298,Katubu,115.9691419,4.8675052,Tenom,Interior,194,0,0,-0.425,516.0,0,False,village,,predict,insufficient
+S1301,Sinawangon,116.034389,4.7568219,Tenom,Interior,0,0,0,,1227.0,0,False,village,,predict,insufficient
+S1303,Aloh,116.1056739,4.831419,Nabawan,Interior,0,0,0,,993.0,0,False,village,,predict,insufficient
+S1322,Bandar Fajar Harapan,119.2067601,5.2335919,LahadDatu,Tawau,2366,0,0,-0.3085,76.0,0,False,town,85.7735,check,insufficient
+S1358,Kampung Menampilik,118.5703486,4.3458764,Semporna,Tawau,524,0,0,,9.0,59,True,hamlet,,predict,insufficient
+S1360,Kampung Pamaguan,118.0563466,5.940402,Sandakan,Sandakan,0,0,0,-0.236,8.0,117,True,hamlet,,predict,insufficient
+S1362,Ladang Segaliud,117.7848788,5.7228561,Sandakan,Sandakan,385,0,0,0.1795,18.0,0,False,village,20.569,check,insufficient
+S1363,Ladang Menggaris,117.7342929,5.7077547,Sandakan,Sandakan,388,0,0,-0.5495,15.0,6,True,village,52.0335,check,insufficient
+S1368,Kampung Luboh,118.0145731,6.0114307,Sandakan,Sandakan,385,0,0,-0.155,10.0,124,True,hamlet,2.44,check,insufficient
+S1369,"SK Nampasan, Ranau",116.6578479,5.868349,Ranau,West Coast,23,1,0,-0.666,703.0,0,False,village,30.953,check,insufficient
+S1371,Desa Orcid,116.2407374,5.0576442,Keningau,Interior,417,0,0,-0.28,366.0,0,False,village,,predict,insufficient
+S1429,Kampung Kumansi,117.0890236,5.2775781,Tongod,Sandakan,514,0,0,-0.373,42.0,76,True,hamlet,30.392,check,insufficient
+S1430,Kampung Tronglit,117.9952884,5.7439076,Sandakan,Sandakan,85,0,0,-0.461,3.0,27,True,hamlet,,predict,insufficient
+S1431,Kampung Kababak,118.5026014,4.5276344,Semporna,Tawau,301,0,0,-0.058,8.0,47,True,hamlet,,predict,insufficient
+S1432,Kampung Silawa,118.5791731,4.5526744,Semporna,Tawau,878,2,0,-0.042,3.0,119,True,hamlet,,predict,insufficient
+S1433,Kampung Lumanggas,118.5733795,4.5492253,Semporna,Tawau,233,1,0,0.1375,10.0,278,True,hamlet,,predict,insufficient
+S1434,Kampung Rasak,118.5320359,4.5430409,Semporna,Tawau,247,1,0,-0.031,13.0,136,True,hamlet,,predict,insufficient
+S1438,Kampung Selakan,118.6947897,4.5748288,Semporna,Tawau,0,0,0,,8.0,101,True,hamlet,,predict,insufficient
+S1439,Kampung Larapan Hujung,118.5939145,4.5534766,Semporna,Tawau,645,2,0,-0.042,1.0,83,True,hamlet,,predict,insufficient
+S1440,Kampung Bakong Bakong,118.4752375,4.5737138,Semporna,Tawau,69,0,0,-0.554,11.0,32,True,hamlet,,predict,insufficient
+S1445,Kampung Tiger,117.8187132,4.4075531,Tawau,Tawau,1210,0,0,-0.0555,100.0,3,False,hamlet,29.337,check,insufficient
