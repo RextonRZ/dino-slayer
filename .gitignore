@@ -1,0 +1,23 @@
+# Secrets. Never commit an API key.
+.env
+*.env
+!.env.example
+agent/.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Synthetic test fixtures (regenerate, don't commit)
+dataset/web/_fixture_*
+
+# Full-size mascot art. Only the resized web/ set is loaded by the page, and
+# these originals are 11 MB the clone does not need. Kept locally as the source
+# to re-export from.
+dashboard/public/mascot/*.png
+
+# OS
+Thumbs.db
+.DS_Store

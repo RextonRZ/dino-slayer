@@ -1,0 +1,27 @@
+# Tanya Dino, the copilot server.
+#
+#     pip install -r agent/requirements.txt
+#     python -m uvicorn agent.server:app --port 7860      # from the repo root
+#
+# The dashboard needs none of this. It is one HTML file and runs on
+# `python -m http.server` alone; the copilot panel says so when this is down.
+#
+# Pinned to what the build was developed and tested against. Loosen if you
+# must, but langgraph 1.x and langchain-core 1.x are a matched pair.
+
+# API
+fastapi==0.115.5
+uvicorn==0.32.1
+pydantic==2.13.4
+
+# Agent
+langgraph==1.2.6
+langchain-core==1.5.3
+langchain-google-genai==4.3.2
+langsmith==0.9.3            # tracing. Off by itself if no key is set
+
+# Data. The tools are plain pandas over the project's own parquet.
+pandas==2.2.3
+pyarrow==19.0.1
+
+python-dotenv==1.0.1

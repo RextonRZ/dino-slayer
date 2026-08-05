@@ -20,6 +20,7 @@ Then open <http://localhost:8000/dashboard/>.
 | `../dataset/web/dipi.geojson` | 1,448 settlement points + attributes |
 | `../dataset/web/sabah_districts.geojson` | 25 GADM district polygons (`NAME_2`) |
 | `../dataset/web/sabah_divisions.geojson` | 5 official divisions, pre-dissolved |
+| `../dataset/web/facilities.geojson` | 606 OSM schools and health points |
 
 `sabah_divisions.geojson` is generated once, offline, by unioning the district
 polygons per division. Regenerate it only if the district file changes.
@@ -60,34 +61,39 @@ Every Google result carries *"Context only — not scoring evidence. Absence of
 imagery is not evidence that a place lacks facilities."* Google content is never
 used as DIPI evidence.
 
-## Optional: the simulator's video clip
+## The simulator's video clips
 
-The Experience Simulator ships with a **CSS mock player** that needs no asset —
-it stalls and spins according to the computed buffering maths.
+Five clips ship with the page, one per quality tier, in
+`public/videostimulation/`. Selecting a tier plays the real thing, so a judge
+sees the difference between 360p and 4K rather than only the stalling.
 
-To use a real clip instead, do **both** steps:
+| Tier | File | Resolution | Size |
+|---|---|---|---|
+| 360p | `video360p.mp4` | 640×360 | 0.54 MB |
+| 480p | `video480p.mp4` | 854×480 | 2.80 MB |
+| 720p | `video720p.mp4` | 1280×720 | 7.83 MB |
+| 1080p | `video1080p.mp4` | 1920×1080 | 16.79 MB |
+| 4K | `video4k.mp4` | 3840×2160 | 27.25 MB |
 
-1. Put the file at exactly `dashboard/media/sample_clip.mp4`
-2. In `index.html`, change `let CLIP_URL = null;` to
-   `let CLIP_URL = "media/sample_clip.mp4";`
+All five are H.264 with AAC audio. `video360p.mp4` is re-encoded from the 480p
+source rather than shot separately.
 
-Step 2 is a deliberate manual switch rather than an automatic probe: probing for
-a file that is not there logs a 404 console error, and the acceptance checklist
-requires a clean console. The same computed pauses drive the real clip once it
-is enabled — nothing else changes.
+**Nothing is fetched until a tier is actually selected.** Every clip carries
+`preload="none"`, because 55 MB at boot would blow the three second opening
+reveal. Opening a settlement plays 720p by default.
 
-| Requirement | Value |
-|---|---|
-| Path / name | `dashboard/media/sample_clip.mp4` (exact — nothing else is looked for) |
-| Container / codec | MP4, H.264 video, AAC or no audio |
-| Length | **≤ 10 seconds** (the player models exactly 10 s of content) |
-| Resolution | 1280×720 or smaller, 16:9 |
-| Size | keep under ~2 MB so first load stays under 3 s |
-| Licence | royalty-free, bundled locally |
+**Sound starts muted, deliberately.** Chrome blocks autoplay with audio until
+the user has interacted with the page, and a blocked video freezes on frame one,
+which reads as a broken simulation. Muted first means it always plays. The
+speaker button in the top right corner unmutes, and that preference then sticks
+across tier switches and settlements. Closing the panel pauses and rewinds the
+clip, so nothing keeps playing behind a panel you have dismissed.
 
-It is muted and never embedded from an external host — no YouTube, no iframe.
-The overlay label *"Simulated preview — visualisation of estimated experience,
-not a live network test."* stays on screen whether the clip is real or mocked.
+The same computed pauses drive the real clips: below 1.0× the link speed, each
+2 s of video takes 2/ratio seconds to arrive, and the player stalls for the
+difference. The caption *"Simulated preview, visualisation of estimated
+experience, not a live network test."* sits under the player and never
+disappears. Nothing is embedded from an external host, no YouTube, no iframe.
 
-If the file is absent the page logs nothing and shows the mock. That is the
-supported default, not a failure state.
+To swap a clip, replace the file at the same path. Keep it at or under 10
+seconds, the player models exactly 10 s of content.
