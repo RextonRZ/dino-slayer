@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="dashboard/public/logo-nav-dark.png" alt="Dino Slayer" width="300" />
+<img src="dashboard/public/logo-nav-light.png" alt="Dino Slayer" width="300" />
 
 ### 1,448 villages in Sabah. One ranked list of where to look first.
 
