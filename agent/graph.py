@@ -193,6 +193,11 @@ class TDState(TypedDict):
     tool_outputs: list
     violations: list
     rewrites: int
+    # The District Decision Comparison currently on the user's screen, if any.
+    # Recomputed here in Python from the area NAMES the dashboard sends — the
+    # dashboard never sends its numbers, so a client cannot feed the model a
+    # figure and have the guardrail bless it as data.
+    context: dict
 
 
 @lru_cache(maxsize=2)
@@ -242,9 +247,55 @@ def _window(msgs: list) -> list:
             if all(c["id"] in answered for c in (getattr(m, "tool_calls", None) or []))]
 
 
+# ── the comparison the user is looking at ────────────────────────────────────
+# The dashboard's "Ask Tanya Dino about this" button sends the SELECTION, never
+# the numbers. compare_areas() then recomputes them here, so what the model is
+# handed is the same deterministic output that drew the table rather than
+# anything a client asserted. The fixed-rule summary travels with it and is
+# never edited: the model reasons ON it, it does not replace it.
+CONTEXT_KEYS = ("areas", "level", "stats", "sabah", "indicators", "summary",
+                "note", "unavailable", "flags")
+
+
+def seed_comparison(level: str, areas) -> dict:
+    """Recompute the on-screen comparison, trimmed to what a reader needs.
+
+    `rows` is dropped because it mirrors `indicators`, and `ids` because at
+    twenty-five districts it is 1,114 settlement ids that would both bloat the
+    prompt and ring the entire map for a question about districts.
+    """
+    if not areas or len(areas) < 2:
+        return {}
+    out = T.compare_areas(list(areas), level or "district")
+    if not out.get("indicators"):
+        return {}
+    return {k: out[k] for k in CONTEXT_KEYS if k in out}
+
+
+def _context_message(ctx: dict) -> SystemMessage:
+    names = ", ".join(ctx.get("areas") or [])
+    return SystemMessage(
+        f"The user is looking at the District Decision Comparison for {names}. The JSON "
+        "below is the EXACT set of figures on their screen, computed in Python by the "
+        "same code that drew the table:\n"
+        + json.dumps(ctx, default=str)
+        + "\n\nAnswer from THESE numbers. Do not recompute them, do not round them "
+        "differently, and do not introduce a figure that is neither in this object nor "
+        "in a tool result. `summary` is the fixed-rule text already printed on their "
+        "sheet — never restate it and never contradict it; add the reasoning it cannot "
+        "give, such as which of two areas to fund first and why, or what a field team "
+        "should collect. `percentile_worse_than` is the rank against every area in "
+        "Sabah, where a HIGHER number is worse. You may still call tools for anything "
+        "this object does not contain, such as one named settlement.")
+
+
 def agent_node(state: TDState):
-    msgs = [SystemMessage(SYSTEM)] + _window(state["messages"])
-    return {"messages": [_llm(bound=True).invoke(msgs)]}
+    # The comparison rides in front of the window rather than inside the
+    # history, so it survives MAX_HISTORY trimming: a follow-up on the eighth
+    # question still sees the same figures the first one did.
+    ctx = state.get("context") or {}
+    head = [SystemMessage(SYSTEM)] + ([_context_message(ctx)] if ctx else [])
+    return {"messages": [_llm(bound=True).invoke(head + _window(state["messages"]))]}
 
 
 def _coerce_args(fn, args) -> dict:
@@ -433,9 +484,22 @@ def _scan(draft: str, outputs: list) -> list:
     return v
 
 
+def _all_outputs(state: TDState) -> list:
+    """Tool results, plus the on-screen comparison if one is attached.
+
+    The comparison is Python output exactly like a tool result, so its figures
+    are data and the number guardrail must not report them as invented.
+    """
+    outs = list(state.get("tool_outputs") or [])
+    ctx = state.get("context") or {}
+    if ctx:
+        outs = outs + [{"tool": "comparison_context", "result": ctx}]
+    return outs
+
+
 def evidence_check_node(state: TDState):
     draft = _text(state["messages"][-1])
-    return {"violations": _scan(draft, state.get("tool_outputs") or [])}
+    return {"violations": _scan(draft, _all_outputs(state))}
 
 
 def rewrite_node(state: TDState):
@@ -445,7 +509,7 @@ def rewrite_node(state: TDState):
         # It carries EVERY caveat _scan can ask for, because this text is the
         # terminal state — if it tripped a rule of its own there would be
         # nothing left to rewrite it into.
-        rows = [o for o in (state.get("tool_outputs") or []) if (o.get("result") or {}).get("rows")]
+        rows = [o for o in _all_outputs(state) if (o.get("result") or {}).get("rows")]
         body = "\n".join(f"- {o['tool']}: {len((o['result'] or {}).get('rows', []))} row(s)"
                          for o in rows) or "- no tool returned rows"
         safe = ("I could not phrase that within the evidence rules, so here is the tool output "
@@ -458,7 +522,9 @@ def rewrite_node(state: TDState):
     llm = _llm()
     # Same window as agent_node. This used to send the entire history, which
     # both grew without bound and could carry the same dangling call.
-    out = llm.invoke([SystemMessage(SYSTEM), *_window(state["messages"]), HumanMessage(fix)])
+    ctx = state.get("context") or {}
+    out = llm.invoke([SystemMessage(SYSTEM), *([_context_message(ctx)] if ctx else []),
+                      *_window(state["messages"]), HumanMessage(fix)])
     return {"messages": [out], "rewrites": n}
 
 
@@ -528,6 +594,7 @@ def _payload(state: dict, trace_url: str = "") -> dict:
     """The dashboard contract, built from TOOL OUTPUT rather than the model's text."""
     answer = _text(state["messages"][-1])
     outs = state.get("tool_outputs") or []
+    ctx = state.get("context") or {}
     # map ids and the table come from TOOL OUTPUT, never from the model's text.
     ids, table, notes = [], [], []
     for o in outs:
@@ -544,6 +611,11 @@ def _payload(state: dict, trace_url: str = "") -> dict:
     if any(w in joined for w in ("evidence needed", "not scored", "has not shipped",
                                 "no settlement matches", "insufficient")):
         rtype = "no_evidence"
+    elif ctx and not outs:
+        # Reasoning over the on-screen comparison IS a grounded answer. Without
+        # this it fell to "refusal" and the mascot looked baffled by a question
+        # it had just answered from real figures.
+        rtype = "answer"
     elif not outs:
         rtype = "refusal"          # answered from the rules without calling a tool
     elif ids:
@@ -553,9 +625,16 @@ def _payload(state: dict, trace_url: str = "") -> dict:
     else:
         rtype = "no_evidence"
 
+    used = [o["tool"] for o in outs]
+    if ctx:
+        # Shown in the chat's "what actually ran" list, so the grounding is
+        # visible rather than implied.
+        used = [f"comparison on screen ({len(ctx.get('areas') or [])} "
+                f"{ctx.get('level', 'district')}s)"] + used
     out = {"answer": answer, "table": table,
            "map": {"action": "select" if len(ids) == 1 else "highlight", "ids": ids},
-           "tools_used": [o["tool"] for o in outs],
+           "tools_used": used,
+           "grounded_in_comparison": bool(ctx),
            "response_type": rtype,
            "notes": notes,
            "rewrites": state.get("rewrites", 0)}
@@ -564,12 +643,21 @@ def _payload(state: dict, trace_url: str = "") -> dict:
     return out
 
 
-def ask(question: str, session_id: str | None = None) -> dict:
+def _initial(question: str, context) -> dict:
+    """The turn's starting state. `context` is {level, areas} from the dashboard;
+    the figures are recomputed here rather than accepted from the client."""
+    ctx = {}
+    if isinstance(context, dict) and context.get("areas"):
+        ctx = seed_comparison(context.get("level", "district"), context.get("areas"))
+    return {"messages": [HumanMessage(question)], "tool_outputs": [],
+            "violations": [], "rewrites": 0, "context": ctx}
+
+
+def ask(question: str, session_id: str | None = None, context=None) -> dict:
     """Run one turn. Returns the dashboard contract: answer, table, map.ids."""
     from langchain_core.tracers.context import collect_runs
     with collect_runs() as cb:
-        state = _graph().invoke({"messages": [HumanMessage(question)],
-                                 "tool_outputs": [], "violations": [], "rewrites": 0},
+        state = _graph().invoke(_initial(question, context),
                                 config=_config(session_id))
         run_id = cb.traced_runs[0].id if cb.traced_runs else None
     return _payload(state, _trace_url(run_id))
@@ -587,15 +675,14 @@ STEP_LABEL = {
 }
 
 
-def ask_stream(question: str, session_id: str | None = None):
+def ask_stream(question: str, session_id: str | None = None, context=None):
     """Yield (event, data) as the graph runs, then one final ('done', payload).
 
     Errors are yielded as an event too, never raised into the SSE body, so the
     dashboard always receives a terminal message.
     """
     try:
-        state = {"messages": [HumanMessage(question)],
-                 "tool_outputs": [], "violations": [], "rewrites": 0}
+        state = _initial(question, context)
         last = None
         for update in _graph().stream(state, config=_config(session_id),
                                       stream_mode="updates"):

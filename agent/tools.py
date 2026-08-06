@@ -711,6 +711,11 @@ def generate_validation_report(district: str = "", top_k: int = 10) -> dict:
 CLASSROOM_USERS = 30
 UNDERSERVED_MBPS = VIDEO_TIERS["360p"] * CLASSROOM_USERS      # 21.0 Mbps
 REMOTE_KM = 20.0
+# The dashboard can now put every district on screen at once, so the tool that
+# answers questions about that view has to reach as far as the view does. It was
+# capped at four, which would have silently compared the first four of a
+# twenty-five-district selection and called the answer a comparison of all of them.
+CMP_MAX_AREAS = 25
 
 
 def _dedup_population(sub) -> int:
@@ -981,7 +986,7 @@ def _summarise(areas: list, stats: dict, level: str) -> list:
 
 
 def compare_areas(names, level: str = "district") -> dict:
-    """Two to four districts or divisions, side by side on the same definitions."""
+    """Two or more districts or divisions, side by side on the same definitions."""
     level = _s(level).lower() or "district"
     col = "division" if level.startswith("div") else "district"
     if isinstance(names, str):
@@ -993,7 +998,7 @@ def compare_areas(names, level: str = "district") -> dict:
 
     known = {d for d in DF[col] if d}
     resolved, missing = [], []
-    for n in names[:4]:
+    for n in names[:CMP_MAX_AREAS]:
         hit = next((d for d in known if _key(d) == _key(n)), None)
         if hit and hit in resolved:
             continue                       # "Ranau vs Ranau" is not a comparison
@@ -1002,7 +1007,7 @@ def compare_areas(names, level: str = "district") -> dict:
         got = f"Only matched {_label(resolved[0])}. " if resolved else ""
         miss = f"No match for {', '.join(missing)}. " if missing else ""
         return {"rows": [], "ids": [], "flags": [],
-                "note": (f"{miss}{got}Give two to four different {col}s to compare. Sabah has "
+                "note": (f"{miss}{got}Give at least two different {col}s to compare. Sabah has "
                          f"{len(known)}: {', '.join(sorted(_label(k) for k in known))}.")}
 
     # The facilities file carries a district but no division, so divisions are
