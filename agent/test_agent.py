@@ -8,6 +8,7 @@ rewrite cap, conversation memory, and the streamed graph steps. Nothing here
 calls a paid API or needs the network.
 """
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -59,7 +60,7 @@ else:
 
 # ...and the same shapes must survive LangChain's Pydantic layer, which
 # validates BEFORE the function body and used to reject them outright.
-from agent.graph import _coerce_args, rank_settlements as _rs
+from agent.graph import _coerce_args, rank_settlements as _rs, compare_areas as _ca
 for shape in [{"district": ["Kota Marudu"], "top_k": "5"},
               {"district": {"name": "Kota Marudu"}},
               {"district": "Kota Marudu", "top_k": 5.0},
@@ -295,6 +296,88 @@ check("the speed is now quotable without tripping the number guardrail",
            if "no tool result" in x])
 check("predict_coverage is still honest about not having shipped",
       "not shipped" in T.predict_coverage("Kampung Melati")["note"])
+
+print("\n=== 14. district decision comparison ===")
+c = T.compare_areas(["Ranau", "Kota Kinabalu"])
+check("two districts come back", c["areas"] == ["Ranau", "Kota Kinabalu"], c.get("areas"))
+check("the flat rows render as a table", isinstance(c["rows"][0].get("Ranau"), (int, float)), c["rows"][0])
+check("the structured form carries percentiles",
+      c["indicators"][0]["percentile_worse_than"]["Ranau"] is not None)
+check("a Sabah reference is on every row", all("sabah" in i for i in c["indicators"]))
+check("map ids are real settlements", len(c["ids"]) > 0 and c["ids"][0].startswith("S"))
+
+# The safeguard that matters most: no indicator may be a raw total that simply
+# tracks size. Ranau has 249 settlements to Kota Kinabalu's 35.
+rate_keys = [i["key"] for i in c["indicators"] if i["unit"] == "%"]
+check("rates are present and are not size", len(rate_keys) >= 6, rate_keys)
+big, small = c["stats"]["Ranau"], c["stats"]["Kota Kinabalu"]
+check("Ranau is 7x the settlements but does not lead every indicator",
+      big["settlements"] > 5 * small["settlements"]
+      and small["median_dl_mbps"] > big["median_dl_mbps"])
+
+print("  -- population dedupe --")
+ranau = T.DF[T.DF["district"] == "Ranau"]
+naive, dedup = int(ranau["pop_2km"].sum()), T._dedup_population(ranau)
+check("summing overlapping buffers overcounts by more than 5x", naive > 5 * dedup,
+      f"{naive} vs {dedup}")
+check("the deduped figure is what ships", big["people_all"] == dedup, (big["people_all"], dedup))
+check("underserved population never exceeds total population",
+      all(s["people_underserved"] <= s["people_all"] for s in c["stats"].values()))
+one = T.DF[T.DF["settlement_id"] == "S0004"]
+check("a single settlement is its own cluster",
+      T._dedup_population(one) == int(one["pop_2km"].iloc[0]))
+check("an empty area is zero, not a crash", T._dedup_population(T.DF.head(0)) == 0)
+
+print("  -- no settlement is called slow for being unmeasured --")
+gap_only = T.DF[T.DF["evidence_tier"] == "insufficient"]
+st = T._area_stats(gap_only, T.FAC.head(0))
+check("an all-evidence-gap area has no underserved rate at all",
+      st["underserved_rate_pct"] is None and st["measured"] == 0, st["underserved_rate_pct"])
+check("and no people counted as underserved", st["people_underserved"] == 0)
+check("its evidence gap is 100%", st["evidence_gap_pct"] == 100)
+
+print("  -- rounding matches the dashboard --")
+check("halves go up, not to even", (T._half_up(62.5), T._half_up(47.5)) == (63, 48),
+      (T._half_up(62.5), T._half_up(47.5)))
+check("python's own round() would have disagreed", round(62.5) == 62)
+check("one decimal place works too", T._half_up(3.45, 1) == 3.5)
+check("None survives", T._half_up(None) is None)
+
+print("  -- the written summary --")
+s = c["summary"]
+check("it produces sentences", len(s) >= 3, s)
+check("it says 'rate' so nobody reads it as a total", any("rate" in x for x in s))
+check("terrain and remoteness are associated, never causal",
+      not any(re.search(r"\bcaus(e|ed|es)\b(?!\s+it)", x) for x in s)
+      and any("associated with" in x for x in s if "terrain" in x.lower() or "Remoteness" in x))
+check("it is deterministic", T.compare_areas(["Ranau", "Kota Kinabalu"])["summary"] == s)
+check("it names the evidence gap when one side is thinner",
+      any("no usable measurement" in x for x in s), s)
+
+print("  -- what the data cannot support is declared --")
+missing = {m["indicator"] for m in c["unavailable"]}
+check("roads, towers, slope and prediction uncertainty are all named",
+      len(missing) == 4 and any("Road" in m for m in missing)
+      and any("Tower" in m for m in missing) and any("Slope" in m for m in missing)
+      and any("uncertainty" in m for m in missing), missing)
+check("the note repeats it for the agent", "not available in this dataset" in c["note"])
+check("the note states the population caveat", "not a census" in c["note"])
+check("flagged so the guardrail can see it", "rates_not_totals" in c["flags"])
+
+print("  -- divisions and edge cases --")
+dv = T.compare_areas(["Interior", "West Coast"], level="division")
+check("divisions work", dv["level"] == "division" and len(dv["areas"]) == 2)
+check("division facilities roll up through districts", dv["stats"]["Interior"]["schools"] > 0)
+for bad_in, why in [([], "empty"), (["Ranau"], "one"), (["Ranau", "Ranau"], "the same twice"),
+                    (["Atlantis", "Narnia"], "unknown"), (None, "None")]:
+    r = T.compare_areas(bad_in)
+    check(f"{why} is refused with an explanation", not r["rows"] and len(r["note"]) > 20)
+check("a sentence parses into areas",
+      T.compare_areas("Ranau vs Kudat")["areas"] == ["Ranau", "Kudat"])
+check("more than four is capped at four",
+      len(T.compare_areas(["Ranau", "Kudat", "Pitas", "Tuaran", "Beaufort"])["areas"]) == 4)
+check("the agent can call it through the tool boundary",
+      len(_ca.invoke(_coerce_args(_ca, {"names": ["Ranau", "Kudat"], "level": 0}))["areas"]) == 2)
 
 print(f"\n{ok} passed, {fail} failed")
 sys.exit(1 if fail else 0)

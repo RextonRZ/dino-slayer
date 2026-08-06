@@ -11,9 +11,11 @@ and the map can never disagree about a number.
 """
 from __future__ import annotations
 
+import math
 import re
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -694,7 +696,379 @@ def generate_validation_report(district: str = "", top_k: int = 10) -> dict:
             "markdown": "\n".join(md), "note": ""}
 
 
+# ── District Decision Comparison ────────────────────────────────────────────
+# "Why should District A be assessed before District B?" is the question this
+# whole product exists to support, and until now the only way to ask it was to
+# read two maps side by side.
+#
+# Everything here is a RATE or a MEDIAN. A raw total answers "which district is
+# bigger", which nobody needed to ask: Ranau has 249 settlements and Kota
+# Kinabalu has 46, so Ranau wins every count going and tells you nothing.
+
+# Sharing 30 ways is the classroom case the dashboard already models, and 0.7
+# Mbps is its 360p floor. Same arithmetic in the simulator, the rankings filter
+# and here, so the three can never disagree.
+CLASSROOM_USERS = 30
+UNDERSERVED_MBPS = VIDEO_TIERS["360p"] * CLASSROOM_USERS      # 21.0 Mbps
+REMOTE_KM = 20.0
+
+
+def _dedup_population(sub) -> int:
+    """People near these settlements, with the overlap taken out.
+
+    pop_2km is a 2 km buffer around each settlement, and rural settlements sit
+    far closer together than 4 km. Summing the column counts the same villagers
+    once per neighbour: across Ranau it inflates 73,771 people to 566,012, a
+    factor of 7.7. Any "population affected" built by summing that column is
+    wrong by most of its own value.
+
+    So: link settlements whose buffers overlap, and take one figure per cluster
+    rather than one per settlement. It is still an estimate of people NEAR the
+    settlements, not a census, and it is deliberately conservative.
+    """
+    n = len(sub)
+    if not n:
+        return 0
+    lon, lat = sub["lon"].to_numpy(), sub["lat"].to_numpy()
+    pop = np.nan_to_num(sub["pop_2km"].to_numpy())
+    if n == 1:
+        return int(pop[0])
+    la, lo = np.radians(lat)[:, None], np.radians(lon)[:, None]
+    h = (np.sin((la.T - la) / 2) ** 2
+         + np.cos(la) * np.cos(la.T) * np.sin((lo.T - lo) / 2) ** 2)
+    km = 2 * 6371.0 * np.arcsin(np.sqrt(np.clip(h, 0, 1)))
+    parent = list(range(n))
+
+    def root(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    for i, j in zip(*np.where(np.triu(km <= 4.0, 1))):   # buffers touch at 4 km
+        a, b = root(int(i)), root(int(j))
+        if a != b:
+            parent[a] = b
+    best = {}
+    for i in range(n):
+        r = root(i)
+        best[r] = max(best.get(r, 0.0), float(pop[i]))
+    return int(round(sum(best.values())))
+
+
+def _half_up(v, nd=0):
+    """floor(x·10^nd + 0.5)/10^nd, not round().
+
+    Python rounds halves to even and JavaScript rounds them up, so a district
+    at exactly 62.5% measured came out 62 from the tool and 63 from the
+    dashboard — the same disagreement that cost a percentile on the terrain
+    columns. The comparison exists to be quoted in a paper, so the two
+    implementations have to agree to the digit.
+    """
+    if v is None or pd.isna(v):
+        return None
+    m = 10 ** nd
+    out = math.floor(float(v) * m + 0.5) / m
+    return out if nd else int(out)
+
+
+def _pct(part, whole):
+    return None if not whole else _half_up(100.0 * part / whole, 0)
+
+
+def _area_stats(sub, fac) -> dict:
+    """One area's indicators. Measured-only wherever service is judged.
+
+    Nothing here infers service from absence. A settlement with no measurement
+    is counted in the evidence gap and is excluded from every speed statistic —
+    it is never counted as slow.
+    """
+    # Service is judged only where the evidence supports judging it. 118
+    # settlements in the insufficient tier still carry a dl_mbps, but the median
+    # test count behind those readings is ZERO — they are tile artefacts. Letting
+    # them into an underserved rate would turn "we have not measured here" into
+    # "the service here is poor", which is the one inference this project refuses
+    # to make. They stay in the evidence-gap share instead, which is where a
+    # planner can act on them.
+    meas = sub[sub["dl_mbps"].notna() & (sub["evidence_tier"] != "insufficient")]
+    scored = sub[sub["dipi"].notna()]
+    under = meas[meas["dl_mbps"] < UNDERSERVED_MBPS]
+    severe = meas[meas["dl_mbps"] < VIDEO_TIERS["360p"]]
+    gap = sub[sub["evidence_tier"] == "insufficient"]
+    return {
+        "settlements": int(len(sub)),
+        "measured": int(len(meas)),
+        "scored": int(len(scored)),
+
+        # connectivity — medians, never means; one fibre-fed town skews a mean
+        "median_dl_mbps": _half_up(meas["dl_mbps"].median(), 1),
+        "median_ul_mbps": _half_up(meas["ul_mbps"].median(), 1),
+        "median_latency_ms": _half_up(meas["latency_ms"].median(), 0),
+        "underserved_rate_pct": _pct(len(under), len(meas)),
+        "severe_rate_pct": _pct(len(severe), len(meas)),
+
+        # people — deduplicated, and only for settlements actually measured slow
+        "people_underserved": _dedup_population(under),
+        "people_all": _dedup_population(sub),
+        "median_pop_2km": _half_up(sub["pop_2km"].median(), 0),
+
+        # evidence — the three tiers as shares, plus the sample behind them
+        "measured_pct": _pct(int((sub["evidence_tier"] == "measured").sum()), len(sub)),
+        "low_evidence_pct": _pct(int((sub["evidence_tier"] == "low_evidence").sum()), len(sub)),
+        "evidence_gap_pct": _pct(len(gap), len(sub)),
+        "median_tests": _half_up(sub["n_tests"].median(), 0),
+
+        # accessibility — distance to the nearest town is the only remoteness
+        # measure this dataset supports. There is no road network in it.
+        "median_backhaul_km": _half_up(sub["backhaul_km"].median(), 1),
+        "remote_rate_pct": _pct(int((sub["backhaul_km"] > REMOTE_KM).sum()), len(sub)),
+
+        # terrain — context, never a pillar
+        "median_elevation_m": _half_up(sub["elevation_m"].median(), 0),
+        "terrain_shadow_pct": _pct(int((sub["elev_drop_m"] <= TERRAIN_DROP_M).sum()), len(sub)),
+
+        # institutions — point-in-polygon, not summed 3 km buffers
+        "schools": int((fac["kind"] == "school").sum()),
+        "health": int((fac["kind"] == "health").sum()),
+        "schools_underserved": int((under["n_schools_3km"] > 0).sum()),
+
+        # priority
+        "median_dipi": _half_up(scored["dipi"].median(), 1),
+        "top_dipi": _half_up(scored["dipi"].max(), 1) if len(scored) else None,
+        "in_sabah_top_100": int((scored["rank"] <= 100).sum()),
+    }
+
+
+# label, key, unit, higher_is_worse, group, and whether it is a rate.
+# higher_is_worse drives the ranking and the summary: it is the only thing that
+# knows 60% underserved is bad news and 60 Mbps is good news.
+INDICATORS = [
+    ("Median download",            "median_dl_mbps",      "Mbps", False, "Connectivity"),
+    ("Median latency",             "median_latency_ms",   "ms",   True,  "Connectivity"),
+    ("Below 360p at 30 users",     "underserved_rate_pct", "%",   True,  "Connectivity"),
+    ("Below 360p for one user",    "severe_rate_pct",     "%",    True,  "Connectivity"),
+    ("People in underserved areas", "people_underserved", "",     True,  "People"),
+    ("Settlements",                "settlements",         "",     None,  "People"),
+    ("Median people within 2 km",  "median_pop_2km",      "",     None,  "People"),
+    ("Measured",                   "measured_pct",        "%",    False, "Evidence"),
+    ("Low evidence",               "low_evidence_pct",    "%",    True,  "Evidence"),
+    ("No usable measurement",      "evidence_gap_pct",    "%",    True,  "Evidence"),
+    ("Median tests per settlement", "median_tests",       "",     False, "Evidence"),
+    ("Median distance to a town",  "median_backhaul_km",  "km",   True,  "Remoteness"),
+    ("More than 20 km from a town", "remote_rate_pct",    "%",    True,  "Remoteness"),
+    ("Median elevation",           "median_elevation_m",  "m",    None,  "Terrain"),
+    ("150 m below nearest town",   "terrain_shadow_pct",  "%",    True,  "Terrain"),
+    ("Schools",                    "schools",             "",     None,  "Institutions"),
+    ("Health points",              "health",              "",     None,  "Institutions"),
+    ("Underserved with a school",  "schools_underserved", "",     True,  "Institutions"),
+    ("Median DIPI",                "median_dipi",         "",     True,  "Priority"),
+    ("In the Sabah top 100",       "in_sabah_top_100",    "",     True,  "Priority"),
+]
+
+# Indicators this dataset cannot supply. Named rather than quietly omitted, so
+# a reader can see the shape of what is missing instead of assuming the
+# comparison covers ground it does not.
+NOT_AVAILABLE = [
+    ("Road access and travel time", "no road network in this project"),
+    ("Tower and backhaul infrastructure", "no operator or site data"),
+    ("Slope", "SRTM gives point elevation here, not a derived slope surface"),
+    ("Modelled speed and its uncertainty", "the coverage model has not shipped, "
+     "so no settlement carries a prediction to compare"),
+]
+
+# How large a gap has to be before the summary calls it a difference. Below
+# this the two areas are reported as comparable rather than ranked, because a
+# 2-point spread on a screening index is not a planning signal.
+MEANINGFUL = {"underserved_rate_pct": 10, "evidence_gap_pct": 10, "severe_rate_pct": 5,
+              "remote_rate_pct": 10, "terrain_shadow_pct": 10, "median_dipi": 5,
+              "median_dl_mbps": 5, "median_latency_ms": 15, "median_backhaul_km": 5}
+
+
+def _summarise(areas: list, stats: dict, level: str) -> list:
+    """The narrative, written by Python.
+
+    Deterministic on purpose. It is the one part of the comparison a planner is
+    most likely to paste into a paper, so it must say the same thing every time
+    it is run, and it must not be able to invent a number. It also never says a
+    cause: terrain and remoteness are ASSOCIATED with lower measured speed here,
+    and this data cannot establish more than that.
+    """
+    if len(areas) < 2:
+        return []
+    lines = []
+    # With three or four areas the interesting comparison is the spread, not
+    # whichever two were typed first. Anchor the narrative on the extremes and
+    # the middle areas still appear in every table row.
+    ranked = sorted(areas, key=lambda x: (stats[x]["underserved_rate_pct"] is None,
+                                          -(stats[x]["underserved_rate_pct"] or 0)))
+    a, b = ranked[0], ranked[-1]
+    sa, sb = stats[a], stats[b]
+    if len(areas) > 2:
+        lines.append(f"Across these {len(areas)} {level}s the widest service gap is between "
+                     f"{a} and {b}; the others fall between them on most indicators.")
+
+    def gap(key):
+        x, y = sa.get(key), sb.get(key)
+        return None if x is None or y is None else x - y
+
+    # 1. the headline: service, as a rate
+    g = gap("underserved_rate_pct")
+    if g is not None and abs(g) >= MEANINGFUL["underserved_rate_pct"]:
+        hi, lo = (a, b) if g > 0 else (b, a)
+        lines.append(
+            f"{hi} has the higher underserved rate: {stats[hi]['underserved_rate_pct']:g}% of "
+            f"its measured settlements fall below 360p once shared by {CLASSROOM_USERS}, "
+            f"against {stats[lo]['underserved_rate_pct']:g}% in {lo}. That is a rate, so it "
+            f"does not simply reflect {hi} being larger.")
+    elif g is not None:
+        lines.append(
+            f"{a} and {b} have comparable underserved rates "
+            f"({sa['underserved_rate_pct']:g}% and {sb['underserved_rate_pct']:g}% of measured "
+            f"settlements below 360p at {CLASSROOM_USERS} users), so service level alone does "
+            f"not separate them.")
+
+    # 2. people, which is the number that actually justifies spending
+    pa, pb = sa["people_underserved"], sb["people_underserved"]
+    if max(pa, pb) > 0 and abs(pa - pb) / max(pa, pb, 1) > 0.25:
+        hi, lo = (a, b) if pa > pb else (b, a)
+        lines.append(
+            f"{hi} has more people in those areas, roughly {max(pa, pb):,} against "
+            f"{min(pa, pb):,}. Both figures merge overlapping 2 km buffers, so they estimate "
+            f"people near the settlements rather than a headcount.")
+
+    # 3. evidence, which decides whether any of the above can be trusted
+    g = gap("evidence_gap_pct")
+    if g is not None and abs(g) >= MEANINGFUL["evidence_gap_pct"]:
+        hi, lo = (a, b) if g > 0 else (b, a)
+        lines.append(
+            f"{hi} is the less measured of the two: {stats[hi]['evidence_gap_pct']:g}% of its "
+            f"settlements have no usable measurement, against {stats[lo]['evidence_gap_pct']:g}% "
+            f"in {lo}. Its service figures rest on a smaller sample and should be read as "
+            f"weaker evidence, not as a better or worse result.")
+
+    # 4. context, stated as association
+    bits = []
+    g = gap("remote_rate_pct")
+    if g is not None and abs(g) >= MEANINGFUL["remote_rate_pct"]:
+        hi = a if g > 0 else b
+        bits.append(f"{hi} is the more remote, with {stats[hi]['remote_rate_pct']:g}% of "
+                    f"settlements more than {REMOTE_KM:g} km from the nearest town")
+    g = gap("terrain_shadow_pct")
+    if g is not None and abs(g) >= MEANINGFUL["terrain_shadow_pct"]:
+        hi = a if g > 0 else b
+        bits.append(f"{hi} has more settlements sitting 150 m or more below their nearest "
+                    f"town ({stats[hi]['terrain_shadow_pct']:g}%)")
+    if bits:
+        # str.capitalize() lowercases the rest of the string, which turned
+        # "Ranau" into "ranau" halfway through the sentence.
+        joined = ", and ".join(bits)
+        lines.append(joined[:1].upper() + joined[1:] +
+                     ". Remoteness and terrain are associated with lower measured speed in "
+                     "this dataset; neither is shown to cause it.")
+
+    # 5. what to do about it — the only actionable sentence, and it is hedged
+    worst_gap = max(areas, key=lambda x: stats[x]["evidence_gap_pct"] or 0)
+    worst_svc = max(areas, key=lambda x: stats[x]["underserved_rate_pct"] or 0)
+    if worst_gap == worst_svc:
+        lines.append(
+            f"{worst_svc} carries both the weaker service rate and the thinner evidence, so it "
+            f"warrants field measurement before any option is costed.")
+    else:
+        lines.append(
+            f"On this data {worst_svc} screens as the higher service need and {worst_gap} as the "
+            f"higher measurement need. They are different questions and can be funded separately.")
+    return lines
+
+
+def compare_areas(names, level: str = "district") -> dict:
+    """Two to four districts or divisions, side by side on the same definitions."""
+    level = _s(level).lower() or "district"
+    col = "division" if level.startswith("div") else "district"
+    if isinstance(names, str):
+        names = [p for p in re.split(r"\s*(?:,|\band\b|\bvs\b|\bversus\b)\s*", names) if p.strip()]
+    names = [_s(n) for n in (names or []) if _s(n)]
+    if len(names) < 2:
+        return {"rows": [], "ids": [], "flags": [],
+                "note": "Give at least two districts or divisions to compare."}
+
+    known = {d for d in DF[col] if d}
+    resolved, missing = [], []
+    for n in names[:4]:
+        hit = next((d for d in known if _key(d) == _key(n)), None)
+        if hit and hit in resolved:
+            continue                       # "Ranau vs Ranau" is not a comparison
+        (resolved.append(hit) if hit else missing.append(n))
+    if len(resolved) < 2:
+        got = f"Only matched {_label(resolved[0])}. " if resolved else ""
+        miss = f"No match for {', '.join(missing)}. " if missing else ""
+        return {"rows": [], "ids": [], "flags": [],
+                "note": (f"{miss}{got}Give two to four different {col}s to compare. Sabah has "
+                         f"{len(known)}: {', '.join(sorted(_label(k) for k in known))}.")}
+
+    # The facilities file carries a district but no division, so divisions are
+    # rolled up through the district map rather than joined on a column that
+    # does not exist.
+    def facilities_in(area):
+        if col == "district":
+            return FAC[FAC["district"] == area]
+        members = {d for d in DF[DF["division"] == area]["district"] if d}
+        return FAC[FAC["district"].isin(members)]
+
+    stats = {_label(r): _area_stats(DF[DF[col] == r], facilities_in(r)) for r in resolved}
+    labels = list(stats)
+
+    # Sabah-wide reference, and the percentile of each area among ALL areas at
+    # this level, so two weak districts cannot look strong just by being next
+    # to each other.
+    everyone = {_label(d): _area_stats(DF[DF[col] == d], facilities_in(d)) for d in known}
+    sabah = _area_stats(DF, FAC)
+
+    indicators, rows = [], []
+    for label, key, unit, worse_high, group in INDICATORS:
+        vals = {l: stats[l].get(key) for l in labels}
+        pool = sorted(v for v in (s.get(key) for s in everyone.values()) if v is not None)
+        ranks = {}
+        for l in labels:
+            v = vals[l]
+            if v is None or not pool or worse_high is None:
+                ranks[l] = None
+            else:
+                # percentile of BADNESS, so 90 always means "worse than 90% of
+                # areas" whichever direction the raw number runs.
+                below = sum(1 for p in pool if p < v)
+                pc = 100.0 * below / len(pool)
+                ranks[l] = round(pc if worse_high else 100 - pc)
+        indicators.append({"group": group, "indicator": label, "unit": unit, "key": key,
+                           "worse_high": worse_high, "values": vals,
+                           "percentile_worse_than": ranks, "sabah": sabah.get(key)})
+        # A flat mirror of the same numbers, because the chat panel renders
+        # `rows` as a table and a nested dict would arrive as [object Object].
+        flat = {"indicator": f"{label}{f' ({unit})' if unit else ''}"}
+        flat.update({l: vals[l] for l in labels})
+        flat["Sabah"] = sabah.get(key)
+        rows.append(flat)
+
+    ids = list(DF[DF[col].isin(resolved) & DF["dipi"].notna()]["settlement_id"])
+    note = [f"{len(labels)} {col}s compared on identical definitions, from the same Ookla "
+            f"2025 Q1–Q4 aggregates and the same DIPI weights"]
+    note.append("every service figure uses measured settlements only — a settlement with no "
+                "measurement is counted in the evidence gap and never counted as slow")
+    note.append("population merges overlapping 2 km buffers, so it estimates people near the "
+                "settlements and is not a census headcount")
+    if missing:
+        note.append(f"no match for {', '.join(missing)}")
+    note.append("not available in this dataset: "
+                + "; ".join(f"{n.lower()} ({why})" for n, why in NOT_AVAILABLE))
+    return {"rows": rows, "ids": ids, "indicators": indicators,
+            "areas": labels, "level": col, "stats": stats, "sabah": sabah,
+            "summary": _summarise(labels, stats, col),
+            "unavailable": [{"indicator": n, "reason": w} for n, w in NOT_AVAILABLE],
+            "flags": ["rates_not_totals", "osm_incomplete"],
+            "note": ". ".join(note) + "."}
+
+
 TOOLS = {"rank_settlements": rank_settlements, "explain_priority": explain_priority,
+         "compare_areas": compare_areas,
          "compare_settlements": compare_settlements, "simulate_experience": simulate_experience,
          "predict_coverage": predict_coverage, "recommend_intervention": recommend_intervention,
          "optimise_budget": optimise_budget, "plan_survey": plan_survey,

@@ -169,9 +169,23 @@ def list_facilities(district: str = "", kind: str = "", limit: int = 50,
     return T.list_facilities(district, kind, limit, sort_by)
 
 
+@tool
+def compare_areas(names: str, level: str = "district") -> dict:
+    """Compare two to four DISTRICTS or DIVISIONS side by side on identical definitions:
+    median speed and latency, the share of settlements below 360p for a class of 30, people
+    in those areas, how much of each is measured, remoteness, terrain, schools and health
+    points, and where each sits against the other 25 districts. Use this for "compare A and
+    B", "A vs B", "which district should we prioritise", "is A worse than B".
+    names: the areas, e.g. "Ranau, Kudat" or "Ranau vs Kota Kinabalu".
+    level: district (default) or division.
+    Every figure is a rate or a median, never a raw total, so a large district does not win
+    by being large. The result carries its own written summary in `summary`."""
+    return T.compare_areas(names, level)
+
+
 TOOL_LIST = [rank_settlements, explain_priority, compare_settlements, simulate_experience,
              predict_coverage, recommend_intervention, optimise_budget, plan_survey,
-             generate_validation_report, district_summary, list_facilities]
+             generate_validation_report, district_summary, list_facilities, compare_areas]
 
 
 class TDState(TypedDict):
@@ -257,7 +271,12 @@ def _coerce_args(fn, args) -> dict:
             continue                       # an argument this tool does not take
         ann = f.annotation
         if ann is str and not isinstance(v, str):
-            v = T._s(v)
+            # A list of strings joins rather than collapsing to its first item.
+            # T._s(["Ranau", "Kudat"]) returns "Ranau", so a two-district
+            # comparison quietly became a one-district one.
+            v = (", ".join(str(x).strip() for x in v if str(x).strip())
+                 if isinstance(v, (list, tuple)) and all(isinstance(x, str) for x in v)
+                 else T._s(v))
         elif ann is bool and not isinstance(v, bool):
             v = T._s(v).lower() in ("1", "true", "yes", "y")
         elif ann is int and not isinstance(v, int):
