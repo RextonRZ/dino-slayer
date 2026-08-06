@@ -22,6 +22,16 @@ Then open <http://localhost:8000/dashboard/>.
 | `../dataset/web/sabah_divisions.geojson` | 5 official divisions, pre-dissolved |
 | `../dataset/web/facilities.geojson` | 606 OSM schools and health points |
 
+Terrain is derived at load from the `elevation_m` already in `dipi.geojson`: distance to
+the nearest of the 59 OSM towns, the metres of drop to it, and elevation percentile within
+the district. The agent and `export_training_table.py` compute the same three values with
+the same haversine and the same rounding, and all three were checked to agree on all 1,448
+settlements. Terrain is context and never enters DIPI.
+
+The optional **Terrain relief** layer streams NASA SRTM hillshade tiles from AWS Terrain
+Tiles. It is off by default and requests nothing until switched on, so the opening reveal
+never waits on a third-party host.
+
 `sabah_divisions.geojson` is generated once, offline, by unioning the district
 polygons per division. Regenerate it only if the district file changes.
 

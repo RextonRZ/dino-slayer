@@ -36,10 +36,11 @@ MAPPED = [
   "`loadGoogleContext()`; `askAgent()` offline path; `sabah_divisions.geojson`"),
 
  ("MANAGE 1.4", "Residual risk disclosed downstream",
-  "Unverified assumptions are labelled on the face of the component that uses them, not buried: "
-  "\u201cIllustrative decision criteria pending source verification\u201d on the recommender and "
-  "\u201cIllustrative planning assumptions \u2014 not procurement estimates\u201d on the budget panel.",
-  "`recommenderBlock()`; `.bud-warn` banner; Open items table below"),
+  "Unverified assumptions are labelled where the number they qualify appears, not on a collapsed "
+  "heading nobody reads: \u201cIllustrative decision criteria pending source verification\u201d sits on the "
+  "recommender, and \u201cIllustrative costs, not procurement estimates\u201d sits directly above the funded "
+  "figures, so the caveat is on screen whenever a cost is.",
+  "`recommenderBlock()`; `.bud-warn` above `renderBudget()` output; Open items table below"),
 
  ("MANAGE 2.1", "A non-AI alternative was chosen where one sufficed",
   "DIPI is deliberately arithmetic, not a model: a disclosed weighted sum of four pillars that a planner "
@@ -48,9 +49,10 @@ MAPPED = [
   "`dipiOf()`; `recommend()` returns its `why` list"),
 
  ("MANAGE 2.4", "Deactivation and spend controls",
-  "Google imagery is off by default even with a key saved, can be switched off mid-session, is capped at "
-  "50 billable calls per session, and shows a live counter of what it has spent.",
-  "`GOOGLE.setOn()`; `GOOGLE.MAX_CALLS`; `updateGoogleMeter()`"),
+  "Google imagery is off by default even with a key saved, can be switched off mid-session, and is "
+  "capped at 50 billable calls per session. Past the cap the panel refuses and says so rather than "
+  "silently spending.",
+  "`GOOGLE.setOn()`; `GOOGLE.MAX_CALLS`; `GOOGLE.left()` refusal path"),
 
  ("MAP 1.1", "Purpose and limits stated in every view",
   "The contract sentence \u201cScreening for further assessment \u2014 not a coverage determination\u201d is present "

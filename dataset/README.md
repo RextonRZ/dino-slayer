@@ -29,7 +29,7 @@ web/            GeoJSON the browser actually loads
 | `web/facilities.geojson` | 606 | The facilities layer |
 | `web/sabah_districts.geojson` | 25 | District polygons, trimmed to what the map needs |
 | `web/sabah_divisions.geojson` | 5 | Districts dissolved into the five official divisions |
-| `ml/training_table.csv` | 1,448 | Features and a pre-assigned split for the coverage model |
+| `ml/training_table.csv` | 1,448 | Features, terrain and a pre-assigned split for the coverage model |
 
 `sabah_divisions.geojson` is generated once, offline, by unioning district polygons per
 division. It is committed so the page never has to run a geometry library at load time.
@@ -47,7 +47,7 @@ division. It is committed so the page never has to run a geometry library at loa
 | `n_schools_3km`, `n_clinics_3km` | OpenStreetMap | ODbL | Count of OSM facility points inside a 3 km buffer |
 | `rwi` | [Meta Relative Wealth Index](https://dataforgood.facebook.com/dfg/tools/relative-wealth-index) | CC BY 4.0 | Nearest RWI cell. Higher is wealthier. 96 settlements have no RWI cell |
 | `seasonal_water_px`, `flood_prone` | [JRC Global Surface Water](https://global-surface-water.appspot.com/) | EC JRC / Google | Seasonal water pixels near the point. 577 flagged |
-| `elevation_m` | [NASA SRTM](https://www.earthdata.nasa.gov/data/instruments/srtm) | Public domain | Sampled at the point |
+| `elevation_m` | [NASA SRTM](https://www.earthdata.nasa.gov/data/instruments/srtm) | Public domain | Sampled at the point. Runs -2 m to 1,510 m |
 | `_district`, `_division` | [GADM 4.1](https://gadm.org/) | Free for academic use | Not stored in the file. The dashboard derives it at load by point in polygon |
 
 **Two warnings that matter more than they look.**
@@ -59,6 +59,45 @@ reports settlement counts and medians instead, never a total population.
 `n_schools_3km` and `n_clinics_3km` are buffer counts, not catchments. A school 3 km away
 may serve an entirely different village. A zero means none mapped in OpenStreetMap, which
 in rural Sabah is not the same as none present.
+
+---
+
+## Terrain
+
+Telecom GeoAI is usually framed as three layers: network performance, physical landscape,
+and human demand. Ookla is the first, WorldPop and RWI are the third, and elevation is the
+second. Three terrain values are derived from `elevation_m`, identically in the dashboard,
+the agent and `export_training_table.py`, so no two of them can quote different numbers.
+
+| Derived | Meaning |
+|---|---|
+| `backhaul_km` | Distance to the nearest of the 59 OSM towns and cities. A stand-in for distance to backhaul, not a survey of where fibre terminates |
+| `elev_drop_m` | Metres below (negative) or above that town. Runs -781 m to +1,029 m |
+| `elev_pct_district` | Elevation percentile inside its own district, so "high" is judged against the local area rather than sea level |
+
+**Terrain never enters DIPI.** It is context, exactly like the flood layer. It explains why
+a measured link may be slow and it qualifies a siting recommendation, but it does not move
+a settlement up or down the queue.
+
+**How much weight it deserves, measured rather than asserted.** Against the 1,114 scored
+settlements, Spearman correlation with measured download speed:
+
+| Feature | vs `dl_mbps` |
+|---|---|
+| `elevation_m` | **-0.25** |
+| `backhaul_km` | -0.10 |
+| `elev_drop_m` | -0.08 |
+
+Raw elevation is the strongest of the three and beats the distance-to-town proxy the
+recommender already uses. The drop is weak, so the product treats it as a **siting caveat**
+and never as a predictor: 165 settlements sit 150 m or more below their nearest town, and
+132 of those are in Ranau alone.
+
+**What cannot be done with this data.** These are point elevations, not a surface. No
+line-of-sight, Fresnel-zone or propagation calculation is possible from them, and none is
+claimed anywhere in the product. A real path-loss model needs the SRTM raster, which is not
+committed here. The dashboard's optional hillshade layer streams that raster from AWS
+Terrain Tiles for display only; nothing is computed from it.
 
 ---
 

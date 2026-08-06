@@ -54,6 +54,17 @@ drawn on the map so you can see what a fix would actually reach.
 
 ![Nearby facilities](docs/media/nearby-facilities.png)
 
+**The ground it all sits on.** Telecom GeoAI is usually framed as three layers: network
+performance, physical landscape, and human demand. Ookla is the first and WorldPop plus RWI
+are the third. Elevation is the second, and it turns out to matter: across the scored
+settlements it correlates -0.25 with measured download speed, a stronger relationship than
+distance to the nearest town. Every drill-down carries a terrain reading, and a hillshade
+layer draws the hills a link would have to cross.
+
+Terrain never enters the score. It explains a slow link and it qualifies a siting
+recommendation. 165 settlements sit at least 150 m below the town their nearest mast would
+be in, and 132 of those are in Ranau, under Kinabalu.
+
 **The rankings.** All 1,114 scored settlements, sortable by any column, filterable by
 district, evidence tier, place type, and whether a classroom of 30 could stream 360p.
 Sorting never renumbers the rank column, so row 1 sorted by latency is never mistaken for
@@ -244,7 +255,7 @@ Every source is open, and every one is credited in the dashboard footer as well 
 | [WorldPop](https://www.worldpop.org/) | Population within 2 km | CC BY 4.0 |
 | [Meta Relative Wealth Index](https://dataforgood.facebook.com/dfg/tools/relative-wealth-index) | Equity pillar | CC BY 4.0 |
 | [JRC Global Surface Water](https://global-surface-water.appspot.com/) | Seasonal water context | EC JRC / Google |
-| [NASA SRTM](https://www.earthdata.nasa.gov/data/instruments/srtm) | Elevation | Public domain |
+| [NASA SRTM](https://www.earthdata.nasa.gov/data/instruments/srtm) | Elevation and terrain context | Public domain |
 | [GADM 4.1](https://gadm.org/) | District and division boundaries | Free for academic use |
 | [CARTO](https://carto.com/basemaps/) / [Esri World Imagery](https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9) | Basemaps | Attribution required |
 
