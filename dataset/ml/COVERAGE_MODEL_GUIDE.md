@@ -1,5 +1,31 @@
 # Coverage model: what to predict, and how it can go wrong
 
+> ### The training table changed. Retrain before you report anything.
+>
+> `training_table.csv` gained three terrain columns: `backhaul_km`, `elev_drop_m`
+> and `elev_pct_district`. Nothing else moved. Same 1,448 rows, same
+> `settlement_id` order, same splits (850 / 264 / 118 / 216), same target.
+>
+> **Re-pull the file before your next run.** A model trained on the old
+> 17-column version is still valid, it just cannot see terrain, and its scores
+> are not comparable with anything trained on the new one.
+>
+> Check you have the right file:
+>
+> ```bash
+> python -c "import pandas as pd,hashlib;
+> print(hashlib.sha256(open('dataset/ml/training_table.csv','rb').read()).hexdigest()[:12]);
+> print(pd.read_csv('dataset/ml/training_table.csv').shape)"
+> # fd0d29125cc2
+> # (1448, 20)
+> ```
+>
+> If either line differs, regenerate it: `python dataset/export_training_table.py`.
+>
+> **Report both runs if you have time.** With and without the three terrain
+> columns, on the same folds. If terrain adds nothing, that is a finding worth a
+> line in the model card, and it is cheaper to say so than to be asked.
+
 Written against the actual file (`dataset/web/dipi.geojson`, 1,448 settlements).
 Every number below was measured, not assumed.
 
@@ -58,6 +84,33 @@ Use only these. All are complete except `rwi`.
 | `place` (city/town/village/hamlet) | 0 |
 | longitude, latitude | 0 |
 | `district` (25 categories) | 0 |
+| `backhaul_km` | 0 |
+| `elev_drop_m` | 59 |
+| `elev_pct_district` | 2 |
+
+The last three are terrain, derived by `export_training_table.py` from
+`elevation_m` and the 59 OSM town and city anchors. They are safe: none of them
+touches the Ookla measurement.
+
+`backhaul_km` is distance to the nearest town or city, `elev_drop_m` is metres
+below (negative) or above that town, and `elev_pct_district` is elevation
+percentile inside the settlement's own district. The 59 missing `elev_drop_m`
+values are the towns themselves, where the drop is meaningless rather than zero.
+Leave them empty so the model sees NaN.
+
+**How much these are worth, measured on the 1,114 scored rows.** Spearman
+against `dl_mbps`:
+
+| Feature | vs target |
+|---|---|
+| `elevation_m` | **-0.25** |
+| `backhaul_km` | -0.10 |
+| `elev_drop_m` | -0.08 |
+
+Elevation is the strongest single terrain signal and worth more than the
+distance proxy. Do not drop it for being "just terrain". Do not expect much from
+`elev_drop_m` on its own; it earns its place in the product as a siting caveat,
+and it is offered here only so the model can find an interaction if one exists.
 
 ### Never use these. Each one leaks the answer.
 
