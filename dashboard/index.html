@@ -780,6 +780,49 @@ details[open] .qb-summary::before{content:"▾"}
 .qb-summary .t{font-size:14px;font-weight:600;color:var(--ink-strong)}
 .empty{padding:34px 16px;text-align:center;color:var(--ink-muted);font-size:12.5px}
 
+/* ══ 10b. District Decision Comparison ═════════════════════════════════════ */
+.cmp-lede{max-width:62ch;margin:-4px 0 14px}
+/* display:flex beats [hidden]'s user-agent display:none, so the export buttons
+   stayed on screen with nothing to export. */
+.cmp-head-actions{display:flex;gap:8px}
+.cmp-head-actions[hidden]{display:none}
+.cmp-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.cmp-bar .seg{margin:0;width:190px}
+.cmp-bar .rk-count{margin:0}
+.cmp-chips{margin-bottom:16px;max-height:96px;overflow-y:auto}
+.chip-btn{height:28px;padding:0 11px;border-radius:99px;border:1px solid var(--hairline);
+  background:transparent;color:var(--ink-muted);font-size:11.5px;font-weight:600;cursor:pointer}
+.chip-btn:hover:not(:disabled){background:var(--tint);color:var(--ink)}
+.chip-btn.on{background:var(--accent-bg);border-color:var(--accent);color:var(--accent)}
+.chip-btn:disabled{opacity:.35;cursor:not-allowed}
+.cmp-wrap{max-height:none}
+#cmpTable th[scope="row"]{text-align:left;font-weight:500;color:var(--ink);
+  font-size:12px;letter-spacing:0;text-transform:none;position:static}
+/* A group heading is a row, not a second table — the columns must stay aligned
+   with the numbers underneath them. */
+tr.cmp-group td{background:var(--tint);font-size:9.5px;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-muted);padding:7px 10px;border-bottom:0}
+td.cmp-worst{color:var(--warn);font-weight:700}
+/* The percentile rides alongside the value rather than taking a column of its
+   own; at four areas a second column each would not fit. */
+.cmp-pc{display:inline-block;min-width:22px;margin-left:7px;padding:1px 5px;border-radius:4px;
+  background:var(--tint);color:var(--ink-muted);font-size:9.5px;font-weight:700;cursor:help}
+td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
+.cmp-cols{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-top:18px}
+.cmp-note-card{border:1px solid var(--hairline);border-radius:var(--radius);
+  background:var(--surface);padding:16px 18px}
+.cmp-note-card h3{font-size:12.5px;font-weight:700;color:var(--ink-strong);margin:0 0 9px}
+.cmp-note-card p{font-size:12.5px;line-height:1.62;color:var(--ink);margin:0 0 9px}
+.cmp-note-card .caption{color:var(--ink-muted);font-size:11px;margin:12px 0 0;
+  padding-top:10px;border-top:1px solid var(--hairline)}
+.cmp-missing{margin:0;padding-left:17px}
+.cmp-missing li{font-size:12px;line-height:1.6;color:var(--ink-muted);margin-bottom:5px}
+.cmp-missing b{color:var(--ink)}
+/* The printed masthead. Hidden on screen — the section already has a heading —
+   and the only place the brand mark appears on the page. */
+.cmp-print-head,.cmp-print-foot{display:none}
+@media (max-width:900px){.cmp-cols{grid-template-columns:1fr}}
+
 /* ══ 11. Footer ════════════════════════════════════════════════════════════ */
 /* The contract sentence may never truncate. It refuses to shrink and wraps
    whole; the credits are what give way, dropping to a second line. */
@@ -802,6 +845,71 @@ details[open] .qb-summary::before{content:"▾"}
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.001ms !important;transition-duration:.001ms !important}
   button:active,a:active{transform:none}
+}
+
+/* ══ 12. The printed comparison ════════════════════════════════════════════
+   Browser print to PDF rather than a PDF library: it costs no dependency, no
+   build step and no CDN, it renders the same fonts and colours the reviewer
+   just looked at, and "Save as PDF" is already in the dialog on every desktop
+   browser. A one-page decision sheet, not a report designer.
+
+   Everything except #cmpSheet is removed from the page rather than hidden, so
+   the map canvas and the fixed header cannot leave a blank first page.        */
+@media print{
+  @page{size:A4 portrait;margin:14mm 13mm}
+  /* Force the light palette: dark theme prints as a full-bleed black page. */
+  :root,:root[data-theme="dark"]{
+    --bg:#fff;--surface:#fff;--tint:#f4f5f7;--ink:#1a1d21;--ink-strong:#000;
+    --ink-muted:#5b6169;--hairline:#d8dbe0;--hairline-strong:#b9bec6;
+    --accent:#c2410c;--accent-bg:#fff3ec;--warn:#b4530b;--warn-bg:#fdf3e7;
+    --material-bg:#fff;color-scheme:light}
+  html,body{background:#fff !important;height:auto;overflow:visible}
+  /* Unwind the layout by structure rather than by class name. The shell is a
+     grid of fixed rows, so hiding the header and footer collapsed it to 64 px
+     and the sheet printed as a blank page. Everything that is not on the path
+     down to #cmpSheet is removed, and every box on that path is turned back
+     into an ordinary block of its natural height. */
+  .app > *:not(.body),
+  .body > *:not(.stage),
+  .stage > *:not(#compare),
+  #compare > *:not(#cmpSheet),
+  #loading,#thTip,.info,#cmpBody:empty{display:none !important}
+  .app,.body,.stage,#compare,#cmpSheet{display:block !important;position:static !important;
+    inset:auto !important;height:auto !important;max-height:none !important;
+    min-height:0 !important;overflow:visible !important;padding:0 !important;
+    margin:0 !important;background:#fff !important;box-shadow:none !important}
+  .cmp-print-head{display:flex;align-items:center;gap:12px;padding-bottom:7px;
+    margin-bottom:10px;border-bottom:2px solid var(--accent)}
+  .cmp-print-logo{height:26px;width:auto}
+  .cmp-print-head div{flex:1;display:flex;flex-direction:column;gap:2px}
+  .cmp-print-head b{font-size:14px;color:#000;letter-spacing:-.01em}
+  .cmp-print-head span{font-size:11px;color:var(--ink-muted)}
+  .cmp-print-date{font-size:10px;color:var(--ink-muted);white-space:nowrap}
+  .cmp-print-foot{display:block;margin-top:14px;padding-top:8px;
+    border-top:1px solid var(--hairline);font-size:8.5px;line-height:1.5;
+    color:var(--ink-muted)}
+  .table-wrap,.cmp-note-card{border-color:var(--hairline) !important;
+    box-shadow:none !important;overflow:visible !important;max-height:none !important}
+  /* Sized to land the whole comparison on ONE A4 sheet: 21 indicators, seven
+     group headings, both note cards and the source line. A decision sheet that
+     runs to a second page stops being a sheet. */
+  table{font-size:8.4px}
+  th,td{padding:1.9px 6px !important;height:auto !important;line-height:1.35}
+  thead th{position:static !important;background:#fff !important;font-size:7.5px}
+  tr.cmp-group td{padding:2.6px 6px !important;font-size:7.5px;letter-spacing:.13em}
+  /* A row that splits across the page break is unreadable in a printed table. */
+  tr,.cmp-note-card{break-inside:avoid}
+  .cmp-cols{grid-template-columns:1.15fr .85fr;gap:9px;margin-top:9px}
+  .cmp-note-card{padding:9px 11px}
+  .cmp-note-card p{font-size:8px;line-height:1.5;margin-bottom:5px}
+  .cmp-missing li{font-size:7.8px;line-height:1.45;margin-bottom:3px}
+  .cmp-note-card .caption{font-size:7.4px;margin-top:7px;padding-top:6px}
+  .cmp-note-card h3{font-size:9px;margin-bottom:6px}
+  .cmp-pc{font-size:7.4px;min-width:16px;padding:0 4px;margin-left:5px}
+  .cmp-pc{background:#eef0f3 !important;color:#5b6169 !important}
+  td.cmp-worst{color:var(--warn) !important}
+  td.cmp-worst .cmp-pc{background:#fdf3e7 !important;color:var(--warn) !important}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
 </head>
@@ -827,6 +935,11 @@ details[open] .qb-summary::before{content:"▾"}
         <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
           <path d="M2 4h12M2 8h12M2 12h8"/></svg>
         Rankings
+      </button>
+      <button class="ghost-btn" id="cmpToggle" aria-pressed="false" title="Compare districts">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M8 2v12M4.5 5.5L2 10h5zM11.5 5.5L9 10h5z"/></svg>
+        Compare
       </button>
       <button class="ghost-btn" id="chatBtn" aria-pressed="false" title="Ask the copilot">
         <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
@@ -1053,6 +1166,82 @@ details[open] .qb-summary::before{content:"▾"}
             </table>
           </div>
         </details>
+      </section>
+
+      <!-- ── District Decision Comparison ──────────────────────────────── -->
+      <section class="rankings cmp" id="compare" aria-label="District comparison" data-open="0">
+        <div class="rk-head">
+          <div>
+            <span class="eyebrow">Decision support</span>
+            <h1 class="sect-title" style="margin-top:6px">District decision comparison</h1>
+          </div>
+          <div class="cmp-head-actions" id="cmpActions" hidden>
+            <button class="ghost-btn" id="cmpCsv">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+                <path d="M8 2v8m0 0L5 7m3 3l3-3M3 13h10"/></svg>
+              CSV
+            </button>
+            <button class="ghost-btn" id="cmpPrint">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+                <path d="M4 6V2h8v4M4 12H2V7h12v5h-2M4 10h8v4H4z"/></svg>
+              Save as PDF
+            </button>
+          </div>
+        </div>
+
+        <p class="note cmp-lede">Two to four areas on identical definitions, so
+          &ldquo;why this one first?&rdquo; has an answer that is not a map read twice.
+          <button class="info" type="button" tabindex="0" aria-label="How to read this"
+            data-tip="Every indicator is a rate or a median, never a raw total — a district with 249 settlements would otherwise out-score one with 35 on every count. Service figures use measured settlements only: a settlement with no measurement is counted in the evidence gap and never counted as slow. Population merges overlapping 2 km buffers, because summing them counts the same people once per neighbour and inflates Ranau sevenfold.">i</button>
+        </p>
+
+        <div class="cmp-bar">
+          <div class="seg" role="group" aria-label="Compare level">
+            <button class="seg-btn" data-level="district" aria-pressed="true">Districts</button>
+            <button class="seg-btn" data-level="division" aria-pressed="false">Divisions</button>
+          </div>
+          <span class="rk-count" id="cmpCount"></span>
+          <button class="ghost-btn" id="cmpClear">Clear</button>
+        </div>
+        <div class="rk-chips cmp-chips" id="cmpChips"></div>
+
+        <!-- the printed page starts here -->
+        <div id="cmpSheet">
+          <div class="cmp-print-head">
+            <img class="cmp-print-logo" src="public/logo-nav-light.png" alt="Dino Slayer">
+            <div>
+              <b>District Decision Comparison</b>
+              <span id="cmpSubject"></span>
+            </div>
+            <span class="cmp-print-date" id="cmpStamp"></span>
+          </div>
+
+          <div class="table-wrap cmp-wrap">
+            <table id="cmpTable"></table>
+          </div>
+          <div id="cmpBody"></div>
+
+          <div class="cmp-cols">
+            <div class="cmp-note-card">
+              <h3>What this comparison says</h3>
+              <div id="cmpSummary"></div>
+              <p class="caption">Written from the figures above by fixed rules, not by the
+                language model, so it reads the same every time. Terrain and remoteness are
+                <b>associated with</b> lower measured speed in this data; neither is shown
+                to cause it.</p>
+            </div>
+            <div class="cmp-note-card">
+              <h3>Not in this dataset</h3>
+              <ul class="cmp-missing" id="cmpMissing"></ul>
+              <p class="caption">Listed rather than left out, so the comparison is not read
+                as covering ground it does not.</p>
+            </div>
+          </div>
+
+          <p class="cmp-print-foot">Dino Slayer · Digital Inclusion Priority Index · Sabah ·
+            Ookla Open Data 2025 Q1–Q4, GADM districts, OpenStreetMap facilities, NASA SRTM.
+            Screening for further assessment — not a coverage determination.</p>
+        </div>
       </section>
 
       <!-- ── Drill-down panel ──────────────────────────────────────────── -->
@@ -1350,6 +1539,13 @@ function anchorOf(geom) {
     const [x, y] = f.geometry.coordinates;
     f.properties._district = districtOf(index, x, y);
     f.properties._division = DIVISION_OF[f.properties._district] || null;
+    // The comparison works over properties alone, and the file keeps the
+    // coordinates on the geometry. Without these its distance test silently
+    // returned NaN, nothing clustered, and "people in underserved areas" was
+    // the raw sum of overlapping buffers — Keningau read 815,990 against a
+    // true 37,569.
+    f.properties._lon = x;
+    f.properties._lat = y;
     f.properties._d = Math.hypot(x - cx, y - cy);
     if (f.properties._d > maxD) maxD = f.properties._d;
   }
@@ -4072,6 +4268,318 @@ const RAW_OF = {
 const pillarTip = (p, k, wn) => esc(`${RK_LABEL[k]} ${num(p[k] * 100)} of 100, from ${RAW_OF[k](p)}. `
   + `Counts for ${nf(wn[k] * 100, 0)}% of DIPI.`);
 
+/* ═══ District Decision Comparison ═══════════════════════════════════════════
+   "Why should District A be assessed before District B?" — the question this
+   product exists to answer, which until now needed two maps and a memory.
+
+   Computed here in the browser, not fetched. The comparison is a core view, and
+   a core view cannot stop working when the agent server is not running. The
+   same arithmetic exists in agent/tools.py so the chat can answer it too, and
+   the two are checked against each other rather than trusted to agree.
+
+   Every figure is a RATE or a MEDIAN. Raw totals answer "which district is
+   bigger", which nobody had to ask: Ranau has 249 settlements to Kota
+   Kinabalu's 35 and would win every count going. */
+const CMP_USERS = 30;                       // the classroom the simulator models
+const CMP_UNDERSERVED = 0.7 * CMP_USERS;    // 21 Mbps: 360p's floor, shared 30 ways
+const CMP_REMOTE_KM = 20;
+
+/* floor(x + 0.5), matching agent/tools.py's _half_up. Python's round() takes
+   halves to even, so a district at exactly 62.5% measured read 62 from the
+   agent and 63 here. The comparison is meant to be quoted, so the two have to
+   agree to the digit. */
+const halfUp = (v, nd = 0) => {
+  if (v === null || v === undefined || Number.isNaN(v)) return null;
+  const m = 10 ** nd, out = Math.floor(v * m + 0.5) / m;
+  return nd ? out : Math.round(out);
+};
+const med = (a, nd = 0) => {
+  const s = a.filter(v => v !== null && v !== undefined && !Number.isNaN(v)).sort((x, y) => x - y);
+  if (!s.length) return null;
+  const h = s.length / 2;
+  return halfUp(s.length % 2 ? s[Math.floor(h)] : (s[h - 1] + s[h]) / 2, nd);
+};
+const pctOf = (part, whole) => whole ? halfUp(100 * part / whole, 0) : null;
+
+/* People near these settlements, with the double-counting taken out.
+
+   pop_2km is a 2 km buffer per settlement, and rural settlements sit far closer
+   together than 4 km, so summing the column counts the same villagers once per
+   neighbour. Across Ranau it inflates 73,771 people to 566,012 — a factor of
+   7.7, meaning most of any "population affected" total built that way is the
+   same people over and over. Link settlements whose buffers touch, take one
+   figure per cluster. Still an estimate of people NEAR them, not a census. */
+function dedupPop(rows) {
+  const n = rows.length;
+  if (!n) return 0;
+  if (n === 1) return Math.round(rows[0].pop_2km || 0);
+  const parent = [...Array(n).keys()];
+  const root = x => { while (parent[x] !== x) { parent[x] = parent[parent[x]]; x = parent[x]; } return x; };
+  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) {
+    if (havKm([rows[i]._lon, rows[i]._lat], [rows[j]._lon, rows[j]._lat]) <= 4) {
+      const a = root(i), b = root(j);
+      if (a !== b) parent[a] = b;
+    }
+  }
+  const best = new Map();
+  for (let i = 0; i < n; i++) {
+    const r = root(i);
+    best.set(r, Math.max(best.get(r) || 0, rows[i].pop_2km || 0));
+  }
+  return Math.round([...best.values()].reduce((s, v) => s + v, 0));
+}
+
+/* One area's indicators. Nothing here infers service from absence: a settlement
+   with no measurement is counted in the evidence gap and is excluded from every
+   speed statistic. It is never counted as slow. */
+function areaStats(rows, facs) {
+  // Insufficient-tier rows can still carry a dl_mbps, on a median of zero
+  // tests. Judging service from those would turn "not measured" into "poorly
+  // served" — they belong in the evidence gap, not the underserved rate.
+  const meas = rows.filter(p => p.dl_mbps !== null && p.evidence_tier !== "insufficient");
+  const scored = rows.filter(p => dipiOf(p) !== null);
+  const under = meas.filter(p => p.dl_mbps < CMP_UNDERSERVED);
+  const severe = meas.filter(p => p.dl_mbps < 0.7);
+  const tier = t => rows.filter(p => p.evidence_tier === t).length;
+  return {
+    settlements: rows.length, measured: meas.length, scored: scored.length,
+    median_dl_mbps: med(meas.map(p => p.dl_mbps), 1),
+    median_ul_mbps: med(meas.map(p => p.ul_mbps), 1),
+    median_latency_ms: med(meas.map(p => p.latency_ms)),
+    underserved_rate_pct: pctOf(under.length, meas.length),
+    severe_rate_pct: pctOf(severe.length, meas.length),
+    people_underserved: dedupPop(under), people_all: dedupPop(rows),
+    median_pop_2km: med(rows.map(p => p.pop_2km)),
+    measured_pct: pctOf(tier("measured"), rows.length),
+    low_evidence_pct: pctOf(tier("low_evidence"), rows.length),
+    evidence_gap_pct: pctOf(tier("insufficient"), rows.length),
+    median_tests: med(rows.map(p => p.n_tests)),
+    median_backhaul_km: med(rows.map(p => backhaulKm(p.settlement_id)), 1),
+    remote_rate_pct: pctOf(rows.filter(p => (backhaulKm(p.settlement_id) ?? 0) > CMP_REMOTE_KM).length, rows.length),
+    median_elevation_m: med(rows.map(p => p.elevation_m)),
+    terrain_shadow_pct: pctOf(rows.filter(p => p._elevDrop !== null && p._elevDrop <= TERRAIN_DROP).length, rows.length),
+    schools: facs.filter(f => f.kind === "school").length,
+    health: facs.filter(f => f.kind === "health").length,
+    schools_underserved: under.filter(p => p.n_schools_3km > 0).length,
+    median_dipi: med(scored.map(p => dipiOf(p)), 1),
+    top_dipi: scored.length ? halfUp(Math.max(...scored.map(p => dipiOf(p))), 1) : null,
+    in_sabah_top_100: scored.filter(p => rankOf(p) <= 100).length
+  };
+}
+
+/* label, key, unit, worseHigh, group. worseHigh is the only thing that knows
+   60% underserved is bad news and 60 Mbps is good news; it drives both the
+   percentile and which cell gets flagged. null = neither good nor bad. */
+const CMP_ROWS = [
+  ["Median download", "median_dl_mbps", "Mbps", false, "Connectivity"],
+  ["Median upload", "median_ul_mbps", "Mbps", false, "Connectivity"],
+  ["Median latency", "median_latency_ms", "ms", true, "Connectivity"],
+  ["Below 360p at 30 users", "underserved_rate_pct", "%", true, "Connectivity"],
+  ["Below 360p for one user", "severe_rate_pct", "%", true, "Connectivity"],
+  ["People in underserved areas", "people_underserved", "", true, "People at stake"],
+  ["Settlements screened", "settlements", "", null, "People at stake"],
+  ["Median people within 2 km", "median_pop_2km", "", null, "People at stake"],
+  ["Measured", "measured_pct", "%", false, "Evidence"],
+  ["Low evidence", "low_evidence_pct", "%", true, "Evidence"],
+  ["No usable measurement", "evidence_gap_pct", "%", true, "Evidence"],
+  ["Median tests per settlement", "median_tests", "", false, "Evidence"],
+  ["Median distance to a town", "median_backhaul_km", "km", true, "Remoteness"],
+  ["More than 20 km from a town", "remote_rate_pct", "%", true, "Remoteness"],
+  ["Median elevation", "median_elevation_m", "m", null, "Terrain"],
+  ["150 m below nearest town", "terrain_shadow_pct", "%", true, "Terrain"],
+  ["Schools", "schools", "", null, "Institutions"],
+  ["Health points", "health", "", null, "Institutions"],
+  ["Underserved with a school", "schools_underserved", "", true, "Institutions"],
+  ["Median DIPI", "median_dipi", "", true, "Priority"],
+  ["In the Sabah top 100", "in_sabah_top_100", "", true, "Priority"]
+];
+
+/* Indicators this dataset cannot supply, named rather than quietly dropped. A
+   reader can then see the shape of what is missing instead of assuming the
+   comparison covers ground it does not. */
+const CMP_MISSING = [
+  ["Road access and travel time", "no road network in this project"],
+  ["Tower and backhaul infrastructure", "no operator or site data"],
+  ["Slope", "SRTM gives point elevation here, not a derived slope surface"],
+  ["Modelled speed and its uncertainty",
+   "the coverage model has not shipped, so no settlement carries a prediction"]
+];
+
+/* How far apart two areas must be before this calls it a difference. Under
+   these, they are reported as comparable rather than ranked — a 2-point spread
+   on a screening index is not a planning signal. */
+const CMP_MEANINGFUL = { underserved_rate_pct:10, evidence_gap_pct:10, remote_rate_pct:10,
+  terrain_shadow_pct:10 };
+
+const cmp = { level: "district", picked: [] };
+
+const cmpAreaNames = () => cmp.level === "division"
+  ? Object.keys(DIVISIONS).sort()
+  : [...new Set(FEATURES.map(f => f.properties._district).filter(Boolean))].sort();
+
+function cmpRowsFor(area) {
+  const key = cmp.level === "division" ? "_division" : "_district";
+  return FEATURES.map(f => f.properties).filter(p => p[key] === area);
+}
+function cmpFacsFor(area) {
+  return FACILITIES.map(f => f.properties).filter(p => cmp.level === "division"
+    ? (DIVISION_OF[p._district] || null) === area : p._district === area);
+}
+
+/* The narrative, written in JS rather than by the model.
+
+   Deterministic on purpose: it is the part a planner is most likely to paste
+   into a paper, so it must say the same thing every time and cannot invent a
+   number. It never claims a cause either — terrain and remoteness are
+   ASSOCIATED with lower measured speed here, and this data cannot show more. */
+function cmpSummary(areas, stats) {
+  if (areas.length < 2) return [];
+  const out = [];
+  const rank = [...areas].sort((x, y) =>
+    (stats[y].underserved_rate_pct ?? -1) - (stats[x].underserved_rate_pct ?? -1));
+  const a = rank[0], b = rank[rank.length - 1], sa = stats[a], sb = stats[b];
+  // The prose reads to a human, so it uses the display name. The keys stay raw:
+  // stats is keyed by the file's "KotaKinabalu", the sentence says "Kota Kinabalu".
+  const L = districtLabel;
+  const noun = cmp.level === "division" ? "divisions" : "districts";
+  const gap = k => (sa[k] === null || sb[k] === null) ? null : sa[k] - sb[k];
+
+  if (areas.length > 2)
+    out.push(`Across these ${areas.length} ${noun} the widest service gap is between
+      ${L(a)} and ${L(b)}; the others fall between them on most indicators.`);
+
+  let g = gap("underserved_rate_pct");
+  if (g !== null && Math.abs(g) >= CMP_MEANINGFUL.underserved_rate_pct)
+    out.push(`${L(a)} has the higher underserved rate: ${sa.underserved_rate_pct}% of its measured
+      settlements fall below 360p once shared by ${CMP_USERS}, against ${sb.underserved_rate_pct}%
+      in ${L(b)}. That is a rate, so it does not simply reflect ${L(a)} being larger.`);
+  else if (g !== null)
+    out.push(`${L(a)} and ${L(b)} have comparable underserved rates (${sa.underserved_rate_pct}% and
+      ${sb.underserved_rate_pct}% of measured settlements below 360p at ${CMP_USERS} users), so
+      service level alone does not separate them.`);
+
+  const pa = sa.people_underserved, pb = sb.people_underserved;
+  if (Math.max(pa, pb) > 0 && Math.abs(pa - pb) / Math.max(pa, pb, 1) > 0.25)
+    out.push(`${L(pa > pb ? a : b)} has more people in those areas, roughly
+      ${int(Math.max(pa, pb))} against ${int(Math.min(pa, pb))}. Both figures merge overlapping
+      2 km buffers, so they estimate people near the settlements rather than a headcount.`);
+
+  g = gap("evidence_gap_pct");
+  if (g !== null && Math.abs(g) >= CMP_MEANINGFUL.evidence_gap_pct) {
+    const [hi, lo] = g > 0 ? [a, b] : [b, a];
+    out.push(`${L(hi)} is the less measured of the two: ${stats[hi].evidence_gap_pct}% of its
+      settlements have no usable measurement, against ${stats[lo].evidence_gap_pct}% in ${L(lo)}.
+      Its service figures rest on a smaller sample and should be read as weaker evidence, not
+      as a better or worse result.`);
+  }
+
+  const bits = [];
+  g = gap("remote_rate_pct");
+  if (g !== null && Math.abs(g) >= CMP_MEANINGFUL.remote_rate_pct) {
+    const hi = g > 0 ? a : b;
+    bits.push(`${L(hi)} is the more remote, with ${stats[hi].remote_rate_pct}% of settlements more
+      than ${CMP_REMOTE_KM} km from the nearest town`);
+  }
+  g = gap("terrain_shadow_pct");
+  if (g !== null && Math.abs(g) >= CMP_MEANINGFUL.terrain_shadow_pct) {
+    const hi = g > 0 ? a : b;
+    bits.push(`${L(hi)} has more settlements sitting 150 m or more below their nearest town
+      (${stats[hi].terrain_shadow_pct}%)`);
+  }
+  if (bits.length)
+    out.push(bits.join(", and ") + `. Remoteness and terrain are associated with lower measured
+      speed in this dataset; neither is shown to cause it.`);
+
+  const worstGap = areas.reduce((x, y) => (stats[y].evidence_gap_pct ?? 0) > (stats[x].evidence_gap_pct ?? 0) ? y : x);
+  const worstSvc = areas.reduce((x, y) => (stats[y].underserved_rate_pct ?? 0) > (stats[x].underserved_rate_pct ?? 0) ? y : x);
+  out.push(worstGap === worstSvc
+    ? `${L(worstSvc)} carries both the weaker service rate and the thinner evidence, so it warrants
+       field measurement before any option is costed.`
+    : `On this data ${L(worstSvc)} screens as the higher service need and ${L(worstGap)} as the higher
+       measurement need. They are different questions and can be funded separately.`);
+  return out.map(s => s.replace(/\s+/g, " ").trim());
+}
+
+const cmpFmt = (v, unit) => v === null || v === undefined ? `<span class="sub">—</span>`
+  : (unit === "%" || unit === "" ? int(Math.round(v)) : num(v, unit === "ms" || unit === "m" ? 0 : 1))
+    + (unit && unit !== "%" ? `<span class="u">${unit}</span>` : unit === "%" ? "%" : "");
+
+function renderCompare() {
+  const picked = cmp.picked.filter(a => cmpAreaNames().includes(a));
+  el("cmpChips").innerHTML = cmpAreaNames().map(a => {
+    const on = picked.includes(a), full = picked.length >= 4 && !on;
+    return `<button class="chip-btn${on ? " on" : ""}" data-area="${esc(a)}"${full ? " disabled" : ""}
+      >${esc(districtLabel(a))}</button>`;
+  }).join("");
+  el("cmpCount").textContent = picked.length < 2
+    ? `Pick ${2 - picked.length} more to compare` : `${picked.length} selected`;
+
+  const body = el("cmpBody");
+  if (picked.length < 2) {
+    body.innerHTML = `<div class="empty">Choose two to four ${cmp.level === "division"
+      ? "divisions" : "districts"} above. Every indicator is a rate or a median, so a large
+      district cannot win simply by being large.</div>`;
+    el("cmpActions").hidden = true;
+    return;
+  }
+  el("cmpActions").hidden = false;
+  el("cmpBody").innerHTML = "";     // or the "choose two…" prompt prints under the table
+
+  const stats = {}, all = {};
+  for (const a of picked) stats[a] = areaStats(cmpRowsFor(a), cmpFacsFor(a));
+  for (const a of cmpAreaNames()) all[a] = stats[a] || areaStats(cmpRowsFor(a), cmpFacsFor(a));
+  const sabah = areaStats(FEATURES.map(f => f.properties), FACILITIES.map(f => f.properties));
+
+  let html = "", group = "";
+  for (const [label, key, unit, worseHigh] of CMP_ROWS) {
+    const g = CMP_ROWS.find(r => r[1] === key)[4];
+    if (g !== group) {
+      group = g;
+      html += `<tr class="cmp-group"><td colspan="${picked.length + 2}">${esc(group)}</td></tr>`;
+    }
+    const vals = picked.map(a => stats[a][key]);
+    const real = vals.filter(v => v !== null && v !== undefined);
+    // Flag the worst cell, not the biggest. Direction comes from worseHigh, so
+    // 60% underserved and 12 Mbps both read as the bad one.
+    const worst = worseHigh === null || !real.length ? null
+      : (worseHigh ? Math.max(...real) : Math.min(...real));
+    html += `<tr><th scope="row">${esc(label)}${unit === "%" ? "" : ""}</th>`;
+    picked.forEach((a, i) => {
+      const v = vals[i], pc = worseHigh === null ? null : pctileOf(all, key, v, worseHigh);
+      const bad = worst !== null && v === worst && real.length > 1
+        && Math.min(...real) !== Math.max(...real);
+      html += `<td class="r num${bad ? " cmp-worst" : ""}">${cmpFmt(v, unit)}${
+        pc === null ? "" : `<span class="cmp-pc" data-tip="Worse than ${pc}% of the ${
+          cmpAreaNames().length} ${cmp.level}s in Sabah on this indicator.">${pc}</span>`}</td>`;
+    });
+    html += `<td class="r num sub">${cmpFmt(sabah[key], unit)}</td></tr>`;
+  }
+  el("cmpTable").innerHTML =
+    `<thead><tr><th>Indicator</th>${picked.map(a =>
+      `<th class="r">${esc(districtLabel(a))}</th>`).join("")}<th class="r">Sabah</th></tr></thead>
+     <tbody>${html}</tbody>`;
+
+  el("cmpSummary").innerHTML = cmpSummary(picked, stats)
+    .map(s => `<p>${esc(s)}</p>`).join("");
+  el("cmpMissing").innerHTML = CMP_MISSING
+    .map(([n, why]) => `<li><b>${esc(n)}</b> — ${esc(why)}</li>`).join("");
+  el("cmpStamp").textContent = new Date().toLocaleDateString("en-GB",
+    { day: "numeric", month: "long", year: "numeric" });
+  el("cmpSubject").textContent = picked.map(districtLabel).join(" · ");
+}
+
+/* Where a value sits among ALL 25 districts, expressed as percent WORSE than.
+   Ranking only against the two or three on screen would let two weak districts
+   look strong for standing next to each other. */
+function pctileOf(all, key, v, worseHigh) {
+  if (v === null || v === undefined) return null;
+  const pool = Object.values(all).map(s => s[key]).filter(x => x !== null && x !== undefined);
+  if (pool.length < 2) return null;
+  const below = pool.filter(x => x < v).length;
+  const pc = 100 * below / pool.length;
+  return Math.round(worseHigh ? pc : 100 - pc);
+}
+
 function renderRankings() {
   const keep = currentFilter();
   const scored = visibleRows();
@@ -4182,6 +4690,38 @@ function downloadCSV() {
   URL.revokeObjectURL(a.href);
 }
 
+/* The comparison as data. The printed sheet is for reading; this is for
+   checking, so it carries the indicator key and the Sabah reference column
+   rather than only the pretty label. */
+function downloadCompareCSV() {
+  const picked = cmp.picked;
+  if (picked.length < 2) return;
+  const stats = {}, all = {};
+  for (const a of cmpAreaNames()) all[a] = areaStats(cmpRowsFor(a), cmpFacsFor(a));
+  for (const a of picked) stats[a] = all[a];
+  const sabah = areaStats(FEATURES.map(f => f.properties), FACILITIES.map(f => f.properties));
+  const q = v => v === null || v === undefined ? ""
+    : /[",\n]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : v;
+  const head = ["group", "indicator", "key", "unit", ...picked.map(districtLabel),
+    ...picked.map(a => `${districtLabel(a)}_pct_worse_than`), "sabah"].map(q).join(",");
+  const body = CMP_ROWS.map(([label, key, unit, worseHigh, group]) =>
+    [group, label, key, unit,
+      ...picked.map(a => stats[a][key]),
+      ...picked.map(a => pctileOf(all, key, stats[a][key], worseHigh)),
+      sabah[key]].map(q).join(",")).join("\n");
+  const notes = cmpSummary(picked, stats).map(s => `# ${s}`).join("\n");
+  const blob = new Blob([`# Dino Slayer — district decision comparison\n`
+    + `# ${picked.map(districtLabel).join(" vs ")} · ${new Date().toISOString().slice(0, 10)}\n`
+    + `# Rates and medians, never raw totals. Service figures use measured settlements only.\n`
+    + `# Population merges overlapping 2 km buffers and is not a census headcount.\n`
+    + notes + "\n" + head + "\n" + body], { type:"text/csv;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `dino-slayer-comparison-${picked.map(x => x.toLowerCase()).join("-")}.csv`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
 /* ══ V5 Theme ════════════════════════════════════════════════════════════ */
 const SUN = `<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
   <circle cx="8" cy="8" r="3.1"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3 3l1.2 1.2M11.8 11.8L13 13M13 3l-1.2 1.2M4.2 11.8L3 13"/></svg>`;
@@ -4257,15 +4797,44 @@ function wireUI() {
     setTimeout(() => map.resize(), 240);
   };
 
-  el("viewToggle").onclick = () => {
-    const open = el("rankings").dataset.open === "1";
-    el("rankings").dataset.open = open ? "0" : "1";
-    el("viewToggle").setAttribute("aria-pressed", String(!open));
-    if (!open) {
-      closePanel();
-      if (rankingsDirty) { renderRankings(); rankingsDirty = false; }
+  /* Rankings and Compare are both full-bleed views over the map, so opening
+     one closes the other rather than stacking two z-index:10 sheets. */
+  const showView = which => {
+    for (const [id, btn] of [["rankings", "viewToggle"], ["compare", "cmpToggle"]]) {
+      const on = id === which;
+      el(id).dataset.open = on ? "1" : "0";
+      el(btn).setAttribute("aria-pressed", String(on));
     }
+    if (which) closePanel();
+    if (which === "rankings" && rankingsDirty) { renderRankings(); rankingsDirty = false; }
+    if (which === "compare") renderCompare();
   };
+  el("viewToggle").onclick = () =>
+    showView(el("rankings").dataset.open === "1" ? null : "rankings");
+  el("cmpToggle").onclick = () =>
+    showView(el("compare").dataset.open === "1" ? null : "compare");
+
+  el("compare").addEventListener("click", e => {
+    const lvl = e.target.closest(".seg-btn[data-level]");
+    if (lvl) {
+      cmp.level = lvl.dataset.level;
+      cmp.picked = [];                       // district names are not division names
+      el("compare").querySelectorAll(".seg-btn[data-level]")
+        .forEach(b => b.setAttribute("aria-pressed", String(b === lvl)));
+      return renderCompare();
+    }
+    const chip = e.target.closest(".chip-btn[data-area]");
+    if (chip && !chip.disabled) {
+      const a = chip.dataset.area;
+      cmp.picked = cmp.picked.includes(a)
+        ? cmp.picked.filter(x => x !== a)
+        : [...cmp.picked, a].slice(0, 4);
+      renderCompare();
+    }
+  });
+  el("cmpClear").onclick = () => { cmp.picked = []; renderCompare(); };
+  el("cmpPrint").onclick = () => window.print();
+  el("cmpCsv").onclick = downloadCompareCSV;
 
   renderWeights();
   el("wReset").onclick = () => {
