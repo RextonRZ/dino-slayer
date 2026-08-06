@@ -149,6 +149,86 @@ def _load_facilities() -> pd.DataFrame:
 FAC = _load_facilities()
 
 
+# ── Layer 2: terrain ─────────────────────────────────────────────────────────
+# The bootcamp's three-layer model for telecom GeoAI is network performance,
+# physical landscape, and human demand. Ookla is the first, WorldPop and RWI the
+# third; elevation is the second, and it is the strongest terrain signal in this
+# file: it correlates -0.25 with measured download speed, a stronger
+# relationship than distance to the nearest town (-0.10).
+#
+# Two derived values, both from the SRTM elevation already in the parquet, and
+# both mirroring the dashboard exactly so the agent and the map cannot disagree:
+#
+#   elev_drop_m   metres below (negative) or above the nearest town or city.
+#                 Masts cluster at towns, so a large drop means terrain is more
+#                 likely in the way. A PROXY. We have point elevations, not a
+#                 surface, so no line-of-sight calculation is possible and none
+#                 is claimed.
+#   elev_pct      elevation percentile inside its own district, which says
+#                 whether a place is high or low FOR ITS AREA.
+#
+# Terrain never enters DIPI. It is context, like the flood layer.
+TERRAIN_DROP_M = -150
+
+
+def _add_terrain(df: pd.DataFrame) -> pd.DataFrame:
+    if "lon" not in df.columns or "elevation_m" not in df.columns:
+        df["elev_drop_m"] = None
+        df["elev_anchor"] = ""
+        df["elev_pct"] = None
+        return df
+    anchors = df[df["place"].isin(["city", "town"])]
+    if not len(anchors):
+        df["elev_drop_m"], df["elev_anchor"], df["elev_pct"] = None, "", None
+        return df
+
+    import numpy as np
+    ax = anchors["lon"].to_numpy(); ay = anchors["lat"].to_numpy()
+    ae = anchors["elevation_m"].to_numpy()
+    an = [n if isinstance(n, str) and n.strip() else f"Unnamed settlement ({i})"
+          for n, i in zip(anchors["name"], anchors["settlement_id"])]
+    # Haversine, identical to the dashboard's havKm(). A flat approximation
+    # picks a different nearest town for a handful of settlements, and then the
+    # agent and the panel quote different drops for the same place.
+    R = 6371.0
+    la1 = np.radians(df["lat"].to_numpy())[:, None]
+    lo1 = np.radians(df["lon"].to_numpy())[:, None]
+    la2 = np.radians(ay)[None, :]
+    lo2 = np.radians(ax)[None, :]
+    h = (np.sin((la2 - la1) / 2) ** 2
+         + np.cos(la1) * np.cos(la2) * np.sin((lo2 - lo1) / 2) ** 2)
+    km = 2 * R * np.arcsin(np.sqrt(np.clip(h, 0, 1)))
+    j = km.argmin(axis=1)
+    nearest_km = km[np.arange(len(df)), j]
+
+    drop = df["elevation_m"].to_numpy() - ae[j]
+    # A town is its own nearest anchor, so its drop is meaningless, not zero.
+    drop = np.where(nearest_km < 1e-9, np.nan, drop)
+    df["elev_drop_m"] = np.round(drop, 0)
+    df["elev_anchor"] = [an[k] for k in j]
+    df["backhaul_km"] = np.round(nearest_km, 2)
+    # floor(x+0.5) so halves round the same way the dashboard's Math.round does.
+    df["elev_pct"] = np.floor(df.groupby("district")["elevation_m"]
+                                .rank(pct=True).mul(100) + 0.5)
+    return df
+
+
+DF = _add_terrain(DF)
+
+
+def terrain_of(row) -> dict:
+    """The terrain reading for one settlement, in the words the panel uses."""
+    drop = row.get("elev_drop_m")
+    shadowed = drop is not None and not pd.isna(drop) and drop <= TERRAIN_DROP_M
+    return {
+        "elevation_m": _num(row.get("elevation_m"), 0),
+        "elev_percentile_in_district": _num(row.get("elev_pct"), 0),
+        "metres_vs_nearest_town": _num(drop, 0),
+        "nearest_town": row.get("elev_anchor") or None,
+        "terrain_shadow_risk": bool(shadowed),
+    }
+
+
 def _s(v) -> str:
     """Coerce whatever the model actually passed into a clean string.
 
@@ -252,9 +332,22 @@ def explain_priority(name_or_id: str) -> dict:
                          f"measurements to place it in the ranking.")}
     rows = [{"pillar": k.replace("p_", ""), "score_0_100": _num(row[k] * 100),
              "weight": f"{int(WEIGHTS[k]*100)}%"} for k in WEIGHTS]
+    # The measurement itself. Nothing returned it before, so "what does this
+    # settlement actually read?" was unanswerable: the agent fell through to
+    # predict_coverage, got "the model has not shipped", and told the user it
+    # could not confirm a speed that was sitting in the file all along. It also
+    # makes a connectivity pillar of 0.2 legible — that is 0.2 NEED, because the
+    # place is fast, and without the speed beside it the score reads backwards.
+    measured = {"dl_mbps": _num(row["dl_mbps"]), "ul_mbps": _num(row["ul_mbps"]),
+                "latency_ms": _num(row["latency_ms"], 0), "n_tests": int(row["n_tests"]),
+                "evidence": row["evidence_tier"]}
     return {"rows": rows, "ids": [row["settlement_id"]],
             "name": display_name(row), "rank": int(row["rank"]), "dipi": _num(row["dipi"]),
             "evidence": row["evidence_tier"], "n_tests": int(row["n_tests"]),
+            "measured": measured,
+            # Terrain is context, never a pillar. It travels alongside the score
+            # so the agent can explain a slow link, not justify the ranking.
+            "terrain": terrain_of(row),
             "alternatives": alts, "note": ""}
 
 
@@ -341,9 +434,14 @@ def recommend_intervention(name_or_id: str) -> dict:
     else:
         opt = "Community Wi-Fi at an institution"
         why = [f"{inst} school or clinic within 3 km", f"only {int(pop)} people within 2 km"]
+    t = terrain_of(row)
+    if t["terrain_shadow_risk"]:
+        why.append(f"sits {abs(int(t['metres_vs_nearest_town']))} m below {t['nearest_town']}, "
+                   f"so a line of sight to a mast there cannot be assumed")
     if row["flood_prone"]:
         why.append("seasonal water adjacency: siting needs field checks")
     return {"rows": [{"option": opt, "reasons": "; ".join(why)}], "ids": [row["settlement_id"]],
+            "terrain": t,
             "flags": ["illustrative_rules"],
             "label": "Illustrative decision criteria pending source verification — prototype only.",
             "note": "Rules-based decision support — not a trained model."}
@@ -411,12 +509,15 @@ def district_summary(district: str = "", sort_by: str = "facilities", top_k: int
             "scored": int(len(sc)),
             "evidence_gap": int((s["evidence_tier"] == "insufficient").sum()),
             "median_dl_mbps": _num(med),
+            "median_elevation_m": _num(s["elevation_m"].median(), 0),
+            "terrain_shadowed": int((s["elev_drop_m"] <= TERRAIN_DROP_M).sum()),
             "top_dipi": _num(sc["dipi"].max()) if len(sc) else None,
         })
     key = {"facilities": "facilities", "schools": "schools", "health": "health",
            "settlements": "settlements", "scored": "scored",
            "evidence_gap": "evidence_gap", "priority": "top_dipi",
-           "top_dipi": "top_dipi"}.get(sort_by, "facilities")
+           "top_dipi": "top_dipi", "elevation": "median_elevation_m",
+           "terrain": "terrain_shadowed"}.get(sort_by, "facilities")
     reverse = key != "median_dl_mbps"
     rows.sort(key=lambda r: (r[key] is None, r[key] if r[key] is not None else 0),
               reverse=reverse)
@@ -430,12 +531,56 @@ def district_summary(district: str = "", sort_by: str = "facilities", top_k: int
     return {"rows": rows, "ids": ids, "flags": ["osm_incomplete"], "note": note}
 
 
-def list_facilities(district: str = "", kind: str = "", limit: int = 50) -> dict:
+def _facility_connectivity():
+    """Each facility joined to the nearest settlement that actually has a speed.
+
+    "Which school is best placed" is not answerable from this data, because
+    nobody has run a speed test at a school. The nearest defensible question is
+    what the nearest MEASURED settlement reads, and how far away it is, so both
+    travel with every row and the distance is what tells you how much to trust
+    the reading.
+    """
+    import numpy as np
+    if not len(FAC):
+        return {}
+    m = DF[DF["dl_mbps"].notna() & DF["lon"].notna()]
+    if not len(m):
+        return {}
+    R = 6371.0
+    la1 = np.radians(FAC["lat"].to_numpy())[:, None]
+    lo1 = np.radians(FAC["lon"].to_numpy())[:, None]
+    la2 = np.radians(m["lat"].to_numpy())[None, :]
+    lo2 = np.radians(m["lon"].to_numpy())[None, :]
+    h = (np.sin((la2 - la1) / 2) ** 2
+         + np.cos(la1) * np.cos(la2) * np.sin((lo2 - lo1) / 2) ** 2)
+    km = 2 * R * np.arcsin(np.sqrt(np.clip(h, 0, 1)))
+    j = km.argmin(axis=1)
+    names = [display_name(r) for _, r in m.iterrows()]
+    speeds = m["dl_mbps"].to_numpy()
+    tiers = m["evidence_tier"].to_numpy()
+    return {fid: {"nearest_settlement": names[k],
+                  "km_to_it": round(float(km[i, k]), 2),
+                  "its_dl_mbps": round(float(speeds[k]), 1),
+                  "its_evidence": str(tiers[k])}
+            for i, (fid, k) in enumerate(zip(FAC["facility_id"], j))}
+
+
+FAC_CONN = _facility_connectivity()
+
+# How far a facility may borrow a speed from before the borrowing stops meaning
+# anything. Same 3 km the institutions pillar uses to decide a school is served.
+FAC_NEAR_KM = 3.0
+
+
+def list_facilities(district: str = "", kind: str = "", limit: int = 50,
+                    sort_by: str = "name") -> dict:
     """The actual named schools and health points, optionally in one district.
 
     kind: school, health, hospital, clinic, doctors, or empty for everything.
+    sort_by: name, fastest or slowest, by the nearest measured settlement.
     """
-    district, kind, limit = _s(district), _s(kind).lower(), max(1, min(_i(limit, 50), 200))
+    district, kind = _s(district), _s(kind).lower()
+    limit, sort_by = max(1, min(_i(limit, 50), 200)), _s(sort_by).lower() or "name"
     f = FAC
     if district:
         f = f[f["district"].map(_key) == _key(district)]
@@ -451,18 +596,64 @@ def list_facilities(district: str = "", kind: str = "", limit: int = 50) -> dict
                 "note": f"Unknown kind '{kind}'. Use school, health, hospital, clinic or doctors."}
 
     total = len(f)
-    named = f[f["name"].notna() & (f["name"].astype(str).str.strip() != "")]
+    named = f[f["name"].notna() & (f["name"].astype(str).str.strip() != "")].copy()
     unnamed = total - len(named)
-    shown = named.sort_values(["amenity", "name"]).head(limit)
-    rows = [{"name": r["name"], "type": AMENITY_LABEL.get(r["amenity"], r["amenity"]),
-             "district": _label(r["district"])} for _, r in shown.iterrows()]
+
+    named["_dl"] = named["facility_id"].map(
+        lambda i: (FAC_CONN.get(i) or {}).get("its_dl_mbps"))
+    named["_km"] = named["facility_id"].map(
+        lambda i: (FAC_CONN.get(i) or {}).get("km_to_it"))
+
+    ranked = sort_by in ("fastest", "best", "slowest", "worst")
+    far = 0
+    if ranked:
+        # Ranking facilities by a borrowed speed only means something while the
+        # borrowing is close. Without this a school 4 km from a fast town beat a
+        # school 300 m from a slower one, and the list read as though the far
+        # school were better connected. 3 km is the same radius the institutions
+        # pillar uses, so the whole product draws the line in one place.
+        near = named[named["_km"].notna() & (named["_km"] <= FAC_NEAR_KM)]
+        far = len(named) - len(near)
+        named = near
+    if sort_by in ("fastest", "best"):
+        shown = named.sort_values("_dl", ascending=False, na_position="last").head(limit)
+    elif sort_by in ("slowest", "worst"):
+        shown = named.sort_values("_dl", ascending=True, na_position="last").head(limit)
+    else:
+        shown = named.sort_values(["amenity", "name"]).head(limit)
+
+    rows = []
+    for _, r in shown.iterrows():
+        c = FAC_CONN.get(r["facility_id"]) or {}
+        rows.append({"name": r["name"], "type": AMENITY_LABEL.get(r["amenity"], r["amenity"]),
+                     "district": _label(r["district"]),
+                     "nearest_settlement": c.get("nearest_settlement"),
+                     "km_to_it": c.get("km_to_it"),
+                     "its_dl_mbps": c.get("its_dl_mbps"),
+                     "its_evidence": c.get("its_evidence")})
+
     bits = [f"{total} facilit{'y' if total == 1 else 'ies'} in this file"]
     if len(rows) < len(named):
-        bits.append(f"showing the first {len(rows)} by name")
+        bits.append(f"showing {len(rows)}"
+                    + (" sorted by the nearest measured settlement's speed"
+                       if ranked else " by name"))
     if unnamed:
         bits.append(f"{unnamed} carry no name in OpenStreetMap and are not listed")
+    bits.append("Speed is measured at the nearest settlement that has a measurement, not at the "
+                "facility itself, so read km_to_it before trusting it. Nobody has run a speed "
+                "test at a school")
+    if far:
+        # The model is told the rule and the count, so it can answer "why is X
+        # not on this list" instead of inventing a reason.
+        bits.append(f"{far} named facilit{'y is' if far == 1 else 'ies are'} left out of this "
+                    f"ranking because the nearest settlement with a measurement is more than "
+                    f"{FAC_NEAR_KM:g} km away, which is too far to stand in for the facility. "
+                    f"A fast settlement with no facility within {FAC_NEAR_KM:g} km therefore "
+                    f"appears nowhere in this list")
     bits.append("OSM coverage of rural facilities is incomplete, so this is not a register")
-    return {"rows": rows, "ids": [], "flags": ["osm_incomplete"], "note": ". ".join(bits) + "."}
+    return {"rows": rows, "ids": [],
+            "flags": ["osm_incomplete", "proxy_location"] + (["radius_capped"] if far else []),
+            "note": ". ".join(bits) + "."}
 
 
 def plan_survey(district: str = "", top_k: int = 10) -> dict:

@@ -163,5 +163,138 @@ tm = [m for m in msgs if m.__class__.__name__ == "ToolMessage"]
 check("ToolMessage content parses as JSON", bool(tm) and json.loads(tm[0].content)["rows"])
 check("no python repr leaked", "'rows'" not in tm[0].content)
 
+print("\n=== 8. Gemini can return content as a list of parts ===")
+listy = AIMessage(content=[{"type": "text", "text": "Kota Kinabalu leads."}])
+st = {"messages": [listy], "violations": [], "rewrites": 0,
+      "tool_outputs": [{"tool": "list_facilities",
+                        "result": {"rows": [{"name": "X", "evidence": "low_evidence"}],
+                                   "flags": [], "note": ""}}]}
+try:
+    G.evidence_check_node(st)
+    check("evidence check survives list content", True)
+except Exception as e:
+    check("evidence check survives list content", False, f"{type(e).__name__}: {e}")
+check("the answer is flattened, not a raw part list",
+      G._payload(st)["answer"] == "Kota Kinabalu leads.", G._payload(st)["answer"])
+for c, want in [("plain", "plain"),
+                ([{"type": "text", "text": "a"}, {"type": "text", "text": "b"}], "a b"),
+                ([], ""),
+                ([{"type": "image_url", "image_url": "x"}], ""),
+                (["bare", {"text": "d"}], "bare d")]:
+    check(f"_text({str(c)[:34]}) is {want!r}", G._text(AIMessage(content=c)) == want,
+          repr(G._text(AIMessage(content=c))))
+
+print("\n=== 9. facilities carry the nearest measured settlement ===")
+slow = T.list_facilities(kind="school", sort_by="slowest", limit=3)
+fast = T.list_facilities(kind="school", sort_by="fastest", limit=1)
+check("slowest first", slow["rows"][0]["its_dl_mbps"] <= slow["rows"][-1]["its_dl_mbps"], slow["rows"])
+check("fastest is the other end", fast["rows"][0]["its_dl_mbps"] > slow["rows"][0]["its_dl_mbps"])
+check("every row names the settlement it borrowed the speed from",
+      all(r["nearest_settlement"] and r["km_to_it"] is not None for r in slow["rows"]))
+check("flagged as a proxy, not a measurement at the facility",
+      "proxy_location" in slow["flags"])
+check("the note says nobody tested at a school", "school" in slow["note"])
+check("an unknown sort falls back to name order",
+      len(T.list_facilities(kind="school", sort_by=["nonsense"], limit=3)["rows"]) == 3)
+
+print("\n=== 10. the 4th question of every session used to die ===")
+# Gemini rejects a history window that opens on a dangling function call:
+#   "Please ensure that function call turn comes immediately after a user turn
+#    or after a function response turn."
+# A blind [-MAX_HISTORY:] slice produced exactly that from turn 4 onward.
+from langchain_core.messages import HumanMessage as _H, ToolMessage as _T
+def convo(turns):
+    m = []
+    for t in range(turns):
+        m += [_H(f"q{t}"), tc("list_facilities", {}, t), _T(content="{}", tool_call_id=f"c{t}"),
+              AIMessage(f"a{t}")]
+    return m
+broke = []
+for turns in range(1, 9):
+    for partial in (0, 1, 2, 3):          # mid-turn as well as between turns
+        msgs = convo(turns)[:turns * 4 + partial - 3] if partial else convo(turns)
+        if not msgs:
+            continue
+        w = G._window(msgs)
+        opens_ok = isinstance(w[0], _H)
+        # every tool call inside the window must have its response inside it too
+        ids = {c["id"] for m in w for c in (getattr(m, "tool_calls", None) or [])}
+        answered = {getattr(m, "tool_call_id", None) for m in w}
+        if not opens_ok or not ids <= answered:
+            broke.append((turns, partial))
+check("every window opens on a user turn, at every depth", not broke, broke[:4])
+check("a blind slice really did break (so this test means something)",
+      any(not isinstance(convo(t)[:t * 4 - 2][-G.MAX_HISTORY:][0], _H) for t in range(4, 9)))
+check("short histories are passed through untouched",
+      G._window(convo(1)) == convo(1))
+check("the window still respects the budget when it can",
+      len(G._window(convo(8))) <= G.MAX_HISTORY + 3, len(G._window(convo(8))))
+check("no HumanMessage at all does not crash", G._window([AIMessage("x")] * 20) is not None)
+
+print("\n=== 11. a number the tools never returned cannot reach the user ===")
+# The real failure: asked why a settlement was not picked, the model repeated a
+# speed the USER had asserted, for a place no tool had returned a row for.
+echoed = f"Kampung Melati has a download speed of 303.7 Mbps. {T.DISCLAIMER}"
+check("a figure quoted with no tool called is caught",
+      any("no tool result" in x for x in G._scan(echoed, [])))
+def clean(draft, res, tool="t"):
+    return [x for x in G._scan(draft, [{"tool": tool, "result": res}]) if "no tool result" in x]
+truthful = [
+    (f"SEKOLAH KEBANGSAAN MOSTYN is 0.6 km from Kampung Mostyn Lama at 312.7 Mbps. {T.DISCLAIMER}",
+     T.list_facilities(kind="school", sort_by="fastest", limit=5)),
+    (f"Kampung Tangkol leads at 76.6, Talas follows at 75.9. {T.DISCLAIMER}",
+     T.rank_settlements(district="Kota Marudu", top_k=10)),
+    (f"Kota Kinabalu leads with 105 facilities, 74 schools and 31 health points. {T.DISCLAIMER}",
+     T.district_summary(sort_by="facilities", top_k=5)),
+    (f"At 11.4 Mbps split between 30 people each gets about 0.4 Mbps. {T.DISCLAIMER}",
+     T.simulate_experience("Talas", "720p", 30)),
+    # the same number written at a different scale is the same number
+    (f"A budget of RM 2.5 million is illustrative. {T.DISCLAIMER}",
+     T.optimise_budget(2500000, "Kudat", "base")),
+]
+bad = [d[:40] for d, r in truthful if clean(d, r)]
+check("truthful answers are never flagged", not bad, bad)
+check("a pillar score is flagged when only rank_settlements was called",
+      clean(f"Kampung Tangkol leads at 76.6, its connectivity pillar is 90.1. {T.DISCLAIMER}",
+            T.rank_settlements(district="Kota Marudu", top_k=10)))
+check("small integers are left alone",
+      not clean(f"The top 10 in 2026 for a class of 30, 40% of DIPI. {T.DISCLAIMER}",
+                T.rank_settlements(district="Kota Marudu", top_k=10)))
+
+print("\n=== 12. a borrowed speed is only ranked while the borrowing is close ===")
+fast = T.list_facilities(kind="school", sort_by="fastest", limit=20)
+check("nothing in the ranking borrows from beyond 3 km",
+      all(r["km_to_it"] <= T.FAC_NEAR_KM for r in fast["rows"]),
+      [(r["name"], r["km_to_it"]) for r in fast["rows"] if r["km_to_it"] > T.FAC_NEAR_KM])
+check("the cap is declared as a flag", "radius_capped" in fast["flags"])
+check("the note says how many were left out and why",
+      "left out" in fast["note"] and "3 km" in fast["note"])
+check("it explains that a fast settlement can be absent entirely",
+      "appears nowhere" in fast["note"], fast["note"][-160:])
+plain = T.list_facilities(kind="school", limit=20)
+check("listing by name is not capped", "radius_capped" not in plain["flags"])
+check("a far-borrowing school is still listable by name, just not ranked",
+      any(r["km_to_it"] > T.FAC_NEAR_KM for r in T.list_facilities(limit=200)["rows"]))
+
+print("\n=== 13. a settlement's own measurement is reachable ===")
+# "Kampung Melati is 328.6 Mbps, isn't it?" had no tool that could confirm it.
+# The agent fell through to predict_coverage, got "the model has not shipped",
+# and told the user it could not confirm a number the file already held.
+e = T.explain_priority("Kampung Melati")
+check("explain_priority returns the measured speed", e["measured"]["dl_mbps"] == 328.6, e.get("measured"))
+check("upload and latency travel with it",
+      e["measured"]["ul_mbps"] is not None and e["measured"]["latency_ms"] is not None)
+check("it agrees with the dashboard file",
+      e["measured"]["dl_mbps"] == round(float(T.DF.loc[T.DF["name"] == "Kampung Melati", "dl_mbps"].iloc[0]), 1))
+check("the number of tests behind it is stated", e["measured"]["n_tests"] == 79, e["measured"])
+check("a fast place has a LOW connectivity pillar, and both are now visible",
+      [r for r in e["rows"] if r["pillar"] == "connectivity"][0]["score_0_100"] < 1)
+check("the speed is now quotable without tripping the number guardrail",
+      not [x for x in G._scan(f"Kampung Melati reads 328.6 Mbps down. {T.DISCLAIMER}",
+                              [{"tool": "explain_priority", "result": e}])
+           if "no tool result" in x])
+check("predict_coverage is still honest about not having shipped",
+      "not shipped" in T.predict_coverage("Kampung Melati")["note"])
+
 print(f"\n{ok} passed, {fail} failed")
 sys.exit(1 if fail else 0)

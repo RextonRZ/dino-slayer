@@ -51,6 +51,12 @@ summarising what they return.
 Rules you must follow:
 - Never compute, estimate or recall a number yourself. Every number in your answer must
   appear in a tool result. If a tool did not return it, do not say it.
+- Call the tool again for every question about a named settlement, district or facility,
+  even when the answer appeared earlier in this conversation and even when the question is
+  a repeat. The evidence check only sees tools called in THIS turn and deletes any figure
+  you did not fetch in it, so answering from memory loses the number.
+- If the user asserts a figure, do not agree with it or repeat it until a tool has returned
+  it. Look it up and state what the data says, even if that contradicts them.
 - Ranking is the Digital Inclusion Priority Index (DIPI), a transparent weighted blend:
   connectivity need 40%, population at stake 25%, institutions served 15%, equity 20%.
   It screens communities for FURTHER ASSESSMENT.
@@ -88,7 +94,12 @@ def rank_settlements(district: str = "", division: str = "", top_k: int = 10,
 
 @tool
 def explain_priority(name_or_id: str) -> dict:
-    """Why one settlement is ranked where it is: the four pillar scores and their weights."""
+    """Everything known about one settlement: its measured download, upload, latency and
+    how many tests back them, the four pillar scores and their weights, and its terrain
+    reading (elevation, height within its district, metres above or below the nearest
+    town) which helps explain a slow link but never affects the score.
+    Use this for "what speed does X get", "is X really N Mbps" and "why is X ranked there".
+    A LOW connectivity pillar means low NEED, i.e. the place is already fast."""
     return T.explain_priority(name_or_id)
 
 
@@ -113,7 +124,8 @@ def predict_coverage(name_or_id: str) -> dict:
 
 @tool
 def recommend_intervention(name_or_id: str) -> dict:
-    """Suggested connectivity option and the rules that fired. Illustrative criteria."""
+    """Suggested connectivity option and the rules that fired, including any terrain
+    caveat. Illustrative criteria."""
     return T.recommend_intervention(name_or_id)
 
 
@@ -138,19 +150,23 @@ def generate_validation_report(district: str = "", top_k: int = 10) -> dict:
 
 @tool
 def district_summary(district: str = "", sort_by: str = "facilities", top_k: int = 25) -> dict:
-    """Compare districts: settlements, evidence gap, median speed, and how many schools
-    and health points actually sit inside each one. Use this for "which district has the
-    most schools / hospitals / settlements / evidence gap". Sort by facilities, schools,
-    health, settlements, evidence_gap or priority."""
+    """Compare districts: settlements, evidence gap, median speed, median elevation, how
+    many sit below their nearest town, and how many schools and health points are inside
+    each one. Use this for "which district has the most schools / hospitals / settlements /
+    evidence gap", or "which district is the most mountainous". Sort by facilities, schools,
+    health, settlements, evidence_gap, priority, elevation or terrain."""
     return T.district_summary(district, sort_by, top_k)
 
 
 @tool
-def list_facilities(district: str = "", kind: str = "", limit: int = 50) -> dict:
-    """The actual NAMES of schools and health points, optionally within one district.
-    Use this when asked to list or name facilities. kind: school, health, hospital,
-    clinic, doctors, or empty for all."""
-    return T.list_facilities(district, kind, limit)
+def list_facilities(district: str = "", kind: str = "", limit: int = 50,
+                    sort_by: str = "name") -> dict:
+    """The actual NAMES of schools and health points, each with the nearest settlement
+    that has a speed measurement and what it reads. Use this to list or name facilities,
+    and to answer which schools or clinics sit in the best or worst connected places.
+    kind: school, health, hospital, clinic, doctors, or empty for all.
+    sort_by: name, fastest, or slowest."""
+    return T.list_facilities(district, kind, limit, sort_by)
 
 
 TOOL_LIST = [rank_settlements, explain_priority, compare_settlements, simulate_experience,
@@ -180,8 +196,40 @@ def _llm(bound: bool = False):
     return llm.bind_tools(TOOL_LIST) if bound else llm
 
 
+def _window(msgs: list) -> list:
+    """The last MAX_HISTORY messages, cut on a turn boundary.
+
+    A blind [-MAX_HISTORY:] slice cuts wherever it lands. From the FOURTH
+    question of a session onward it landed between an AIMessage carrying
+    tool_calls and the ToolMessage answering it, so the window opened on a
+    dangling function call and Gemini rejected the whole turn:
+
+        400 INVALID_ARGUMENT — Please ensure that function call turn comes
+        immediately after a user turn or after a function response turn.
+
+    which surfaced to the user as "Copilot offline" on question four, every
+    session, forever. Only a HumanMessage is a safe place to open a window: a
+    tool call and its response are then always inside it together.
+    """
+    starts = [i for i, m in enumerate(msgs) if isinstance(m, HumanMessage)]
+    if len(msgs) > MAX_HISTORY and starts:
+        cut = len(msgs) - MAX_HISTORY
+        # The oldest turn that still fits; failing that the current turn, even
+        # if a long tool loop makes it overrun the budget. Correct beats short.
+        msgs = msgs[next((i for i in starts if i >= cut), starts[-1]):]
+    elif len(msgs) > MAX_HISTORY:
+        msgs = msgs[-MAX_HISTORY:]
+    # Belt and braces: never send a tool call whose response is not also in the
+    # window. Nothing in the graph produces one today — rewrite_node calls the
+    # model unbound, so it cannot emit a call that never runs — but this is the
+    # shape Gemini rejects outright, and it is one line to make impossible.
+    answered = {getattr(m, "tool_call_id", None) for m in msgs}
+    return [m for m in msgs
+            if all(c["id"] in answered for c in (getattr(m, "tool_calls", None) or []))]
+
+
 def agent_node(state: TDState):
-    msgs = [SystemMessage(SYSTEM)] + state["messages"][-MAX_HISTORY:]
+    msgs = [SystemMessage(SYSTEM)] + _window(state["messages"])
     return {"messages": [_llm(bound=True).invoke(msgs)]}
 
 
@@ -240,6 +288,67 @@ def tools_node(state: TDState):
     return {"messages": out_msgs, "tool_outputs": raw}
 
 
+def _text(msg) -> str:
+    """A message's content as a plain string.
+
+    Gemini does not always return content as a string. It can return a list of
+    parts, and everything downstream assumed a string: the guardrail called
+    .lower() on it and killed the turn with "'list' object has no attribute
+    'lower'", and on the paths that did not crash the raw part list went to the
+    user as the answer. Flatten it once, here, so neither can happen.
+    """
+    c = getattr(msg, "content", msg)
+    if isinstance(c, str):
+        return c
+    if isinstance(c, list):
+        parts = []
+        for part in c:
+            if isinstance(part, str):
+                parts.append(part)
+            elif isinstance(part, dict):
+                t = part.get("text") or part.get("content")
+                if isinstance(t, str):
+                    parts.append(t)
+        return " ".join(parts).strip()
+    return "" if c is None else str(c)
+
+
+# A number a planner would read as a measurement: anything with a decimal
+# point, or an integer of four digits or more (populations, budgets). Small
+# integers are deliberately skipped — "top 10", "a class of 30", "40% of DIPI"
+# are structure, not data, and flagging them would be all false positives.
+DATA_NUMBER = re.compile(r"\d[\d,]*\.\d+|\d[\d,]{3,}")
+# ...and a bare four-digit number in this range is a year, not a population.
+YEAR = re.compile(r"^(19|20)\d\d$")
+
+
+def _data_numbers(text: str) -> set:
+    return {n for n in (m.group(0).replace(",", "") for m in DATA_NUMBER.finditer(text))
+            if not YEAR.match(n)}
+
+
+def _tool_numbers(outputs: list) -> set:
+    """Every number the tools returned, in the forms a model would write them."""
+    allowed = set()
+    for o in outputs:
+        blob = json.dumps(o.get("result") or {}, default=str)
+        for m in re.finditer(r"\d+(?:\.\d+)?", blob):
+            allowed.add(m.group(0))
+            try:
+                f = abs(float(m.group(0)))
+            except ValueError:
+                continue
+            # Every scale a model might write it at, so "RM 2.5 million" is
+            # recognised as the 2500000 the tool returned rather than reported
+            # as invented.
+            for scale in (1, 1e3, 1e6, 1e9):
+                for dp in (0, 1, 2):
+                    s = f"{f / scale:.{dp}f}"
+                    allowed.add(s)
+                    allowed.add(s.rstrip("0").rstrip(".") or "0")
+    return allowed
+
+
 def _scan(draft: str, outputs: list) -> list:
     """The guardrail. Pure Python, reading raw tool rows — not the model's word for it.
 
@@ -287,13 +396,26 @@ def _scan(draft: str, outputs: list) -> list:
     if has_sharing and not re.search(r"shar|assum|each|per person|per user", draft, re.I):
         v.append("A shared-connection figure is quoted without saying it assumes the link is "
                  "split equally between users. Name the assumption.")
+    # "Python computes, the agent narrates" — enforced rather than requested.
+    # The system prompt already forbids inventing a number, and the model
+    # ignored it: asked why a settlement was not picked, it restated a speed
+    # the USER had asserted in the question as if it were data, and no tool had
+    # ever returned that figure for that place. A prompt is not a control.
+    invented = sorted(_data_numbers(draft) - _tool_numbers(outputs))
+    if invented:
+        v.append("These figures appear in the answer but in no tool result: "
+                 + ", ".join(invented[:4])
+                 + ". Every number must come from a tool. Remove them, or say the data does "
+                   "not contain that figure. Never repeat a number the user supplied as if "
+                   "the dataset confirmed it.")
+
     if T.DISCLAIMER.rstrip(".").lower() not in draft.lower():
         v.append(f"The closing disclaimer is missing: {T.DISCLAIMER}")
     return v
 
 
 def evidence_check_node(state: TDState):
-    draft = state["messages"][-1].content or ""
+    draft = _text(state["messages"][-1])
     return {"violations": _scan(draft, state.get("tool_outputs") or [])}
 
 
@@ -315,7 +437,9 @@ def rewrite_node(state: TDState):
     fix = ("Your draft broke these rules:\n- " + "\n- ".join(state["violations"]) +
            "\n\nRewrite it fixing ONLY these. Change no numbers.")
     llm = _llm()
-    out = llm.invoke([SystemMessage(SYSTEM), *state["messages"], HumanMessage(fix)])
+    # Same window as agent_node. This used to send the entire history, which
+    # both grew without bound and could carry the same dangling call.
+    out = llm.invoke([SystemMessage(SYSTEM), *_window(state["messages"]), HumanMessage(fix)])
     return {"messages": [out], "rewrites": n}
 
 
@@ -383,7 +507,7 @@ def _trace_url(run_id) -> str:
 
 def _payload(state: dict, trace_url: str = "") -> dict:
     """The dashboard contract, built from TOOL OUTPUT rather than the model's text."""
-    answer = state["messages"][-1].content or ""
+    answer = _text(state["messages"][-1])
     outs = state.get("tool_outputs") or []
     # map ids and the table come from TOOL OUTPUT, never from the model's text.
     ids, table, notes = [], [], []
