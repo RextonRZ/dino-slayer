@@ -135,7 +135,8 @@ button,a,input,select{transition:background-color .18s var(--ease),color .18s va
 .topbar-actions{display:flex;align-items:center;gap:8px;flex:none}
 .ghost-btn{height:34px;padding:0 12px;border-radius:8px;border:1px solid var(--hairline);
   color:var(--ink);font-size:12.5px;font-weight:600;display:inline-flex;align-items:center;gap:7px}
-.ghost-btn:hover{background:var(--tint)}
+.ghost-btn:hover:not(:disabled){background:var(--tint)}
+.ghost-btn:disabled{opacity:.4;cursor:not-allowed}
 .ghost-btn[aria-pressed="true"]{background:var(--tint);color:var(--ink-strong);border-color:var(--hairline-strong)}
 .icon-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--hairline);
   display:grid;place-items:center;color:var(--ink)}
@@ -796,19 +797,44 @@ details[open] .qb-summary::before{content:"▾"}
 .chip-btn.on{background:var(--accent-bg);border-color:var(--accent);color:var(--accent)}
 .chip-btn:disabled{opacity:.35;cursor:not-allowed}
 .cmp-wrap{max-height:none}
+/* Fixed layout so every column keeps the same width down the whole table and
+   the eye can track a single area straight down it. The label column is given
+   its width explicitly; the areas and the Sabah reference split the rest
+   evenly, whether there are two of them or four. */
+/* width:auto + min-width:100% so the table fills the panel at two areas and
+   grows past it at twenty-five, where .table-wrap takes over and scrolls. The
+   colgroup below fixes every data column at the same width either way. */
+#cmpTable{table-layout:fixed;width:auto;min-width:100%}
+#cmpTable col.cmp-col-label{width:15.5rem}
+#cmpTable col.cmp-col-area{width:8.2rem}
 #cmpTable th[scope="row"]{text-align:left;font-weight:500;color:var(--ink);
-  font-size:12px;letter-spacing:0;text-transform:none;position:static}
+  font-size:13px;line-height:1.45;letter-spacing:0;text-transform:none;position:static;
+  white-space:normal;padding-left:14px;
+  position:sticky;left:0;z-index:1;background:var(--surface)}
+#cmpTable thead th:first-child{position:sticky;left:0;z-index:3}
+tr.cmp-group td{position:sticky;left:0}
+/* Room to breathe. The printed sheet overrides all of this with its own
+   tighter values, so the PDF is unaffected. */
+#cmpTable td,#cmpTable thead th{padding:11px 14px;height:auto}
+/* .u is scoped to .tile and .kpi elsewhere, so in this table it was bare
+   inline text and every reading rendered as "39.2Mbps". */
+#cmpTable .u{font-size:9.5px;color:var(--ink-muted);font-weight:500;margin-left:3px}
+#cmpTable thead th{font-size:10px}
 /* A group heading is a row, not a second table — the columns must stay aligned
    with the numbers underneath them. */
 tr.cmp-group td{background:var(--tint);font-size:9.5px;font-weight:700;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--ink-muted);padding:7px 10px;border-bottom:0}
+  text-transform:uppercase;color:var(--ink-muted);padding:9px 14px !important;border-bottom:0}
 td.cmp-worst{color:var(--warn);font-weight:700}
 /* The percentile rides alongside the value rather than taking a column of its
-   own; at four areas a second column each would not fit. */
-.cmp-pc{display:inline-block;min-width:22px;margin-left:7px;padding:1px 5px;border-radius:4px;
-  background:var(--tint);color:var(--ink-muted);font-size:9.5px;font-weight:700;cursor:help}
+   own; at four areas a second column each would not fit. Fixed width, and a
+   blank one is emitted where an indicator has no direction — that keeps both
+   the chips AND the numbers above them on the same vertical line. */
+.cmp-pc{display:inline-block;width:26px;margin-left:9px;padding:1px 0;border-radius:4px;
+  background:var(--tint);color:var(--ink-muted);font-size:9.5px;font-weight:700;cursor:help;
+  text-align:center;vertical-align:baseline}
+.cmp-pc.blank{background:none;visibility:hidden;cursor:default}
 td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
-.cmp-cols{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-top:18px}
+.cmp-cols{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-top:20px}
 .cmp-note-card{border:1px solid var(--hairline);border-radius:var(--radius);
   background:var(--surface);padding:16px 18px}
 .cmp-note-card h3{font-size:12.5px;font-weight:700;color:var(--ink-strong);margin:0 0 9px}
@@ -818,6 +844,168 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
 .cmp-missing{margin:0;padding-left:17px}
 .cmp-missing li{font-size:12px;line-height:1.6;color:var(--ink-muted);margin-bottom:5px}
 .cmp-missing b{color:var(--ink)}
+
+/* ── the three visual layers ─────────────────────────────────────────────
+   Screen only. Colour is carried entirely by the existing DIPI ramp: each
+   area is drawn in the colour of its own median DIPI, so the thumbnail, the
+   bar and the radar all agree without spending a single new hue on decoration.
+   The cyan accent stays reserved for selection, as it is everywhere else. */
+.cmp-vis{margin-bottom:26px}
+.cmp-vis[hidden]{display:none}
+/* Three zones, each announced. Without them this view was six full-width
+   blocks in a row with nothing saying where one thought ended and the next
+   began. Consistent 26 px of air and one hairline per break. */
+.cmp-zone{padding-top:22px;margin-top:26px;border-top:1px solid var(--hairline)}
+.cmp-zone:first-child{padding-top:0;margin-top:0;border-top:0}
+.cmp-zone-label{display:block;margin-bottom:14px}
+.cmp-zone-tail{padding-bottom:2px}
+.cmp-zone-note{color:var(--ink-muted);font-size:11.5px;margin:-8px 0 0;max-width:62ch}
+
+/* Every card is the same skeleton at any count: badge and name, then shape
+   beside the headline figure, then one full-width row of three stats. */
+.cmp-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(244px,1fr));gap:14px}
+.cmp-card{border:1px solid var(--hairline);border-radius:var(--radius);background:var(--surface);
+  padding:15px 16px;min-width:0;display:flex;flex-direction:column;gap:13px;
+  cursor:pointer;position:relative;
+  transition:border-color .16s var(--ease),background-color .16s var(--ease)}
+.cmp-card:hover,.cmp-card:focus-visible{border-color:var(--hairline-strong);background:var(--tint)}
+.cmp-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* The affordance stays out of the way until the pointer is on the card: at
+   twenty-five cards, twenty-five permanent "view on map" labels would be the
+   loudest thing in the view. */
+.cmp-card-go{position:absolute;right:14px;top:15px;display:inline-flex;align-items:center;
+  gap:4px;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);opacity:0;transition:opacity .16s var(--ease);pointer-events:none}
+.cmp-card:hover .cmp-card-go,.cmp-card:focus-visible .cmp-card-go{opacity:1}
+@media (prefers-reduced-motion:reduce){.cmp-card,.cmp-card-go{transition:none}}
+.cmp-card-head{display:flex;align-items:center;gap:9px;min-width:0}
+.cmp-card-head b{font-size:13.5px;font-weight:600;color:var(--ink-strong);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* The index badge is the reliable link between the three layers: two areas in
+   the same DIPI class share a colour, and a number never collides. */
+.cmp-idx{flex:none;width:18px;height:18px;border-radius:5px;display:grid;place-items:center;
+  font-size:10px;font-weight:800;color:var(--bg)}
+.cmp-card-body{display:flex;align-items:center;gap:14px;min-width:0;flex:1 1 auto}
+.cmp-shape{width:104px;height:86px;flex:none;display:block}
+.cmp-shape-bg{fill:var(--tint);stroke:var(--hairline);stroke-width:.6;
+  vector-effect:non-scaling-stroke}
+.cmp-shape-on{stroke:var(--ink-strong);stroke-width:1.1;vector-effect:non-scaling-stroke;
+  fill-opacity:.92}
+.cmp-shape-ring{fill:none;stroke-width:1.4;opacity:.9;vector-effect:non-scaling-stroke}
+/* Stacked, so the figure and its label share one left edge across all four
+   cards rather than drifting with the width of the number. */
+.cmp-card-stat{display:flex;flex-direction:column;gap:3px;min-width:0}
+.cmp-card-stat .v{font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.cmp-card-stat .micro{font-size:9px;letter-spacing:.11em;white-space:nowrap}
+/* Full card width, so all three stats fit even at four areas — beside the map
+   there were only ~150 px and "SETTLEMENTS" clipped mid-word. */
+.cmp-card-foot{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  padding-top:12px;border-top:1px solid var(--hairline);margin-top:auto}
+.cmp-stat{min-width:0;display:flex;flex-direction:column;gap:3px}
+.cmp-stat .num{font-size:15px;font-weight:600;color:var(--ink-strong);line-height:1}
+.cmp-stat .micro{font-size:8px;letter-spacing:.04em;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+
+/* A matched pair: same border, radius, surface and padding, tops aligned, and
+   both captions pinned to the bottom so the two cards end level.
+
+   Side by side only while the two cards are comparable in height. At twenty-five
+   areas the bar card is 125 rows and the radar card is nine, and stretching them
+   to match left the radar card as a tall empty box — so past a handful they
+   stack and each takes its own height and the full width. */
+.cmp-panels{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:stretch}
+.cmp-panels.stacked{grid-template-columns:1fr}
+.cmp-viscard{border:1px solid var(--hairline);border-radius:var(--radius);
+  background:var(--surface);padding:17px 18px;min-width:0;
+  display:flex;flex-direction:column}
+.cmp-viscard-head{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  flex-wrap:wrap;min-height:26px;margin-bottom:15px}
+.cmp-viscard-body{flex:1 1 auto;min-width:0}
+.cmp-viscard h3{font-size:13px;font-weight:700;color:var(--ink-strong);margin:0}
+.cmp-viscard > .caption{color:var(--ink-muted);font-size:11px;line-height:1.55;
+  margin:15px 0 0;padding-top:12px;border-top:1px solid var(--hairline)}
+.cmp-metrics{display:flex;gap:5px;flex-wrap:wrap}
+.cmp-metrics .chip-btn{height:25px;padding:0 10px;font-size:10.5px}
+
+/* One row of bars per indicator. The emphasised one lifts; the rest stay
+   readable rather than being hidden, because the comparison is the point. */
+.cmp-bargroup{padding:11px 0;border-top:1px solid var(--hairline);
+  opacity:.62;transition:opacity .18s var(--ease)}
+.cmp-bargroup:first-child{border-top:0;padding-top:0}
+.cmp-bargroup:last-child{padding-bottom:0}
+.cmp-bargroup.on{opacity:1}
+.cmp-barhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  margin-bottom:8px}
+.cmp-barhead > span:first-child{font-size:11.5px;font-weight:600;color:var(--ink-strong)}
+/* .cmp-brow, not .cmp-bar — that name is already the toolbar above, and
+   reusing it turned the toolbar into a three-column grid whose count span
+   sat on top of the Divisions button and swallowed its clicks. */
+.cmp-brow{display:grid;grid-template-columns:6.4rem minmax(0,1fr) 4.6rem;gap:11px;
+  align-items:center;padding:3px 0}
+.cmp-bar-nm{font-size:11px;color:var(--ink-muted);overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap}
+.cmp-track{position:relative;height:9px;border-radius:99px;background:var(--track)}
+.cmp-track > i{display:block;height:100%;border-radius:99px;width:0;
+  transition:width .34s var(--ease)}
+/* The provincial median, as a hairline on the track. */
+.cmp-tick{position:absolute;top:-3px;bottom:-3px;width:1px;background:var(--ink-muted);
+  opacity:.55}
+.cmp-bar-v{font-size:11.5px;font-weight:600;text-align:right;color:var(--ink-strong)}
+.cmp-brow.worst .cmp-bar-v{color:var(--warn)}
+.cmp-brow.worst .cmp-bar-nm{color:var(--warn)}
+
+/* A flow grid with a floor on the cell width, so two areas sit side by side,
+   four wrap 2x2 and twenty-five wrap into rows — and no radar is ever squeezed
+   below the width at which its axis labels stop being readable. */
+/* 240 px is the pivot: in the side-by-side card (~620 px) it yields exactly two
+   across, so four areas read as a clean 2x2 rather than a row of three and an
+   orphan; in the stacked full-width card it opens out to five. */
+.cmp-radars{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:18px 16px;align-items:start}
+.cmp-radar{margin:0;min-width:0;display:flex;flex-direction:column}
+/* The viewBox already reserves a margin for the labels; this stops two
+   neighbouring charts from ever crowding each other at narrow widths. */
+.cmp-radar svg{width:100%;height:auto;display:block;overflow:visible;padding:0 2px}
+.cmp-grid{fill:none;stroke:var(--hairline);stroke-width:.7}
+.cmp-spoke{stroke:var(--hairline);stroke-width:.6}
+.cmp-poly{fill-opacity:.24;stroke-width:1.6;stroke-linejoin:round}
+.cmp-ax{font-size:9px;fill:var(--ink-muted);letter-spacing:.05em;
+  text-transform:uppercase;font-weight:700}
+.cmp-radar figcaption{margin-top:7px;text-align:center;min-width:0}
+.cmp-radar figcaption b{display:block;font-size:11.5px;font-weight:600;color:var(--ink-strong);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cmp-radar figcaption span{display:block;font-size:10px;color:var(--ink-muted);
+  line-height:1.4;margin-top:2px}
+@media (max-width:1180px){.cmp-panels{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){
+  .cmp-track > i{transition:none}
+  .cmp-bargroup{transition:none}
+}
+/* The AI layer. Deliberately quiet and deliberately BELOW the fixed summary:
+   the reproducible text is the product, this is the follow-up. */
+.cmp-ai{margin-top:12px;padding-top:11px;border-top:1px solid var(--hairline)}
+.cmp-ai-note{font-size:11px;line-height:1.55;color:var(--ink-muted);margin:0 0 10px}
+.cmp-ai-btn{height:32px;font-size:12px;padding:0 12px 0 8px;gap:8px}
+.cmp-ai-face{width:22px;height:22px;object-fit:contain;flex:none;
+  margin:-4px 0;image-rendering:auto}
+.cmp-ai-btn[data-state="offline"]{color:var(--warn);border-color:var(--warn)}
+.cmp-ai-btn[data-state="offline"] .cmp-ai-face{filter:grayscale(1);opacity:.5}
+.cmp-ai-btn[data-state="on"]{border-color:var(--accent);color:var(--accent)}
+
+/* The comparison the copilot is answering from, named on screen. */
+.chat-ctx{flex:none;margin:0 0 9px;padding:9px 11px;border-radius:10px;
+  border:1px solid var(--hairline);background:var(--tint)}
+.chat-ctx[hidden]{display:none}
+.chat-ctx-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.chat-ctx-x{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-muted);padding:2px 4px;border-radius:5px}
+.chat-ctx-x:hover{color:var(--ink-strong);background:var(--tint)}
+.chat-ctx-body{margin:4px 0 0;font-size:11.5px;line-height:1.45;color:var(--ink)}
+/* Where an answer's figures came from. Same quiet voice as the disclaimer it
+   sits beside, because it is the same kind of statement. */
+.bub-src{margin:7px 0 0;font-size:10.5px;line-height:1.45;color:var(--ink-muted)}
+.bub-src + .bub-note{margin-top:5px;padding-top:5px}
+
 /* The printed masthead. Hidden on screen — the section already has a heading —
    and the only place the brand mark appears on the page. */
 .cmp-print-head,.cmp-print-foot{display:none}
@@ -862,7 +1050,12 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
     --bg:#fff;--surface:#fff;--tint:#f4f5f7;--ink:#1a1d21;--ink-strong:#000;
     --ink-muted:#5b6169;--hairline:#d8dbe0;--hairline-strong:#b9bec6;
     --accent:#c2410c;--accent-bg:#fff3ec;--warn:#b4530b;--warn-bg:#fdf3e7;
-    --material-bg:#fff;color-scheme:light}
+    --material-bg:#fff;
+    /* These two were left out, so they kept the dark theme's near-white values
+       and every pillar bar and track printed invisible on white paper. */
+    --bar:#4a5260;--track:#e6e9ed;
+    --safe:#0f7048;--safe-bg:#eaf6f0;--neutral:#5b6169;--neutral-bg:#eef0f3;
+    color-scheme:light}
   html,body{background:#fff !important;height:auto;overflow:visible}
   /* Unwind the layout by structure rather than by class name. The shell is a
      grid of fixed rows, so hiding the header and footer collapsed it to 64 px
@@ -871,19 +1064,37 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
      into an ordinary block of its natural height. */
   .app > *:not(.body),
   .body > *:not(.stage),
-  .stage > *:not(#compare),
-  #compare > *:not(#cmpSheet),
-  #loading,#thTip,.info,#cmpBody:empty{display:none !important}
-  .app,.body,.stage,#compare,#cmpSheet{display:block !important;position:static !important;
+  .stage > *:not(.print-target),
+  #loading,#thTip,.info,.cmp-ai,.no-print{display:none !important}
+  /* Only the comparison's own sheet prints from the comparison view. */
+  [data-print="compare"] #compare > *:not(#cmpSheet){display:none !important}
+  /* display:block !important below would otherwise beat [hidden]. */
+  #cmpSheet[hidden]{display:none !important}
+  /* The panel is a slid-out, invisible, absolutely-positioned box on screen;
+     all three of those have to be undone or it prints as a blank page. */
+  .app,.body,.stage,.print-target,#cmpSheet{display:block !important;
+    position:static !important;
     inset:auto !important;height:auto !important;max-height:none !important;
     min-height:0 !important;overflow:visible !important;padding:0 !important;
-    margin:0 !important;background:#fff !important;box-shadow:none !important}
+    margin:0 !important;background:#fff !important;box-shadow:none !important;
+    transform:none !important;visibility:visible !important;
+    width:auto !important;max-width:none !important;border:0 !important}
+  .print-head{display:flex !important;align-items:center;gap:12px;padding-bottom:7px;
+    margin-bottom:11px;border-bottom:2px solid var(--accent)}
+  .print-head img{height:26px;width:auto}
+  .print-head div{flex:1;display:flex;flex-direction:column;gap:2px}
+  .print-head b{font-size:14px;color:#000;letter-spacing:-.01em}
+  .print-head span{font-size:11px;color:var(--ink-muted)}
+  .print-foot{display:block !important;margin-top:14px;padding-top:8px;
+    border-top:1px solid var(--hairline);font-size:8.5px;line-height:1.5;
+    color:var(--ink-muted)}
   .cmp-print-head{display:flex;align-items:center;gap:12px;padding-bottom:7px;
     margin-bottom:10px;border-bottom:2px solid var(--accent)}
   .cmp-print-logo{height:26px;width:auto}
   .cmp-print-head div{flex:1;display:flex;flex-direction:column;gap:2px}
   .cmp-print-head b{font-size:14px;color:#000;letter-spacing:-.01em}
-  .cmp-print-head span{font-size:11px;color:var(--ink-muted)}
+  .cmp-print-head span{font-size:11px;color:var(--ink-muted);
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .cmp-print-date{font-size:10px;color:var(--ink-muted);white-space:nowrap}
   .cmp-print-foot{display:block;margin-top:14px;padding-top:8px;
     border-top:1px solid var(--hairline);font-size:8.5px;line-height:1.5;
@@ -896,6 +1107,20 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
   table{font-size:8.4px}
   th,td{padding:1.9px 6px !important;height:auto !important;line-height:1.35}
   thead th{position:static !important;background:#fff !important;font-size:7.5px}
+  /* The screen's table sizing is set on #cmpTable, and an id beats the bare
+     element selectors above — so a 15.5 rem label column and 13 px labels
+     followed the table into print, wrapped every row onto two lines and
+     pushed the summary cards onto a second page. Undo all three here. */
+  #cmpTable{table-layout:auto !important;width:100% !important;min-width:0 !important}
+  #cmpTable col{width:auto !important}
+  /* Sticky is for a scrolling viewport; on paper it just offsets the column. */
+  #cmpTable th[scope="row"],#cmpTable thead th:first-child,tr.cmp-group td{
+    position:static !important;background:transparent !important}
+  tr.cmp-group td{background:var(--tint) !important}
+  #cmpTable th[scope="row"]{width:auto !important;font-size:8.4px !important;
+    line-height:1.3 !important;padding-left:6px !important}
+  #cmpTable thead th{font-size:7.5px !important}
+  #cmpTable td,#cmpTable thead th{padding:1.9px 6px !important}
   tr.cmp-group td{padding:2.6px 6px !important;font-size:7.5px;letter-spacing:.13em}
   /* A row that splits across the page break is unreadable in a printed table. */
   tr,.cmp-note-card{break-inside:avoid}
@@ -905,10 +1130,69 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
   .cmp-missing li{font-size:7.8px;line-height:1.45;margin-bottom:3px}
   .cmp-note-card .caption{font-size:7.4px;margin-top:7px;padding-top:6px}
   .cmp-note-card h3{font-size:9px;margin-bottom:6px}
-  .cmp-pc{font-size:7.4px;min-width:16px;padding:0 4px;margin-left:5px}
+  .cmp-pc{font-size:7.4px;width:14px;min-width:0;padding:0;margin-left:5px}
+  #cmpTable .u{font-size:7px;margin-left:2px}
   .cmp-pc{background:#eef0f3 !important;color:#5b6169 !important}
   td.cmp-worst{color:var(--warn) !important}
   td.cmp-worst .cmp-pc{background:#fdf3e7 !important;color:var(--warn) !important}
+
+  /* ── The rankings sheet ────────────────────────────────────────────────
+     Prints exactly the rows the filters left on screen, in the order shown.
+     Landscape because fourteen columns will not fit portrait, and the row
+     count goes in the masthead so a reader knows whether they are holding a
+     filtered shortlist or the whole province. */
+  [data-print="rankings"] .rk-toolbar,
+  [data-print="rankings"] #rkCount,
+  [data-print="rankings"] #csvBtn,
+  [data-print="rankings"] #pdfBtn,
+  [data-print="rankings"] .rk-head .eyebrow,
+  [data-print="rankings"] .rk-head h1,
+  [data-print="rankings"] thead th .arw{display:none !important}
+  [data-print="rankings"] .rk-head{padding:0 !important;margin:0 !important;border:0}
+  [data-print="rankings"] .kpis{grid-template-columns:repeat(4,1fr);gap:6px;
+    margin-bottom:9px;max-width:none}
+  [data-print="rankings"] .kpi{padding:6px 8px;break-inside:avoid}
+  [data-print="rankings"] .kpi .v{font-size:15px}
+  [data-print="rankings"] table{font-size:7.4px}
+  [data-print="rankings"] tbody td{height:auto !important;padding:2.2px 4px !important}
+  [data-print="rankings"] thead th{padding:3px 4px !important;font-size:6.6px}
+  [data-print="rankings"] .qb-section{margin-top:10px;break-before:auto}
+  [data-print="rankings"] .chip{font-size:6.4px;padding:0 4px;gap:3px}
+  [data-print="rankings"] .chip .dot{width:3px;height:3px}
+  /* A settlement row that splits across a page break is unreadable. */
+  [data-print="rankings"] tbody tr{break-inside:avoid}
+
+  /* ── One settlement ────────────────────────────────────────────────────
+     The drill-down as a field sheet. Everything interactive is dropped —
+     a printed toggle, a printed video and a printed close button are all
+     just noise on paper. */
+  [data-print="settlement"] .panel{width:auto !important}
+  /* The masthead already carries the name, district and rank; printing the
+     panel's own header under it said all three twice. */
+  [data-print="settlement"] .panel-head{display:none !important}
+  [data-print="settlement"] .icon-btn,
+  [data-print="settlement"] .player,
+  [data-print="settlement"] .player-sound,
+  [data-print="settlement"] .toggle-row,
+  [data-print="settlement"] .sim-tabs,
+  [data-print="settlement"] .share,
+  [data-print="settlement"] .tier-line .tb,
+  [data-print="settlement"] .ghost-btn,
+  [data-print="settlement"] .fac-link,
+  [data-print="settlement"] .g-mount,
+  [data-print="settlement"] details.math > summary{display:none !important}
+  /* The maths is the whole reason a planner would keep this page, so it
+     prints open whatever state the disclosure was left in on screen. */
+  [data-print="settlement"] details.math > .mathbody{display:block !important}
+  [data-print="settlement"] .block{break-inside:avoid;margin-bottom:11px}
+  [data-print="settlement"] .hero{padding:8px 0 10px;margin-bottom:11px}
+  [data-print="settlement"] .hero .big{font-size:34px}
+  [data-print="settlement"] .tiles{gap:5px}
+  [data-print="settlement"] .tile{padding:6px 8px;break-inside:avoid}
+  [data-print="settlement"] .tile .v{font-size:13px}
+  [data-print="settlement"] .panel-head h2{font-size:16px}
+  [data-print="settlement"] .sim,.evidence-block{padding:9px 10px}
+
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
@@ -1104,11 +1388,18 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
             <span class="eyebrow">Rankings</span>
             <h1 class="sect-title" style="margin-top:6px">Screened settlements</h1>
           </div>
-          <button class="ghost-btn" id="csvBtn">
-            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
-              <path d="M8 2v8m0 0L5 7m3 3l3-3M3 13h10"/></svg>
-            Download CSV
-          </button>
+          <div class="cmp-head-actions">
+            <button class="ghost-btn" id="csvBtn">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+                <path d="M8 2v8m0 0L5 7m3 3l3-3M3 13h10"/></svg>
+              Download CSV
+            </button>
+            <button class="ghost-btn" id="pdfBtn" title="Print the rows currently on screen">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+                <path d="M4 6V2h8v4M4 12H2V7h12v5h-2M4 10h8v4H4z"/></svg>
+              Save as PDF
+            </button>
+          </div>
         </div>
         <div class="kpis" id="kpis"></div>
         <div id="rkNote"></div>
@@ -1189,10 +1480,10 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
           </div>
         </div>
 
-        <p class="note cmp-lede">Two to four areas on identical definitions, so
-          &ldquo;why this one first?&rdquo; has an answer that is not a map read twice.
+        <p class="note cmp-lede">Two areas, or every one in Sabah, on identical definitions —
+          so &ldquo;why this one first?&rdquo; has an answer that is not a map read twice.
           <button class="info" type="button" tabindex="0" aria-label="How to read this"
-            data-tip="Every indicator is a rate or a median, never a raw total — a district with 249 settlements would otherwise out-score one with 35 on every count. Service figures use measured settlements only: a settlement with no measurement is counted in the evidence gap and never counted as slow. Population merges overlapping 2 km buffers, because summing them counts the same people once per neighbour and inflates Ranau sevenfold.">i</button>
+            data-tip="Compare two areas or all of them. Every indicator is a rate or a median, never a raw total — a district with 249 settlements would otherwise out-score one with 35 on every count. Service figures use measured settlements only: a settlement with no measurement is counted in the evidence gap and never counted as slow. Population merges overlapping 2 km buffers, because summing them counts the same people once per neighbour and inflates Ranau sevenfold.">i</button>
         </p>
 
         <div class="cmp-bar">
@@ -1201,9 +1492,57 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
             <button class="seg-btn" data-level="division" aria-pressed="false">Divisions</button>
           </div>
           <span class="rk-count" id="cmpCount"></span>
+          <button class="ghost-btn" id="cmpAll">Select all</button>
           <button class="ghost-btn" id="cmpClear">Clear</button>
         </div>
         <div class="rk-chips cmp-chips" id="cmpChips"></div>
+        <div class="empty" id="cmpEmpty" hidden></div>
+
+        <!-- Screen-only. Sits OUTSIDE #cmpSheet, so the print rule that keeps
+             only the sheet drops all three layers without a second stylesheet
+             and the one-page PDF stays exactly as it was. -->
+        <div class="cmp-vis" id="cmpVis" hidden>
+          <section class="cmp-zone">
+            <span class="eyebrow cmp-zone-label">At a glance</span>
+            <div class="cmp-strip" id="cmpStrip"></div>
+          </section>
+
+          <section class="cmp-zone">
+            <span class="eyebrow cmp-zone-label">Compare</span>
+            <div class="cmp-panels" id="cmpPanels">
+              <section class="cmp-viscard">
+                <div class="cmp-viscard-head">
+                  <h3>Indicator comparison</h3>
+                  <div class="cmp-metrics" id="cmpMetrics" role="group"
+                       aria-label="Emphasise an indicator"></div>
+                </div>
+                <div class="cmp-viscard-body"><div id="cmpBars"></div></div>
+                <p class="caption">Bars share one scale per indicator. The tick on each track is
+                  the Sabah median, so beating the other areas on screen is not mistaken for
+                  beating the province.</p>
+              </section>
+
+              <section class="cmp-viscard">
+                <div class="cmp-viscard-head">
+                  <h3>Shape of need</h3>
+                  <span class="micro">vs all <span id="cmpRadarN"></span></span>
+                </div>
+                <div class="cmp-viscard-body"><div class="cmp-radars" id="cmpRadars"></div></div>
+                <p class="caption">Each axis is that area's percentile against every district in
+                  Sabah, so further out is always worse. It shows which KIND of need an area has,
+                  and is not a combined score — the axes are never added together.</p>
+              </section>
+            </div>
+          </section>
+
+          <!-- Sits outside #cmpSheet so the printed page never carries it. -->
+          <section class="cmp-zone cmp-zone-tail">
+            <span class="eyebrow cmp-zone-label">Full table</span>
+            <p class="caption cmp-zone-note">Every indicator, with each area's percentile against
+              all 25 districts. This is the sheet that prints — A4 portrait up to six areas, then
+              landscape. Nothing is ever dropped from it.</p>
+          </section>
+        </div>
 
         <!-- the printed page starts here -->
         <div id="cmpSheet">
@@ -1219,7 +1558,6 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
           <div class="table-wrap cmp-wrap">
             <table id="cmpTable"></table>
           </div>
-          <div id="cmpBody"></div>
 
           <div class="cmp-cols">
             <div class="cmp-note-card">
@@ -1229,6 +1567,17 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
                 language model, so it reads the same every time. Terrain and remoteness are
                 <b>associated with</b> lower measured speed in this data; neither is shown
                 to cause it.</p>
+              <!-- Screen only. The printed sheet carries the reproducible summary and
+                   nothing that needs a server to exist. -->
+              <div class="cmp-ai">
+                <p class="cmp-ai-note">Fixed-rule summary above is reproducible. Ask Tanya Dino
+                  for follow-up reasoning &mdash; it explains these same figures, it does not
+                  recompute them.</p>
+                <button class="ghost-btn cmp-ai-btn" id="cmpAsk" type="button">
+                  <img class="cmp-ai-face" src="public/mascot/web/idle1.png" alt="" aria-hidden="true">
+                  <span id="cmpAskLabel">Ask Tanya Dino about this</span>
+                </button>
+              </div>
             </div>
             <div class="cmp-note-card">
               <h3>Not in this dataset</h3>
@@ -1262,6 +1611,16 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
               <path d="M4 4l8 8M12 4l-8 8"/></svg>
           </button>
         </div>
+        <!-- What the copilot has been handed. Visible, and droppable, because a
+             grounded answer should never be grounded in something invisible. -->
+        <div class="chat-ctx" id="chatCtx" hidden>
+          <div class="chat-ctx-head">
+            <span class="micro">Grounded in</span>
+            <button class="chat-ctx-x" id="chatCtxClear" type="button"
+                    aria-label="Drop the comparison context">Drop</button>
+          </div>
+          <p class="chat-ctx-body" id="chatCtxBody"></p>
+        </div>
         <div class="chat-log" id="chatLog"></div>
         <div class="chat-status" id="chatStatus" data-on="0"></div>
         <div class="chat-egs">
@@ -1282,6 +1641,17 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
     <span class="credits">Network performance © Ookla Speedtest Open Data (CC BY-NC-SA 4.0), quarterly tile aggregates 2025 Q1–Q4, accessed Aug 2026 · © OpenStreetMap contributors (ODbL) · Population © WorldPop (CC BY 4.0) · Surface water © EC JRC/Google · Relative Wealth Index © Meta Data for Good (CC BY 4.0) · Elevation: NASA SRTM · Boundaries: GADM · Basemap © CARTO</span>
   </footer>
 </div>
+
+<!-- Lent to whichever section is printing, then taken back. One masthead
+     rather than one per sheet, so they cannot drift apart. -->
+<div class="print-head" id="printHead" hidden>
+  <img src="public/logo-nav-light.png" alt="Dino Slayer">
+  <div><b id="printTitle"></b><span id="printSubject"></span></div>
+  <span class="cmp-print-date" id="printStamp"></span>
+</div>
+<p class="print-foot" id="printFoot" hidden>Dino Slayer · Digital Inclusion Priority Index ·
+  Sabah · Ookla Open Data 2025 Q1–Q4, GADM districts, OpenStreetMap facilities, NASA SRTM.
+  Screening for further assessment — not a coverage determination.</p>
 
 <!-- Column explainer. Outside .app so the table's overflow cannot clip it. -->
 <div class="th-tip" id="thTip" role="tooltip" data-show="0"></div>
@@ -1436,6 +1806,7 @@ let mapReady = false;
 let FEATURES = [];              // every settlement, with _district injected
 let SCORED = [], QUEUE_B = [];
 let FACILITIES = [];            // 606 OSM schools + health points
+let DISTRICT_GEO = null, DIVISION_GEO = null;   // polygons, for the mini maps
 let selectedFacility = null;
 let selectedId = null;
 let hoveredDistrict = null;     // NAME_2 under the cursor, for the hover fill
@@ -1563,6 +1934,11 @@ function anchorOf(geom) {
     f.properties._district = districtOf(index, x, y);
     f.properties._division = DIVISION_OF[f.properties._district] || null;
   }
+
+  // Kept for the comparison's mini choropleths, which need the polygons
+  // themselves rather than the map's copy of them.
+  DISTRICT_GEO = districts;
+  DIVISION_GEO = divisions;
 
   FEATURES = dipi.features;
   SCORED  = FEATURES.filter(f => f.properties.evidence_tier !== "insufficient")
@@ -1993,6 +2369,33 @@ function selectDistrict(d) {
   applyFilters();
   if (d) zoomToDistrict(d);
   else map.flyTo({ center:[116.8, 5.3], zoom:6.8, duration:REDUCED ? 0 : 900 });
+  // Picking districts on the map is how a planner builds a shortlist, so the
+  // comparison collects them as they go. Four is the ceiling, and the chips in
+  // the Compare view remain the way to drop one.
+  if (d && cmp.level === "district" && !cmp.picked.includes(d) && cmp.picked.length < 4) {
+    cmp.picked.push(d);
+    if (el("compare").dataset.open === "1") renderCompare();
+  }
+}
+
+/* Frame an area on the map, at either level, driving the SAME two selects the
+   sidebar does rather than a second parallel filter path. The comparison's
+   cards use it to answer "where actually is this?" with the map instead of a
+   thumbnail. */
+function focusArea(level, name) {
+  if (level === "division") {
+    el("divisionSel").value = name;
+    fillDistrictOptions(name);
+    el("districtSel").value = "";
+    applyFilters();
+    const pts = FEATURES.filter(f => f.properties._division === name)
+                        .map(f => f.geometry.coordinates);
+    if (!pts.length) return;
+    const b = pts.reduce((acc, c) => acc.extend(c), new maplibregl.LngLatBounds(pts[0], pts[0]));
+    map.fitBounds(b, { padding: 70, duration: REDUCED ? 0 : 900 });
+    return;
+  }
+  selectDistrict(name);
 }
 
 /* ══ FIX 6 — flood lens as a focus mode ══════════════════════════════════
@@ -2147,10 +2550,17 @@ function renderPanel(p) {
                  : `<span class="chip plain" id="rankChip">Rank ${int(rankOf(p))} of 1,114</span>`}
         </div>
       </div>
-      <button class="icon-btn" id="panelClose" aria-label="Close panel">
-        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7">
-          <path d="M4 4l8 8M12 4l-8 8"/></svg>
-      </button>
+      <div style="display:flex;gap:6px;flex:none">
+        <button class="icon-btn" id="panelPdf" aria-label="Save this settlement as PDF"
+                title="Save this settlement as PDF">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M4 6V2h8v4M4 12H2V7h12v5h-2M4 10h8v4H4z"/></svg>
+        </button>
+        <button class="icon-btn" id="panelClose" aria-label="Close panel">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7">
+            <path d="M4 4l8 8M12 4l-8 8"/></svg>
+        </button>
+      </div>
     </div>`;
 
   const hero = isQB ? `
@@ -2245,6 +2655,12 @@ function renderPanel(p) {
   panel.dataset.open = "1";
   panel.scrollTop = 0;
   el("panelClose").onclick = closePanel;
+  el("panelPdf").onclick = () => {
+    stopPlayer();                       // never print with a clip still running
+    printSheet("settlement", el("panel"), nameOf(p),
+      `${districtLabel(p._district)} · ${p.evidence_tier === "insufficient"
+        ? "evidence gap, not scored" : "rank " + int(rankOf(p)) + " of 1,114"}`);
+  };
   const mcb = el("modelCardBtn");
   if (mcb) mcb.onclick = renderModelCard;   // no modelled number without its metrics
   const nb = el("nearbyToggle");
@@ -3679,8 +4095,107 @@ const STREAM_URL = ASK_URL + "/stream";
    page starts a fresh conversation, which is the honest default for a kiosk
    demo a stranger might walk up to. */
 const SESSION_ID = "s" + Math.random().toString(36).slice(2) + Date.now().toString(36);
+const HEALTH_URL = "http://localhost:7860/health";
 let chatBusy = false;
 let streamOk = true;          // flipped off permanently if the server has no /stream
+
+/* ══ The AI layer over the comparison ═════════════════════════════════════
+   The fixed-rule summary is the product: reproducible, printable, and written
+   in JS from the figures on screen. This is the layer ON TOP of it, for the
+   questions a fixed rule cannot answer — "which of these two first, and why?"
+
+   Two things keep it honest:
+     1. the dashboard sends the SELECTION, never the numbers. The server
+        recomputes them with agent/tools.py, so a figure cannot enter the
+        model's context just because a client asserted it.
+     2. the summary is never edited. The copilot reasons over the same figures
+        and says so; the printed sheet does not change and does not need this
+        server to exist.                                                      */
+let cmpCtx = null;            // { level, areas } the copilot is answering from
+let agentOnline = null;       // null = not probed yet, then true / false
+
+/* One HEAD-weight GET, only when the Compare view is opened, and it can only
+   ever change a label. Nothing on this page waits on it. */
+async function probeAgent() {
+  try {
+    const c = new AbortController();
+    const t = setTimeout(() => c.abort(), 1200);
+    const r = await fetch(HEALTH_URL, { signal: c.signal });
+    clearTimeout(t);
+    agentOnline = r.ok;
+  } catch (e) { agentOnline = false; }
+  renderCmpAsk();
+  return agentOnline;
+}
+
+/* The button says what it can actually do right now. Offline is a label, not
+   an error dialog: the summary beside it is unaffected either way. */
+function renderCmpAsk() {
+  const b = el("cmpAsk"), l = el("cmpAskLabel");
+  if (!b || !l) return;
+  const n = cmp.picked.length;
+  const noun = cmp.level === "division" ? "division" : "district";
+  if (agentOnline === false) {
+    b.dataset.state = "offline";
+    b.disabled = false;                    // still clickable: clicking re-probes
+    l.textContent = "Copilot offline — retry";
+    b.title = "The local agent server is not running. The summary above is unaffected.";
+    return;
+  }
+  const on = cmpCtxMatches();
+  b.dataset.state = on ? "on" : "";
+  b.disabled = false;
+  l.textContent = on ? "Asking about these " + n + " " + noun + "s"
+                     : "Ask Tanya Dino about this";
+  b.title = "Open the copilot with these " + n + " " + noun
+          + "s and their figures as context.";
+}
+/* True when the chat is already grounded in exactly what is on screen. */
+function cmpCtxMatches() {
+  return !!cmpCtx && cmpCtx.level === cmp.level
+    && cmpCtx.areas.length === cmp.picked.length
+    && cmpCtx.areas.every(a => cmp.picked.includes(a));
+}
+
+function setCmpCtx(ctx) {
+  cmpCtx = ctx;
+  const box = el("chatCtx");
+  if (box) {
+    box.hidden = !ctx;
+    if (ctx) el("chatCtxBody").innerHTML =
+      `<b>${esc(ctx.areas.map(districtLabel).join(" · "))}</b> — the ${
+        ctx.areas.length} ${esc(ctx.level)}s in the comparison, on the figures shown there.`;
+  }
+  renderCmpAsk();
+}
+
+/* The comparison-specific prompts. They are the questions the fixed summary
+   deliberately does not answer, which is the whole reason this layer exists. */
+function cmpChatEgs() {
+  const a = cmpCtx.areas.map(districtLabel);
+  const [x, y] = [a[0], a[1] || a[0]];
+  return [
+    `Why does ${x} screen higher than ${y}?`,
+    `If I had RM500k, which of these should I fund first and why?`,
+    `What should a field team collect to strengthen ${x}'s evidence?`
+  ];
+}
+
+function openCmpChat() {
+  if (agentOnline === false) { agentOnline = null; renderCmpAsk(); probeAgent(); }
+  setCmpCtx({ level: cmp.level, areas: [...cmp.picked] });
+  showView(null);                      // the map and the chat, not the table
+  openChat(true);
+  el("chatPanel").querySelectorAll(".chat-eg").forEach((b, i) => {
+    const q = cmpChatEgs()[i];
+    if (q) { b.textContent = q; b.hidden = false; } else b.hidden = true;
+  });
+  pushBubble("bot", `<div class="bub-answer">Ready. I have the comparison for
+    <b>${esc(cmpCtx.areas.map(districtLabel).join(", "))}</b> and the same figures the
+    table shows.</div>
+    <p class="bub-note">I explain those figures, I do not recompute them. The fixed-rule
+    summary on the sheet is unchanged.</p>`);
+}
 
 function openChat(on) {
   el("chatPanel").dataset.open = on ? "1" : "0";
@@ -3887,7 +4402,11 @@ function renderAgentTable(rows) {
           .filter(Boolean).join(" · ")}.</p>` : ""}`;
 }
 
-const askBody = q => JSON.stringify({ question: q, session_id: SESSION_ID });
+/* The context is re-sent on EVERY turn it is active rather than once at the
+   start: the server trims history to twelve messages, so a context attached to
+   the first question would silently fall out from about the fourth. */
+const askBody = q => JSON.stringify({ question: q, session_id: SESSION_ID,
+  ...(cmpCtx ? { context: { level: cmpCtx.level, areas: cmpCtx.areas } } : {}) });
 
 async function askPlain(q) {
   const res = await fetch(ASK_URL, { method:"POST",
@@ -3952,10 +4471,21 @@ async function askAgent(q) {
     // Talking while the answer lands, then the face the DATA earned.
     setMascot("talking");
     typing.className = "bub bot";
+    /* Where the figures came from, stated on the answer itself. Written here
+       rather than asked of the model: a provenance line the model could forget
+       to add is not a provenance line. The server reports whether it actually
+       seeded the comparison, so this can never claim grounding that did not
+       happen. */
+    const src = d.grounded_in_comparison
+      ? `<p class="bub-src">Figures above are the District Decision Comparison's own —
+         the same fixed values shown in the table, recomputed from the dataset rather than
+         by the model. The fixed-rule summary on the sheet is unchanged.</p>`
+      : "";
     typing.innerHTML =
       `<div class="bub-answer">${renderAnswer(d.answer)}</div>`
       + renderAgentTable(d.table)
       + (note ? `<p class="caption g-err">${esc(note)}</p>` : "")
+      + src
       + steps
       + (d.trace_url ? `<a class="caption" target="_blank" rel="noopener noreferrer"
            href="${esc(d.trace_url)}">View the trace</a>` : "");
@@ -3987,6 +4517,17 @@ function setChatBusy(on) {
   if (!on) i.focus();
 }
 
+/* The general prompts, and the way back from the comparison-specific ones. */
+const CHAT_EGS = ["Top 10 priority in Kota Marudu",
+                  "Why is Kampung Tangkol ranked #1?",
+                  "Can a class of 30 in Talas watch 720p?"];
+function resetChatEgs() {
+  el("chatPanel").querySelectorAll(".chat-eg").forEach((b, i) => {
+    b.textContent = CHAT_EGS[i] || "";
+    b.hidden = !CHAT_EGS[i];
+  });
+}
+
 function initChat() {
   el("chatBtn").onclick = () => openChat(el("chatPanel").dataset.open !== "1");
   el("chatClose").onclick = () => openChat(false);
@@ -3996,6 +4537,7 @@ function initChat() {
     el("chatInput").value = "";
     askAgent(v);
   };
+  resetChatEgs();
   /* A suggestion fills the box and hands control back. Firing it on click gave
      the user no chance to edit the question, and no way to look at one without
      asking it. */
@@ -4411,7 +4953,117 @@ const CMP_MISSING = [
 const CMP_MEANINGFUL = { underserved_rate_pct:10, evidence_gap_pct:10, remote_rate_pct:10,
   terrain_shadow_pct:10 };
 
-const cmp = { level: "district", picked: [] };
+/* ── Layer 1: the mini choropleths ───────────────────────────────────────
+   A name tells you which district. A shape tells you WHERE it is, which is
+   most of what a planner reading a comparison actually wants to know.
+
+   Built once per level and cached. The GADM districts carry 9,311 vertices
+   between them, and drawing all of that four times over into a 130 px
+   thumbnail would cost more than the whole map does — so each ring is
+   decimated to the thumbnail's own resolution first. */
+const polysOf = g => g.type === "Polygon" ? [g.coordinates]
+                   : g.type === "MultiPolygon" ? g.coordinates : [];
+const SHAPE_CACHE = new Map();
+
+function shapeIndex(fc, nameKey) {
+  if (SHAPE_CACHE.has(nameKey)) return SHAPE_CACHE.get(nameKey);
+  let mnX = Infinity, mnY = Infinity, mxX = -Infinity, mxY = -Infinity;
+  for (const f of fc.features) for (const poly of polysOf(f.geometry))
+    for (const ring of poly) for (const c of ring) {
+      if (c[0] < mnX) mnX = c[0]; if (c[0] > mxX) mxX = c[0];
+      if (c[1] < mnY) mnY = c[1]; if (c[1] > mxY) mxY = c[1];
+    }
+  // Equirectangular with a cosine correction at the mid-latitude, so Sabah
+  // keeps its proportions instead of stretching east–west.
+  const kx = Math.cos(((mnY + mxY) / 2) * Math.PI / 180);
+  const H = 100, s = H / (mxY - mnY);
+  const W = (mxX - mnX) * kx * s;
+  const TOL = 0.5;                    // in view units — half a pixel at this size
+  const pathOf = f => {
+    let d = "";
+    for (const poly of polysOf(f.geometry)) for (const ring of poly) {
+      const pts = [];
+      let last = null;
+      for (const c of ring) {
+        const x = (c[0] - mnX) * kx * s, y = (mxY - c[1]) * s;
+        if (!last || Math.abs(x - last[0]) + Math.abs(y - last[1]) >= TOL) {
+          pts.push([x, y]); last = [x, y];
+        }
+      }
+      if (pts.length < 3) continue;   // an island smaller than the pen
+      d += "M" + pts.map(p => `${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join("L") + "Z";
+    }
+    return d;
+  };
+  const paths = new Map(), spots = new Map();
+  let all = "";
+  for (const f of fc.features) {
+    const d = pathOf(f);
+    paths.set(f.properties[nameKey], d);
+    // Where the area sits and how big it draws. Kota Kinabalu is 35 settlements
+    // in a corner and renders as a speck — too small to find without help — so
+    // anything under a few view units gets a locator ring instead of relying
+    // on a fill nobody can see.
+    let ax = Infinity, ay = Infinity, bx = -Infinity, by = -Infinity;
+    for (const m of d.matchAll(/(-?[\d.]+) (-?[\d.]+)/g)) {
+      const x = +m[1], y = +m[2];
+      if (x < ax) ax = x; if (x > bx) bx = x;
+      if (y < ay) ay = y; if (y > by) by = y;
+    }
+    spots.set(f.properties[nameKey], isFinite(ax)
+      ? { cx: (ax + bx) / 2, cy: (ay + by) / 2, span: Math.max(bx - ax, by - ay) } : null);
+    all += d;
+  }
+  const idx = { w: +W.toFixed(1), h: H, paths, spots, all };
+  SHAPE_CACHE.set(nameKey, idx);
+  return idx;
+}
+const cmpShapes = () => cmp.level === "division"
+  ? (DIVISION_GEO ? shapeIndex(DIVISION_GEO, "division") : null)
+  : (DISTRICT_GEO ? shapeIndex(DISTRICT_GEO, "NAME_2") : null);
+
+/* ── Layer 2: the bars ───────────────────────────────────────────────────
+   Five indicators a funding conversation actually turns on. Medians, not
+   means, throughout: one fibre-fed town drags a mean and says nothing about
+   the district around it. */
+const CMP_METRICS = [
+  ["DIPI",       "median_dipi"],
+  ["Population", "people_underserved"],
+  ["Schools",    "schools_underserved"],
+  ["Download",   "median_dl_mbps"],
+  ["Evidence",   "measured_pct"]
+];
+
+/* ── Layer 3: the profile ────────────────────────────────────────────────
+   Every axis is the percentile of BADNESS against all 25 districts, which is
+   already computed for the table. That puts six unlike things — a percentage,
+   a speed, a headcount — on one honest 0–100 scale without inventing a
+   composite score, and the shape shows WHICH KIND of need an area has. */
+const CMP_AXES = [
+  ["Service",  "underserved_rate_pct"],
+  ["Speed",    "median_dl_mbps"],
+  ["People",   "people_underserved"],
+  ["Evidence", "evidence_gap_pct"],
+  ["Remote",   "remote_rate_pct"],
+  ["Terrain",  "terrain_shadow_pct"]
+];
+
+const cmp = { level: "district", picked: [], metric: "median_dipi" };
+
+/* Text-only formatter for the visual layers. cmpFmt() emits markup for the
+   table cells; a bar label and an SVG title need a plain string. */
+const CMP_DP1 = new Set(["median_dipi"]);   // an index, not a count
+function cmpFmtPlain(v, unit, key) {
+  if (v === null || v === undefined) return "—";
+  if (CMP_DP1.has(key)) return num(v, 1);
+  if (unit === "%") return Math.round(v) + "%";
+  if (!unit) return Number.isInteger(v) ? int(v) : num(v, 1);
+  return num(v, unit === "ms" || unit === "m" ? 0 : 1) + " " + unit;
+}
+/* One identity colour per area, taken from its own median DIPI on the ramp
+   the map already uses. It carries meaning rather than spending a new hue,
+   and it ties the thumbnail, the bar and the radar together. */
+const cmpColor = s => s.median_dipi === null ? "var(--neutral)" : dipiColor(s.median_dipi);
 
 const cmpAreaNames = () => cmp.level === "division"
   ? Object.keys(DIVISIONS).sort()
@@ -4504,31 +5156,203 @@ const cmpFmt = (v, unit) => v === null || v === undefined ? `<span class="sub">�
   : (unit === "%" || unit === "" ? int(Math.round(v)) : num(v, unit === "ms" || unit === "m" ? 0 : 1))
     + (unit && unit !== "%" ? `<span class="u">${unit}</span>` : unit === "%" ? "%" : "");
 
+/* Layer 1. Where each area is, and its headline, in one card. */
+function renderCmpStrip(picked, stats) {
+  const idx = cmpShapes();
+  el("cmpStrip").innerHTML = picked.map((a, i) => {
+    const s = stats[a], col = cmpColor(s);
+    const d = idx ? idx.paths.get(a) : null;
+    const spot = idx ? idx.spots.get(a) : null;
+    const ring = spot && spot.span < 9
+      ? `<circle class="cmp-shape-ring" cx="${spot.cx.toFixed(1)}" cy="${spot.cy.toFixed(1)}"
+           r="${Math.max(7.5, spot.span).toFixed(1)}" stroke="${col}"/>` : "";
+    const stat = (v, label) =>
+      `<div class="cmp-stat"><span class="num">${v}</span><span class="micro">${label}</span></div>`;
+    return `<article class="cmp-card" role="button" tabindex="0" data-area="${esc(a)}"
+      title="Show ${esc(districtLabel(a))} on the map"
+      aria-label="Show ${esc(districtLabel(a))} on the map">
+      <div class="cmp-card-head">
+        <span class="cmp-idx" style="background:${col}">${i + 1}</span>
+        <b>${esc(districtLabel(a))}</b>
+      </div>
+      <div class="cmp-card-body">
+        ${idx ? `<svg class="cmp-shape" viewBox="-4 -4 ${idx.w + 8} ${idx.h + 8}" role="img"
+            aria-label="${esc(districtLabel(a))} shown within Sabah">
+            <path class="cmp-shape-bg" d="${idx.all}"/>
+            ${d ? `<path class="cmp-shape-on" d="${d}" fill="${col}"/>` : ""}
+            ${ring}
+          </svg>` : ""}
+        <div class="cmp-card-stat">
+          <span class="v num" style="color:${col}">${s.median_dipi === null ? "—" : num(s.median_dipi)}</span>
+          <span class="micro">Median DIPI</span>
+        </div>
+      </div>
+      <div class="cmp-card-foot">
+        ${stat(s.underserved_rate_pct === null ? "—" : s.underserved_rate_pct + "%", "Underserved")}
+        ${stat(s.evidence_gap_pct === null ? "—" : s.evidence_gap_pct + "%", "Unmeasured")}
+        ${stat(int(s.settlements), "Settlements")}
+      </div>
+      <span class="cmp-card-go" aria-hidden="true">View on map
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+             stroke-width="2"><path d="M6 3l5 5-5 5"/></svg></span>
+    </article>`;
+  }).join("");
+
+  /* A card is a way INTO the map, not just a picture of one. Clicking it
+     filters and frames that area exactly as the sidebar or a click on the
+     shape would, then drops the full-screen comparison so the map is visible. */
+  el("cmpStrip").querySelectorAll(".cmp-card").forEach(card => {
+    const go = () => { focusArea(cmp.level, card.dataset.area); showView(null); };
+    card.onclick = go;
+    card.onkeydown = e => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); }
+    };
+  });
+}
+
+/* Layer 2. One row of bars per indicator, all bars in a row on one scale, so
+   a difference is seen rather than read cell by cell. The Sabah median rides
+   on the track as a tick — a bar that beats every other bar on screen but
+   sits under the provincial median should not look like a win. */
+function renderCmpBars(picked, stats, sabah) {
+  el("cmpMetrics").innerHTML = CMP_METRICS.map(([short, key]) =>
+    `<button class="chip-btn${cmp.metric === key ? " on" : ""}" data-metric="${esc(key)}"
+       aria-pressed="${cmp.metric === key}">${esc(short)}</button>`).join("");
+
+  el("cmpBars").innerHTML = CMP_METRICS.map(([, key]) => {
+    const row = CMP_ROWS.find(r => r[1] === key);
+    const label = row[0], unit = row[2], worseHigh = row[3];
+    const vals = picked.map(a => stats[a][key]);
+    const real = vals.filter(v => v !== null && v !== undefined);
+    if (!real.length) return "";
+    const ref = sabah[key];
+    // A bounded indicator is drawn against its own domain, not against the
+    // largest value on screen. Stretching 41.8 and 52.2 to fill the track
+    // would make a 10-point gap on a 0–100 index look like a rout.
+    const bounded = unit === "%" || key === "median_dipi";
+    const max = bounded ? 100 : (Math.max(...real, ref ?? 0) || 1);
+    // Only call something the worst when the areas actually differ.
+    const worst = real.length > 1 && Math.min(...real) !== Math.max(...real)
+      ? (worseHigh ? Math.max(...real) : Math.min(...real)) : null;
+    const tick = (ref === null || ref === undefined) ? ""
+      : `<span class="cmp-tick" style="left:${Math.min(100, ref / max * 100).toFixed(1)}%"></span>`;
+    return `<div class="cmp-bargroup${cmp.metric === key ? " on" : ""}">
+      <div class="cmp-barhead"><span>${esc(label)}</span>
+        <span class="micro">Sabah ${esc(cmpFmtPlain(ref, unit, key))}</span></div>
+      ${picked.map((a, i) => {
+        const v = vals[i];
+        const w = (v === null || v === undefined) ? 0 : Math.max(1.5, v / max * 100);
+        const bad = worst !== null && v === worst;
+        return `<div class="cmp-brow${bad ? " worst" : ""}">
+          <span class="cmp-bar-nm">${esc(districtLabel(a))}</span>
+          <span class="cmp-track">${tick}<i style="width:${w.toFixed(1)}%;background:${
+            cmpColor(stats[a])}"></i></span>
+          <span class="cmp-bar-v num">${esc(cmpFmtPlain(v, unit, key))}</span>
+        </div>`;
+      }).join("")}
+    </div>`;
+  }).join("");
+}
+
+/* Layer 3. Six axes, one small radar per area rather than four overlaid —
+   overlaid polygons stop being readable at three and become a knot at four.
+   Every axis runs the same way: further out is worse. */
+function renderCmpRadar(picked, stats, all) {
+  const R = 40, CX = 62, CY = 54, N = CMP_AXES.length;
+  const at = (i, v) => {
+    const ang = (-90 + i * 360 / N) * Math.PI / 180;
+    const r = R * Math.max(0, Math.min(100, v)) / 100;
+    return [CX + r * Math.cos(ang), CY + r * Math.sin(ang)];
+  };
+  const ring = f => CMP_AXES.map((_, i) => at(i, 100 * f).map(n => n.toFixed(1)).join(",")).join(" ");
+  el("cmpRadarN").textContent = `${cmpAreaNames().length} ${cmp.level}s`;
+
+  el("cmpRadars").innerHTML = picked.map(a => {
+    const col = cmpColor(stats[a]);
+    const pcs = CMP_AXES.map(([, key]) => {
+      const row = CMP_ROWS.find(r => r[1] === key);
+      return pctileOf(all, key, stats[a][key], row[3]);
+    });
+    const pts = pcs.map((v, i) => at(i, v ?? 0).map(n => n.toFixed(1)).join(",")).join(" ");
+    const labels = CMP_AXES.map(([name], i) => {
+      const [x, y] = at(i, 142);
+      const anchor = Math.abs(x - CX) < 4 ? "middle" : x > CX ? "start" : "end";
+      return `<text class="cmp-ax" x="${x.toFixed(1)}" y="${(y + 3).toFixed(1)}"
+        text-anchor="${anchor}">${esc(name)}</text>`;
+    }).join("");
+    const dots = pcs.map((v, i) => {
+      const [x, y] = at(i, v ?? 0);
+      return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="1.9" fill="${col}"/>`;
+    }).join("");
+    const worstAxis = pcs.reduce((b, v, i) => (v ?? -1) > (pcs[b] ?? -1) ? i : b, 0);
+    return `<figure class="cmp-radar">
+      <svg viewBox="-38 -12 200 140" role="img"
+           aria-label="${esc(districtLabel(a))} need profile across six indicators">
+        ${[0.25, 0.5, 0.75, 1].map(f =>
+          `<polygon class="cmp-grid" points="${ring(f)}"/>`).join("")}
+        ${CMP_AXES.map((_, i) => {
+          const [x, y] = at(i, 100);
+          return `<line class="cmp-spoke" x1="${CX}" y1="${CY}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}"/>`;
+        }).join("")}
+        <polygon class="cmp-poly" points="${pts}" fill="${col}" stroke="${col}"/>
+        ${dots}${labels}
+      </svg>
+      <figcaption><b>${esc(districtLabel(a))}</b>
+        <span>Strongest need: ${esc(CMP_AXES[worstAxis][0].toLowerCase())}
+          (${pcs[worstAxis] === null ? "—" : pcs[worstAxis] + "th pct)"}</span></figcaption>
+    </figure>`;
+  }).join("");
+}
+
 function renderCompare() {
   const picked = cmp.picked.filter(a => cmpAreaNames().includes(a));
   el("cmpChips").innerHTML = cmpAreaNames().map(a => {
-    const on = picked.includes(a), full = picked.length >= 4 && !on;
-    return `<button class="chip-btn${on ? " on" : ""}" data-area="${esc(a)}"${full ? " disabled" : ""}
-      >${esc(districtLabel(a))}</button>`;
+    const on = picked.includes(a);
+    return `<button class="chip-btn${on ? " on" : ""}" data-area="${esc(a)}"
+      aria-pressed="${on}">${esc(districtLabel(a))}</button>`;
   }).join("");
+  const nAll = cmpAreaNames().length;
   el("cmpCount").textContent = picked.length < 2
-    ? `Pick ${2 - picked.length} more to compare` : `${picked.length} selected`;
+    ? `Pick ${2 - picked.length} more to compare`
+    : `${picked.length} of ${nAll} selected`;
+  const allBtn = el("cmpAll");
+  allBtn.textContent = `Select all ${nAll}`;
+  allBtn.disabled = picked.length === nAll;
 
-  const body = el("cmpBody");
   if (picked.length < 2) {
-    body.innerHTML = `<div class="empty">Choose two to four ${cmp.level === "division"
-      ? "divisions" : "districts"} above. Every indicator is a rate or a median, so a large
-      district cannot win simply by being large.</div>`;
+    // Clear really has to clear. Hiding the charts while leaving the table,
+    // the written summary and the date stamp on screen made Clear look broken
+    // and left a stale sheet that Ctrl+P would still have printed.
+    const noun = cmp.level === "division" ? "divisions" : "districts";
+    el("cmpEmpty").textContent = `Choose at least two ${noun} above, or Select all. Every `
+      + `indicator is a rate or a median, so a large ${noun.slice(0, -1)} cannot win simply `
+      + `by being large.`;
+    el("cmpEmpty").hidden = false;
+    el("cmpSheet").hidden = true;
     el("cmpActions").hidden = true;
+    el("cmpVis").hidden = true;
+    for (const id of ["cmpTable", "cmpSummary", "cmpMissing", "cmpStrip", "cmpBars", "cmpRadars"])
+      el(id).innerHTML = "";
+    el("cmpSubject").textContent = "";
+    el("cmpStamp").textContent = "";
     return;
   }
+  el("cmpEmpty").hidden = true;
+  el("cmpSheet").hidden = false;
   el("cmpActions").hidden = false;
-  el("cmpBody").innerHTML = "";     // or the "choose two…" prompt prints under the table
+  el("cmpVis").hidden = false;
 
   const stats = {}, all = {};
   for (const a of picked) stats[a] = areaStats(cmpRowsFor(a), cmpFacsFor(a));
   for (const a of cmpAreaNames()) all[a] = stats[a] || areaStats(cmpRowsFor(a), cmpFacsFor(a));
   const sabah = areaStats(FEATURES.map(f => f.properties), FACILITIES.map(f => f.properties));
+
+  // The three visual layers read the SAME stats object the table does, so a
+  // bar and its cell can never disagree.
+  el("cmpPanels").classList.toggle("stacked", picked.length > 6);
+  renderCmpStrip(picked, stats);
+  renderCmpBars(picked, stats, sabah);
+  renderCmpRadar(picked, stats, all);
 
   let html = "", group = "";
   for (const [label, key, unit, worseHigh] of CMP_ROWS) {
@@ -4549,13 +5373,19 @@ function renderCompare() {
       const bad = worst !== null && v === worst && real.length > 1
         && Math.min(...real) !== Math.max(...real);
       html += `<td class="r num${bad ? " cmp-worst" : ""}">${cmpFmt(v, unit)}${
-        pc === null ? "" : `<span class="cmp-pc" data-tip="Worse than ${pc}% of the ${
+        pc === null ? `<span class="cmp-pc blank" aria-hidden="true"></span>`
+        : `<span class="cmp-pc" data-tip="Worse than ${pc}% of the ${
           cmpAreaNames().length} ${cmp.level}s in Sabah on this indicator.">${pc}</span>`}</td>`;
     });
-    html += `<td class="r num sub">${cmpFmt(sabah[key], unit)}</td></tr>`;
+    // The reference column reserves the same slot, so its numbers sit on the
+    // same vertical line as the areas' rather than a chip-width to the right.
+    html += `<td class="r num sub">${cmpFmt(sabah[key], unit)}`
+      + `<span class="cmp-pc blank" aria-hidden="true"></span></td></tr>`;
   }
   el("cmpTable").innerHTML =
-    `<thead><tr><th>Indicator</th>${picked.map(a =>
+    `<colgroup><col class="cmp-col-label">${
+      picked.map(() => `<col class="cmp-col-area">`).join("")}<col class="cmp-col-area"></colgroup>
+     <thead><tr><th>Indicator</th>${picked.map(a =>
       `<th class="r">${esc(districtLabel(a))}</th>`).join("")}<th class="r">Sabah</th></tr></thead>
      <tbody>${html}</tbody>`;
 
@@ -4565,8 +5395,107 @@ function renderCompare() {
     .map(([n, why]) => `<li><b>${esc(n)}</b> — ${esc(why)}</li>`).join("");
   el("cmpStamp").textContent = new Date().toLocaleDateString("en-GB",
     { day: "numeric", month: "long", year: "numeric" });
-  el("cmpSubject").textContent = picked.map(districtLabel).join(" · ");
+  /* Naming every area made the masthead a variable-height block — eighteen
+     names wrapped to a third line and tipped the sheet onto a second page,
+     while twenty-five did not. Past a handful the count is what a reader
+     needs here; the table headers below name them all anyway. */
+  renderCmpAsk();
+  el("cmpSubject").textContent = picked.length <= 6
+    ? picked.map(districtLabel).join(" · ")
+    : picked.length === nAll
+      ? `All ${nAll} ${cmp.level}s in Sabah`
+      : `${picked.length} of ${nAll} ${cmp.level}s`;
+  setPrintPage(picked.length);
 }
+
+/* A4 portrait holds about six areas. Past that the sheet has to turn sideways
+   and tighten, because the alternative is what it did before: print a header
+   naming twenty-five districts above a table that silently stopped at
+   fourteen. A sheet that looks complete and is not is the worst outcome here,
+   so the page adapts and PRINT_MAX below is enforced on top of it. */
+function setPrintPage(n) {
+  let st = el("cmpPageCSS");
+  if (!st) {
+    st = document.createElement("style");
+    st.id = "cmpPageCSS";
+    document.head.appendChild(st);
+  }
+  if (n <= 6) { st.textContent = ""; return; }
+  const tiny = n > 12;
+  st.textContent = `@media print{
+    @page{size:A4 landscape;margin:10mm}
+    #cmpTable{font-size:${tiny ? 5.9 : 7.2}px}
+    #cmpTable td,#cmpTable th{padding:${tiny ? 1.1 : 1.6}px ${tiny ? 2 : 4}px !important}
+    #cmpTable thead th{font-size:${tiny ? 5.4 : 6.4}px}
+    #cmpTable .u{font-size:${tiny ? 4.6 : 5.6}px;margin-left:1px}
+    .cmp-pc{display:none !important}
+    .cmp-print-head b{font-size:12px}
+    .cmp-print-head{padding-bottom:5px;margin-bottom:7px}
+    .cmp-cols{gap:8px;margin-top:8px}
+    .cmp-note-card{padding:7px 9px}
+    .cmp-note-card h3{font-size:8.4px;margin-bottom:4px}
+    .cmp-note-card p,.cmp-missing li{font-size:${tiny ? 6.6 : 7.4}px;
+      line-height:1.4;margin-bottom:${tiny ? 3 : 4}px}
+    .cmp-note-card .caption{font-size:${tiny ? 6.2 : 6.8}px;margin-top:4px;padding-top:3px}
+    /* The source line was tipping a single row onto a second page. */
+    .cmp-print-foot{margin-top:8px;padding-top:5px;font-size:7px;line-height:1.4}
+  }`;
+}
+
+/* ══ Printing any of the three sheets ═════════════════════════════════════
+   One driver rather than three. The section being printed is tagged
+   .print-target, the root says WHICH sheet so the per-sheet rules can bite,
+   and the shared masthead is lent to it and taken back afterwards — so the
+   DOM is exactly as it was once the dialog closes, whether the user printed
+   or cancelled. */
+let printBorrow = null;
+
+function printSheet(kind, node, title, subject, { head = true } = {}) {
+  if (!node) return;
+  const root = document.documentElement;
+  root.dataset.print = kind;
+  node.classList.add("print-target");
+  /* A closed <details> prints as its summary and nothing else, which made the
+     rankings sheet promise "11 evidence-gap rows" in its masthead above a
+     collapsed empty section, and dropped the settlement sheet's workings.
+     CSS cannot open one — Chrome hides the contents through the shadow slot,
+     not through a display rule — so they are opened here and put back after. */
+  const shut = [...node.querySelectorAll("details:not([open])")];
+  shut.forEach(d => d.open = true);
+  printBorrow = { node, head: null, foot: null, shut };
+  if (head) {
+    el("printTitle").textContent = title;
+    el("printSubject").textContent = subject;
+    el("printStamp").textContent = new Date().toLocaleDateString("en-GB",
+      { day: "numeric", month: "long", year: "numeric" });
+    const h = el("printHead"), f = el("printFoot");
+    h.hidden = false; f.hidden = false;
+    node.prepend(h);
+    node.append(f);
+    printBorrow.head = h; printBorrow.foot = f;
+  }
+  window.print();
+  // Safari and Firefox fire afterprint; Chrome fires it too, but a cancelled
+  // dialog on some builds does not — so a timeout backstops it. Restoring
+  // twice is harmless because restore() is idempotent.
+  setTimeout(restorePrint, 800);
+}
+
+function restorePrint() {
+  if (!printBorrow) return;
+  const { node, head, foot, shut } = printBorrow;
+  printBorrow = null;
+  (shut || []).forEach(d => d.open = false);
+  node.classList.remove("print-target");
+  delete document.documentElement.dataset.print;
+  // Back where they live, so the next print starts from a known DOM.
+  for (const n of [head, foot]) {
+    if (!n) continue;
+    n.hidden = true;
+    document.body.appendChild(n);
+  }
+}
+window.addEventListener("afterprint", restorePrint);
 
 /* Where a value sits among ALL 25 districts, expressed as percent WORSE than.
    Ranking only against the two or three on screen would let two weak districts
@@ -4709,12 +5638,20 @@ function downloadCompareCSV() {
       ...picked.map(a => stats[a][key]),
       ...picked.map(a => pctileOf(all, key, stats[a][key], worseHigh)),
       sabah[key]].map(q).join(",")).join("\n");
-  const notes = cmpSummary(picked, stats).map(s => `# ${s}`).join("\n");
-  const blob = new Blob([`# Dino Slayer — district decision comparison\n`
-    + `# ${picked.map(districtLabel).join(" vs ")} · ${new Date().toISOString().slice(0, 10)}\n`
-    + `# Rates and medians, never raw totals. Service figures use measured settlements only.\n`
-    + `# Population merges overlapping 2 km buffers and is not a census headcount.\n`
-    + notes + "\n" + head + "\n" + body], { type:"text/csv;charset=utf-8" });
+  /* Every note line is QUOTED so it occupies exactly one cell. Unquoted, a
+     sentence like "roughly 1,196 against 0" split on its own commas and a
+     spreadsheet drew the preamble as a ragged 1-to-4-column mess sitting
+     above the real header — which is what made the export look wrong. */
+  const notes = [
+    "Dino Slayer — district decision comparison",
+    `${picked.map(districtLabel).join(" vs ")} · ${new Date().toISOString().slice(0, 10)}`,
+    `${picked.length} ${cmp.level}s compared.`,
+    "Rates and medians, never raw totals. Service figures use measured settlements only.",
+    "Population merges overlapping 2 km buffers and is not a census headcount.",
+    ...cmpSummary(picked, stats)
+  ].map(t => q("# " + t)).join("\n");
+  const blob = new Blob([notes + "\n" + head + "\n" + body],
+    { type:"text/csv;charset=utf-8" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
   a.download = `dino-slayer-comparison-${picked.map(x => x.toLowerCase()).join("-")}.csv`;
@@ -4785,6 +5722,24 @@ function setTheme(next) {
   }
 }
 
+/* Rankings and Compare are both full-bleed views over the map, so opening one
+   closes the other rather than stacking two z-index:10 sheets. Module scope
+   because the comparison's copilot button also uses it to get back to the map. */
+function showView(which) {
+  for (const [id, btn] of [["rankings", "viewToggle"], ["compare", "cmpToggle"]]) {
+    const on = id === which;
+    el(id).dataset.open = on ? "1" : "0";
+    el(btn).setAttribute("aria-pressed", String(on));
+  }
+  // Both full-bleed views sit UNDER the right-hand panels, so an open chat or
+  // drill-down covers a quarter of the table and swallows clicks on whatever
+  // is beneath it — which is how a click on an "At a glance" card could land
+  // on the chat log instead of the card.
+  if (which) { closePanel(); openChat(false); }
+  if (which === "rankings" && rankingsDirty) { renderRankings(); rankingsDirty = false; }
+  if (which === "compare") { renderCompare(); if (agentOnline === null) probeAgent(); }
+}
+
 /* ══ Wiring ══════════════════════════════════════════════════════════════ */
 function wireUI() {
   el("themeToggle").innerHTML = SUN;
@@ -4797,18 +5752,6 @@ function wireUI() {
     setTimeout(() => map.resize(), 240);
   };
 
-  /* Rankings and Compare are both full-bleed views over the map, so opening
-     one closes the other rather than stacking two z-index:10 sheets. */
-  const showView = which => {
-    for (const [id, btn] of [["rankings", "viewToggle"], ["compare", "cmpToggle"]]) {
-      const on = id === which;
-      el(id).dataset.open = on ? "1" : "0";
-      el(btn).setAttribute("aria-pressed", String(on));
-    }
-    if (which) closePanel();
-    if (which === "rankings" && rankingsDirty) { renderRankings(); rankingsDirty = false; }
-    if (which === "compare") renderCompare();
-  };
   el("viewToggle").onclick = () =>
     showView(el("rankings").dataset.open === "1" ? null : "rankings");
   el("cmpToggle").onclick = () =>
@@ -4823,17 +5766,35 @@ function wireUI() {
         .forEach(b => b.setAttribute("aria-pressed", String(b === lvl)));
       return renderCompare();
     }
+    const met = e.target.closest(".chip-btn[data-metric]");
+    if (met) { cmp.metric = met.dataset.metric; return renderCompare(); }
     const chip = e.target.closest(".chip-btn[data-area]");
     if (chip && !chip.disabled) {
       const a = chip.dataset.area;
       cmp.picked = cmp.picked.includes(a)
         ? cmp.picked.filter(x => x !== a)
-        : [...cmp.picked, a].slice(0, 4);
+        : [...cmp.picked, a];
       renderCompare();
     }
   });
   el("cmpClear").onclick = () => { cmp.picked = []; renderCompare(); };
-  el("cmpPrint").onclick = () => window.print();
+  el("cmpAsk").onclick = openCmpChat;
+  el("chatCtxClear").onclick = () => { setCmpCtx(null); resetChatEgs(); };
+  el("cmpAll").onclick = () => { cmp.picked = cmpAreaNames(); renderCompare(); };
+  el("cmpPrint").onclick = () =>
+    printSheet("compare", el("compare"), "", "", { head: false });
+
+  /* The rankings, as the filters left them. The masthead states the row count
+     because a printed table gives no other clue whether it is a shortlist or
+     all 1,114 settlements. */
+  el("pdfBtn").onclick = () => {
+    const n = document.querySelectorAll("#rankBody tr[data-id]").length;
+    const qb = document.querySelectorAll("#qbBody tr[data-id]").length;
+    const d = el("districtSel").value, v = el("divisionSel").value;
+    const where = d ? districtLabel(d) : v ? v + " Division" : "All of Sabah";
+    printSheet("rankings", el("rankings"), "Screened settlements",
+      `${where} · ${int(n)} scored and ${int(qb)} evidence-gap rows, as filtered on screen`);
+  };
   el("cmpCsv").onclick = downloadCompareCSV;
 
   renderWeights();
