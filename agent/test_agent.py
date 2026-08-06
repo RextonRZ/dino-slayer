@@ -374,10 +374,48 @@ for bad_in, why in [([], "empty"), (["Ranau"], "one"), (["Ranau", "Ranau"], "the
     check(f"{why} is refused with an explanation", not r["rows"] and len(r["note"]) > 20)
 check("a sentence parses into areas",
       T.compare_areas("Ranau vs Kudat")["areas"] == ["Ranau", "Kudat"])
-check("more than four is capped at four",
-      len(T.compare_areas(["Ranau", "Kudat", "Pitas", "Tuaran", "Beaufort"])["areas"]) == 4)
+check("five areas are all compared, not silently cut to four",
+      len(T.compare_areas(["Ranau", "Kudat", "Pitas", "Tuaran", "Beaufort"])["areas"]) == 5)
+_every = sorted({d for d in T.DF["district"] if d})
+check("it reaches as far as the dashboard does, all 25 districts",
+      len(T.compare_areas(_every)["areas"]) == len(_every) == T.CMP_MAX_AREAS)
 check("the agent can call it through the tool boundary",
       len(_ca.invoke(_coerce_args(_ca, {"names": ["Ranau", "Kudat"], "level": 0}))["areas"]) == 2)
+
+print("\n=== 15. the comparison as agent context ===")
+from agent.graph import seed_comparison, _all_outputs, _tool_numbers, _scan, _initial
+_ctx = seed_comparison("district", ["Kudat", "Tawau"])
+check("the on-screen comparison seeds a context", _ctx["areas"] == ["Kudat", "Tawau"])
+check("its numbers are the tool's own, not the client's",
+      _ctx["stats"] == T.compare_areas(["Kudat", "Tawau"])["stats"])
+check("the fixed-rule summary travels verbatim",
+      _ctx["summary"] == T.compare_areas(["Kudat", "Tawau"])["summary"])
+check("1,114 settlement ids and the duplicate rows stay out of the prompt",
+      "ids" not in _ctx and "rows" not in _ctx)
+for _bad, _why in [([], "nothing"), (["Kudat"], "one area"),
+                   (["Atlantis", "Narnia"], "two unknown areas"), (None, "None")]:
+    check(f"{_why} seeds no context", seed_comparison("district", _bad) == {})
+
+_st = {"tool_outputs": [], "context": _ctx}
+_allowed = _tool_numbers(_all_outputs(_st))
+check("every on-screen figure counts as data to the guardrail",
+      all(str(_ctx["stats"]["Kudat"][k]) in _allowed for k in
+          ("median_dl_mbps", "evidence_gap_pct", "people_underserved", "median_dipi")))
+check("an answer quoting the screen passes the guardrail",
+      not _scan(f"Kudat's median download is {_ctx['stats']['Kudat']['median_dl_mbps']} Mbps "
+                f"and {_ctx['stats']['Kudat']['evidence_gap_pct']}% has no usable "
+                f"measurement. {T.DISCLAIMER}", _all_outputs(_st)))
+check("a figure that is on neither the screen nor a tool is still caught",
+      any("999.9" in v for v in _scan(f"Kudat runs at 999.9 Mbps. {T.DISCLAIMER}",
+                                      _all_outputs(_st))))
+check("no context means the guardrail is exactly as strict as before",
+      _tool_numbers(_all_outputs({"tool_outputs": [], "context": {}})) == _tool_numbers([]))
+check("a turn with no context starts with an empty one",
+      _initial("hello", None)["context"] == {})
+check("the dashboard's selection is recomputed, not trusted",
+      _initial("x", {"level": "district", "areas": ["Kudat", "Tawau"],
+                     "stats": {"Kudat": {"median_dl_mbps": 999.9}}})["context"]["stats"]
+      == _ctx["stats"])
 
 print(f"\n{ok} passed, {fail} failed")
 sys.exit(1 if fail else 0)

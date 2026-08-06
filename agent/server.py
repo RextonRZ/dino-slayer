@@ -36,11 +36,23 @@ app.add_middleware(
 )
 
 
+class CmpContext(BaseModel):
+    """The District Decision Comparison the user is looking at.
+
+    Names and a level, never numbers. The figures are recomputed from the
+    dataset in graph.seed_comparison(), so a client cannot hand the model a
+    made-up figure and have the number guardrail treat it as data.
+    """
+    level: str = Field(default="district", max_length=16)
+    areas: list[str] = Field(default_factory=list, max_length=25)
+
+
 class Ask(BaseModel):
     # Bounded so a pasted essay cannot be forwarded to the model as-is.
     question: str = Field(min_length=1, max_length=2000)
     # One LangGraph thread per chat panel, so follow-up questions resolve "it".
     session_id: str | None = Field(default=None, max_length=64)
+    context: CmpContext | None = None
 
 
 @app.get("/health")
@@ -55,6 +67,10 @@ def health():
     }
 
 
+def _ctx(body: "Ask") -> dict | None:
+    return body.context.model_dump() if body.context else None
+
+
 def _error_payload(e: Exception) -> dict:
     return {
         "answer": f"The copilot could not complete that: {e}. {T.DISCLAIMER}",
@@ -67,7 +83,7 @@ def _error_payload(e: Exception) -> dict:
 def ask(body: Ask):
     from .graph import ask as run_graph
     try:
-        return run_graph(body.question, body.session_id)
+        return run_graph(body.question, body.session_id, _ctx(body))
     except Exception as e:
         # A failure here is answered honestly rather than silently faked. The
         # dashboard renders it as a normal bubble.
@@ -87,7 +103,7 @@ def ask_stream(body: Ask):
 
     def gen():
         try:
-            for event, data in run_stream(body.question, body.session_id):
+            for event, data in run_stream(body.question, body.session_id, _ctx(body)):
                 yield f"event: {event}\ndata: {json.dumps(data, default=str)}\n\n"
         except Exception as e:                    # never leave the stream hanging
             traceback.print_exc()
