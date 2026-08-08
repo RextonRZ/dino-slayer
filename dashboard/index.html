@@ -632,11 +632,17 @@ select.field{appearance:none;cursor:pointer;
   background:var(--surface);border:1px solid var(--hairline-strong);
   border-radius:var(--radius);box-shadow:var(--shadow);padding:13px 15px 12px;
   transition:top .32s var(--ease),left .32s var(--ease)}
-.guide-head{display:flex;align-items:center;gap:9px;margin-bottom:9px}
-/* Overhangs the padding so it reads as standing beside the card, not boxed in. */
-.guide-face{width:58px;height:58px;object-fit:contain;flex:none;margin:-6px 0 -6px -8px}
-[data-theme="light"] .guide-face{filter:drop-shadow(0 2px 6px rgba(15,25,40,.18))}
-.guide-card h3{margin:1px 0 0;font-size:14.5px;line-height:1.25;color:var(--ink-strong)}
+/* Stands beside the card rather than inside it. The card is fixed, so it is
+   already the containing block; guidePlace() reserves FACE px on whichever
+   side it ends up and flips the side when the card is against an edge. */
+.guide-face{position:absolute;bottom:-6px;width:118px;height:118px;object-fit:contain;
+  pointer-events:none;filter:drop-shadow(0 6px 14px rgba(0,0,0,.45));
+  animation:guide-bob 3.4s var(--ease) infinite}
+.guide-card[data-side="right"] .guide-face{right:-100px}
+.guide-card[data-side="left"] .guide-face{left:-100px}
+[data-theme="light"] .guide-face{filter:drop-shadow(0 4px 10px rgba(15,25,40,.22))}
+@keyframes guide-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.guide-card h3{margin:3px 0 7px;font-size:15px;line-height:1.25;color:var(--ink-strong)}
 .guide-card p{margin:0;font-size:12.5px;line-height:1.55;color:var(--ink)}
 .guide-dots{display:flex;gap:3px;margin:11px 0 10px}
 .guide-dots i{height:2px;flex:1;border-radius:1px;background:var(--track)}
@@ -647,9 +653,14 @@ select.field{appearance:none;cursor:pointer;
 .guide-skip{background:none;border:0;padding:2px 0;cursor:pointer;
   font:inherit;font-size:11.5px;color:var(--ink-muted);text-decoration:underline}
 .guide-skip:hover{color:var(--ink)}
-@media (prefers-reduced-motion:reduce){.guide-hole,.guide-card{transition:none}}
+@media (prefers-reduced-motion:reduce){.guide-hole,.guide-card{transition:none}.guide-face{animation:none}}
+/* No room either side on a phone, so it perches on the top edge instead.
+   [data-side] is repeated to outrank the two side rules above, which a media
+   query on its own does not do. */
 @media (max-width:620px){
-  .guide-card{width:calc(100vw - 24px)}
+  .guide-card{width:calc(100vw - 24px);padding-top:30px}
+  .guide-card[data-side] .guide-face{bottom:auto;top:-44px;left:auto;right:6px;
+    width:92px;height:92px}
   .guide-foot{flex-direction:column;align-items:stretch}
   .guide-foot>div{display:grid;grid-template-columns:1fr 1fr}
 }
@@ -1918,15 +1929,13 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
 <div class="guide" id="guide" hidden role="dialog" aria-modal="true" aria-labelledby="guideTitle">
   <button class="guide-shield" id="guideShield" aria-label="Close the guide"></button>
   <div class="guide-hole" id="guideHole" hidden></div>
-  <article class="guide-card" id="guideCard">
-    <div class="guide-head">
-      <img class="guide-face" id="guideFace" src="" alt="" aria-hidden="true"
-           width="58" height="58">
-      <div>
-        <span class="micro" id="guideStep"></span>
-        <h3 id="guideTitle"></h3>
-      </div>
-    </div>
+  <article class="guide-card" id="guideCard" data-side="right">
+    <!-- Outside the card, so it reads as standing next to it rather than
+         boxed into a header. Cycles frames like the copilot mascot. -->
+    <img class="guide-face" id="guideFace" src="" alt="" aria-hidden="true"
+         width="118" height="118">
+    <span class="micro" id="guideStep"></span>
+    <h3 id="guideTitle"></h3>
     <p id="guideBody"></p>
     <div class="guide-dots" id="guideDots" aria-hidden="true"></div>
     <div class="guide-foot">
@@ -6899,37 +6908,37 @@ function showView(which) {
    element is missing is skipped rather than shown against nothing.       */
 const GUIDE_KEY = "dino.guide.v1";
 const GUIDE = [
-  { face:"happy1", title:"1,448 villages, one ranked list",
+  { face:"happy", title:"1,448 villages, one ranked list",
     body:"Every mapped settlement in Sabah, scored on how badly it needs a connectivity "
        + "intervention. Two minutes and you will know what to press." },
-  { at:"#legend", face:"pointing1", title:"Read the map first",
+  { at:"#legend", face:"pointing", title:"Read the map first",
     body:"Every dot is a settlement and the deeper the red, the sooner it needs attention. "
        + "Hollow rings have too little measurement to score, so an evidence gap looks like "
        + "a gap and never like good news." },
-  { at:"#map", face:"pointing2", title:"Click any settlement",
+  { at:"#map", face:"pointing", title:"Click any settlement",
     body:"The full case for its score: four pillars, the raw numbers behind each one, and "
        + "how much measurement is standing behind them." },
-  { at:"#findGroup", face:"thinking1", title:"Or go straight to one",
+  { at:"#findGroup", face:"thinking", title:"Or go straight to one",
     body:"Search by name or ID, or narrow the whole page to a division and district." },
-  { at:"#topList", face:"pointing3", title:"The current top of the list",
+  { at:"#topList", face:"pointing", title:"The current top of the list",
     body:"It follows your filters and your weightings, so it answers where to look first "
        + "given what you have selected." },
-  { at:"#surveyGroup", face:"thinking2", title:"Where to measure next",
+  { at:"#surveyGroup", face:"thinking", title:"Where to measure next",
     body:"334 settlements have too little data to score at all. This ranks them by what is "
        + "at stake and by how wide the model's range is, so a survey goes where a lot is "
        + "riding on an answer nobody has." },
-  { at:"#seqGroup", face:"talking1", title:"Deployment bundles",
+  { at:"#seqGroup", face:"talking", title:"Deployment bundles",
     body:"Villages close enough to share one trench, priced as a group instead of each "
        + "paying for its own cable to town. It ranks fibre builds and says so: only 6 of "
        + "the top 50 by priority are eligible for one." },
-  { at:"#budgetGroup", face:"thinking3", title:"Budget what-if",
+  { at:"#budgetGroup", face:"thinking", title:"Budget what-if",
     body:"Type a budget and see how far down the queue it reaches. The unit costs are "
        + "published benchmarks rather than quotes, and you can type your own over them." },
-  { at:"#weightGroup", face:"confused1", title:"Argue with the weighting",
+  { at:"#weightGroup", face:"confused", title:"Argue with the weighting",
     body:"The four pillar weights are ours, not a law of nature. Move them and every score, "
        + "rank and colour recomputes. The panel and the CSV both stamp which weighting "
        + "produced them." },
-  { at:".topbar-actions", face:"happy2", title:"Three more ways in",
+  { at:".topbar-actions", face:"happy", title:"Three more ways in",
     body:"Rankings for the full sortable table, Compare for districts side by side, and Ask "
        + "Dino to ask a question in plain English and watch the map follow the answer. "
        + "This guide is the ? button whenever you want it again." },
@@ -6938,6 +6947,27 @@ const GUIDE = [
 let gStep = 0;
 let gOpened = [];        // panels this guide opened, closed again on the way out
 let gRail = false;       // true when the guide had to expand a collapsed sidebar
+let gFaceTimer = null;
+const FACE = 100;        // how far the mascot overhangs the card, matches the CSS
+
+/* Its own animator rather than setMascot(), which owns the copilot's image and
+   one shared timer. A one-shot state settles into the idle loop, so the mascot
+   keeps breathing while you read instead of freezing on its last frame. */
+function guideFace(state) {
+  clearTimeout(gFaceTimer);
+  const img = el("guideFace");
+  if (!img) return;
+  let st = MASCOT[state] ? state : "idle", f = 0;
+  const paint = () => { img.src = `${MASCOT_DIR}${st}${f + 1}.png`; img.dataset.state = st; };
+  paint();
+  if (REDUCED) return;
+  const tick = () => {
+    if (++f >= MASCOT[st].n) { if (MASCOT[st].loop) f = 0; else { st = "idle"; f = 0; } }
+    paint();
+    gFaceTimer = setTimeout(tick, MASCOT[st].ms);
+  };
+  gFaceTimer = setTimeout(tick, MASCOT[st].ms);
+}
 
 function guideAt(i) {
   const sel = GUIDE[i] && GUIDE[i].at;
@@ -6964,6 +6994,7 @@ function guideOpen() {
 
 function guideClose() {
   el("guide").hidden = true;
+  clearTimeout(gFaceTimer);
   for (const d of gOpened) d.open = false;
   gOpened = [];
   if (gRail) { el("body").dataset.rail = "collapsed"; gRail = false; }
@@ -6974,7 +7005,7 @@ function guideClose() {
 
 function guideShow() {
   const live = guideLive(), pos = live.indexOf(gStep), s = GUIDE[gStep];
-  el("guideFace").src = MASCOT_DIR + s.face + ".png";
+  guideFace(s.face);
   el("guideStep").textContent = `Step ${pos + 1} of ${live.length}`;
   el("guideTitle").textContent = s.title;
   el("guideBody").textContent = s.body;
@@ -7011,17 +7042,26 @@ function guidePlace(r) {
   hole.style.height = (r.height + 8) + "px";
 
   const cw = card.offsetWidth, ch = card.offsetHeight;
+  // Below 620px the mascot sits on the card's top edge and needs no side room.
+  const face = vw > 620 ? FACE : 0;
   let top, left;
-  if (r.right + pad + cw < vw)      { left = r.right + pad;  top = r.top; }
-  else if (r.left - pad - cw > 0)   { left = r.left - pad - cw; top = r.top; }
-  else if (r.bottom + pad + ch < vh){ left = r.left;         top = r.bottom + pad; }
-  else if (r.top - pad - ch > 0)    { left = r.left;         top = r.top - pad - ch; }
+  if (r.right + pad + cw + face < vw)   { left = r.right + pad;      top = r.top; }
+  else if (r.left - pad - cw - face > 0){ left = r.left - pad - cw;  top = r.top; }
+  else if (r.bottom + pad + ch < vh)    { left = r.left;             top = r.bottom + pad; }
+  else if (r.top - pad - ch > 0)        { left = r.left;             top = r.top - pad - ch; }
   // The map fills the stage, so no side has room. Sit inside its lower left
   // instead of being clamped over the middle of what we are pointing at.
-  else                              { left = r.left + pad * 2;
-                                      top = r.bottom - ch - pad * 2; }
-  card.style.top = Math.max(pad, Math.min(top, vh - ch - pad)) + "px";
-  card.style.left = Math.max(pad, Math.min(left, vw - cw - pad)) + "px";
+  else                                  { left = r.left + pad * 2;
+                                          top = r.bottom - ch - pad * 2; }
+  left = Math.max(pad, Math.min(left, vw - cw - pad));
+  // On a phone the mascot stands on the card's top edge, so the card cannot be
+  // flush with the top of the screen or its head is cut off.
+  const topPad = face ? pad : 52;
+  card.style.top = Math.max(topPad, Math.min(top, vh - ch - pad)) + "px";
+  card.style.left = left + "px";
+  // Mascot goes right unless the card is against the right edge.
+  card.dataset.side = (left + cw + face + 4 <= vw) ? "right"
+                    : (left - face - 4 >= 0 ? "left" : "right");
 }
 
 function guideMove(dir) {
