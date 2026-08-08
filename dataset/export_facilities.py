@@ -20,13 +20,13 @@ ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "dataset" / "settlements" / "facilities_sabah_osm.parquet"
 OUT = ROOT / "dataset" / "web" / "facilities.geojson"
 
-# Sabah bounding box, used only to verify the export — never to filter silently.
+# Sabah bounding box, used only to verify the export, never to filter silently.
 BBOX = (115.0, 4.0, 119.7, 7.6)
 HEALTH = {"clinic", "hospital", "doctors"}
 
 
 def wkb_point(buf):
-    """Decode a WKB Point. Returns (lon, lat) — EPSG:4326 x,y order."""
+    """Decode a WKB Point. Returns (lon, lat) in EPSG:4326 x,y order."""
     if not isinstance(buf, (bytes, bytearray)):
         raise TypeError("expected WKB bytes, got %r" % type(buf))
     little = buf[0] == 1
