@@ -22,7 +22,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parent.parent
 SETTLEMENTS = ROOT / "dataset" / "settlements"
 
-DISCLAIMER = "Screening for further assessment — not a coverage determination."
+DISCLAIMER = "Screening for further assessment, not a coverage determination."
 LOW_EV_WARNING = ("Some rows rest on limited tests, prioritise field validation.")
 
 # Same numbers as the dashboard simulator.
@@ -748,8 +748,8 @@ def _dedup_population(sub) -> int:
 
     pop_2km is a 2 km buffer around each settlement, and rural settlements sit
     far closer together than 4 km. Summing the column counts the same villagers
-    once per neighbour: across Ranau it inflates 73,771 people to 566,012, a
-    factor of 7.7. Any "population affected" built by summing that column is
+    once per neighbour: across Ranau it inflates 22,303 people to 566,012, a
+    factor of 25. Any "population affected" built by summing that column is
     wrong by most of its own value.
 
     So: link settlements whose buffers overlap, and take one figure per cluster

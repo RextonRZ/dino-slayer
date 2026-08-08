@@ -48,7 +48,7 @@ this repo.
 1. Google Cloud console → enable **Street View Static API** and **Places API (New)**
 2. Create a **browser key**, restrict it by HTTP referrer to `localhost:8000/*`
    (and your demo host), and restrict it to only those two APIs
-3. Set a billing budget alert — belt and braces
+3. Set a billing budget alert, belt and braces
 4. Open <http://localhost:8000/dashboard/?setup=1>, paste the key, Save
 5. A **"Google imagery"** toggle now appears in the sidebar under LAYERS. It
    starts **OFF**. Turn it on when you want it.
@@ -61,13 +61,13 @@ this repo.
 |---|---|
 | Key lives in `localStorage` | Never committed, never in page source, cannot leak via git |
 | Toggle defaults OFF even with a key | A saved key alone bills nothing |
-| Lazy per settlement | Fires only when a drill-down panel opens, for that one point — never for all 1,448, never at boot |
+| Lazy per settlement | Fires only when a drill-down panel opens, for that one point, never for all 1,448, never at boot |
 | Per-settlement cache | Re-opening the same settlement costs nothing |
 | Hard session cap | 50 calls, then it refuses and says so. Reload resets |
 | Free metadata pre-check | Street View metadata is free; the billable image is only requested where imagery actually exists |
 | Live counter | The sidebar shows billable calls used and remaining |
 
-Every Google result carries *"Context only — not scoring evidence. Absence of
+Every Google result carries *"Context only, not scoring evidence. Absence of
 imagery is not evidence that a place lacks facilities."* Google content is never
 used as DIPI evidence.
 
