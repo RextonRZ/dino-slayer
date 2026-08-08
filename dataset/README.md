@@ -30,6 +30,26 @@ web/            GeoJSON the browser actually loads
 | `web/sabah_districts.geojson` | 25 | District polygons, trimmed to what the map needs |
 | `web/sabah_divisions.geojson` | 5 | Districts dissolved into the five official divisions |
 | `ml/training_table.csv` | 1,448 | Features, terrain and a pre-assigned split for the coverage model |
+| `ml/fold_assignment.csv` | 1,448 | The five spatial folds, frozen before any model was fitted. 850 training rows, 598 marked -1 |
+| `ml/metrics.json` | | Raw model run output: MAE, RMSE, R2, ablations, and all six biased districts |
+| `ml/model_ablations.json` | | The curated view of the above. Five models, four rejected, with the reason for each |
+| `ml/model_predictions_v1.csv` | 1,448 | Estimates, spread and top three factors for the 216 unmeasured settlements |
+| `ml/measurement_priority_v1.csv` | 111 | Survey targeting, offline. See the note below |
+| `ml/survey_routes_v1.csv` | 14 | Per-district visiting order for the settlements a measurement would actually settle. Straight line, no road network, so a lower bound |
+| `ml/clusters.json` | 323 | Fibre bundles and each settlement's spanning-tree spur |
+| `ml/cluster_sensitivity.json` | | What the bundling does at `min_cluster_size` 3 to 10. Not a plateau, and it says so |
+| `ml/tower_pairs.csv` | 10,070 | Every candidate mast to village path, distance only |
+| `ml/tower_pairs_los.csv` | 10,070 | The same paths with the SRTM terrain screen applied |
+| `ml/tower_scenarios.json` | | Mast counts by assumed radius, distance only |
+| `ml/tower_los_scenarios.json` | | Mast counts after the line-of-sight and Fresnel screen |
+| `ml/tower_isolated.csv` | 449 | Settlements only a mast in their own village can reach |
+| `ml/tower_isolated_power.csv` | 449 | The above plus `ever_lit`, giving the 56 that need their own mast and their own power |
+| `ml/viirs_annual_max1km.csv` | 18,824 | Thirteen years of nighttime radiance, 1,448 settlements x 13 years |
+| `ml/viirs_trend.csv` | 1,448 | Peak radiance, trend class, and the lit/unlit split |
+| `web/power.json` | 703 unlit | The night view and the power flag, published from the two files above |
+| `web/towers_los.json` | | The screened mast sites and paths the map draws |
+| `web/clusters.json` | 323 | The bundling, as the dashboard reads it |
+| `web/sources.json` | 20 sources | Every published figure with its quote, page and how far it was verified |
 
 `sabah_divisions.geojson` is generated once, offline, by unioning district polygons per
 division. It is committed so the page never has to run a geometry library at load time.
@@ -207,7 +227,7 @@ settlements with the geographic features and a pre-assigned `split`:
 `dl_mbps` is null on every `predict` row by definition. `evidence_tier_REFERENCE_ONLY` is
 there for auditing and **must not be used as a feature**, it leaks the target.
 
-Two things in [ml/COVERAGE_MODEL_GUIDE.md](ml/COVERAGE_MODEL_GUIDE.md) are not optional:
+Two things are not optional, and both are recorded in [ml/model_ablations.json](ml/model_ablations.json):
 
 - **Group your folds by district.** 29% of settlements share an exact download speed with
   at least one other settlement, because they read from the same Ookla tile. Random k-fold
@@ -215,6 +235,12 @@ Two things in [ml/COVERAGE_MODEL_GUIDE.md](ml/COVERAGE_MODEL_GUIDE.md) are not o
 - **Never predict DIPI, predict `dl_mbps`.** DIPI is a weighted sum that already contains
   connectivity. A model trained to predict DIPI from its own components learns the weights
   and reports a fit that means nothing.
+
+**One divergence to know about.** `ml/measurement_priority_v1.csv` carries the offline
+survey formula, which gates on whether a measurement could cross the service threshold. The
+dashboard's live panel uses a simpler product of stakes and prediction spread, and does not
+read those columns. The two rank differently. Use the file for the method and the panel for
+what currently ships, and do not quote them as the same thing.
 
 ---
 

@@ -112,6 +112,28 @@ settlements are mostly small and remote, so only 6 of the top 50 are in any bund
 panel states that on its own face rather than letting a reader assume the bundles are the
 priority list.
 
+**Shared mast screening.** One mast can serve several villages, so pricing a mast per
+settlement overstates the job. Distance alone said 86 to 189 masts would cover the 449 tower
+settlements. Running the same set cover over only the paths that survive an SRTM line of
+sight and 60% Fresnel check says **240 to 274**: at 3 km only half the candidate links get
+through. The useful part is the second order effect. Before terrain, the assumed service
+radius swung the cost by RM 53.6m; after it, RM 17.7m. Once four paths in five are blocked,
+extra reach stops buying coverage, so the weakest assumption in the whole tower estimate
+stopped being the thing it hung on.
+
+**Night view.** VIIRS nighttime radiance, thirteen years of it, as a map mode rather than an
+overlay. The priority colouring dims away and the 745 lit settlements glow at their measured
+brightness. **703 of 1,448 register nothing in thirteen years**, so anything sited there has
+to bring its own power, and 56 of them also need their own mast. It is deliberately a mode
+and not a layer on the priority map: an overlay would say those places are worse served,
+which the data does not know, while a night view says they emitted no light, which is exactly
+what it does know. Nightlights measure electrification, never coverage.
+
+**Compare districts, divisions or settlements.** Any number of areas side by side on
+identical definitions, with a metric table, a need profile and a one page PDF. A third mode
+compares up to 20 individual settlements, searched by name, which answers "which of these
+two, and why" rather than "which district".
+
 **Suggested option.** Filter the map by which of the four delivery options the recommender
 suggests: fibre 323, tower 449, satellite 22, community Wi-Fi 654. A filter and not a
 colour, so the dots keep their DIPI reading while you narrow which ones are on screen.
@@ -155,6 +177,9 @@ The weights recover to 40.00 / 25.00 / 15.01 / 20.00 by least squares against th
 DIPI, and each pillar correlates 1.0000 with the percentile rank of its own input. The
 full derivation, including the evidence tier rule, is in [dataset/README.md](dataset/README.md).
 
+Every other number on the screen, panel by panel, with the arithmetic and the source behind
+each one, is in [docs/how_it_works.md](docs/how_it_works.md).
+
 **Three evidence tiers, and only two of them get a score.**
 
 | Tier | Rule | Count | What happens |
@@ -167,7 +192,7 @@ full derivation, including the evidence tier rule, is in [dataset/README.md](dat
 
 ## Ask Dino
 
-A LangGraph state machine over Gemini, with eleven pandas tools and one rule: **Python
+A LangGraph state machine over Gemini, with fifteen pandas tools and one rule: **Python
 computes, the agent narrates.** The model never emits a number or a settlement ID of its
 own. It calls a tool, the tool returns figures, and a deterministic evidence check reads
 the raw tool rows, not the model's prose, before anything reaches the user. Up to two
@@ -186,6 +211,10 @@ rewrites, then a hard-templated safe answer.
 | `optimise_budget` | How far a given budget reaches down the list |
 | `plan_survey` | Where to send a field team next |
 | `generate_validation_report` | The dataset's own integrity checks |
+| `compare_areas` | Any number of districts or divisions on identical definitions |
+| `find_failing_schools` | Schools whose link cannot carry 360p once a classroom shares it |
+| `rank_bundles` | Which fibre bundles a budget reaches, under three scenarios |
+| `explain_bundle` | What is in one bundle and what its trench actually costs |
 
 **You can watch it think.** The panel streams the graph's real node transitions over
 server-sent events: which tools it chose, how many rows each returned, whether the
@@ -228,6 +257,11 @@ JSON so the quotes cannot drift.
 **Prerequisites:** Python 3.10+ for the dataset scripts and the agent. Nothing else. The
 dashboard is one HTML file with no build step.
 
+Every derived file the browser reads is published by a script in `dataset/` that re-checks it
+on the way through and refuses to write if a check fails. That is not ceremony: it has caught
+a claim that all 216 unmeasured settlements were dark when 24 of them are lit, and a
+population figure that double counted overlapping buffers by a factor of 25.
+
 **The dashboard, on its own:**
 
 ```bash
@@ -254,7 +288,7 @@ console, and it must be a different key from the Maps one.
 **Check the tools without the LLM:**
 
 ```bash
-python -m agent.tools        # runs all 11 tools against the real data and prints the results
+python -m agent.tools        # runs all 15 tools against the real data and prints the results
 ```
 
 **Endpoints**
@@ -273,8 +307,13 @@ python -m agent.tools        # runs all 11 tools against the real data and print
 dashboard/index.html        the entire dashboard, one file
 dashboard/public/           logo, mascot frames, simulator video clips
 dataset/                    sources, the DIPI pipeline output, and the web exports
-dataset/ml/                 training table and the guide for the coverage model
+dataset/ml/                 training table, frozen folds, model artefacts, terrain and VIIRS
+dataset/export_*.py         publish a derived file, and re-verify it on the way through
 agent/                      LangGraph agent, tools, and the FastAPI server
+docs/system_info.md         what the system does, what is geo, what is AI, and the impact
+docs/how_it_works.md        every panel, how each number is counted, and its source
+docs/deployment_clusters.md the bundling and mast work, with the methods that failed
+docs/viirs_nightlights.md   nightlights tested and rejected, kept as a power flag
 docs/ai_governance.md       NIST AI RMF mapping, generated
 ```
 
@@ -293,7 +332,15 @@ Every source is open, and every one is credited in the dashboard footer as well 
 | [JRC Global Surface Water](https://global-surface-water.appspot.com/) | Seasonal water context | EC JRC / Google |
 | [NASA SRTM](https://www.earthdata.nasa.gov/data/instruments/srtm) | Elevation and terrain context | Public domain |
 | [GADM 4.1](https://gadm.org/) | District and division boundaries | Free for academic use |
+| [OpenCelliD](https://opencellid.org/) | Cell record context layer, never a model feature | CC BY-SA 4.0 |
+| [NOAA VIIRS VNL V2](https://eogdata.mines.edu/products/vnl/) | Night view and the power flag | Public domain |
 | [CARTO](https://carto.com/basemaps/) / [Esri World Imagery](https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9) | Basemaps | Attribution required |
+
+Twenty published figures behind the thresholds and unit costs are registered in
+`dataset/web/sources.json` with the quote, the page and how far each was verified, and the
+dashboard reads that file at load so its tooltips and the docs cannot drift apart. Four
+frameworks set method rather than numbers: the NIST AI RMF Playbook, ITU-R P.530, ITU-R
+P.1812 and ITU-T G.114.
 
 Details, file by file, in [dataset/README.md](dataset/README.md).
 

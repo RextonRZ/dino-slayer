@@ -17,7 +17,7 @@
     "            NOT read in the full text",
     "  unverified  used, but no citation has been pinned. Say so rather than imply one."
   ],
-  "updated": "2026-08-07",
+  "updated": "2026-08-09",
   "sources": {
     "mcmc_jendela_schools": {
       "title": "MCMC Draws Up More Solutions Under JENDELA 2 For Rural Connectivity",
@@ -158,10 +158,65 @@
       "verified": "citation"
     },
     "platform_video_bitrates": {
-      "title": "Published sustained-bitrate guidance for video quality tiers",
-      "summary": "0.7 / 1.1 / 2.5 / 5 / 20 Mbps for 360p / 480p / 720p / 1080p / 4K. Widely published platform guidance; the dashboard already credits YouTube for the 20 Mbps 4K figure on the face of the simulator.",
-      "verified": "unverified",
-      "gap": "No single citation has been pinned for the full ladder. This is the weakest attribution left in the project."
+      "title": "YouTube Help: System requirements, recommended sustained speeds by resolution",
+      "summary": "0.7 / 1.1 / 2.5 / 5 / 20 Mbps for 360p / 480p / 720p / 1080p / 4K. All five tiers match Google's published table exactly. Verified against the live help page on 8 Aug 2026, which lists these as approximate speeds recommended for playing each video format.",
+      "verified": "citation",
+      "publisher": "Google / YouTube",
+      "url": "https://support.google.com/youtube/answer/78358"
+    },
+    "fcc_speed_guide": {
+      "title": "Broadband Speed Guide",
+      "publisher": "Federal Communications Commission (FCC), United States",
+      "url": "https://www.fcc.gov/consumers/guides/broadband-speed-guide",
+      "summary": "Per-activity minimum download speeds for one activity at a time. Standard personal video call 1 Mbps, HD personal video call 1.5 Mbps, HD video teleconferencing 6 Mbps, streaming HD video 5 to 8 Mbps.",
+      "what_it_backs": "The 1.5 Mbps marginal floor on the video-call task. It does NOT back the 3 Mbps pass threshold, which comes from Zoom.",
+      "verified": "search"
+    },
+    "zoom_bandwidth": {
+      "title": "System requirements and bandwidth for Zoom meetings",
+      "publisher": "Zoom Video Communications",
+      "url": "https://support.zoom.com/hc/en/article?id=zm_kb&sysparm_article=KB0060748",
+      "summary": "Group video calling at 1080p HD is published as 3.8 Mbps up and 3.0 Mbps down.",
+      "what_it_backs": "The 3 Mbps pass threshold on the video-call task.",
+      "caveat": "Zoom's pair is asymmetric. The dashboard applies 3 Mbps to BOTH legs, so its upload gate is more permissive than Zoom's published 3.8 Mbps. Since upload is the leg that usually fails on these connections, this makes the call verdict slightly optimistic, not conservative.",
+      "verified": "search"
+    },
+    "itu_g114": {
+      "title": "Recommendation ITU-T G.114: One-way transmission time",
+      "publisher": "International Telecommunication Union, ITU-T Study Group 12 (05/2003)",
+      "url": "https://www.itu.int/rec/T-REC-G.114",
+      "summary": "General limits for one-way mouth-to-ear delay: 0 to 150 ms preferred, 150 to 400 ms acceptable with increasing degradation, above 400 ms unacceptable for general network planning.",
+      "what_it_backs": "The 150 ms latency gate on the video-call task, which is exactly G.114's preferred limit. The 250 ms marginal gate is ours, chosen inside G.114's degrading band rather than at its 400 ms edge.",
+      "caveat": "G.114 budgets ONE-WAY mouth-to-ear delay, which includes codec and jitter-buffer time. Ookla latency_ms is a network ROUND TRIP and excludes both. The two are not the same quantity and the comparison is a working approximation, not a conformance test.",
+      "verified": "search"
+    },
+    "mcmc_700mhz": {
+      "title": "Assignment of Spectrum: 700 MHz band",
+      "publisher": "Malaysian Communications and Multimedia Commission (MCMC)",
+      "url": "https://www.mcmc.gov.my/en/spectrum/assignment-of-spectrum/spectrum-assignment",
+      "note": "700 MHz is an assigned and live coverage band in Malaysia. Digital Nasional Berhad was allocated 2x20 MHz (703-723 and 758-778 MHz) on its establishment in 2021, and Ministerial Direction No. 1 of 2024 assigned two further 20 MHz blocks to U Mobile as the second 5G network. An earlier 2020 assignment to five operators by ministerial order was reversed, so the band's history is contested; that it is assigned and in use is not.",
+      "verified": "search"
+    },
+    "viirs_vnl_v2": {
+      "title": "VIIRS Nighttime Light Annual Composites V2 (VNL V2)",
+      "publisher": "Earth Observation Group, Colorado School of Mines / NOAA",
+      "url": "https://eogdata.mines.edu/products/vnl/",
+      "note": "ANNUAL_V21 (2013 to 2021) and ANNUAL_V22 (2022 to 2025), band average_masked, read through Google Earth Engine at 500 m. The annual product was chosen over monthly Black Marble because its processing discards biomass burning pixels using the twelve-month median, which filters Sabah's palm oil fires and gas flares at source. Extracted and analysed by Andrew, 8 Aug 2026.",
+      "verified": "citation"
+    },
+    "itu_p530": {
+      "title": "Recommendation ITU-R P.530: Propagation data and prediction methods required for the design of terrestrial line-of-sight systems",
+      "publisher": "ITU Radiocommunication Sector",
+      "url": "https://www.itu.int/rec/R-REC-P.530/en",
+      "note": "The reason the Fresnel test is described as one part of link planning rather than the whole of it. P.530 treats clearance alongside multipath fading, rain attenuation, diffraction and interference, none of which are modelled here. Our screen answers whether terrain blocks a path, not whether a link would work.",
+      "verified": "citation"
+    },
+    "itu_p1812": {
+      "title": "Recommendation ITU-R P.1812: A path-specific propagation prediction method for point-to-area terrestrial services in the frequency range 30 MHz to 6 000 MHz",
+      "publisher": "ITU Radiocommunication Sector",
+      "url": "https://www.itu.int/rec/R-REC-P.1812/en",
+      "note": "Listed as THE CALCULATION WE DO NOT RUN. P.1812 is the method a real point-to-area coverage prediction requires: terrain diffraction, clutter, tropospheric scatter, ducting and location variability, producing a field strength exceeded for a stated percentage of time and locations. Our screen answers only whether terrain blocks a path at 60% first-Fresnel clearance. Naming the method we did not run is what keeps the mast panel honest about being a screen.",
+      "verified": "citation"
     }
   },
   "searched_and_not_found": [
@@ -295,6 +350,80 @@
       "source": "itu_lastmile_2020",
       "page": 101,
       "note": "ITU Table 29 offers microwave point-to-point only for large FLAT areas. Where a large area is mountainous and mostly non-line-of-sight, it lists wide area cellular or satellite only. Sabah is mountainous, which is why the terrain flag on a fixed-wireless recommendation matters rather than being decoration."
+    },
+    "mast_height_m": {
+      "means": "How tall the mast is assumed to be in the line-of-sight screen. A taller mast sees over more terrain, so this choice moves the number of masts needed.",
+      "value": 30,
+      "unit": "m",
+      "status": "sourced",
+      "source": "oughton_2021",
+      "page": 12,
+      "note": "Oughton prices a full 30 m tower at USD 47k, the same figure the RM 520k per site benchmark comes from, so the height and the cost are consistent with each other rather than picked separately.",
+      "in_dashboard": false,
+      "used_by": "dataset/tower_los.py, offline terrain screen"
+    },
+    "receiver_height_m": {
+      "means": "How high the receiving antenna sits at the village end of the link. Raising it clears more terrain, so like the mast height it changes how many masts are needed.",
+      "value": 10,
+      "unit": "m",
+      "status": "unsourced",
+      "note": "Ours. Nothing published gives a rural CPE mounting height for this context. It is a rooftop-scale assumption, and it moves the answer: a lower receiver blocks more paths and pushes the mast count up. Stated wherever the screened figures appear.",
+      "in_dashboard": false,
+      "used_by": "dataset/tower_los.py, offline terrain screen"
+    },
+    "los_band_mhz": {
+      "means": "The frequency the Fresnel zone is computed at. Lower frequencies have a wider first Fresnel zone, so they need more terrain clearance to pass the screen.",
+      "value": 700,
+      "unit": "MHz",
+      "status": "sourced",
+      "source": "mcmc_700mhz",
+      "note": "700 MHz is Malaysia's assigned sub-1 GHz coverage band, so it is a real choice rather than a guess. What is still ours is the assumption that a rural Sabah mast would use it rather than a higher band. That residual is BOUNDED and the bound is already computed: 700 MHz is the lowest assigned band, so it has the widest Fresnel zone and is the strictest plausible screen. Any higher band passes more paths, and as frequency rises the Fresnel zone shrinks toward zero, at which point the test is plain line of sight. So the true answer for any band sits between the fresnel and los rows of tower_los_scenarios.json: 274 to 256 masts at 3 km, 253 to 222 at 5 km, 240 to 192 at 10 km, RM 124.8m to RM 99.8m at 10 km. Terrain-blocked paths stay blocked at every frequency: only 11.9% to 14.7% of paths are in play at all.",
+      "in_dashboard": false,
+      "used_by": "dataset/tower_los.py, offline terrain screen"
+    },
+    "fresnel_clearance": {
+      "means": "How much of the first Fresnel zone has to be clear of terrain before a path counts as usable. A ray that only just grazes a ridge still loses signal to diffraction, so clearing the straight line is not enough.",
+      "value": 0.6,
+      "unit": "fraction of the first Fresnel zone",
+      "status": "sourced",
+      "source": "itu_lastmile_2020",
+      "page": 101,
+      "note": "The 60% rule is standard microwave planning practice rather than a figure from one paper. ITU-R P.530 is the recommendation that sets clearance criteria for terrestrial line-of-sight links, and it treats clearance as ONE input alongside fading, rain and multipath, so passing this screen is not a prediction that a link works. The screen reports the plain line-of-sight result alongside the Fresnel one so the effect of this choice is visible: 33.2% of 10 km paths pass line of sight, 19.1% pass Fresnel.",
+      "in_dashboard": false,
+      "used_by": "dataset/tower_los.py, offline terrain screen",
+      "corroborating": "itu_p530"
+    },
+    "earth_radius_factor": {
+      "means": "The allowance for the atmosphere bending radio waves slightly downwards, which lets a signal reach a little beyond the visual horizon. Applied as an effective earth radius.",
+      "value": "4/3",
+      "status": "sourced",
+      "source": "itu_lastmile_2020",
+      "note": "k = 4/3 is the standard temperate-climate refraction assumption in microwave link design. Applied to every path in the screen. Omitting it would block slightly more paths.",
+      "in_dashboard": false,
+      "used_by": "dataset/tower_los.py, offline terrain screen"
+    },
+    "mast_reach_km": {
+      "means": "How far one mast is assumed to serve. This is the parameter the whole tower cost rests on, and it is the one we cannot source.",
+      "value": [
+        3,
+        5,
+        10
+      ],
+      "unit": "km",
+      "status": "unsourced",
+      "note": "Deliberately a range and never a single figure. Nothing published gives a rural mast reach for Sabah; fwa_max_km = 40 is distance to town for backhaul, not coverage. On distance alone the choice swung the answer by RM 53.6m. After the SRTM line-of-sight and Fresnel screen it swings it by RM 17.7m, because once four paths in five are blocked, extra reach stops buying coverage. Still unsourced, now much less load-bearing. See docs/deployment_clusters.md section 7a.",
+      "in_dashboard": false,
+      "used_by": "dataset/tower_los.py, offline terrain screen"
+    },
+    "ntl_lit_threshold": {
+      "means": "The nighttime radiance a settlement has to reach, in any of thirteen years, before it counts as having detectable electric light. Below it, a settlement is treated as off-grid for siting purposes.",
+      "value": 0.5,
+      "unit": "nW/cm2/sr",
+      "status": "unsourced",
+      "source": "viirs_vnl_v2",
+      "note": "Ours. No published cutoff separates lit from unlit for settlements this small. Its effect is BOUNDED and tested rather than asserted: lit counts run 400 at 0.5, 519 at 0.25 and 670 at 0.1, and 0.1 is close to VIIRS's practical noise floor, so 778 of 1,448 settlements are undetectable under any defensible cutoff. Lowering the threshold recruits marginal mid-sized settlements, not the remote ones: all 216 unmeasured settlements are dark at every threshold. See docs/viirs_nightlights.md. NEVER an input to DIPI and never a coverage statement: nightlights measure electrification, not connectivity.",
+      "in_dashboard": false,
+      "used_by": "docs/viirs_nightlights.md; not yet in the product, needs viirs_trend.csv"
     }
   }
 }
