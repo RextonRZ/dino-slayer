@@ -1,0 +1,1449 @@
+settlement_id,name,district,lon,lat,elevation_m,observed_speed,predicted_speed,prediction_std,prediction_lower,prediction_upper,top_factor_1,top_factor_2,top_factor_3,top_factor_1_value,top_factor_2_value,top_factor_3_value,speed_source,model_version,model_run_date,cv_mae,cv_r2
+S0000,Kota Kinabalu,KotaKinabalu,116.0728988,5.9780066,11.0,210.1005,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0004,Telaga,Pitas,117.0723261,6.839631,7.0,47.646,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0007,Mangkubau Laut,Pitas,117.1307734,6.976774,19.0,3.619,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0009,Sikuati,Kudat,116.7130317,6.8919254,13.0,31.381,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0010,Nangka,Kudat,116.7951724,6.7891331,19.0,37.869,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0011,Bangau,Kudat,116.7259494,6.9552111,15.0,29.5945,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0012,Kampung Gumandang,Kudat,116.7894383,6.9675791,22.0,36.368,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0015,Langkon,KotaMarudu,116.7030749,6.5323956,12.0,25.863,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0016,Kampung Bintasan,KotaMarudu,116.7052836,6.5708761,29.0,32.534,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0017,Kampung Tanjung Batu Laut,KotaMarudu,116.8545206,6.5872942,8.0,83.571,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0018,Senaija,Pitas,117.0437707,6.7412585,0.0,38.971,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0019,Dandong,Pitas,117.0170646,6.6590911,11.0,26.4225,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0020,Pingan Pingan,Pitas,116.936608,6.665972,9.0,37.223,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0021,Bukah,Kudat,116.7630174,6.6659879,18.0,9.176,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0022,Kampung Marimbau,Kudat,116.6511044,6.7316162,15.0,30.4765,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0023,Kg. Maliau,Beluran,117.1513112,5.6223063,118.0,44.5995,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0024,Kampung Tenghilan,Tuaran,116.3176665,6.2583153,13.0,114.8565,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0026,Kg. Bautu,Beluran,117.2023793,5.6587226,63.0,84.557,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0028,Kampung Karagasan,Ranau,117.0088319,6.1142294,77.0,129.836,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0029,Kg. Matopang,Ranau,116.9626671,5.716389,186.0,61.945,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0030,Salulong,Ranau,117.0946702,6.1063726,56.0,100.991,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0033,Talas,KotaMarudu,116.8436982,6.4764024,15.0,11.38,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0034,Kampung Taginambor,KotaMarudu,116.7474934,6.4741058,17.0,51.661,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0035,Kampung Sualog,Beluran,117.3784228,5.8825565,10.0,10.45,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0036,Kampung Kukut,KotaBelud,116.5506256,6.5248946,50.0,43.668,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0037,Kg. Baring,KotaMarudu,116.6551009,6.4354356,365.0,236.017,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0038,Kampung K. Rampayan,KotaBelud,116.5023056,6.5228172,13.0,21.983,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0040,Kg. Tamau,KotaBelud,116.415399,6.4203023,13.0,45.661,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0041,Kampung Keguraan,KotaBelud,116.5024247,6.4565219,11.0,49.1735,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0042,Pauh,Keningau,116.4101726,5.3132388,395.0,41.56,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0044,Kampung Delayan,Keningau,116.3580845,5.2313137,374.0,39.563,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0045,Kg. Kiabau,Beluran,117.2233007,5.8223381,35.0,95.64,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0048,Kobuh Baru,Ranau,116.7709674,5.9303108,380.0,25.0595,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0049,Simpang 4 Kasabug,Keningau,116.3747193,5.2732968,375.0,34.294,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0050,Kampung Tomis,Tuaran,116.4829642,5.9938105,700.0,24.6535,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0051,Kampung Bayangan,Keningau,116.2032784,5.3736221,288.0,66.7105,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0052,Kampung Lokos,Tuaran,116.4646417,5.9653342,923.0,18.521,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0053,Senagang,Keningau,116.0344046,5.2908601,301.0,81.2385,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0054,Kampung Sandatan,Ranau,116.5069201,5.9292235,1326.0,7.246,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0055,Kampung Lanas,Keningau,116.4967452,5.3270294,374.0,27.957,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0056,Kampung Bedukan,Ranau,116.6548454,5.8982444,384.0,22.563,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0057,Kampung Kuangoh,Keningau,116.209765,5.4228974,334.0,55.4915,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0058,Murud Kurud,Ranau,116.932569,6.1573849,123.0,77.87,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0059,Pinipi,Keningau,116.4944629,5.3422686,379.0,27.957,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0060,Merungin,Ranau,116.8611805,6.1135252,168.0,21.818,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0062,Kampung Apin Apin,Keningau,116.2736526,5.4587899,329.0,38.7115,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0063,Kg. Tinutuan,Ranau,116.8184033,6.108734,212.0,156.145,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0066,Mampisas,Tongod,116.5084813,5.4146548,425.0,42.037,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0069,Kg. Tombovo,Putatan,116.056044,5.8611682,14.0,207.845,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0070,Kg. Tampasak,Papar,116.059748,5.8112171,12.0,128.054,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0072,Kampung Kuala,Papar,115.9573292,5.6381844,11.0,94.179,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0073,Benoni,Papar,115.9243582,5.6917133,10.0,126.2115,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0074,Kayau,Papar,116.0294256,5.6803176,17.0,23.349,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0075,Tompios,Ranau,116.8410683,5.7022944,196.0,30.793,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0076,Kampung Paginatan,Ranau,116.8311165,5.7500197,197.0,43.9125,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0077,Kampung Matopang,Ranau,116.8168422,5.7908133,206.0,18.067,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0078,Kampung Nibalayan,Ranau,116.5839984,5.8641269,702.0,10.3225,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0079,Kampung Kituntul,Tambunan,116.3838417,5.7127093,631.0,42.376,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0080,,Tambunan,116.4468761,5.7636797,842.0,75.92,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0081,Kampung Kerokot Laut,Tambunan,116.5062278,5.8131708,1024.0,43.668,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0082,Kampung Tempurong,KualaPenyu,115.5611542,5.5420109,23.0,43.4135,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0083,Kg. Kota Klias,Beaufort,115.6245849,5.4526327,6.0,35.459,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0084,Kampung Binsuluk,Beaufort,115.6926781,5.525775,8.0,42.745,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0085,Kampung Sawangan,KualaPenyu,115.6114373,5.6147787,69.0,23.061,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0086,Kampung Balibatu,Beaufort,115.7509543,5.3251135,135.0,185.791,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0087,Melalap,Tenom,115.9956357,5.243595,201.0,24.579,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0088,Kg.Malabau,Beaufort,115.6728513,5.4071403,22.0,49.007,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0089,Kg. Limbawang,Beaufort,115.7063199,5.3639501,12.0,44.228,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0090,Kg. Gading,Papar,115.918146,5.4941292,36.0,46.028,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0091,Bongawan,Papar,115.8558147,5.5402815,8.0,36.362,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0092,Kampung Jawa,Papar,115.9125468,5.622376,8.0,96.608,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0093,Kampung Ulu Kimanis,Papar,115.9623713,5.5693002,24.0,55.007,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0094,Kampung Pimping,Beaufort,115.7525025,5.5110905,15.0,40.849,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0095,Membakut,Beaufort,115.8034703,5.4752882,10.0,39.673,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0096,Kemabong,Tenom,115.9178894,4.9137172,236.0,41.189,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0098,Kampung Pantai,Sipitang,115.5391794,5.0091398,46.0,49.449,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0099,Masapol,Sipitang,115.5918648,5.1071138,21.0,57.374,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0101,Kampung Malintatan,Sipitang,115.5455903,5.0480446,26.0,34.871,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0102,Kampung Layon,Nabawan,116.2648504,4.8583807,479.0,45.58,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0104,Kampung Palakat,Sipitang,115.557134,5.117332,20.0,69.132,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0105,Mentalik,Tenom,115.9693573,5.0730539,188.0,42.222,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0107,Kampung Lingkungan,Beaufort,115.6362248,5.2010737,20.0,73.569,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0109,Kampung Malana,Sipitang,115.6429305,5.1247727,26.0,78.3625,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0111,Kampung Paal,Tenom,115.9059101,5.0186735,231.0,58.644,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0113,Kampung Gadong,Beaufort,115.6085704,5.3493525,14.0,22.896,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0114,Sook,Keningau,116.289617,5.1423979,355.0,37.442,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0115,Kampung Laboi,Beaufort,115.6539176,5.2330561,27.0,41.3065,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0116,Nabawan,Nabawan,116.4258286,5.0397345,462.0,60.082,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0117,Weston,Beaufort,115.6057549,5.2125971,6.0,66.649,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0118,Kampung Lobou,Nabawan,116.430182,5.0539935,605.0,64.85,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0119,Kampung Padas Damit,Beaufort,115.563127,5.3315352,17.0,48.824,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0121,Kampung Agis,Nabawan,116.4509623,4.5985524,152.0,0.359,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0124,Maligan,Sipitang,115.7073142,4.6792068,607.0,42.14,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0125,Labiron,Sipitang,115.7376574,4.6710384,581.0,80.366,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0126,Paitan,Beluran,117.3972184,6.4068083,11.0,51.1225,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0130,Balaron,Nabawan,116.4422487,4.7181021,286.0,111.298,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0131,Menggatal,KotaKinabalu,116.1580498,6.0301847,14.0,165.457,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0132,Kampung Kiulu,Tuaran,116.2835896,6.0508758,187.0,25.944,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0133,Kampung Kamarin,Tuaran,116.3122994,5.9920618,170.0,83.3665,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0134,Kionsom,KotaKinabalu,116.1813025,5.9647408,198.0,76.955,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0135,Kampung Wangkang,KualaPenyu,115.5361321,5.5142364,28.0,33.535,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0137,Kampung Dudar,KotaBelud,116.5675257,6.59418,15.0,61.428,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0138,Surusop,Tuaran,116.2403592,6.2478396,4.0,182.105,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0139,Kampung Bolong,Tuaran,116.192204,6.2031481,13.0,117.739,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0140,Tuaran,Tuaran,116.2328137,6.1762851,15.0,168.913,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0141,Kampung Berungis,Tuaran,116.2214943,6.1511982,11.0,185.632,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0145,Kg. Saguan,Tongod,116.8381955,5.2551994,65.0,272.083,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0149,Kampung Bangsai,KualaPenyu,115.5327708,5.4716727,17.0,21.6925,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0150,Kalugus,KualaPenyu,115.4466707,5.4206631,37.0,12.521,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0151,Kampung Kuala Karamuak,Tongod,117.2104656,5.2870807,49.0,25.3025,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0152,Beaufort,Beaufort,115.7430094,5.3470611,14.0,102.916,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0153,Tenom,Tenom,115.941709,5.1213163,181.0,44.436,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0154,Keningau,Keningau,116.1523241,5.3316751,279.0,174.0235,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0155,Tambunan,Tambunan,116.3655408,5.6688001,562.0,44.162,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0156,Papar,Papar,115.9320971,5.7330227,8.0,145.484,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0157,Sungai Sungai,Beluran,117.3697621,6.2510893,17.0,19.5155,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0158,Sipitang,Sipitang,115.5494493,5.0763734,8.0,90.916,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0159,Kampung Mempakul,KualaPenyu,115.3584871,5.2967088,16.0,33.5005,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0160,Kuala Penyu,KualaPenyu,115.6008534,5.5675507,11.0,36.001,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0162,Sapulut,Nabawan,116.4807819,4.7053675,312.0,20.0265,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0164,Pinangah,Tongod,116.8352431,5.2113004,68.0,32.637,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0165,Kudat,Kudat,116.8494435,6.8824598,10.0,147.232,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0166,Kanibongan,Pitas,117.2077305,6.661511,16.0,33.5495,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0168,Ranau,Ranau,116.6662881,5.9511437,543.0,81.871,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0169,Kota Belud,KotaBelud,116.4292891,6.3497629,19.0,131.656,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0170,Donggongon,Penampang,116.0890694,5.906508,15.0,230.705,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0171,Pitas,Pitas,117.054365,6.7303182,10.0,42.092,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0172,Matunggong,Kudat,116.7225425,6.7151333,30.0,22.479,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0173,Kota Marudu,KotaMarudu,116.7617535,6.4951419,13.0,115.304,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0174,Tawau,Tawau,117.885331,4.2435206,16.0,205.814,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0175,Sandakan,Sandakan,118.1158598,5.8391274,8.0,220.974,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0176,Semporna,Semporna,118.6118806,4.4790651,10.0,128.873,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0177,Lahad Datu,LahadDatu,118.3275533,5.0215726,4.0,179.325,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0178,Kampung Betotai,Tuaran,116.2825212,6.2383709,9.0,63.5045,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0179,Kg. Kelawat,KotaBelud,116.3743229,6.3240036,87.0,53.1925,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0180,Kampung Tembayang,KualaPenyu,115.3863577,5.3947301,20.0,64.6085,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0181,Kampung Kuala Sapi,Beluran,117.4379987,5.8241814,10.0,28.704,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0182,Kampung Bilit,Kinabatangan,118.2079604,5.4999089,27.0,42.174,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0183,Sukau,Kinabatangan,118.2869938,5.5097346,16.0,25.876,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0184,Kundasang,Ranau,116.5744809,5.9857273,1280.0,26.026,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0185,Pekan Nabalu,Tuaran,116.4629369,6.0282512,1011.0,32.747,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0186,Kampung Kabatu,Beaufort,115.6876589,5.3968433,14.0,48.509,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0187,Kampung Kabidang,Beaufort,115.6848433,5.4023466,10.0,47.935,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0188,Kampung Klias Kecil,Beaufort,115.6382102,5.44141,10.0,53.425,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0189,Kampung Melabu,Beaufort,115.6640257,5.4223745,21.0,47.361,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0190,Kg. Nukahan,Beaufort,115.5891481,5.4619507,6.0,133.1085,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0191,Kampung Takuli,Beaufort,115.6768857,5.4164768,14.0,49.007,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0192,Kampung Kiau Nuluh,KotaBelud,116.4962608,6.0467225,981.0,55.622,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0193,Kampung Berhala Darat,Sandakan,118.1307628,5.8502094,1.0,244.315,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0194,Kampung Air Sim Sim,Sandakan,118.1288334,5.857127,1.0,244.315,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0195,Kampung Batu Putih,Sandakan,118.0377354,5.9145208,6.0,172.761,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0196,Kampung Sentosa,Sandakan,118.014302,5.9479941,11.0,90.946,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0197,Kg. Tinusa 2,Sandakan,118.091217,5.8883739,0.0,124.872,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0198,Kampung Botol,Sandakan,118.1058852,5.8519963,37.0,189.728,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0199,Kampung Pukat,Sandakan,118.0874576,5.8291432,0.0,202.9565,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0200,Batu Sapi,Sandakan,118.0445333,5.8037817,2.0,214.23,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0201,Kg. Tinangol,Kudat,116.7038484,6.7723729,23.0,38.834,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0202,Kg Mengaris,Kinabatangan,117.9501832,5.4070377,7.0,53.272,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0203,Kg. Gum Gum,Sandakan,117.9209983,5.8933391,7.0,70.779,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0205,Kampung Dandulit,Sandakan,117.9102422,5.9696538,4.0,107.4605,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0207,Abai,Kinabatangan,118.3830886,5.687723,-2.0,34.872,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0208,Inanam,KotaKinabalu,116.135958,5.9922378,11.0,198.1335,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0209,Kampung Sungai Kayu,Sandakan,118.0637551,5.9040503,12.0,127.355,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0210,Kampung Lupak Meluas,Sandakan,118.0666249,5.8089058,6.0,157.6135,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0211,Kampung Air,Sandakan,118.0825228,5.8148658,2.0,106.203,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0212,Kampung Merintanam,Sipitang,115.546489,5.039118,24.0,30.534,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0213,Kampung Pirasan,KotaBelud,116.43065,6.3329745,27.0,179.927,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0214,Kampung Rangalau,KotaBelud,116.4403454,6.3056896,32.0,63.7675,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0215,Kampung Rajunah,KotaBelud,116.453604,6.283342,50.0,24.276,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0216,Kampung Gaur,KotaBelud,116.457519,6.281577,47.0,22.867,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0217,Tanjung Aru,KotaKinabalu,116.0557423,5.9533677,10.0,204.746,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0218,Kampung Hungab,Penampang,116.096415,5.9094814,12.0,226.883,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0219,Kg. Balung,Tawau,118.1039281,4.3654738,60.0,167.625,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0220,Kampung Mandawang,KotaMarudu,116.6231166,6.66726,11.0,9.88,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0221,Kg. Dambai Papar,Papar,115.9549736,5.7427164,27.0,111.392,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0222,Kampung Bokara,Sandakan,118.0807131,5.8124591,1.0,129.739,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0223,Segaliud,Sandakan,117.8201327,5.7308288,9.0,18.5885,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0224,Kampung Lot M,Kinabatangan,117.8303446,5.6433749,19.0,74.1935,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0225,Kinabatangan,Kinabatangan,117.8466525,5.588993,34.0,59.735,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0226,Kg. Nelayan Tengah,Sandakan,118.0173564,5.9210819,5.0,153.052,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0227,Kampung Bahagia,Sandakan,118.0276899,5.7919259,0.0,217.0815,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0229,Telupid,Beluran,117.1307798,5.6272326,102.0,67.156,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0230,Kg. Jaya Baru,Kinabatangan,117.9061674,5.5718621,12.0,99.939,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0231,Tongod,Tongod,116.9687321,5.2681386,62.0,83.593,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0232,Kg. Balaban,Beluran,117.5770708,5.8342116,17.0,24.08,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0233,Kg. Jaya Bakti,Sandakan,117.7092373,5.7681783,15.0,23.922,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0234,Kampung Kawang,Papar,116.0176734,5.773031,5.0,59.1765,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0235,Kawang,Papar,116.0205166,5.7756548,39.0,58.632,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0239,Saliwangan,Beaufort,115.8016325,5.272817,29.0,43.6895,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0240,Kampung Sambah,Tuaran,116.2902122,6.2443677,11.0,11.518,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0241,Kampung Suromboton,Tuaran,116.3520719,6.2646388,19.0,96.222,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0242,Kampung Marak Parak,KotaMarudu,116.7332936,6.3120478,144.0,26.093,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0243,Kampung Sunsui,KotaMarudu,116.7747033,6.3871847,68.0,24.482,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0244,Kampung Sorinsim,KotaMarudu,116.7116806,6.2934576,180.0,96.0,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0245,Badukan,Ranau,116.6661539,5.9157822,431.0,93.152,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0246,Kampung Buang Sayang 2,Papar,115.9358337,5.738405,12.0,154.438,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0247,Kampung Melugus,Papar,115.9321537,5.7435936,9.0,145.484,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0248,Kampung Laut Papar,Papar,115.9254799,5.7357576,8.0,139.9475,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0249,Kampung Pengalat Kecil,Papar,115.9437611,5.7499957,6.0,128.062,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0250,Kampung Pengalat Besar,Papar,115.9629088,5.7599899,8.0,201.652,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0251,Kampung Baun,Papar,115.9479992,5.7456679,10.0,134.411,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0252,Kampung Bundusan,Papar,115.9397509,5.7611763,10.0,155.201,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0253,Kampung Sumbiling,Papar,115.9497501,5.7417086,8.0,115.626,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0254,Kampung Berundong,Papar,115.9191936,5.726764,9.0,134.411,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0255,Kampung Tenggilung,KualaPenyu,115.557874,5.5010953,14.0,45.574,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0256,Kampung Kayul,KualaPenyu,115.5463513,5.4994293,22.0,36.3415,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0257,Menumbok,KualaPenyu,115.3690652,5.3040795,8.0,32.161,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0258,Kg. Bakalau,Beaufort,115.731229,5.3511344,16.0,89.477,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0259,Kg. Gadung,Beaufort,115.6941463,5.3761581,14.0,45.8765,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0260,Simpang Tiga,Kinabatangan,118.3834193,5.6960434,-1.0,34.872,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0261,Kg Mengaris2,Kinabatangan,117.9516956,5.4061473,9.0,53.272,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0262,Kampung Batu Puteh.,Kinabatangan,117.9418331,5.4200674,9.0,65.446,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0263,Kampung Ranggal,Pitas,117.2216046,6.5973275,14.0,46.124,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0265,,Tongod,116.8067359,5.2248916,81.0,81.4825,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0266,,Tongod,116.8014009,5.2387729,74.0,108.737,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0267,,Tongod,116.8549486,5.2445209,76.0,346.169,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0269,Pensiangan,Nabawan,116.3117345,4.5384978,172.0,43.784,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0272,Kalabakan,Tawau,117.4905986,4.4144005,9.0,96.812,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0273,Sungai Rakit,KotaMarudu,116.8012118,6.4544107,18.0,15.276,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0274,Rampayan Ulu,KotaBelud,116.5176299,6.5215802,15.0,35.6665,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0275,,KotaBelud,116.5497762,6.5807904,14.0,29.4075,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0276,,KotaBelud,116.5866787,6.6128756,15.0,70.205,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0277,,KotaBelud,116.580574,6.6178259,16.0,70.205,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0279,,Kudat,116.6805184,6.8828641,17.0,30.123,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0280,,Kudat,116.6760968,6.8728835,14.0,31.684,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0281,,KotaBelud,116.3463728,6.3847972,10.0,57.3,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0282,Kampung Sri Ganda,Kinabatangan,118.5611896,5.5073945,4.0,212.3815,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0284,Togop Laut,Ranau,116.7975091,6.1615009,223.0,104.417,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0285,,Ranau,116.8102657,6.1657463,204.0,115.142,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0287,,Ranau,116.8997656,6.1841248,224.0,161.854,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0289,Pinampadan,Ranau,116.8718096,6.1492245,144.0,21.813,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0290,Kampung Kaingaran,Ranau,116.97026,6.0921074,96.0,82.127,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0291,Tinaom,Ranau,116.9572312,6.1112469,104.0,100.4,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0293,,Ranau,116.9497291,6.1649276,116.0,46.3835,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0294,Mantub,Ranau,116.9525025,6.1755676,122.0,53.667,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0295,Sumbilingon,Ranau,116.9592348,6.1856954,128.0,53.667,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0296,Nasakot,Ranau,116.961343,6.1992709,129.0,93.5085,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0297,,Ranau,116.9567672,6.2026547,136.0,93.5085,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0298,Kimanis,Papar,115.8951324,5.6138322,6.0,182.268,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0300,Putatan,Putatan,116.05,5.8833333,9.0,200.378,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0301,Kunak,Kunak,118.2475984,4.6838807,14.0,84.056,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0302,Beluran,Beluran,117.5598077,5.8979788,5.0,48.049,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0307,Kampung Sumbilingan,KotaBelud,116.3458603,6.3129372,11.0,47.221,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0308,Batu Payung,Tawau,117.992711,4.228356,130.0,38.497,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0309,Tinagat,Tawau,117.9670708,4.240154,10.0,160.025,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0310,Kg Dagat Lama,Kinabatangan,118.7752305,5.3665927,9.0,6.1105,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0311,Kampung Damai SFI,Sipitang,115.5350166,5.0208115,51.0,49.092,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0312,Kampung Molosok,Keningau,116.1217083,5.0176067,373.0,50.076,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0313,Kampung Dalit Station,Keningau,116.1260882,5.0204538,373.0,50.076,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0314,Kampung Kahaba,Keningau,116.1084747,5.0094591,379.0,50.076,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0315,Kampung Tambulaung,KotaBelud,116.4551222,6.2285288,92.0,44.857,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0316,Kampung Taginambur,KotaBelud,116.4491033,6.2251585,96.0,50.3815,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0317,Kampung Podos,KotaBelud,116.4848625,6.223804,138.0,37.547,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0318,Kampung Soronsob,KotaBelud,116.4523971,6.2186365,101.0,48.818,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0319,Kampung Tamalang,KotaBelud,116.4494384,6.2360746,106.0,47.124,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0320,Kampung Bahab,KotaBelud,116.4515128,6.2137719,129.0,59.751,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0321,Kampung Bayayat,KotaBelud,116.4454789,6.2065818,168.0,59.751,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0322,Kampung Sogoh,KotaBelud,116.4466573,6.1992736,160.0,47.384,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0323,Kampung Tinata,KotaBelud,116.4687633,6.2138754,224.0,55.649,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0324,Kampung Nopungguk,KotaBelud,116.4881866,6.2021431,388.0,3.381,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0325,Kampung Gansurai,KotaBelud,116.4712732,6.1953094,170.0,6.437,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0326,Kampung Melangkap Noriou,KotaBelud,116.4849272,6.1792216,409.0,25.061,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0327,Kampung Melangkap Tiong,KotaBelud,116.4822091,6.1682574,278.0,33.3475,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0328,Kampung Melangkap Baru,KotaBelud,116.4742672,6.1658929,224.0,33.3475,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0329,Kampung Melangkap Kapa,KotaBelud,116.5123489,6.1519023,663.0,99.455,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0330,Kampung Lobong-Lobong,KotaBelud,116.4639483,6.0677167,529.0,27.109,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0331,Kampung Kaung Ulu,KotaBelud,116.4597571,6.078188,425.0,29.024,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0332,Kampung Kaung,KotaBelud,116.4578722,6.0753764,381.0,29.024,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0333,Kampung Tambatuon,KotaBelud,116.4532593,6.1239943,230.0,91.158,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0334,Kampung Lingkubang,KotaBelud,116.445671,6.1466984,203.0,91.158,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0335,Kampung Kebayau,KotaBelud,116.4610807,6.1579797,440.0,48.8865,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0336,Kampung Melangkap Tomis,KotaBelud,116.4840244,6.1460017,467.0,28.835,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0337,Kampung Purak Ogis,KotaBelud,116.4459051,6.163235,169.0,62.557,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0338,Kampung Narinang,KotaBelud,116.4455836,6.1852478,139.0,46.817,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0339,Kampung Taginambur Jaya,KotaBelud,116.4525488,6.2473825,71.0,31.098,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0340,Kampung Bukit Bendera,KotaBelud,116.451671,6.2495427,92.0,30.251,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0341,Kampung Mengkulat,KotaBelud,116.4754237,6.2491271,122.0,15.943,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0342,Kampung Pinolobu,KotaBelud,116.4921853,6.2586505,262.0,14.021,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0343,Kampung Ratau,KotaBelud,116.4596676,6.2556724,64.0,22.9225,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0344,Kampung Tamu Darat,KotaBelud,116.4537819,6.2647561,80.0,24.276,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0345,Kampung Bokilong,KotaBelud,116.4473655,6.2888642,50.0,30.015,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0346,Kampung Tuguson,KotaBelud,116.4347245,6.2399444,107.0,47.124,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0348,Kampung Kaung Melawan,KotaBelud,116.4612922,6.2514125,88.0,21.271,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0349,Kampung Piasau,KotaBelud,116.4384731,6.3298703,22.0,149.308,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0350,Kampung Tambulion,KotaBelud,116.4703028,6.3436836,29.0,67.958,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0351,Kampung Nahaba,KotaBelud,116.5161892,6.2917772,106.0,43.851,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0352,Kampung Tegudon,KotaBelud,116.5213042,6.2893898,101.0,43.045,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0353,Kampung Terintidon,KotaBelud,116.5406989,6.2405329,237.0,24.769,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0354,Kampung Sayap,KotaBelud,116.5563737,6.2077042,476.0,35.439,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0355,Poring,Ranau,116.7087175,6.0412176,498.0,73.606,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0356,Kampung Tiong Kamburaon,Tuaran,116.4135535,6.2265366,535.0,11.608,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0357,Kampung Lasau Tintapon,KotaBelud,116.4217135,6.2861672,65.0,113.3735,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0358,Bahagia,Nabawan,116.4409293,5.092138,470.0,67.236,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0359,Riah,Nabawan,116.4527953,5.0755521,462.0,77.7015,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0360,Kampung Mandap,KotaBelud,116.3868016,6.3219835,56.0,44.511,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0361,Kampung Mandap Doluoh,KotaBelud,116.397505,6.3249904,34.0,76.686,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0362,Kampung Kinasaraban,KotaBelud,116.4035949,6.3325058,58.0,104.361,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0363,Kampung Gandukut,KotaBelud,116.5421541,6.3061273,133.0,45.933,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0364,Kampung Nanamun,KotaBelud,116.4939753,6.4821376,15.0,103.057,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0365,Kampung Kayu Putih,KotaBelud,116.4878031,6.4635833,9.0,49.1735,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0366,Kampung Pomotodon,KotaBelud,116.4428194,6.2218072,141.0,53.85,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0367,Kampung Kayangat,Tuaran,116.3768638,6.252582,232.0,27.3935,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0368,Kampung Tomboilik,Tuaran,116.3851612,6.2499739,380.0,21.959,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0369,Kampung Monggis,Tuaran,116.3836377,6.242519,305.0,21.428,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0370,Kampung Rani,Tuaran,116.3584221,6.2567051,18.0,66.028,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0371,Tenghilan,Tuaran,116.3360379,6.2576835,11.0,168.589,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0372,Pekan Taginambur,KotaBelud,116.4499,6.2275471,94.0,47.124,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0373,Kampung Molisou,Tuaran,116.3327042,6.2626966,10.0,155.135,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0374,Kampung Kolapis,Beluran,117.6190252,5.8967747,4.0,54.947,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0375,Toruntungan,Ranau,116.7735199,6.1940804,274.0,73.6995,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0377,Kampung Melangkap,KotaMarudu,116.7860054,6.2846871,178.0,39.9055,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0378,Kampung Kias,KotaMarudu,116.6694093,6.3167607,561.0,150.576,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0379,Kampung Pongoputan Baru,KotaMarudu,116.7327757,6.3363692,158.0,19.13,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0380,Kampung Tangkol,KotaMarudu,116.740202,6.3424779,129.0,16.451,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0383,Kampung Mimpas,KotaMarudu,116.7597414,6.3795511,118.0,24.482,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0384,Kampung Timbang Batu 2,KotaMarudu,116.8076006,6.4390311,186.0,11.707,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0386,Kampung Kadayan,Pitas,117.2187561,6.6178113,12.0,8.025,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0387,Kampung Pinangkau,Beluran,117.2968925,6.5245184,16.0,111.479,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0388,Kampung Tanjung Nipis,Beluran,117.4287888,6.433885,8.0,116.994,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0389,Kampung Kobambangan,Beluran,117.3832823,6.3928187,10.0,57.511,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0390,Kampung Kabuluh,Beluran,117.385528,6.3981983,13.0,52.115,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0391,Kampung Tiampus,Beluran,117.3687466,6.3121771,38.0,190.5575,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0392,Kampung Binsulung,Beluran,117.3159962,6.2799021,22.0,79.59,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0393,Kampung Rosok,KotaBelud,116.5293282,6.4023072,15.0,19.597,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0394,Kampung Kawang-Kawang,KotaBelud,116.5127843,6.4442068,9.0,31.022,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0395,Kampung Bugaron,KotaBelud,116.5214103,6.4237159,6.0,11.513,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0396,Kampung Gentuong,KotaBelud,116.5106171,6.4268077,11.0,8.4635,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0397,Kampung Sukang Sugut,Beluran,117.2912211,6.2553756,23.0,118.04,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0399,Kampung Lingkabau,Beluran,117.1970902,6.1661628,44.0,33.094,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0400,Kampung Timbulus Sugut,Beluran,117.2293145,6.1709476,50.0,67.247,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0401,Kampung Salan,Beluran,117.2246773,6.1630737,89.0,63.5965,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0402,Kampung Basai Baru,Beluran,117.3250145,6.0533295,13.0,21.992,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0403,Kampung Tudan,KotaBelud,116.4626154,6.2493073,77.0,26.003,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0404,Kampung Pompod Kelawat,KotaBelud,116.3515484,6.3239734,18.0,50.602,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0405,Kampung Pituru Laut,KotaBelud,116.3291819,6.3380572,6.0,22.222,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0406,Kampung Pituru Darat,KotaBelud,116.3431186,6.3394007,9.0,28.427,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0407,Kampung Ambong,KotaBelud,116.3280651,6.3064939,9.0,24.594,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0410,Kampung Tolus,KotaBelud,116.328518,6.3000554,3.0,18.241,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0411,Kampung Sungai Rungus,Beluran,117.3436035,6.0597478,11.0,17.6095,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0412,Kampung Botition,Beluran,117.342902,6.0519836,16.0,14.231,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0413,Kampung Bundu Paka,KotaBelud,116.4522523,6.1388087,196.0,91.158,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0414,,LahadDatu,117.8093302,5.2000209,135.0,37.408,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0416,Kampung Simpangan Lama,Tuaran,116.4514073,6.0490023,810.0,18.2495,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0417,Kampung Taginambur Kiulu,Tuaran,116.4434492,6.0279292,725.0,26.5635,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0418,Kampung Bongol,Tuaran,116.422528,6.1050483,655.0,12.6155,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0419,Kampung Kiau Taburi,KotaBelud,116.4855496,6.0325619,939.0,56.444,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0420,Kampung Tomis Jaya,KotaBelud,116.4791545,6.0132916,1044.0,56.399,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0421,Kampung Tiong Gondohon,Tuaran,116.4919792,5.9862679,993.0,23.039,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0422,Kampung Tiong Simpodon,Tuaran,116.4897362,5.9793058,844.0,23.381,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0423,Kampung Tiong Temburung,Tuaran,116.4782993,5.9684582,890.0,24.562,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0424,Kampung Sinulihan,Tuaran,116.4541415,5.9777981,857.0,20.8025,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0428,Kampung Bukid Rantai,KotaBelud,116.4862425,6.2720373,80.0,13.73,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0429,Bandar Sahabat,LahadDatu,119.072572,5.0761557,16.0,56.233,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0430,Karamatoi Laut,Keningau,116.2128929,5.0746583,353.0,39.409,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0432,,Tenom,115.8777495,4.8645291,233.0,9.638,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0433,Kalibatang Baru,Tenom,115.8897693,4.8621763,221.0,9.89,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0434,,Tenom,115.8564889,4.6532652,489.0,83.873,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0443,,Tenom,116.0084657,4.8282742,648.0,5.455,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0444,Long Pasia,Sipitang,115.7306191,4.4057457,1007.0,40.307,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0445,Sigatal Lama,Nabawan,116.4068733,4.4996579,141.0,7.898,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0449,Bandar Cendrawasih,LahadDatu,119.0040353,5.1534359,20.0,59.732,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0450,Bandar Kembara Sakti,Kinabatangan,119.0576001,5.3267574,15.0,33.338,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0453,Kampung Taka,Pitas,117.0366875,6.7223006,10.0,25.0065,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0455,Kampung Tolutu,Pitas,117.1108963,6.6620093,20.0,12.827,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0456,Kampung Sulakalung,Pitas,117.2073658,6.6648177,10.0,33.483,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0459,Lumiri Tengah,Nabawan,116.1882313,4.8704023,541.0,4.594,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0460,Kampung Likowon,Keningau,116.1737353,4.9472712,400.0,4.951,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0462,,Tongod,116.9434523,5.5578962,158.0,295.836,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0463,,Tongod,116.9321331,5.5532167,175.0,295.836,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0464,Entilibon,Tongod,117.0466103,5.536651,87.0,63.145,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0465,,Beluran,117.4017668,5.7577913,11.0,68.771,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0466,,Beluran,117.4367943,5.8344594,2.0,28.704,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0470,Tamparuli,Tuaran,116.2689572,6.1358087,19.0,169.1005,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0471,Kampung Sungai Obar,Sandakan,118.0747863,5.9001938,1.0,110.5845,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0472,Kampung Sunsuron,Tambunan,116.3775895,5.7427156,771.0,38.432,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0474,Kuala Sibangali,Nabawan,116.2618059,4.5115641,177.0,36.896,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0475,Simohong,Nabawan,116.2509063,4.5244609,194.0,36.896,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0476,Dubolon,Nabawan,116.2585347,4.5031205,177.0,36.896,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0477,Sakali,Nabawan,116.318066,4.5443369,167.0,43.784,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0487,Mambu,Nabawan,116.3247487,4.5395013,165.0,43.784,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0488,Salinatan,Nabawan,116.274039,4.5737515,185.0,48.119,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0490,Karampalon,Nabawan,116.2491903,4.5257517,185.0,36.896,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0492,Sigatal Baru,Nabawan,116.4080811,4.4972934,137.0,7.898,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0493,Babayasing,Nabawan,116.2767396,4.5114004,177.0,36.896,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0495,Pilanas,Nabawan,116.3201796,4.5431997,168.0,43.784,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0496,Loporon,Nabawan,116.2837855,4.5093988,170.0,36.896,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0497,Buntung,Nabawan,116.414451,4.4978305,144.0,7.898,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0499,Pulutan,Nabawan,116.4768348,5.1009999,463.0,49.669,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0500,Kampung Malampoi,Nabawan,116.4624744,4.9834634,447.0,46.532,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0501,Kalas,Nabawan,116.4392451,5.062023,465.0,69.844,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0503,Loboh,Nabawan,116.4468573,5.0583799,463.0,60.082,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0504,Anambai Baru,Nabawan,116.4150992,5.0316751,463.0,70.6685,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0505,Mangkulasing,Nabawan,116.4082824,5.066398,471.0,176.381,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0506,Loboh Baru,Nabawan,116.4027383,5.0421848,465.0,119.854,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0507,Enam,Nabawan,116.3998576,5.0456436,468.0,121.086,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0508,Sarikan A,Nabawan,116.4544907,5.0364277,458.0,57.6905,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0509,Kampung Saupi,Nabawan,116.4678111,4.9883122,454.0,42.5725,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0510,Kampung Koyoon,Nabawan,116.4992281,4.705042,291.0,15.2085,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0511,Sarikan B,Nabawan,116.4562941,5.0315794,460.0,31.396,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0512,Kabangawong,Nabawan,116.4597964,5.0185581,453.0,93.211,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0513,Tetagas,Nabawan,116.4677671,4.9952745,454.0,42.5725,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0515,Kampung Takul,Nabawan,116.4589427,4.96891,446.0,35.737,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0516,Nakuyung,Nabawan,116.4159212,5.0280363,464.0,68.262,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0533,Sinsingon,Nabawan,116.47698,4.7154608,391.0,20.0265,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0539,Kantin Tibow,Nabawan,116.7751948,4.6247278,410.0,111.439,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0540,Kampung Tataluan,Nabawan,116.6119324,4.655439,298.0,61.2115,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0544,Kuala Sumatalun,Nabawan,116.4359632,4.4794641,135.0,7.898,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0546,Mangkam,Nabawan,116.4269281,4.4853151,141.0,7.898,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0547,Kampung Sumakiuakiu,Nabawan,116.4231275,4.4892674,145.0,7.898,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0550,Kampung Sasandukon,Nabawan,116.4986324,4.4792804,169.0,69.322,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0551,Silungai,Nabawan,116.4289534,4.4802108,141.0,7.898,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0552,Simpang Pagalungan,Nabawan,116.4776807,4.4966222,172.0,76.8765,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0553,Padang,Nabawan,116.4598441,4.7138076,277.0,27.604,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0554,Sabuluh,Nabawan,116.4538711,4.6034614,164.0,0.359,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0555,Pulungan A,Nabawan,116.4472719,4.7247292,312.0,111.066,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0556,Panawan,Nabawan,116.4669454,4.7125431,282.0,24.5675,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0558,Kampung Sumolombom,Nabawan,116.4305049,4.516878,144.0,18.6675,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0559,Lotong,Nabawan,116.4513129,4.7157558,276.0,111.066,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0560,Kampung Tikandis,Nabawan,116.4525067,4.5860558,154.0,0.359,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0561,Pulungan B,Nabawan,116.4512771,4.7319888,293.0,111.066,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0562,Balaron Kecil,Nabawan,116.4331616,4.7213504,297.0,111.298,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0563,Kampung Romol Saliku Sepulut,Nabawan,116.4777631,4.6744271,303.0,34.45,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0564,Kampung Sinikaluan,Nabawan,116.4468932,4.5665416,149.0,0.359,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0565,Kuala Sabinait,Nabawan,116.4303639,4.5287441,160.0,29.437,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0566,Ligs,Nabawan,116.4449967,4.600797,308.0,0.359,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0567,Kampung Balantos,Nabawan,116.4555304,4.5857371,159.0,0.359,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0569,Kampung Sejahtera Pangkalan Salung,Nabawan,116.4552115,4.5798155,145.0,0.359,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0571,Kampung Kuala Salung,Nabawan,116.4574199,4.5794693,149.0,0.359,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0573,Kampung Kuyoh,Nabawan,116.4407408,4.536212,138.0,29.437,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0576,Kampung Nangkawangan,Nabawan,116.2429462,4.8510777,484.0,52.182,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0587,Mamagon,Keningau,116.1755479,4.8774018,557.0,4.594,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0590,Kampung Dalit Gana,Keningau,116.1193329,5.0208777,371.0,50.076,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0592,Kampung Dalit Laut,Keningau,116.1296499,5.0245621,381.0,50.076,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0595,Kalampun,Keningau,116.1252112,5.0702193,404.0,73.754,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0596,Punggol,Keningau,116.1194208,5.0625149,413.0,73.754,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0597,Kuala Aging,Keningau,116.2208995,5.0937645,347.0,32.6435,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0599,Tuaran Baru,Keningau,116.3409302,5.0954389,370.0,184.723,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0602,Malilia,Keningau,116.1997654,5.0653616,353.0,51.8295,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0603,Sakikilo,Keningau,116.2381905,5.1778704,415.0,48.551,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0605,Kampung Kebulu,Keningau,116.2315424,5.1621456,382.0,47.4075,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0607,Kobosion,Keningau,116.2404752,5.1486648,386.0,47.4075,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0608,Barasanon,Keningau,116.1825533,5.1868176,353.0,43.795,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0610,Mapila,Keningau,116.2515992,5.1648379,394.0,90.635,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0611,Mansiat,Tongod,116.5605112,5.4505072,494.0,88.6465,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0612,Tuawon,Tongod,116.5730592,5.4702116,542.0,69.559,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0614,Nandagan,Tongod,116.5207264,5.4257658,442.0,103.814,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0615,Sinaron,Tongod,116.5778618,5.4604329,505.0,69.559,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0617,Lalapakon,Tongod,116.5546504,5.448024,481.0,101.525,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0618,Mampisas,Keningau,116.4863082,5.4025431,405.0,22.052,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0620,Sosolungon,Tongod,116.5366919,5.4312578,484.0,122.476,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0623,Sinulihan Baru,Keningau,116.3884042,5.292031,383.0,34.294,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0624,Seri Aman,Keningau,116.4916394,5.3388353,374.0,27.957,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0627,Batu Lunguyan,Keningau,116.4395412,5.3433622,417.0,27.909,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0628,Dumbun,Keningau,116.4349919,5.2702003,408.0,42.684,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0629,Kindasan,Keningau,116.4157143,5.3214327,402.0,30.9165,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0630,Mantanid,Keningau,116.4347658,5.2226438,388.0,90.02,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0631,Kiulu Baru,Keningau,116.3959753,5.3030662,388.0,48.4615,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0632,Rampayan,Keningau,116.379809,5.2832779,387.0,24.4,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0633,Lipasu,Keningau,116.391897,5.1739474,369.0,51.512,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0634,Kampung Tiong,Keningau,116.3810541,5.2882954,387.0,24.4,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0635,Poring Simbuan,Keningau,116.4309013,5.249051,390.0,92.1485,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0636,Mailu,Keningau,116.3911099,5.1225003,376.0,87.969,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0637,Kabuan,Keningau,116.3999474,5.1920657,386.0,27.371,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0638,Kabatang Baru,Keningau,116.3734017,5.2601226,374.0,58.469,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0639,Kipaliu,Keningau,116.3756262,5.2593984,372.0,58.469,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0640,Rancangan Belia Tiulon,Keningau,116.3997097,5.1615888,371.0,53.7145,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0643,Kawakahan,Keningau,116.4096448,5.1975798,388.0,23.2375,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0644,Binuou Ulu,Keningau,116.405383,5.1624431,372.0,53.7145,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0645,Pulutan,Keningau,116.4086948,5.2649882,393.0,25.683,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0646,Mototou,Keningau,116.4152898,5.2071051,382.0,20.1305,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0648,Sinar Harapan,Keningau,116.3564896,5.1481891,368.0,15.515,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0650,Binuou Tengah,Keningau,116.3648085,5.1626227,365.0,21.424,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0651,Mustika,Keningau,116.3678933,5.1459778,363.0,39.1355,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0652,Meserui,Keningau,116.3846677,5.173388,369.0,53.7145,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0653,Binuou Laut,Keningau,116.3188922,5.1415185,357.0,41.3125,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0654,Karanaan Baru,Keningau,116.3337432,5.1518875,356.0,29.552,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0655,Ambual,Keningau,116.2302142,5.3736023,298.0,27.2885,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0656,Panagatan Laut,Keningau,116.1995303,5.3409493,285.0,45.831,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0657,Bomboi,Keningau,116.1897857,5.3356719,286.0,56.432,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0658,Panagatan Ulu,Keningau,116.2097255,5.3467074,282.0,32.918,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0659,Marapok,Keningau,116.2340885,5.3797614,294.0,24.448,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0660,Kasugui,Keningau,116.2129939,5.3629756,284.0,23.947,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0661,Magatang,Keningau,116.219394,5.3621802,284.0,32.841,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0662,Pantai Baru,Keningau,116.2269125,5.3844904,294.0,25.993,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0663,Panui,Keningau,116.240027,5.3891572,302.0,24.7315,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0664,Pekan Baru,Keningau,116.2578834,5.4542071,349.0,35.0155,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0665,Linsudan,Keningau,116.2561088,5.4183322,320.0,30.8255,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0666,Pangas Ulu,Keningau,116.3020496,5.4751335,410.0,149.444,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0667,Mararagang,Keningau,116.2752866,5.4797716,413.0,54.708,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0668,Sungoi,Keningau,116.2702798,5.4489856,318.0,27.689,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0669,Mailo,Keningau,116.2381822,5.3997077,301.0,22.163,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0670,Takad,Keningau,116.2654893,5.4728503,361.0,47.861,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0671,Luanti Baru,Keningau,116.2475115,5.4044747,312.0,19.108,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0672,Sodomon,Keningau,116.235405,5.3968478,299.0,28.387,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0673,Marasak,Keningau,116.2424715,5.3940265,309.0,28.7665,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0674,Kampung Kapayan Baru,Keningau,116.2688726,5.4455835,325.0,28.288,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0675,Samangkok,Keningau,116.2659994,5.4585487,334.0,40.632,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0676,Kapayan Lama,Keningau,116.267259,5.4464732,321.0,28.288,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0677,Nuntunan,Keningau,116.2690947,5.4816186,356.0,52.869,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0678,Gasabon,Keningau,116.2733047,5.4582441,330.0,38.7115,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0679,Liau Laut,Keningau,116.2334792,5.4190511,320.0,41.449,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0680,Pangas Laut,Keningau,116.2811304,5.4623131,341.0,45.081,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0681,Umpason,Keningau,116.2803596,5.4719211,378.0,52.306,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0682,Kilambang,Keningau,116.2391342,5.426731,341.0,48.699,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0683,Ritting,Keningau,116.2678351,5.4676301,351.0,46.385,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0684,Ranggom,Keningau,116.2639664,5.455013,333.0,36.791,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0685,Kirokot Baru,Keningau,116.2568816,5.451431,346.0,42.4975,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0686,Tohan Baru,Keningau,116.2497626,5.4356626,343.0,36.004,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0687,Lambanga,Keningau,116.2570889,5.4457484,342.0,34.622,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0688,Pagansangan,Keningau,116.2278076,5.4307567,341.0,37.4365,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0689,Tagai,Keningau,116.227837,5.4176834,336.0,41.449,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0690,Nukakatan Baru,Keningau,116.359591,5.1964629,364.0,29.424,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0693,Bonod Batu 7,Keningau,116.344786,5.2181166,375.0,30.2115,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0696,Sondukut Baru,Keningau,116.20469,5.233424,474.0,12.2715,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0697,Delayan Baru,Keningau,116.3674556,5.2419511,380.0,34.2025,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0699,Terolobou Baru,Keningau,116.3504924,5.1807118,362.0,29.424,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0700,Kionsom Baru,Keningau,116.3720737,5.2314063,374.0,14.203,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0701,Johan Jaya,Keningau,116.3527253,5.1863236,362.0,30.2115,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0702,Delayan Lama,Keningau,116.358671,5.2312481,371.0,39.563,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0703,Tanggulon Jaya,Keningau,116.3539969,5.2413062,391.0,34.2025,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0704,Papar Baru,Keningau,116.3375423,5.1940724,363.0,31.402,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0705,Bunang Laut,Keningau,116.3223902,5.1890418,370.0,54.7805,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0706,Suan,Keningau,116.163248,5.254836,282.0,39.42,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0707,Kukub,Keningau,116.0350168,5.3012077,328.0,81.2385,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0708,Libodon Baru,Keningau,116.1393509,5.2780362,402.0,17.681,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0709,Biah Batu 4,Keningau,116.1619546,5.2829698,299.0,153.6685,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0710,Singgah Mata,Keningau,116.1251851,5.2703372,266.0,28.538,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0712,Sigapon,Keningau,116.0586064,5.2658182,571.0,22.494,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0713,Biah Tengah,Keningau,116.1624208,5.2798188,279.0,153.6685,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0714,Damai,Keningau,116.0623524,5.3047058,554.0,45.6285,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0715,Biah Skim,Keningau,116.1968127,5.2806717,303.0,18.881,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0716,Meninpir Lama,Keningau,116.0891985,5.3158088,472.0,44.921,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0717,Baitah,Keningau,116.1951081,5.2992524,334.0,61.772,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0719,Titimbangon,Keningau,116.06291,5.3363217,862.0,29.058,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0720,Ansip Tengah,Keningau,116.1215895,5.2787276,248.0,32.024,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0721,Pagalungan,Keningau,116.1196595,5.2778914,246.0,30.281,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0723,Ansip Laut,Keningau,116.131931,5.2759528,334.0,26.191,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0724,Kitong,Keningau,116.0926618,5.3403046,467.0,19.798,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0725,Mempulut Kolobot,Keningau,116.1311946,5.2523622,299.0,34.649,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0726,Rimbayan,Keningau,116.1040048,5.265156,279.0,21.231,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0732,Mempulut,Keningau,116.1385903,5.2485711,265.0,31.352,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0733,Mongitom Baru,Keningau,116.2000632,5.472185,478.0,38.7045,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0734,Belinin,Keningau,116.0760473,5.1067837,466.0,36.65,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0735,Tonobon Baru,Keningau,116.2149548,5.4612709,421.0,45.4655,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0736,Seri Lalang,Keningau,116.1592878,5.2815115,288.0,71.753,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0740,Kuala Punteh,Keningau,116.1437518,5.2381576,266.0,37.946,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0742,Lubong,Keningau,116.0663811,5.3252927,598.0,37.502,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0743,Mantatap,Keningau,116.0939588,5.3048064,430.0,62.961,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0744,Suan Ulu,Keningau,116.1765327,5.2605311,342.0,44.753,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0746,Keritan Laut,Keningau,116.0470604,5.3050012,347.0,72.596,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0747,Membulu,Keningau,116.1357927,5.2383302,267.0,53.443,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0748,Inandung,Keningau,116.0714289,5.06463,450.0,65.8625,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0750,Kampung Malidang,Keningau,116.2115667,5.4792463,510.0,38.994,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0751,Meninpir,Keningau,116.0864757,5.3175429,472.0,44.921,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0752,Alab,Keningau,116.0349977,5.2886435,298.0,26.201,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0753,Kodop Baru,Keningau,116.2108043,5.4643992,439.0,38.994,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0754,Bunga Raya,Keningau,116.2123797,5.4632208,437.0,41.4735,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0755,Naaba,Keningau,116.2091656,5.4692707,445.0,41.4735,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0756,Kumawanan,Keningau,116.2061383,5.4159956,329.0,53.7375,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0757,Bandukan Lama,Keningau,116.1633328,5.4407769,375.0,75.095,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0758,Kampung Baru,Keningau,116.1878393,5.4385565,383.0,159.456,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0759,Liawan Ulu,Keningau,116.1341623,5.3937999,443.0,76.507,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0760,Bunsit,Keningau,116.1695534,5.4347935,381.0,125.1595,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0761,Kampung Masak,Keningau,116.1403108,5.3462317,314.0,151.877,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0762,Kampung Patikang Laut,Keningau,116.138969,5.337168,315.0,172.043,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0763,Sandapak,Keningau,116.1855543,5.4130498,331.0,100.057,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0764,Kampung Skim Pamalan,Keningau,116.1619016,5.3861206,353.0,79.811,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0765,Kampung Tudan Baru,Keningau,116.1797005,5.3781619,312.0,105.6805,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0766,Antolob,Keningau,116.1679577,5.4292397,390.0,129.5005,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0767,Bariawa Ulu,Keningau,116.1283877,5.3801016,488.0,39.014,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0768,Kampung Agudon,Keningau,116.1209827,5.3606088,384.0,122.7325,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0769,Berungis,Keningau,116.1968184,5.4328911,371.0,165.538,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0770,Tangkungon,Keningau,116.1788536,5.4283273,348.0,159.1255,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0771,Bandukan Baru,Keningau,116.1767865,5.4064258,338.0,59.784,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0772,Bingkor Lama,Keningau,116.1990116,5.4102348,322.0,60.8855,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0773,Sasaie,Keningau,116.1865803,5.3984425,326.0,60.8855,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0774,Tuntumulud,Keningau,116.1779527,5.4168717,345.0,82.888,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0775,Kampung Indah,Keningau,116.119851,5.3928004,696.0,41.51,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0776,Minansut,Keningau,116.183479,5.4231379,337.0,121.394,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0777,Buang Sayang,Keningau,116.1820449,5.4159915,338.0,92.312,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0778,Linsosod,Keningau,116.1417781,5.3908583,434.0,76.728,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0779,Kampung Singga Mata,Keningau,116.1828558,5.3825626,311.0,93.398,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0780,Kampung Patikang Ulu,Keningau,116.129265,5.3436045,340.0,99.769,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0781,Kampung Bulu Silou,Keningau,116.132852,5.3495657,331.0,149.075,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0792,Mongorimot,Tongod,116.5639703,5.454468,486.0,75.768,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0796,Batu 11,Keningau,116.1946742,5.2210728,488.0,14.424,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0797,Kuala Biah,Keningau,116.1462074,5.2616082,272.0,38.683,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0798,Batu 12,Keningau,116.1942804,5.2096144,480.0,15.619,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0799,Naukab,Keningau,116.2312844,5.5453248,555.0,78.328,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0800,Kitou,Tambunan,116.2746708,5.5195286,515.0,45.1505,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0801,Tiga,Keningau,116.217958,5.5641094,603.0,94.594,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0803,Bagian,Tambunan,116.2851388,5.5282671,737.0,45.1505,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0804,Sri Menanti,Tambunan,116.2542252,5.5431534,710.0,37.925,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0805,Rompon Scheme II,Tambunan,116.2810617,5.5411224,757.0,31.888,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0808,Tenderung Gayo,Keningau,116.196676,5.579333,975.0,76.3195,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0809,Tuad,Keningau,116.2345707,5.5474574,545.0,70.7465,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0813,Purutan Ulu,Tambunan,116.2419076,5.5584849,822.0,82.7985,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0814,Borolungan,Tambunan,116.2901683,5.6053843,520.0,43.978,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0815,Tikolod Ulu,Tambunan,116.2778346,5.6394475,596.0,123.119,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0816,Purutan,Tambunan,116.3007588,5.5883975,688.0,33.832,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0817,Lotong Ulu,Tambunan,116.3163541,5.6305007,554.0,42.081,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0818,Purutan Laut,Tambunan,116.288603,5.5814325,664.0,31.941,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0819,Tikolod,Tambunan,116.2959576,5.6206223,544.0,42.081,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0820,Kuala Monsok,Tambunan,116.3212195,5.5897802,468.0,33.832,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0822,Ligs Sosopon,Tambunan,116.3286917,5.602903,639.0,61.857,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0823,Monsorulung,Tambunan,116.3074828,5.602858,482.0,42.081,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0824,Monsokito,Tambunan,116.3491459,5.6047413,518.0,96.968,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0825,Pupuluton,Tambunan,116.3264611,5.6159659,500.0,45.52,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0826,Mangkataie,Tambunan,116.3045859,5.6363052,581.0,30.9755,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0828,Kiawayan,Tambunan,116.3263736,5.634058,541.0,41.7035,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0829,Tiong,Ranau,116.5548544,5.8282254,1143.0,150.656,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0831,Tariwad,Tambunan,116.5365456,5.8661453,675.0,50.19,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0832,Tontolob Liwan,Tambunan,116.5296853,5.8668869,665.0,13.934,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0833,Tuhan,Tambunan,116.4834597,5.855436,801.0,46.6065,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0834,Garas,Tambunan,116.4973945,5.8713255,809.0,35.9835,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0835,Tinompok Liwan,Tambunan,116.508647,5.857918,861.0,40.225,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0836,Ulu Kumawanan,Tambunan,116.4580331,5.8566688,898.0,52.162,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0837,Pialungan,Ranau,116.5478328,5.8500234,836.0,87.496,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0839,Tiang 1,Tambunan,116.4734878,5.7916927,938.0,90.36,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0840,Punti Ngabai,Tambunan,116.4818104,5.8053237,964.0,72.873,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0841,Kodop Baru,Ranau,116.7356666,5.6978502,632.0,1.206,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0843,Kirokot,Tambunan,116.4918697,5.8232124,770.0,47.7855,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0845,Rumuyuh,Tambunan,116.5007533,5.8723062,808.0,23.252,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0846,Minonun,Tambunan,116.4696292,5.7986386,927.0,45.546,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0847,Taba,Ranau,116.8609613,5.6917486,296.0,40.2295,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0848,Tonop,Tambunan,116.4760797,5.8093182,984.0,63.552,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0849,Tampasak Liwan,Tambunan,116.5019652,5.8087207,922.0,63.552,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0850,Nunuk Ragang,Ranau,116.8635256,5.7147142,205.0,28.065,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0851,Maringkan Baru,Ranau,116.8553777,5.7240714,221.0,28.065,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0852,Kumawanan,Tambunan,116.4741407,5.855142,850.0,52.162,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0854,Pahu,Tambunan,116.4912239,5.8545828,804.0,41.843,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0856,Bunakon,Ranau,116.811607,5.7919059,213.0,18.067,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0857,Seborong,Ranau,116.8300843,5.7523675,204.0,25.13,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0858,Sagindai Lama,Ranau,116.818188,5.834748,243.0,24.736,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0860,Bitoon,Ranau,116.8284711,5.6987582,198.0,30.076,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0861,Tinanom,Ranau,116.7206049,5.6823073,288.0,1.775,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0862,Matupang,Ranau,116.8189854,5.797142,215.0,21.011,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0863,Wakaku,Ranau,116.797663,5.6970714,319.0,38.9815,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0864,Muruk,Ranau,116.7545236,5.9551434,363.0,41.8365,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0865,Bolisuk Baru,Ranau,116.8501607,5.7273222,218.0,28.065,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0866,Toporoh,Ranau,116.8265456,5.7303973,304.0,33.71,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0867,Paginatan,Ranau,116.822488,5.7678718,210.0,23.636,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0868,Takurik,Ranau,116.6733088,5.9588355,520.0,65.202,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0870,Minihas,Ranau,116.8179208,5.788846,209.0,22.3235,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0871,Segindai Baru,Ranau,116.8141675,5.8445935,234.0,24.736,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0872,Nalapak,Ranau,116.7797184,5.9384793,366.0,25.0595,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0873,Kinapulidan,Ranau,116.682421,5.9170408,480.0,89.208,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0874,Silou,Ranau,116.673658,5.9288172,480.0,93.152,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0875,Torikon,Ranau,116.8143039,5.7984346,230.0,20.659,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0876,Lungkidau,Ranau,116.8137508,5.768832,209.0,12.181,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0879,Kigiok,Ranau,116.6766684,5.913365,489.0,93.152,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0881,Rangko,Ranau,116.6650711,5.943377,534.0,97.7085,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0882,Kandawayon,Ranau,116.6495962,5.923018,649.0,120.758,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0883,Kampung Kimolohing,Ranau,116.6627282,5.9568254,539.0,79.248,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0885,Kituntul Baru,Ranau,116.6798494,5.9273279,470.0,79.424,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0886,Luanti Baru,Ranau,116.7695968,5.9452917,342.0,30.261,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0887,Rugading,Ranau,116.6933878,5.89555,608.0,103.689,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0888,Namaus,Ranau,117.0066397,6.1128722,88.0,161.8735,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0889,Lipoi,Ranau,116.6844362,5.919847,465.0,84.7295,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0890,Matan,Ranau,116.6682464,5.9394339,520.0,100.794,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0891,Puru-Puru,Ranau,116.6734967,5.9532487,505.0,75.35,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0892,Kituntul Lama,Ranau,116.6877712,5.9324806,466.0,68.533,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0893,Kampung Rapak,Ranau,116.6774517,5.9598816,505.0,61.761,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0894,Tiang Baru,Ranau,116.6593729,5.9343748,558.0,107.386,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0895,Pasir Putih,Ranau,116.6589887,5.9379386,553.0,100.794,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0896,Lingkudau,Ranau,116.6721673,5.9484432,516.0,82.389,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0897,Paka 2,Ranau,116.6684622,5.9474853,533.0,82.571,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0898,Kologon,Ranau,116.6567443,5.9416958,626.0,113.65,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0899,Giman,Ranau,116.6632738,5.9619833,651.0,74.2605,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0900,Gusi,Ranau,117.0953603,6.10603,60.0,100.991,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0902,Pugi,Ranau,116.9159277,6.2108327,223.0,151.4915,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0903,Manikulau,Ranau,116.9440347,6.070614,104.0,136.692,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0904,Kiwakau,Ranau,117.0084853,6.116152,86.0,161.8735,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0905,Pamaitan,Ranau,116.9879866,6.0959129,98.0,85.282,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0906,Tundangon,Ranau,117.0372115,6.1071192,83.0,109.705,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0907,Karagasan,Ranau,117.0094102,6.114858,75.0,129.836,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0908,Botung,Ranau,116.9956752,6.1078613,130.0,129.836,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0909,Lunsiu,Ranau,116.9742026,6.1041794,107.0,85.282,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0910,Pinitudahan,Ranau,116.9682867,6.1001746,114.0,85.282,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0912,Puralai,Ranau,116.9574731,6.06162,170.0,136.692,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0914,Meridi,Ranau,116.9734444,6.0951114,88.0,82.127,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0915,Lobou Baru,Ranau,116.863994,6.126042,160.0,21.818,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0916,Paka,Ranau,116.9409276,6.0582367,105.0,136.692,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0917,Pupuan,Ranau,116.972556,6.0789621,86.0,88.437,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0918,Kilanas,Ranau,116.9474774,6.0739994,117.0,136.692,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0919,Tagibang,Ranau,116.936323,6.2312313,244.0,144.9045,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0920,Giring,Ranau,116.9494928,6.0640973,100.0,136.692,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0921,Molinsau,Ranau,116.9520933,6.163694,113.0,46.3835,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0922,Kawiyan,Ranau,116.9433461,6.0642153,94.0,136.692,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0924,Linapasan,Ranau,116.9633332,6.171814,124.0,53.0465,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0925,Nawanon,Ranau,116.9051814,6.2019449,180.0,161.854,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0926,Wayan,Ranau,116.9494127,6.141252,125.0,77.87,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0927,Mokodou,Ranau,116.9328793,6.1576467,123.0,77.87,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0928,Tinutuan,Ranau,116.8182326,6.1095094,218.0,156.145,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0929,Tanid,Ranau,116.9462711,6.1617573,121.0,46.3835,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0930,Daramakan,Ranau,116.8346982,6.1620568,177.0,91.889,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0931,Timbua B,Ranau,116.863674,6.1160327,165.0,21.818,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0934,Lobou Timbua,Ranau,116.8496786,6.0977074,172.0,70.192,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0936,Lobou Kiyip,Ranau,116.89535,6.1899187,166.0,171.44,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0938,Togop Darat,Ranau,116.8111433,6.1655933,199.0,115.142,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0939,Kantas,Ranau,116.9017807,6.211838,226.0,161.854,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0940,Pinawantai,Ranau,116.7789947,6.15882,271.0,74.037,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0941,Tarawas,Ranau,116.7986317,6.119726,263.0,206.3515,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0942,Morungin 1,Ranau,116.8755335,6.1275936,147.0,9.791,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0943,Monggis,Ranau,116.7656937,6.20053,300.0,81.411,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0944,Timbua A,Ranau,116.8612539,6.1141163,168.0,21.818,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0945,Morungin 2,Ranau,116.8671691,6.133676,152.0,13.051,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0946,Perancangan,Ranau,116.7974408,6.0692593,254.0,28.066,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0949,Lutut,Ranau,116.7930835,6.006978,255.0,149.4875,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0950,Langsat,Ranau,116.7978462,6.0481787,225.0,37.197,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0951,Takutan,Ranau,116.7732327,6.0886156,292.0,48.459,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0952,Togis,Ranau,116.7758169,6.0724026,253.0,28.957,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0953,Kirokot,Ranau,116.8330692,6.0626507,259.0,20.278,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0954,Singgaron Baru,Ranau,116.7983156,6.02306,245.0,179.188,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0955,Waluhu,Ranau,116.7998473,5.98922,264.0,179.188,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0956,Bongkud,Ranau,116.7563363,6.0214701,318.0,73.744,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0957,Dobut,Ranau,116.8001574,6.0633286,259.0,29.7345,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0958,Lasing,Ranau,116.6782755,5.9641354,512.0,52.368,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0959,Rondogung Baru,Ranau,116.7379799,6.016495,349.0,63.6895,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0960,Nampasan Baru,Ranau,116.7251583,6.0293568,442.0,57.137,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0961,Nopung 2,Ranau,116.7574738,6.044906,313.0,51.725,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0962,Narawang,Ranau,116.7805573,6.0064741,271.0,161.3925,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0963,Kokob,Ranau,116.7029234,5.9741689,544.0,24.26,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0964,Namaus,Ranau,116.7599998,6.0185567,306.0,76.925,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0965,Nopung 1,Ranau,116.7431299,6.0459598,328.0,45.791,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0966,Simpang Poring,Ranau,116.7371689,6.0247047,334.0,62.32,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0967,Tanah Merah,Ranau,116.6891078,5.9803374,541.0,21.91,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0968,Lohan Ulu,Ranau,116.7027903,5.9946501,525.0,24.153,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0969,Kilimu,Ranau,116.6819428,5.9799267,584.0,24.151,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0970,Kinasaraban Baru,Ranau,116.7284581,6.0010386,404.0,41.049,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0971,Koligan,Ranau,116.7244884,5.9984402,425.0,37.538,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0972,Sosopon,Ranau,116.7268438,6.0157129,382.0,55.285,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0973,Marakau,Ranau,116.6861618,5.9497387,486.0,63.6765,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0974,Lohan 1,Ranau,116.7290995,6.0048282,395.0,46.0475,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0975,Minihas,Ranau,116.7348747,6.0014372,380.0,57.137,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0976,Bahab,Ranau,116.6959888,5.9602901,500.0,41.77,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0977,Silad,Ranau,116.7445306,6.0029139,354.0,65.755,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0978,Sinorut,Ranau,116.6712662,5.9631933,553.0,69.6555,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0979,Tudangan,Ranau,116.7028808,5.9698134,553.0,21.623,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0980,Lukapon,Ranau,116.6806532,5.9708827,546.0,37.7665,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0981,Libang,Ranau,116.6945286,5.958544,503.0,44.8955,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0982,Togudon Baru,Ranau,116.6774701,5.9628827,516.0,52.368,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0983,Kauluan,Ranau,116.5975738,5.9873179,1288.0,22.025,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0984,Kampung Dumpiring Atas,Ranau,116.5734337,5.9805142,1300.0,30.838,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0985,Kampung Desa Aman,Ranau,116.5703944,5.9863327,1304.0,24.937,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0986,Gana-Gana,Ranau,116.6532332,5.8952062,470.0,22.418,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0987,Suminimpod,Ranau,116.6426676,5.8869947,834.0,18.808,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0988,Mumpoit,Ranau,116.5672761,5.8670441,890.0,36.7275,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0989,Kampung Mesilau,Ranau,116.5971418,6.0127686,1480.0,28.435,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0990,Monguwou,Ranau,116.650652,5.9164702,580.0,73.619,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0991,Kampung Lembah Permai,Ranau,116.5756531,5.9917774,1221.0,24.926,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0992,Kampung Kinasaraban,Ranau,116.558964,5.9813703,1381.0,30.838,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0993,Somuru,Ranau,116.5955176,5.9610547,1145.0,32.626,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0994,Kampung Dumpiring Bawah,Ranau,116.5716004,5.9795071,1253.0,29.689,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0995,Kampung Cinta Mata,Ranau,116.5815896,6.0040373,1327.0,24.1315,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0996,Kampung Sinisian,Ranau,116.5780289,5.9827035,1284.0,30.653,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0997,Mohimboyon Lama,Ranau,116.5742441,5.9490421,944.0,47.193,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0998,Kampung Nampasan Lama,Ranau,116.6548254,5.87496,732.0,39.198,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1000,Mohimboyon Baru,Ranau,116.5879609,5.942872,814.0,40.735,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1002,Gondohon,Ranau,116.5294,5.9726888,1058.0,34.208,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1003,Pinausuk,Ranau,116.6005266,5.9715748,1073.0,28.725,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1004,Bundu Tuhan Sokid,Ranau,116.5288336,5.9855495,1209.0,30.3175,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1005,Bundu Tuhan Sibah,Ranau,116.5296757,5.9767187,1035.0,34.1195,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1006,Tinompok,Ranau,116.5315391,6.0042032,1510.0,30.094,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1007,Kampung Kinandusan,Ranau,116.5822124,5.9655513,1223.0,32.866,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1008,Lagkau,Ranau,116.578317,5.864768,891.0,10.3225,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1010,Naradau,Ranau,116.610333,5.9699241,1009.0,27.148,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1011,Tungou,Tambunan,116.5484932,5.8686007,823.0,50.19,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1015,Narambai,Ranau,116.5993356,5.868776,843.0,9.895,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1016,Kopongian,Ranau,116.6364847,5.884974,932.0,10.7785,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1018,Poropot,Ranau,116.6024693,5.8939654,701.0,16.2525,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1019,Komburongoh,Ranau,116.5523936,5.9148989,830.0,18.924,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1020,Rondogung,Ranau,116.5840241,5.8730698,873.0,10.3225,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1021,Kosisingon,Ranau,116.5708248,5.8880026,728.0,22.976,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1022,Karanaan,Ranau,116.5383608,5.9289554,746.0,18.924,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1023,Soyod,Ranau,116.5524134,5.9285252,780.0,18.924,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1024,Pahu,Ranau,116.5545268,5.9428587,1063.0,26.2775,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1025,Mogoho,Ranau,116.5622378,5.9272681,822.0,20.9925,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1026,Maukab,Ranau,116.5572532,5.898538,950.0,22.3385,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1027,Pangasaan,Ranau,116.6025198,5.923704,913.0,32.588,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1028,Tudan,Ranau,116.4894282,5.9358347,1277.0,7.246,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1029,Kiwawoi,Ranau,116.5957405,5.9051146,687.0,21.2995,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1030,Piasau,Ranau,116.5389621,5.9197567,1003.0,18.346,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1031,Sosondoton,Ranau,116.5094692,5.9339827,1123.0,7.246,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1032,Ratau,Ranau,116.5201453,5.9432846,945.0,26.195,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1033,Nagaya,Ranau,116.4979724,5.9200367,1164.0,5.087,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1034,Sumalang,Ranau,116.5573592,5.9048187,1041.0,29.643,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1035,Sarapong,Ranau,116.6376991,5.9159618,605.0,10.253,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1036,Noluoh,Ranau,116.6076652,5.9124034,768.0,23.6335,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1037,Liposu Baru,Ranau,116.6325077,5.9781873,932.0,8.783,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1038,Waang,Ranau,116.6017936,5.9222387,893.0,25.835,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1039,Tambiau,Ranau,116.6212631,5.9216559,752.0,25.835,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1040,Liposu Lama,Ranau,116.6271793,5.9776888,900.0,8.596,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1041,Ruhukon,Ranau,116.6317392,5.9616214,802.0,19.999,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1042,Batu 5,Ranau,116.6312945,5.9490482,789.0,19.259,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1043,Purak Pogis,Ranau,116.6275559,5.9360702,674.0,26.504,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1044,Koporingan Lama,Ranau,116.6218703,5.9398281,791.0,24.5965,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1045,Tinatasan,Ranau,116.500596,5.9494673,1074.0,6.1665,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1046,Koporingan Baru,Ranau,116.6217402,5.9431707,844.0,22.902,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1047,Tamalang,Ranau,116.6315073,5.967166,808.0,19.999,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1048,Paka 1,Ranau,116.6394034,5.9577252,660.0,19.999,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1049,Kibbas,Ranau,116.6327509,5.945148,800.0,21.4505,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1050,Pulutan,Ranau,116.5420322,5.9480847,1117.0,26.2775,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1052,Toboh Lama,Ranau,116.5001558,5.9462983,1026.0,6.1665,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1053,Togudon Lama,Ranau,116.5351745,5.9458883,1154.0,26.2775,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1054,Himbaan,Ranau,116.5476671,5.9577048,1252.0,34.031,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1055,Binanding,Nabawan,116.424063,4.502049,162.0,7.898,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1059,Piowou,Nabawan,116.3081253,4.5261095,168.0,43.784,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1060,Kampung Muhibbah,Keningau,116.1423074,5.3309455,296.0,153.3985,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1064,Tulir,Nabawan,116.2857169,4.5600478,178.0,48.119,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1066,Kampung Tuarid Taud,Keningau,116.181591,5.3458817,271.0,99.213,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1067,Kampung Toboh Baru,Keningau,116.186841,5.3697845,301.0,100.244,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1068,Kampung Bakiau,Keningau,116.1502831,5.3176349,260.0,136.223,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1069,Kampung Baginda,Keningau,116.205764,5.3781368,294.0,53.078,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1070,Kampung Awas Awas,Keningau,116.2108103,5.4027902,306.0,33.309,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1071,Kampung Banjar,Keningau,116.139442,5.3129571,262.0,103.1,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1072,Kampung Baitah,Keningau,116.2019406,5.3003001,330.0,72.2335,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1073,Kampung Tiulon,Keningau,116.3860528,5.1234242,379.0,85.283,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1074,Kampung Babason,Keningau,116.2829209,5.1381847,355.0,52.024,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1076,Skim Bumburing,Keningau,116.2331743,5.4127509,311.0,27.598,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1078,Kampung Tigot,Keningau,116.1956928,5.3655019,288.0,87.4265,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1079,Kampung Tetiku Pamalan,Keningau,116.1685997,5.3832728,324.0,82.8005,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1080,Kampung Toboh Laut,Keningau,116.186148,5.3493578,278.0,84.715,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1081,Kampung Samalang,Keningau,116.1512737,5.3700486,366.0,104.14,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1083,Kampung Tanah Merah,Keningau,116.1526828,5.3975112,401.0,63.041,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1091,Liu,Pitas,117.0956768,6.9036909,11.0,42.4025,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1092,Polod 1,Pitas,117.1804086,6.7793551,16.0,47.566,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1093,Kapok,Pitas,117.1101539,6.9152911,11.0,33.309,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1094,Polod 2,Pitas,117.1779827,6.7857478,20.0,47.566,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1097,Liu Darat,Pitas,117.0938266,6.9042192,29.0,42.4025,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1102,Bolouh,Pitas,117.1625517,6.8333174,15.0,46.396,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1103,Ungkup,Pitas,117.1323231,6.8362972,9.0,45.963,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1106,Mangkapon Radap,Pitas,117.1860354,6.763685,13.0,58.232,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1110,Maringgan,Pitas,117.1951715,6.945283,15.0,128.643,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1114,Mangkapon Darat,Pitas,117.1809015,6.7677394,30.0,47.566,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1115,Bawing,Pitas,117.1150191,6.9391582,5.0,95.123,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1116,Kodong,Pitas,117.0945086,6.8921416,19.0,68.1605,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1117,Jambu,Pitas,117.0976262,6.8692151,47.0,14.9,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1118,Gumpa,Pitas,117.108642,6.8584471,21.0,14.9,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1119,Pungitan Polod,Pitas,117.179138,6.7816121,19.0,47.566,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1120,Lukan,Pitas,117.1725364,6.7771882,16.0,47.566,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1121,Mangkapon Laut,Pitas,117.1866501,6.7660043,13.0,86.04,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1122,Lumat,Beaufort,115.7447944,5.4027212,14.0,32.098,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1127,Kinarut,Papar,116.0431553,5.8244279,10.0,190.7475,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1128,Kampung Mapat,Beluran,117.2958457,6.5922825,19.0,193.5095,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1130,Kampung Maidan,Beluran,117.3195892,6.5793823,17.0,164.434,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1133,Kampung Kaung Lapai,Tuaran,116.4384247,6.0807034,794.0,12.257,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1135,Wallace Bay,Tawau,117.6629814,4.2441691,22.0,92.392,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1136,Solibog,Tambunan,116.3369158,5.6235719,520.0,41.6815,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1137,Nupakan,Tambunan,116.4716169,5.6435725,876.0,10.528,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1138,Lalapakon,Tambunan,116.3473513,5.6357365,531.0,37.879,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1139,Kampung Air,KotaKinabalu,116.0731772,5.9779635,12.0,210.1005,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1140,Likas,KotaKinabalu,116.1023998,5.9876497,9.0,222.048,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1141,Serudong Laut,Tawau,117.4338135,4.2530081,6.0,72.805,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1142,Kampung Penampang Proper,Penampang,116.1044142,5.9053514,14.0,230.071,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1143,Sembulan,KotaKinabalu,116.0672468,5.9583428,6.0,224.4295,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1144,Kampung Seng Kee,Sandakan,118.0917576,5.8318673,3.0,210.473,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1145,Kampung Garinono,Sandakan,117.8167543,5.8244287,56.0,34.9495,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1146,Kampung Iran,Beluran,117.5604771,5.8808116,23.0,52.0395,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1147,Kampung Lintuhun,Tambunan,116.3657838,5.6723615,580.0,42.746,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1148,Kampung Timbou,Tambunan,116.3762806,5.6971603,614.0,34.769,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1149,Kampung Papar,Tambunan,116.3609761,5.6770722,590.0,42.746,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1150,Kampung Tombotuon,Tambunan,116.4038244,5.7241723,648.0,40.429,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1151,Kampung Kipaku,Tambunan,116.4067157,5.7396865,666.0,57.034,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1152,Kampung Pantai,Tambunan,116.3969058,5.7268046,668.0,42.551,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1153,Kampung Jawa Uloi,Tenom,115.9560133,5.1444047,194.0,36.387,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1154,Kampung Bunut,Tenom,115.9511845,5.1227783,179.0,43.003,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1155,Kampung Mantailang,Tenom,115.9586872,5.1692031,233.0,27.303,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1156,Kampung Masjid Keningau,Keningau,116.1524864,5.3308276,280.0,176.004,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1157,Kampung Limbawan,Keningau,116.1528422,5.3283971,270.0,171.093,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1158,Kampung Mottou,Keningau,116.1463312,5.3405593,300.0,180.654,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1159,Kampung Sondoton Baru,Keningau,116.1696882,5.3668672,329.0,119.901,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1160,Kampung Istimewa,Sandakan,118.0531029,5.8077405,4.0,177.614,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1161,Kampung Gas Baru,Sandakan,118.033886,5.7933484,0.0,196.248,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1162,Kampung Gas,Sandakan,118.0351893,5.7962612,4.0,196.248,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1163,Kampung Desa Permai,Sandakan,118.0381552,5.7991646,9.0,203.507,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1164,Kampung Tabah Baru,Sandakan,118.0694752,5.8070579,-1.0,157.6135,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1165,Kampung Karamunting Lama,Sandakan,118.0742504,5.8111522,5.0,137.613,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1166,Park Residence,Penampang,116.0904479,5.8733347,11.0,232.059,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1167,Sugud,Penampang,116.1000824,5.8759415,10.0,237.862,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1168,Bukit Padang,KotaKinabalu,116.1080861,5.9547841,19.0,202.161,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1169,Minintod,Penampang,116.121068,5.9437289,19.0,169.645,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1170,Api-Api Centre,KotaKinabalu,116.0692906,5.9751759,18.0,208.9715,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1171,Lido,Penampang,116.0673379,5.9358749,10.0,231.39,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1172,Kepayan,Penampang,116.0585403,5.9238375,7.0,208.768,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1173,Lintas,KotaKinabalu,116.0786247,5.9429606,4.0,223.11,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1174,Kolombong,KotaKinabalu,116.118493,5.9832534,5.0,220.971,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1175,Karamunsing,KotaKinabalu,116.074655,5.9708543,20.0,208.145,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1176,Damai,KotaKinabalu,116.0903835,5.9697232,32.0,219.791,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1177,Luyang,KotaKinabalu,116.0896432,5.9607598,9.0,220.114,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1178,Kampung Setinggan Sembulan,KotaKinabalu,116.0680273,5.9672262,2.0,219.679,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1179,Kampung Sembulan Lama,KotaKinabalu,116.0687301,5.966714,2.0,217.895,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1180,Bundusan,KotaKinabalu,116.1034512,5.9469302,16.0,216.866,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1181,Kampung Forest,Sandakan,118.1136084,5.8685825,1.0,170.88,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1182,Kampung Lingkudau,Keningau,116.1620455,5.3313818,270.0,186.434,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1183,Kampung Kauran,Keningau,116.1317302,5.3163558,263.0,80.3635,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1184,Kampung Ria,Keningau,116.1657528,5.3400169,283.0,157.8685,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1185,Kampung Minawo Laut,Keningau,116.1815292,5.3168613,315.0,133.622,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1186,Kampung Minawo Ulu,Keningau,116.1933541,5.3178138,335.0,129.126,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1187,Kampung Pasir Putih,Keningau,116.1652611,5.3728182,336.0,106.3275,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1188,Kampung Labak,Papar,116.0664603,5.8225766,13.0,161.205,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1189,Kampung Paung Maragang,Beaufort,115.8534799,5.4683256,26.0,9.631,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1190,Salimandut,KotaMarudu,116.8662016,6.4860679,19.0,19.577,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1191,Teringai Darat,KotaMarudu,116.6673028,6.6674862,44.0,89.53,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1192,Teringai Laut,KotaMarudu,116.6347475,6.674904,26.0,14.5925,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1193,Samparita,KotaMarudu,116.9378807,6.5352261,56.0,93.215,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1194,Dombotuon,Ranau,116.6304968,5.9126995,626.0,23.715,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1195,Kampung Tinusa 1,Sandakan,118.0826422,5.8950994,9.0,79.845,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1198,Soniton Ulu,Pitas,116.9936642,6.5230887,62.0,34.7085,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1203,Bambanagan 1,Pitas,117.0632897,6.4738447,152.0,272.22,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1205,Nabongan,Pitas,116.9866071,6.526204,192.0,39.271,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1207,Longgom,Pitas,117.1052237,6.6638091,23.0,10.378,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1208,Pakagaya,Pitas,117.0300315,6.576136,171.0,40.508,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1209,Marang Parang,Pitas,117.0458134,6.5841352,80.0,40.508,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1210,Manggis,Pitas,117.0429938,6.5769116,38.0,45.861,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1211,Bambangan Ulu,Pitas,117.0279207,6.5885598,56.0,26.839,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1212,Salungkapit,Pitas,117.014599,6.6435091,68.0,25.97,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1213,Singgah Mata,Pitas,117.0855448,6.6776111,11.0,14.115,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1214,Rinasuk Bai,Pitas,117.0750177,6.6688346,25.0,14.565,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1215,Nibang,Pitas,116.9956722,6.5488135,45.0,46.8605,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1216,Mandurian Ulu,Pitas,117.0030458,6.595605,85.0,18.2315,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1217,Sumbilingon,Pitas,117.0000869,6.5471766,183.0,46.8605,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1220,Bilangau Besar,Pitas,116.9990688,6.6662192,14.0,27.9525,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1221,Soniton Laut,Pitas,116.9890607,6.559648,49.0,46.8605,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1222,Dandun Darat,Pitas,117.0287968,6.6601369,15.0,22.916,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1223,Sosop Bai,Pitas,117.0744373,6.6433712,59.0,22.489,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1224,Mandamai Bai,Pitas,117.0724613,6.6384114,32.0,65.1415,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1226,Pampang Minalad,Pitas,117.0150969,6.5857086,34.0,20.976,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1227,Dowokon,Pitas,117.0399886,6.6011253,36.0,21.109,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1228,Pinapak,Pitas,117.0263623,6.5975969,21.0,21.109,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1229,Perupuk,Pitas,117.0328854,6.6113481,42.0,19.083,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1230,Kedundung,Pitas,117.0081844,6.5813559,74.0,11.9435,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1231,Tutuwoon,Pitas,117.0464107,6.6560888,11.0,20.8355,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1232,Pandan,Pitas,117.0340874,6.6366443,18.0,20.102,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1233,Sapatalang,Pitas,117.004257,6.6611144,39.0,24.535,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1235,Sosop,Pitas,117.0696958,6.659862,39.0,35.306,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1236,Lugu,Pitas,117.0450732,6.6349887,23.0,20.102,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1238,Kibulu,Pitas,117.0904352,6.6726134,12.0,10.378,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1240,Maliau Layung,Pitas,117.0419798,6.5802325,32.0,45.861,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1241,Rukom Laut,Pitas,117.0920842,6.6941191,30.0,39.916,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1242,Pandan Mandamai,Pitas,117.0477281,6.6406578,21.0,20.8355,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1243,Rukom Darat,Pitas,117.1039099,6.6774993,17.0,12.827,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1244,Layang,Pitas,117.1326059,6.651337,21.0,10.045,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1245,Layong,Pitas,117.1209852,6.6856458,13.0,20.551,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1247,Dandun Laut,Pitas,117.0157769,6.6626223,14.0,26.4225,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1248,Bitulung,Pitas,117.0158056,6.6674992,19.0,19.262,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1249,Dandun Pusat,Pitas,117.0194912,6.6589988,15.0,26.4225,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1250,Bawang,Pitas,117.0465576,6.6751967,11.0,13.09,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1251,Tumbalang Kimbalang,Pitas,117.1479476,6.7035443,11.0,19.618,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1252,Kusilad,Pitas,117.0783703,6.6949553,8.0,35.306,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1253,Kinangoh,Pitas,117.1241957,6.7303801,13.0,14.351,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1254,Gambir,Pitas,117.123128,6.7174121,10.0,19.618,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1255,Ladap,Pitas,117.1212654,6.7146886,23.0,19.618,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1256,Andap,Pitas,117.1182113,6.7137465,10.0,19.618,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1257,Marais,Tenom,115.8774283,4.8602808,227.0,11.212,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1259,Mogunsop,Tenom,115.8778796,4.6649757,476.0,83.873,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1262,Belumbong,Tenom,115.9165432,4.9498512,203.0,14.5345,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1263,Mansasoh,Tenom,115.9085547,5.0311813,233.0,39.242,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1264,Maanas,Tenom,115.8888462,4.8380444,233.0,13.422,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1265,Katambalang,Tenom,115.8820235,4.8489683,225.0,11.212,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1266,Abul,Tenom,115.8990228,4.9000969,250.0,31.606,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1267,Maugus,Tenom,115.9287947,4.9567649,197.0,12.0275,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1268,Batu-Batu,Tenom,115.9677481,5.0300298,214.0,25.095,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1270,Bangkulin,Tenom,115.9010094,4.8751133,251.0,10.781,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1271,Malutut,Tenom,115.8645618,4.6754545,430.0,49.11,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1272,Alutok,Tenom,115.8593433,4.6599606,457.0,83.873,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1273,Mamaitom,Tenom,115.9076972,4.8816281,282.0,15.2435,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1274,Namatutan,Tenom,115.9099937,4.8905928,316.0,50.7315,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1275,Kauran,Tenom,115.9278051,4.9389728,201.0,15.251,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1278,Nanturaan,Tenom,115.8686313,4.781721,479.0,74.9245,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1279,Kemabong Baru,Tenom,115.9145524,4.9003822,246.0,41.9395,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1282,Masanoi Ulu,Tenom,115.8933589,4.9714154,271.0,30.112,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1283,Kuala Rolok,Tenom,115.8960283,4.8274087,269.0,20.308,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1286,Sumandalom,Tenom,115.9389239,5.01491,189.0,20.987,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1287,Kalibatang Lama,Tenom,115.8968561,4.8626957,220.0,9.638,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1288,Mailo Malalaat,Tenom,115.8918758,4.9828339,303.0,45.868,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1289,Kungkular,Tenom,115.8746945,4.7973202,452.0,77.686,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1290,Kuala Tomani Scheme,Tenom,115.8824868,4.8455687,269.0,11.212,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1291,Ulu Sugiang,Tenom,115.8871329,4.9171306,286.0,15.296,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1292,Sugiang Lama,Tenom,115.9209908,4.931657,201.0,34.4755,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1293,Kuala Tolokoson,Tenom,115.9234644,4.8786559,232.0,16.6355,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1294,Enubah,Tenom,115.9218609,5.009984,196.0,36.2545,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1295,Sibulu,Tenom,115.9239912,4.8950427,215.0,54.913,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1296,Pemaluyan,Tenom,115.9189645,4.9424497,197.0,16.264,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1297,Kaparungan,Tenom,115.8841145,4.8680918,250.0,9.1145,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1299,Belumbong Baru,Tenom,115.9099196,4.9725045,218.0,15.041,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1300,Baru Jumpa,Tenom,115.8993904,4.9350834,265.0,15.251,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1302,Ulu Mansasoh,Tenom,115.9024713,5.0292796,318.0,39.242,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1304,Sugiang Baru,Tenom,115.9008991,4.9193841,243.0,19.668,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1305,Mampusuh,Tenom,115.8780063,4.9719694,499.0,61.5205,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1306,Sindungon Laut,Tenom,115.9826051,5.0668444,221.0,41.407,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1307,Mailo,Tenom,115.8942416,4.9820097,274.0,49.711,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1308,Angalor,Tenom,115.9377015,4.9617425,212.0,13.818,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1309,Batu,Tenom,115.9343143,4.9686314,203.0,8.603,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1310,Lalandang,Tenom,115.9360104,5.0057309,190.0,27.436,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1311,Sungei Api,Tenom,115.8990804,5.0199503,266.0,37.262,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1312,Mile 14,Tenom,115.9182353,4.955506,196.0,13.818,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1313,Sindungon Panjang,Tenom,115.9475247,5.0073294,226.0,8.718,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1314,Mandalom Baru,Tenom,115.9695325,5.0691297,188.0,41.9745,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1315,Blok 5,Tenom,116.0012316,5.122124,256.0,9.823,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1316,Ingatan Baru,Tenom,115.929199,5.0042828,192.0,33.885,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1317,Sindungon,Tenom,115.9217612,5.03185,200.0,6.1865,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1318,Makakumpai,Tenom,115.966963,5.117836,182.0,36.769,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1319,Kampung Cina,Beaufort,115.7459965,5.3475809,18.0,101.86,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1320,Kampung Muhibbah,Beaufort,115.7411739,5.3861222,12.0,36.404,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1321,Bandar Embara Budi,LahadDatu,119.1443099,5.1656349,25.0,46.623,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1323,Bandar Gemala Pura,Kinabatangan,119.214677,5.2775082,28.0,38.948,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1324,Hamparan Badai,Kinabatangan,119.2047753,5.3663703,47.0,46.691,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1325,Felda Anjung Teduh,LahadDatu,118.9142663,5.0627134,22.0,39.0595,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1326,Felda Gugusan Umas,Tawau,117.6581544,4.4777903,30.0,139.1355,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1327,Kampung Pasir Putih,Tawau,117.8634798,4.2962761,9.0,177.162,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1328,Kampung Kau Sing,Tawau,117.9691932,4.2588628,35.0,165.374,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1329,Kampung Jaya Baru,Kunak,118.2512359,4.6806536,13.0,84.7535,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1330,Kampung JKR Lama,Kunak,118.2489301,4.6865665,12.0,85.451,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1331,Kampung Sungai Atas,Kunak,118.251426,4.669873,18.0,74.296,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1332,Kampung Sungai Langgas,Kunak,118.2373642,4.6657885,30.0,69.786,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1333,Kampung Telaga Tujuh,Kunak,118.2607451,4.6544051,23.0,44.838,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1334,Kampung Pangi Laut,Kunak,118.2888423,4.6596024,7.0,37.904,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1335,Kampung Pangi Sungai Duyung,Kunak,118.2946921,4.6530187,17.0,37.904,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1336,Kampung Pangi Hujung,Kunak,118.2945101,4.6562419,7.0,37.904,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1337,Kampung Hampilan,Kunak,118.2787498,4.6596061,9.0,59.825,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1338,Kampung Kasnuri,Kunak,118.2701645,4.6567709,11.0,69.3555,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1339,Kampung Kunak Jaya,Kunak,118.2379935,4.6907123,20.0,94.574,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1340,Kampung Buang Sayang,Kunak,118.2416671,4.7000384,5.0,85.451,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1341,Kampung Buang Sayang,Kunak,118.2374481,4.7017439,14.0,77.691,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1342,Kampung Cina,Kunak,118.2327822,4.6819223,22.0,84.7535,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1343,Kampung Putra Jaya,Kunak,118.2264649,4.7015676,11.0,63.3955,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1344,Kampung Kabog,Kunak,118.2202747,4.6987884,28.0,50.9075,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1345,Kampung Madai,Kunak,118.1892659,4.7240551,8.0,27.367,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1346,Kampung Dasar,Kunak,118.2130149,4.7108573,19.0,27.085,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1347,KAMPUNG LORMALONG,Kunak,118.2035741,4.7042168,26.0,27.226,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1348,Taman Sri Idaman Kunak,Kunak,118.2142042,4.6737847,61.0,169.658,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1349,Kampung Sri Bahagia,Kunak,118.1992386,4.6666644,141.0,291.62,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1350,Kampung Simpang Empat,Kunak,118.2152212,4.6796406,44.0,153.621,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1351,Kampung Kadazan,Kunak,118.2086639,4.6682041,120.0,238.599,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1352,Kampung Wawasan,Kunak,118.2143669,4.6832651,46.0,112.5915,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1353,PPR Sri Pangkalan,Kunak,118.2135657,4.6656399,95.0,221.679,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1354,Kampung Mostyn Lama,Kunak,118.1979179,4.6644704,152.0,312.688,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1355,Kampung Cenderawasih Kunak,Kunak,118.2055371,4.6503874,156.0,229.446,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1356,Kg. Kotog Ulu Sugut,Ranau,116.9724739,6.085687,85.0,88.437,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1357,Kampung Nusa-Nusa,Kudat,117.1329206,7.3278736,11.0,164.7355,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1359,Kampung Cenderamata,Sandakan,118.0600098,5.8076773,1.0,196.0515,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1361,Kampung Ulu Memanjang,Beluran,117.5756268,5.7182772,41.0,32.8465,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1364,Ladang Chu Lip Keong,Sandakan,117.9461519,5.9950993,16.0,27.844,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1365,Kampung Sentosa,Sandakan,118.0140645,5.9484425,10.0,91.54,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1366,Kampung Dandulit,Sandakan,117.9113975,5.9945988,18.0,112.59,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1367,Kampung Banting,Sandakan,117.9376049,6.002548,14.0,47.7895,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1370,Kampung Gua Madai,Kunak,118.1537403,4.7189589,52.0,93.835,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1372,Kampung Kabog Baru,Kunak,118.2283772,4.6964535,23.0,69.656,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1373,Kampung Bayangan,Keningau,116.1943262,5.3812208,313.0,79.3505,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1374,Pekan Lama Kota Marudu,KotaMarudu,116.7520247,6.5225146,8.0,32.251,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1375,Kampung Kokol,KotaKinabalu,116.1981364,6.0192661,477.0,22.113,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1376,Pagalungan,Nabawan,116.4218735,4.4994724,154.0,7.898,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1377,Tungku,LahadDatu,118.8891255,5.0205336,8.0,26.282,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1378,Tandek,KotaMarudu,116.8482926,6.5309639,11.0,37.812,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1379,"KAMPUNG SINASAK BATU PITAS, 89100, KOTA MARUDU, SABAH.",Pitas,117.0707405,6.71689,6.0,33.325,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1380,Taun Gusi,KotaBelud,116.4357307,6.3789754,12.0,79.966,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1381,Kampung Panandawan,Tuaran,116.2370789,6.2377035,6.0,78.444,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1382,Tamonong,Tuaran,116.2167048,6.2253902,7.0,168.5525,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1383,Kampung Labuaya,Tuaran,116.2285802,6.1930248,14.0,165.689,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1384,Kampung Pukak,Tuaran,116.2262805,6.2022815,5.0,151.9705,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1385,Kampung Raun,Tuaran,116.2392354,6.1935899,8.0,174.6795,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1386,Pekan Kiulu,Tuaran,116.282368,6.0582824,60.0,25.944,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1387,Kampung Simpangan,Tuaran,116.2054181,6.2116368,9.0,108.3525,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1388,Kampung Sudot Simpangan,Tuaran,116.2079286,6.2185695,8.0,123.9305,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1389,Kampung Simpangan Kuala,Tuaran,116.2203741,6.2122767,10.0,143.1025,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1390,Kampung Trang Belud,Tuaran,116.2206638,6.2252622,6.0,149.879,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1391,Kampung Tajau,Tuaran,116.239973,6.2200467,9.0,190.9105,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1392,Kampung Tambalang,Tuaran,116.1975914,6.1822089,9.0,132.797,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1393,Kampung Dungun,Tuaran,116.2166834,6.1621876,11.0,183.28,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1394,Kampung Tagas,Tuaran,116.2231207,6.1568115,11.0,185.632,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1395,Kampung Marabahai,Tuaran,116.2267685,6.1672543,10.0,157.496,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1396,Kampung Nong Koulod,Tuaran,116.2104571,6.128139,16.0,190.1305,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1397,Kampung Malalin,Tuaran,116.2121527,6.1365721,18.0,199.124,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1398,Kampung Kauluan,Tuaran,116.2392569,6.1248417,17.0,226.74,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1399,Kampung Panjut,Tuaran,116.2262,6.153,10.0,180.9115,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1400,Kampung Tambalugu,Tuaran,116.2297618,6.1449124,15.0,212.242,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1401,Kampung Telibong,Tuaran,116.247518,6.1391467,16.0,225.899,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1402,Kampung Dansangai,Tuaran,116.2403083,6.1135339,22.0,106.795,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1403,Kampung Rugading,Tuaran,116.1944854,6.1159982,10.0,116.3735,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1404,Kampung Karambunai,KotaKinabalu,116.1331057,6.1079279,9.0,165.392,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1405,Kampung Gayang,Tuaran,116.149199,6.1367039,9.0,162.648,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1406,Kampung Piniang,KotaKinabalu,116.1805862,6.1232895,10.0,97.348,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1407,Kampung Giling,Tuaran,116.2052679,6.1184304,15.0,129.7755,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1408,Kampung Mengkabong,Tuaran,116.203959,6.1455524,11.0,195.747,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1409,Kampung Raganan,Tuaran,116.208111,6.1510513,5.0,185.157,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1410,Telipok,KotaKinabalu,116.1961913,6.0901069,16.0,113.546,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1411,Kampung Tambulaung,Tuaran,116.2318513,6.0962064,62.0,65.844,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1412,Kampung Ulu Telipok,Tuaran,116.2202722,6.0959584,125.0,111.7315,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1413,Kampung Bongalio,Tuaran,116.2487948,6.1010524,357.0,46.1855,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1414,Kampung Lokbuno,KotaKinabalu,116.1292165,6.091099,11.0,105.795,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1415,Kampung Besabak,KotaKinabalu,116.0973304,6.0953983,10.0,258.072,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1416,Kampung Lapasan,KotaKinabalu,116.1488664,6.0945288,14.0,218.901,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1417,Kampung Tobobon,KotaKinabalu,116.1663692,6.0514943,15.0,144.681,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1418,Kampung Ratu,KotaKinabalu,116.1690232,6.056506,15.0,135.5375,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1419,Kampung Bendolan,KotaKinabalu,116.1568567,6.0588158,32.0,135.357,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1420,Kampung Locob,KotaKinabalu,116.1446017,6.0674896,24.0,137.4685,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1421,Kampung Tampulan,KotaKinabalu,116.2132233,6.0579997,380.0,7.757,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1422,Kampung Kabayau,Tuaran,116.2285495,6.0665881,361.0,14.003,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1423,Kampung Lakau,Tuaran,116.2373578,6.0810601,509.0,34.846,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1424,Kampung Timbok,KotaKinabalu,116.2068343,6.0742909,42.0,66.243,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1425,Kampung Layan,KotaKinabalu,116.1093789,6.0273363,9.0,167.101,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1426,Kampung Pulutan,KotaKinabalu,116.1691868,6.0103502,23.0,142.8665,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1427,Kampung Lumpugo,KotaKinabalu,116.1856985,6.0079335,151.0,30.814,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1428,Kampung Bangkud,KotaKinabalu,116.2380284,6.0023531,198.0,20.35,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1435,Kampung Bait,Semporna,118.5381889,4.5357708,13.0,32.824,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1436,Kampung Limau Limau,Semporna,118.527149,4.5323189,5.0,32.824,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1437,Kampung Tanjung Kapur,Semporna,118.5328191,4.5209604,9.0,71.021,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1441,Kampung Tagasan Tani,Semporna,118.5525656,4.4224915,18.0,303.734,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1442,Kampung Gading Gading,Semporna,118.3606267,4.6296769,21.0,48.725,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1443,Kampung Melati,Tawau,117.8130913,4.3745678,6.0,328.6405,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1444,Kampung Kelapa,Tawau,117.7907485,4.3921384,18.0,75.38,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1446,Kampung Nipan,Tawau,117.8313008,4.3299656,11.0,247.8285,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S1447,Merotai Besar,Tawau,117.7759373,4.4175388,20.0,102.766,,,,,,,,,,,observed,A_noterrain_v1,2026-08-07,34.06,0.33
+S0001,Kampung Menyangit,Kudat,117.0679083,7.2888051,16.0,46.108,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0002,Kampung Selamat,Kudat,116.9266558,7.2550643,19.0,,67.68000030517578,22.149999618530273,45.529998779296875,89.81999969482422,pop_2km,backhaul_km,rwi,-0.2639,0.2413,0.1987,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0003,Kampung Dogoton,Kudat,117.2784103,7.3464873,7.0,,100.30999755859375,27.780000686645508,72.54000091552734,128.08999633789062,backhaul_km,seasonal_water_px,pop_2km,0.7412,-0.1781,-0.131,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0005,Turong Puteh,Pitas,117.0579151,6.9627193,8.0,,71.30000305175781,9.619999885559082,61.66999816894531,80.91999816894531,rwi,pop_2km,place,0.286,-0.2329,0.1858,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0006,Karakit,Kudat,117.0841255,7.1101449,16.0,86.693,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0008,Kampung Kalutan,Kudat,116.8673747,7.1981843,14.0,,39.7400016784668,11.479999542236328,28.260000228881836,51.220001220703125,pop_2km,seasonal_water_px,backhaul_km,-0.2583,-0.1806,0.0949,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0013,Kampung Pamanuhan,Pitas,117.0156305,6.786092,9.0,,43.75,10.949999809265137,32.790000915527344,54.70000076293945,pop_2km,rwi,backhaul_km,-0.4962,0.489,-0.1734,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0014,Lokapas,Pitas,117.2469219,6.8606122,13.0,,36.63999938964844,9.300000190734863,27.34000015258789,45.95000076293945,pop_2km,backhaul_km,rwi,-0.27,0.1969,-0.1574,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0025,Kampung Pengkalan Peturu,KotaBelud,116.3214984,6.3432786,60.0,11.579,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0027,Nakadong,Beluran,117.0647585,6.2959391,179.0,,101.16999816894531,17.389999389648438,83.77999877929688,118.55999755859375,backhaul_km,place,pop_2km,0.487,0.1061,-0.1032,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0031,Kg. Budu,Beluran,117.2003781,5.750838,45.0,155.3115,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0032,Kg. Kapoi,Beluran,117.1348698,5.7523221,64.0,201.4165,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0039,Botitian,Beluran,117.312438,6.0493527,24.0,53.671,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0043,Kg. Pinuanakan,Beluran,117.2469804,5.8688397,31.0,,52.66999816894531,4.199999809265137,48.470001220703125,56.86000061035156,pop_2km,backhaul_km,place,-0.1816,0.1598,0.0949,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0046,Nabutan Baru,Ranau,116.799061,5.8802415,280.0,,42.0,13.75,28.25,55.75,rwi,backhaul_km,n_schools_3km,-0.4085,0.2074,-0.1057,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0047,Kampung Membulu,Keningau,116.1212014,5.2052634,349.0,,53.2400016784668,25.06999969482422,28.170000076293945,78.30999755859375,n_schools_3km,seasonal_water_px,pop_2km,-0.0585,0.0495,0.0392,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0061,Kampung Monggis,Ranau,116.7677359,6.2072984,294.0,67.9185,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0064,Kampung Rompon,Tambunan,116.3233754,5.5091912,438.0,216.1025,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0065,Suroh Suroh,Beluran,117.1757298,6.0327756,53.0,,65.87999725341797,22.549999237060547,43.34000015258789,88.43000030517578,backhaul_km,pop_2km,seasonal_water_px,0.396,-0.2171,-0.1584,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0067,Basai,Beluran,117.2390266,6.0379927,42.0,163.7445,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0068,Kampung Ulu Monsok,Tambunan,116.3886553,5.5492439,643.0,,90.44000244140625,10.670000076293945,79.7699966430664,101.11000061035156,rwi,seasonal_water_px,backhaul_km,0.6837,0.0799,-0.073,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0071,Kg. Ponobukan,Penampang,116.1921266,5.7743233,269.0,1.137,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0097,Malaing,Keningau,116.1150432,4.9451215,405.0,,60.43000030517578,13.9399995803833,46.4900016784668,74.37999725341797,rwi,backhaul_km,pop_2km,0.2441,-0.1784,-0.1648,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0100,Kampung Pohon Batu,Nabawan,116.1886423,4.7903003,537.0,,82.7300033569336,14.520000457763672,68.20999908447266,97.26000213623047,rwi,place,pop_2km,0.2082,0.152,-0.1408,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0103,Tataluan,Nabawan,116.4924831,4.8853486,444.0,128.582,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0106,Susul,Tongod,116.6665974,4.9062971,191.0,,56.130001068115234,13.329999923706055,42.79999923706055,69.47000122070312,rwi,place,backhaul_km,-0.2224,0.1748,0.1437,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0108,Kampung Dumiri,Tongod,116.6890821,4.9369742,185.0,,79.58000183105469,12.0600004196167,67.5199966430664,91.63999938964844,rwi,pop_2km,place,0.1923,-0.1442,0.1347,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0110,Kampung Lotung,Tongod,116.8574793,5.0044727,127.0,,43.119998931884766,9.640000343322754,33.47999954223633,52.7599983215332,backhaul_km,rwi,n_schools_3km,0.3801,-0.1543,-0.0511,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0112,Pahetowai,Tongod,116.8625477,5.0096023,133.0,,38.790000915527344,10.010000228881836,28.780000686645508,48.79999923706055,rwi,seasonal_water_px,backhaul_km,-0.1645,-0.1136,-0.0988,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0120,Pandawan,Nabawan,116.4932214,4.9116486,437.0,128.582,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0122,Kampung Sosogoh,Nabawan,116.4406405,4.5622237,151.0,,87.11000061035156,6.679999828338623,80.43000030517578,93.79000091552734,rwi,place,pop_2km,0.3277,0.2042,-0.1341,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0123,Dolamos,Beluran,117.3361572,6.3082139,26.0,,23.329999923706055,7.300000190734863,16.030000686645508,30.6299991607666,pop_2km,n_schools_3km,rwi,-0.5754,-0.0603,-0.0506,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0127,Kampung Tonomon,Nabawan,116.5239177,4.6820484,290.0,,54.959999084472656,14.140000343322754,40.81999969482422,69.0999984741211,backhaul_km,place,pop_2km,0.2332,0.1458,-0.1343,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0128,Salarom Taka,Nabawan,116.6034504,4.6724662,309.0,113.0415,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0129,Kampung Salarom Lama,Nabawan,116.1604985,4.5381511,282.0,,55.939998626708984,30.25,25.690000534057617,86.19999694824219,pop_2km,backhaul_km,rwi,-0.2251,0.0974,-0.089,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0136,Kampung Simbulon,Tuaran,116.3542796,5.9251226,614.0,22.76,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0142,,Tongod,116.927504,5.2877832,75.0,,39.029998779296875,14.890000343322754,24.139999389648438,53.91999816894531,rwi,backhaul_km,pop_2km,0.5961,-0.5028,-0.2227,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0143,Kampung Sinarupa,Tongod,117.0357363,5.2470262,123.0,,42.77000045776367,16.31999969482422,26.450000762939453,59.09000015258789,pop_2km,rwi,backhaul_km,-0.4388,0.3937,-0.2155,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0144,Kampung Adian,Tongod,117.123845,5.2495224,57.0,,68.55000305175781,27.989999771118164,40.560001373291016,96.52999877929688,rwi,pop_2km,n_schools_3km,0.3281,-0.1848,-0.099,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0146,Kg. Limpada,Tongod,116.7273727,5.2344907,87.0,,46.08000183105469,30.280000686645508,15.800000190734863,76.36000061035156,seasonal_water_px,pop_2km,flood_prone,-0.3442,-0.2231,-0.0852,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0147,Kg.Pingas,Tongod,116.6980751,5.168687,111.0,,72.75,9.4399995803833,63.31999969482422,82.19000244140625,backhaul_km,rwi,place,0.2812,0.1627,0.155,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0148,Kampung Intutan,Tongod,116.8737008,5.0644994,135.0,,42.720001220703125,6.789999961853027,35.93000030517578,49.52000045776367,pop_2km,backhaul_km,seasonal_water_px,-0.3957,0.2369,-0.1088,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0161,Ulu Tomani,Tenom,115.8694316,4.694062,402.0,38.605,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0163,Tangkulap,Tongod,117.2839792,5.2929123,199.0,,124.25,28.940000534057617,95.30999755859375,153.1999969482422,backhaul_km,rwi,seasonal_water_px,0.9151,0.1087,0.0842,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0167,Kampung Delima,Pitas,117.2420296,6.6873606,13.0,,42.970001220703125,23.40999984741211,19.559999465942383,66.37999725341797,pop_2km,seasonal_water_px,backhaul_km,-0.3787,-0.222,0.1093,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0204,Kampung Samawang,Sandakan,117.7734137,5.9063528,6.0,125.708,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0206,Kampung Tabanka,Sandakan,118.0399306,6.0192756,6.0,,48.02000045776367,19.969999313354492,28.040000915527344,67.98999786376953,seasonal_water_px,backhaul_km,n_schools_3km,-0.1806,-0.103,-0.0769,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0228,Kg. Perpaduan Datok Moh,Kinabatangan,117.952007,5.4472156,12.0,91.6935,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0236,Pangi,Tenom,115.8645731,5.1391058,101.0,79.188,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0237,Halogilat,Beaufort,115.8315613,5.2550808,34.0,7.918,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0238,Rayoh,Tenom,115.8804136,5.2094947,55.0,2.056,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0264,,Pitas,117.240836,6.5782977,22.0,,64.16999816894531,27.309999465942383,36.86000061035156,91.4800033569336,backhaul_km,pop_2km,seasonal_water_px,0.4039,-0.3722,0.084,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0268,Melubang,Pitas,117.0601432,6.9584961,8.0,,57.189998626708984,8.279999732971191,48.90999984741211,65.47000122070312,rwi,pop_2km,backhaul_km,0.3137,-0.2855,0.1216,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0270,Rundum Highland,Tenom,116.0437506,4.7862009,1217.0,2.485,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0271,,Tenom,116.007746,4.9162543,658.0,,23.799999237060547,2.4800000190734863,21.31999969482422,26.270000457763672,rwi,pop_2km,n_schools_3km,-0.3726,-0.2386,-0.0913,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0278,,Kudat,116.6695267,6.8236007,13.0,32.7285,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0283,Tibabar,Ranau,116.8606428,6.165634,160.0,57.823,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0286,Lobou Lama,Ranau,116.8757116,6.176349,141.0,57.823,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0288,Tumbalang,Ranau,116.8898098,6.1544674,193.0,25.9695,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0292,Mangkapoh,Ranau,116.9506451,6.1293593,99.0,156.018,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0299,Kampung Paka Kiulu,Tuaran,116.3930816,5.994343,333.0,,26.649999618530273,6.960000038146973,19.690000534057617,33.619998931884766,pop_2km,backhaul_km,n_schools_3km,-0.5638,-0.2514,-0.0662,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0303,,Kudat,117.317854,7.2318714,15.0,,58.369998931884766,14.6899995803833,43.68000030517578,73.06999969482422,pop_2km,backhaul_km,seasonal_water_px,-0.262,0.2179,-0.1686,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0304,,Kudat,117.3195224,7.2333988,0.0,,59.0099983215332,15.109999656677246,43.900001525878906,74.12000274658203,pop_2km,backhaul_km,seasonal_water_px,-0.262,0.2178,-0.1693,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0305,,Kudat,117.3236288,7.2213103,3.0,,55.439998626708984,16.860000610351562,38.58000183105469,72.30000305175781,pop_2km,seasonal_water_px,backhaul_km,-0.2544,-0.2085,0.2037,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0306,,Kudat,117.3112692,7.2083514,7.0,,53.849998474121094,20.0,33.849998474121094,73.8499984741211,pop_2km,backhaul_km,seasonal_water_px,-0.3157,0.2209,-0.1619,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0347,Kampung Puhus,Tuaran,116.3904003,6.2594075,470.0,13.434,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0376,Kampung Tinindukan,KotaMarudu,116.760687,6.2961999,170.0,,57.689998626708984,6.329999923706055,51.36000061035156,64.0199966430664,pop_2km,backhaul_km,rwi,-0.1969,-0.1568,0.1223,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0381,Kampung Pompodon,KotaMarudu,116.7548147,6.3629363,90.0,4.4765,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0382,Kampung Talamason,KotaMarudu,116.7450321,6.36331,168.0,4.4765,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0385,Kampung Sungai,KotaMarudu,116.6393698,6.4858096,142.0,,90.44000244140625,10.670000076293945,79.7699966430664,101.11000061035156,rwi,seasonal_water_px,backhaul_km,0.6837,0.0799,-0.073,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0398,Kampung Melapi Sugut,Beluran,117.2550722,6.2182436,48.0,98.612,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0408,Kampung Lok Nunuk,Tuaran,116.2814788,6.2974555,5.0,,40.349998474121094,9.640000343322754,30.709999084472656,49.9900016784668,pop_2km,n_schools_3km,seasonal_water_px,-0.1213,-0.0803,0.0503,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0409,Kampung Baru-Baru,Tuaran,116.2939116,6.3040075,8.0,,31.030000686645508,11.109999656677246,19.90999984741211,42.13999938964844,pop_2km,backhaul_km,n_schools_3km,-0.2619,-0.1296,-0.0844,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0415,Kampung Tinagalan Ulu,Keningau,116.3036642,5.0925878,356.0,5.395,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0425,Kampung Kotunuan Lama,Tuaran,116.4677881,5.9529605,861.0,,19.59000015258789,4.78000020980835,14.800000190734863,24.3700008392334,rwi,pop_2km,backhaul_km,-0.3056,-0.2968,-0.285,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0426,Kampung Pahu,Tuaran,116.4136636,5.9881479,306.0,7.89,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0427,Genting,Sandakan,118.025088,5.6487938,16.0,,126.87999725341797,10.319999694824219,116.55000305175781,137.1999969482422,rwi,backhaul_km,pop_2km,0.6286,0.2288,0.1923,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0431,Ahuron,Tenom,115.9881993,4.9004996,650.0,,26.399999618530273,5.070000171661377,21.329999923706055,31.479999542236328,backhaul_km,pop_2km,rwi,-0.2846,-0.215,-0.1916,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0435,Siwanal,Nabawan,116.2493722,4.669841,273.0,,68.69999694824219,30.950000762939453,37.75,99.66000366210938,rwi,pop_2km,backhaul_km,0.3241,-0.2317,0.1014,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0436,Kampung Sumbiling,Nabawan,116.2290797,4.7552757,350.0,,71.36000061035156,16.6299991607666,54.72999954223633,87.98999786376953,pop_2km,rwi,place,-0.2475,0.1769,0.1175,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0437,Kampung Sumbiling,Nabawan,116.2043332,4.7713788,446.0,,75.33999633789062,6.349999904632568,68.98999786376953,81.69999694824219,backhaul_km,place,pop_2km,0.2134,0.1279,-0.1108,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0438,,Nabawan,116.3107345,4.855817,467.0,,73.6500015258789,20.010000228881836,53.63999938964844,93.66000366210938,pop_2km,rwi,place,-0.2465,0.1897,0.1266,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0439,Kampung Pangaraan,Nabawan,116.2210614,4.7340001,314.0,,70.43000030517578,7.079999923706055,63.349998474121094,77.51000213623047,pop_2km,backhaul_km,place,-0.3032,0.1862,0.1714,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0440,,Tongod,117.0584809,4.5419028,385.0,65.269,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0441,,Nabawan,116.1490975,4.812528,714.0,,81.0199966430664,15.890000343322754,65.12999725341797,96.91000366210938,pop_2km,rwi,place,-0.2205,0.195,0.1335,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0442,Kampung Binanun,Nabawan,116.2220216,4.8291202,497.0,,173.77000427246094,76.12000274658203,97.6500015258789,249.8800048828125,rwi,backhaul_km,pop_2km,0.5775,0.3913,0.2348,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0446,Sikalabaan,Nabawan,116.3716693,4.5447525,155.0,,45.599998474121094,13.609999656677246,31.989999771118164,59.209999084472656,pop_2km,rwi,n_schools_3km,-0.5083,0.499,-0.0944,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0447,Lirung,Nabawan,116.3691243,4.5442058,154.0,,46.68000030517578,11.59000015258789,35.09000015258789,58.27000045776367,rwi,pop_2km,n_schools_3km,0.5051,-0.4285,-0.097,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0448,Tinanduk,Nabawan,116.3893246,4.521986,154.0,12.465,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0451,Lampas Sabinait,Nabawan,116.3323844,4.5999402,398.0,,61.349998474121094,13.0600004196167,48.279998779296875,74.41000366210938,rwi,pop_2km,backhaul_km,0.3256,-0.2769,0.0816,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0452,,Nabawan,116.2234837,4.8135645,494.0,,132.00999450683594,31.299999237060547,100.70999908447266,163.30999755859375,rwi,backhaul_km,seasonal_water_px,0.6308,0.4391,0.103,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0454,Kampung Tampakahu,Pitas,117.1000351,6.7420564,21.0,15.986,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0457,Kampung Tukar,Pitas,117.130745,6.6118072,41.0,,54.90999984741211,23.670000076293945,31.239999771118164,78.58000183105469,pop_2km,backhaul_km,rwi,-0.1994,0.1803,-0.127,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0458,Kampung Katalirus,Nabawan,116.2654705,4.9489458,489.0,,54.349998474121094,17.149999618530273,37.20000076293945,71.48999786376953,backhaul_km,rwi,place,0.2574,-0.1864,0.1031,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0461,,Keningau,116.140719,4.9560925,389.0,,103.91999816894531,20.579999923706055,83.33000183105469,124.5,rwi,backhaul_km,seasonal_water_px,0.6411,0.4659,0.1146,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0467,,Nabawan,116.2593003,4.9030559,480.0,,99.9800033569336,14.539999961853027,85.44000244140625,114.5199966430664,rwi,backhaul_km,pop_2km,0.6305,0.3356,-0.2879,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0468,Kawanahon,Ranau,116.656846,5.569785,819.0,,88.87000274658203,20.209999084472656,68.66000366210938,109.08000183105469,backhaul_km,seasonal_water_px,pop_2km,0.7604,0.0782,-0.0685,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0469,Kilo,Keningau,116.4916732,5.3798794,399.0,,71.72000122070312,17.3799991607666,54.34000015258789,89.0999984741211,backhaul_km,pop_2km,seasonal_water_px,0.6734,-0.2308,0.0592,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0473,Kasumunsong,Nabawan,116.2453914,4.5947758,204.0,,40.099998474121094,21.110000610351562,18.989999771118164,61.220001220703125,pop_2km,rwi,backhaul_km,-0.5455,0.3956,-0.2129,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0478,Sabungo,Nabawan,116.246149,4.6231884,227.0,,59.2400016784668,19.600000381469727,39.650001525878906,78.83999633789062,pop_2km,rwi,place,-0.4408,0.3162,0.1647,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0479,Sabibingkol,Nabawan,116.4019799,4.5014035,152.0,7.3215,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0480,Saliku Pensiangan,Nabawan,116.2504104,4.4883584,188.0,,47.91999816894531,13.489999771118164,34.43000030517578,61.41999816894531,rwi,pop_2km,backhaul_km,0.2903,-0.2042,-0.1287,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0481,Siatu,Nabawan,116.2861901,4.508139,183.0,,18.520000457763672,5.929999828338623,12.59000015258789,24.459999084472656,pop_2km,backhaul_km,rwi,-0.6026,-0.3188,-0.1446,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0482,Malilia,Nabawan,116.2221474,4.4124156,299.0,,58.47999954223633,12.279999732971191,46.20000076293945,70.75,pop_2km,rwi,backhaul_km,-0.3878,0.2632,0.2552,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0483,Sumabi,Nabawan,116.3431227,4.5377171,157.0,,49.2400016784668,10.609999656677246,38.619998931884766,59.849998474121094,rwi,pop_2km,backhaul_km,0.5568,-0.4425,-0.1535,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0484,Kabu,Nabawan,116.1441448,4.3546763,270.0,,57.91999816894531,17.329999923706055,40.59000015258789,75.25,pop_2km,rwi,seasonal_water_px,-0.2588,0.2408,-0.1044,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0485,Saliliran,Nabawan,116.220992,4.4040113,304.0,,63.5099983215332,9.130000114440918,54.380001068115234,72.63999938964844,rwi,pop_2km,backhaul_km,0.3283,-0.194,0.1668,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0486,Sinapar,Nabawan,116.2356067,4.4643636,214.0,,32.29999923706055,22.139999389648438,10.15999984741211,54.439998626708984,pop_2km,rwi,n_schools_3km,-0.6553,-0.1136,-0.0625,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0489,Takilis,Nabawan,116.2466333,4.5846859,197.0,,52.08000183105469,12.260000228881836,39.83000183105469,64.33999633789062,rwi,pop_2km,backhaul_km,0.2865,-0.1854,-0.136,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0491,Siwalor,Nabawan,116.3365666,4.5372132,158.0,,64.86000061035156,20.90999984741211,43.95000076293945,85.7699966430664,rwi,pop_2km,n_schools_3km,0.4978,-0.3658,0.0889,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0494,Sipuok,Nabawan,116.3473394,4.5442903,156.0,,44.0,10.359999656677246,33.630001068115234,54.36000061035156,rwi,pop_2km,backhaul_km,0.5421,-0.5086,-0.157,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0498,Bansuit,Keningau,116.4216381,5.1110583,486.0,177.868,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0502,Kampung Labug,Nabawan,116.4137783,4.9545612,459.0,8.236,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0514,Kampung Langkukuk,Nabawan,116.4924187,4.9163016,476.0,128.582,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0517,Kampung Ulu Mosopoh,Nabawan,116.3714226,4.9703642,481.0,,49.65999984741211,8.670000076293945,40.9900016784668,58.33000183105469,rwi,backhaul_km,pop_2km,0.2351,-0.163,-0.1258,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0518,Kampung Pamunterian,Nabawan,116.4295071,4.9565949,453.0,,22.610000610351562,6.019999980926514,16.59000015258789,28.6200008392334,pop_2km,backhaul_km,place,-0.6338,-0.2244,0.2207,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0519,Kampung Tampusison,Nabawan,116.4956051,4.8604172,428.0,60.207,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0520,Kampung Tataluan Pandiwan,Nabawan,116.4895586,4.894948,438.0,128.582,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0521,Bigor,Nabawan,116.5048718,4.7016332,298.0,,60.04999923706055,9.319999694824219,50.72999954223633,69.37000274658203,backhaul_km,pop_2km,rwi,0.2559,0.1129,-0.0679,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0522,Simatuoh,Nabawan,116.5554716,4.673865,279.0,18.585,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0523,Kampung Sandukan,Nabawan,116.611379,4.6745323,291.0,113.0415,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0524,Kampung Kaingalan Sapulut,Nabawan,116.5009599,4.7000775,282.0,,64.33999633789062,2.859999895095825,61.47999954223633,67.20999908447266,backhaul_km,rwi,pop_2km,0.2463,-0.1024,0.0684,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0525,Sungai Matoi,Nabawan,116.4925306,4.8856602,445.0,128.582,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0526,Salarom Baru,Nabawan,116.3856184,4.9674178,468.0,,43.63999938964844,10.550000190734863,33.099998474121094,54.189998626708984,rwi,backhaul_km,pop_2km,0.2851,-0.2845,-0.2041,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0527,Kampung Hinalung Pampalang,Nabawan,116.5058991,4.7050295,274.0,,59.29999923706055,8.789999961853027,50.5099983215332,68.08000183105469,backhaul_km,pop_2km,rwi,0.1443,0.1332,-0.1178,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0528,Kampung Liningkar,Nabawan,116.5740374,4.6851771,284.0,18.585,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0529,Kampung Pandiwan,Nabawan,116.4809914,4.9371194,440.0,182.5305,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0530,Kampung Kagasa,Nabawan,116.506165,4.8079887,427.0,41.355,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0531,Kampung Panganitan,Nabawan,116.4941122,4.8181232,436.0,,69.05000305175781,26.420000076293945,42.63999938964844,95.47000122070312,backhaul_km,pop_2km,place,0.2517,-0.2043,0.0785,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0532,Kampung Solog,Nabawan,116.4998657,4.8375779,431.0,60.207,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0534,Tampulos,Nabawan,116.5467065,4.6836561,282.0,18.585,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0535,Kampung Naaturan,Nabawan,116.5932197,4.7003011,289.0,19.736,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0536,Kampung Labang,Nabawan,116.5961855,4.6976439,288.0,19.736,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0537,Kampung Mawantul,Nabawan,116.5948824,4.6730583,328.0,58.206,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0538,Kampung Samuran,Nabawan,116.6096772,4.6867419,292.0,19.736,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0541,Kampung Bangau,Nabawan,116.6072803,4.6656659,295.0,113.0415,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0542,Sibuah,Nabawan,116.5775013,4.4660748,215.0,46.4705,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0543,Saliha B,Nabawan,116.8608804,4.4236685,409.0,,47.810001373291016,10.899999618530273,36.90999984741211,58.70000076293945,backhaul_km,pop_2km,rwi,0.3521,-0.2426,-0.1992,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0545,Kampung Saliku,Nabawan,116.5913152,4.4589444,217.0,46.4705,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0548,Kem Tentera Sri Saliku,Nabawan,116.5859965,4.4565717,230.0,46.4705,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0549,Kakutar,Nabawan,116.6071402,4.4675735,226.0,45.831,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0557,Pampangon,Nabawan,116.4647651,4.6153187,182.0,,57.0,12.130000114440918,44.869998931884766,69.12999725341797,rwi,pop_2km,backhaul_km,0.3552,-0.2224,-0.1188,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0568,Kuala Tumalasak,Nabawan,116.4340548,4.4549054,139.0,,20.100000381469727,4.590000152587891,15.510000228881836,24.690000534057617,pop_2km,backhaul_km,n_schools_3km,-0.5227,-0.3519,0.1318,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0570,Kampung Saliman,Nabawan,116.4344732,4.4161324,120.0,,32.16999816894531,17.010000228881836,15.15999984741211,49.18000030517578,pop_2km,backhaul_km,place,-0.6285,-0.1922,0.1335,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0572,Kuala Sumaralang,Nabawan,116.4325699,4.4612017,147.0,,22.40999984741211,4.210000038146973,18.200000762939453,26.6299991607666,pop_2km,backhaul_km,seasonal_water_px,-0.5079,-0.2674,-0.1544,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0574,Buntulon,Nabawan,116.4324428,4.4539427,134.0,,22.1299991607666,4.539999961853027,17.59000015258789,26.670000076293945,pop_2km,backhaul_km,n_schools_3km,-0.4804,-0.2516,0.1338,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0575,Bantul,Nabawan,116.4268698,4.3399317,127.0,,68.20999908447266,34.36000061035156,33.86000061035156,102.56999969482422,rwi,seasonal_water_px,pop_2km,0.5231,-0.2974,-0.2261,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0577,Kampung Babalitan,Nabawan,116.4340996,4.449385,128.0,,33.029998779296875,3.990000009536743,29.040000915527344,37.02000045776367,pop_2km,seasonal_water_px,n_schools_3km,-0.3897,-0.1659,0.1432,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0578,Lumpagas,Nabawan,116.4324312,4.3985325,118.0,,27.260000228881836,18.020000457763672,9.239999771118164,45.290000915527344,pop_2km,seasonal_water_px,backhaul_km,-0.5914,-0.2254,-0.1823,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0579,Inakaak,Nabawan,116.4318441,4.4265259,127.0,,32.0,8.880000114440918,23.1200008392334,40.880001068115234,pop_2km,backhaul_km,n_schools_3km,-0.5671,-0.2106,0.1486,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0580,Sumbiling,Nabawan,116.22469,4.7818892,440.0,,72.05000305175781,19.829999923706055,52.209999084472656,91.87999725341797,rwi,pop_2km,backhaul_km,0.2114,-0.1754,0.0936,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0581,Tatapu,Nabawan,116.2576357,4.8993161,473.0,,47.970001220703125,12.270000457763672,35.70000076293945,60.25,pop_2km,backhaul_km,seasonal_water_px,-0.5285,0.4475,0.0449,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0582,Tatalaan Ulu,Nabawan,116.2229043,4.8544087,511.0,,67.43000030517578,10.449999809265137,56.97999954223633,77.87999725341797,backhaul_km,pop_2km,seasonal_water_px,0.2408,-0.1612,0.0971,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0583,Panarakan,Nabawan,116.2604083,4.9018965,477.0,,49.36000061035156,12.119999885559082,37.2400016784668,61.470001220703125,pop_2km,backhaul_km,seasonal_water_px,-0.5266,0.4495,0.0432,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0584,Kampung Ponontomon,Nabawan,116.2643473,4.88108,463.0,45.58,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0585,Susuon,Nabawan,116.2613119,4.8916374,476.0,,72.5999984741211,16.889999389648438,55.720001220703125,89.48999786376953,backhaul_km,rwi,pop_2km,0.2517,0.1754,-0.1377,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0586,Kalabi,Nabawan,116.2621641,4.8930202,489.0,,73.87000274658203,18.139999389648438,55.7400016784668,92.01000213623047,backhaul_km,rwi,pop_2km,0.3409,0.2018,-0.141,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0588,Malaing Ulu,Keningau,116.1395051,4.9564866,392.0,,141.58999633789062,56.16999816894531,85.41999816894531,197.77000427246094,rwi,backhaul_km,seasonal_water_px,0.7371,0.5248,0.1427,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0589,Kampung Bonor,Keningau,116.1805099,4.9690669,373.0,1.221,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0591,Karamatoi Ulu,Keningau,116.1372203,4.9489947,391.0,,165.91000366210938,39.540000915527344,126.37000274658203,205.4499969482422,rwi,backhaul_km,seasonal_water_px,0.8644,0.5097,0.1328,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0593,Binakaan,Keningau,116.3432834,5.117645,376.0,,25.739999771118164,6.5,19.239999771118164,32.2400016784668,pop_2km,backhaul_km,rwi,-0.4516,-0.3474,0.1202,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0594,Seri Menanti,Keningau,116.2749919,5.2023035,419.0,31.461,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0598,Sanang,Keningau,116.1705088,5.0503345,364.0,,52.52000045776367,3.7899999618530273,48.72999954223633,56.310001373291016,backhaul_km,pop_2km,rwi,0.3404,-0.2897,-0.0641,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0600,Namadan Baru,Keningau,116.2055431,5.1331074,386.0,,23.049999237060547,4.46999979019165,18.56999969482422,27.520000457763672,pop_2km,backhaul_km,n_schools_3km,-0.5651,-0.2217,-0.0712,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0601,Lintuhun Baru,Keningau,116.2102068,5.1431533,382.0,,36.72999954223633,8.0600004196167,28.670000076293945,44.790000915527344,pop_2km,backhaul_km,rwi,-0.2342,-0.1143,0.1083,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0604,Bangawong,Keningau,116.3290819,5.0815603,359.0,,23.0,3.6700000762939453,19.329999923706055,26.670000076293945,pop_2km,backhaul_km,n_schools_3km,-0.3968,-0.273,-0.0513,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0606,Susulat Baru,Keningau,116.367318,5.1117207,375.0,87.969,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0609,Totogop,Keningau,116.1801678,5.2268314,300.0,8.6595,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0613,Sinaron Tengah,Tongod,116.5938172,5.4544754,550.0,9.142,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0616,Sinua,Tongod,116.5790393,5.4821092,542.0,62.774,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0619,Kompartment 50,Keningau,116.5496793,5.3074959,401.0,,65.4800033569336,11.630000114440918,53.849998474121094,77.0999984741211,pop_2km,backhaul_km,rwi,-0.4039,0.1878,0.1855,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0621,Kompartment 86,Tongod,116.5601736,5.2718184,391.0,,51.97999954223633,6.170000076293945,45.810001373291016,58.150001525878906,pop_2km,rwi,n_schools_3km,-0.302,0.2205,-0.0901,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0622,Kompartment 148,Tongod,116.6209573,5.2696191,536.0,,94.33000183105469,23.469999313354492,70.86000061035156,117.80000305175781,backhaul_km,pop_2km,rwi,0.4942,-0.119,0.0902,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0625,Pioh,Keningau,116.496168,5.2717183,410.0,,43.470001220703125,7.309999942779541,36.15999984741211,50.779998779296875,rwi,pop_2km,backhaul_km,-0.3828,-0.2117,0.1112,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0626,Wawasan,Keningau,116.5307635,5.2707586,415.0,,36.310001373291016,9.300000190734863,27.010000228881836,45.61000061035156,rwi,pop_2km,n_schools_3km,-0.3356,-0.253,-0.0733,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0641,Sasagahan,Keningau,116.4306414,5.2077032,384.0,26.066,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0642,Pengaradan,Keningau,116.3977252,5.2560354,409.0,25.366,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0647,Maatol,Keningau,116.43553,5.215325,387.0,,58.02000045776367,4.96999979019165,53.04999923706055,62.9900016784668,rwi,backhaul_km,pop_2km,-0.1868,0.1796,0.159,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0649,Mokotog,Keningau,116.4247876,5.2835791,394.0,59.4315,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0691,Bukit Indah,Keningau,116.2799224,5.2656225,565.0,,66.86000061035156,17.440000534057617,49.41999816894531,84.30999755859375,rwi,seasonal_water_px,backhaul_km,0.2682,0.0857,-0.0853,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0692,Mesej Bunang,Keningau,116.2666274,5.2576841,555.0,,58.95000076293945,20.989999771118164,37.959999084472656,79.94000244140625,rwi,pop_2km,seasonal_water_px,0.5438,-0.2594,0.0923,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0694,Mansiang,Keningau,116.228125,5.2554901,416.0,9.265,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0695,Kilugus,Keningau,116.2849091,5.2812117,547.0,,107.58999633789062,39.38999938964844,68.19999694824219,146.97999572753906,rwi,backhaul_km,pop_2km,0.2887,0.2639,0.1959,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0698,Sondukut,Keningau,116.2219378,5.2311401,496.0,6.7515,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0711,Antabakan,Keningau,116.141912,5.1377532,418.0,,58.709999084472656,7.159999847412109,51.54999923706055,65.86000061035156,backhaul_km,rwi,seasonal_water_px,0.1545,0.0532,0.0528,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0718,Gaulan,Keningau,116.0534426,5.3025712,401.0,72.596,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0722,Kaliwot,Keningau,116.1025982,5.2344101,424.0,,25.690000534057617,10.989999771118164,14.699999809265137,36.68000030517578,pop_2km,rwi,backhaul_km,-0.8217,-0.1658,0.0619,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0727,Ulu Senagang,Keningau,116.0302665,5.3443873,467.0,121.7915,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0728,Kuala Tigasa,Keningau,116.1358732,5.2114388,296.0,,31.600000381469727,5.159999847412109,26.450000762939453,36.7599983215332,pop_2km,backhaul_km,n_schools_3km,-0.4998,-0.155,0.0364,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0729,Mongitom Ulu,Keningau,116.186367,5.4910984,685.0,17.406,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0730,Belinin Division,Keningau,116.0789466,5.1702445,548.0,,58.619998931884766,8.119999885559082,50.5,66.7300033569336,pop_2km,rwi,backhaul_km,-0.3222,0.2833,0.143,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0731,Bandukan Ulu,Keningau,116.1569642,5.4716419,806.0,,60.13999938964844,13.270000457763672,46.869998931884766,73.41000366210938,backhaul_km,pop_2km,seasonal_water_px,0.1977,-0.1583,0.0664,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0737,Tataluan,Keningau,116.1245859,5.1089378,430.0,,49.54999923706055,7.53000020980835,42.02000045776367,57.06999969482422,backhaul_km,rwi,pop_2km,0.1375,-0.1232,-0.1067,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0738,Estet Sri Padasa,Keningau,116.1279678,5.1913399,418.0,,115.83999633789062,30.690000534057617,85.1500015258789,146.52999877929688,rwi,backhaul_km,seasonal_water_px,0.7118,0.182,0.1301,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0739,Dimpangoh,Keningau,116.1147343,5.1542775,433.0,,55.11000061035156,8.4399995803833,46.68000030517578,63.54999923706055,rwi,pop_2km,seasonal_water_px,0.1591,-0.0967,0.0812,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0741,Ulu Keritan,Keningau,116.0423502,5.3308299,468.0,16.513,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0745,Sri Telipok Baru,Keningau,116.0472387,5.3545134,595.0,227.07,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0749,Bina Baru,Keningau,116.1254003,5.185274,445.0,,84.19999694824219,21.100000381469727,63.099998474121094,105.29000091552734,rwi,backhaul_km,seasonal_water_px,0.2675,0.1994,0.1187,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0782,Kompartment 149/145,Tongod,116.6742641,5.2521739,307.0,,100.33999633789062,21.299999237060547,79.04000091552734,121.63999938964844,backhaul_km,n_schools_3km,rwi,0.3529,-0.0758,0.0643,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0783,Kompartment 152,Tongod,116.6267962,5.2251505,480.0,,68.37000274658203,17.959999084472656,50.40999984741211,86.33000183105469,rwi,pop_2km,n_schools_3km,0.2224,-0.1662,-0.0778,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0784,Kompartment 154,Tongod,116.6599246,5.2389983,311.0,,100.80999755859375,21.290000915527344,79.5199966430664,122.0999984741211,backhaul_km,n_schools_3km,pop_2km,0.4628,-0.0758,0.0658,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0785,Kompartment 162,Tongod,116.6951096,5.2191704,231.0,,68.76000213623047,18.670000076293945,50.09000015258789,87.43000030517578,rwi,pop_2km,n_schools_3km,0.2224,-0.1662,-0.0778,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0786,Kompartment 125,Tongod,116.6700893,5.2914368,523.0,,96.52999877929688,22.889999389648438,73.6500015258789,119.41999816894531,backhaul_km,pop_2km,seasonal_water_px,0.6616,0.1834,0.0792,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0787,Kompartment 147,Tongod,116.6442341,5.2443623,376.0,,94.33000183105469,23.469999313354492,70.86000061035156,117.80000305175781,backhaul_km,pop_2km,rwi,0.4942,-0.119,0.0902,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0788,Pingas Camp Kompartment 144,Tongod,116.6667287,5.2777254,370.0,92.221,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0789,Kompartment 82,Tongod,116.6524192,5.2982556,396.0,92.221,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0790,Kompartment 155,Tongod,116.6815193,5.2390515,274.0,,75.5999984741211,14.470000267028809,61.130001068115234,90.06999969482422,backhaul_km,n_schools_3km,rwi,0.3529,-0.0758,0.0643,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0791,Kompartment 143,Tongod,116.670471,5.2825763,436.0,92.221,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0793,Kompartment 123,Tongod,116.6656873,5.2980372,368.0,,88.08999633789062,20.18000030517578,67.91000366210938,108.2699966430664,backhaul_km,seasonal_water_px,pop_2km,0.7479,0.0774,-0.0729,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0794,Kaimadang,Keningau,116.2773773,5.3599854,444.0,22.609,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0795,Kiporing,Keningau,116.257985,5.3306312,471.0,22.609,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0802,Ulu Monsorulung,Tambunan,116.2321878,5.5999573,775.0,,37.599998474121094,7.96999979019165,29.639999389648438,45.56999969482422,pop_2km,backhaul_km,rwi,-0.3582,0.3582,-0.2841,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0806,Tajur,Tambunan,116.3589258,5.5201275,591.0,,73.5999984741211,30.829999923706055,42.77000045776367,104.43000030517578,rwi,pop_2km,backhaul_km,0.3061,-0.2193,0.1742,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0807,Rompon,Tambunan,116.3176526,5.5197756,411.0,216.1025,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0810,Susuon Baru,Tambunan,116.3654918,5.5563637,784.0,,84.18000030517578,21.270000457763672,62.91999816894531,105.44999694824219,rwi,pop_2km,seasonal_water_px,0.823,-0.3364,0.0988,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0811,Monsok Ulu,Tambunan,116.3749004,5.558876,574.0,,95.11000061035156,24.860000610351562,70.25,119.97000122070312,rwi,pop_2km,seasonal_water_px,0.8237,-0.361,0.099,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0812,Monsok Tengah,Tambunan,116.358018,5.5700501,573.0,,33.27000045776367,13.670000076293945,19.600000381469727,46.95000076293945,pop_2km,rwi,n_schools_3km,-0.6623,-0.1462,-0.0651,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0821,Kitoring,Tambunan,116.3436675,5.5739764,759.0,,19.56999969482422,9.779999732971191,9.789999961853027,29.34000015258789,pop_2km,rwi,backhaul_km,-0.6784,-0.3234,-0.0899,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0827,Bolotikon,Tambunan,116.2711104,5.638746,631.0,,41.15999984741211,7.650000095367432,33.5099983215332,48.810001373291016,pop_2km,rwi,backhaul_km,-0.4786,0.2081,0.0875,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0830,Widu,Ranau,116.5895682,5.8040982,795.0,,100.36000061035156,33.540000915527344,66.81999969482422,133.89999389648438,rwi,backhaul_km,seasonal_water_px,0.3821,0.1467,0.1321,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0838,Kigiwit,Ranau,116.7264859,5.7170949,741.0,,103.12000274658203,23.780000686645508,79.33999633789062,126.9000015258789,rwi,backhaul_km,seasonal_water_px,0.3857,0.251,0.1403,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0842,Minduhuaon Baru,Ranau,116.8002752,5.8715374,323.0,,62.529998779296875,12.880000114440918,49.650001525878906,75.4000015258789,backhaul_km,n_schools_3km,rwi,0.1475,-0.0748,0.0493,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0844,Paus,Ranau,116.7864316,5.6861462,222.0,199.833,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0853,Toupos,Ranau,116.8833001,5.6769714,403.0,,44.84000015258789,15.359999656677246,29.479999542236328,60.20000076293945,pop_2km,rwi,backhaul_km,-0.3248,-0.3044,0.2901,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0855,Walou,Ranau,116.7408226,5.6653588,397.0,28.838,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0859,Panulangon,Ranau,116.7210878,5.6603136,568.0,2.483,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0869,Mansalu,Ranau,117.0320814,6.0856557,158.0,,157.85000610351562,63.75,94.11000061035156,221.60000610351562,backhaul_km,rwi,seasonal_water_px,0.5582,0.4801,0.1002,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0877,Sungangon,Ranau,116.8053771,5.8622468,247.0,60.947,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0878,Bereing,Ranau,116.7861553,5.9026773,506.0,12.0085,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0880,Mapad,Ranau,116.7159365,5.8672493,466.0,,27.84000015258789,20.399999618530273,7.449999809265137,48.2400016784668,pop_2km,n_schools_3km,seasonal_water_px,-0.6701,-0.0658,0.0276,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0884,Kampung Sedul,Ranau,116.7685302,5.9809394,295.0,53.909,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0901,Agan,Ranau,117.0701728,6.1254207,77.0,,100.66000366210938,19.670000076293945,81.0,120.33000183105469,backhaul_km,pop_2km,rwi,0.6405,-0.1834,0.1734,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0911,Patau,Ranau,116.9769462,6.0551107,111.0,,97.04000091552734,23.190000534057617,73.8499984741211,120.2300033569336,backhaul_km,pop_2km,rwi,0.5152,-0.1145,0.0898,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0913,Tinindoi,Ranau,116.9808099,6.1512347,224.0,,86.8499984741211,11.65999984741211,75.19000244140625,98.51000213623047,backhaul_km,pop_2km,rwi,0.6209,-0.1634,0.1613,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0923,Sinurai,Ranau,116.9619601,6.117644,110.0,90.631,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0932,Kopuakan,Ranau,116.9097353,6.1740036,150.0,,80.11000061035156,19.239999771118164,60.869998931884766,99.36000061035156,backhaul_km,rwi,seasonal_water_px,0.5984,-0.2264,-0.0876,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0933,Garong,Ranau,116.9715973,6.2312546,238.0,,97.04000091552734,23.190000534057617,73.8499984741211,120.2300033569336,backhaul_km,pop_2km,rwi,0.5152,-0.1145,0.0898,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0935,Pahu Sasapan,Ranau,116.7745909,6.13671,286.0,53.711,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S0937,Kawasan Pertanian Kisagut,Ranau,116.8909304,6.1035086,251.0,,70.62999725341797,19.520000457763672,51.099998474121094,90.1500015258789,rwi,pop_2km,backhaul_km,0.2162,-0.1662,0.0801,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0947,Nalumad,Ranau,116.7459246,6.1000667,331.0,,60.56999969482422,4.96999979019165,55.61000061035156,65.54000091552734,backhaul_km,pop_2km,seasonal_water_px,0.2581,0.1392,0.0505,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0948,Dantayon,Ranau,116.7390666,6.101652,448.0,,62.529998779296875,3.2699999809265137,59.2599983215332,65.80000305175781,backhaul_km,pop_2km,n_schools_3km,0.1335,-0.1086,0.0653,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S0999,Niasan,Ranau,116.6353208,5.8525814,752.0,,78.88999938964844,17.020000457763672,61.880001068115234,95.91000366210938,rwi,pop_2km,seasonal_water_px,0.7817,-0.3782,0.0859,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1001,Tiang Lama,Ranau,116.6029261,5.7859487,996.0,,104.25,35.06999969482422,69.18000030517578,139.32000732421875,rwi,backhaul_km,seasonal_water_px,0.3661,0.2316,0.1379,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1009,Togoyog,Ranau,116.6694741,5.8309801,817.0,,61.5099983215332,23.65999984741211,37.849998474121094,85.16999816894531,rwi,pop_2km,backhaul_km,0.3598,-0.3084,-0.1215,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1012,Kampung Gaur,Ranau,116.6670815,5.8697799,610.0,30.953,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1013,Kitaih,Ranau,116.6501005,5.8106471,980.0,,56.0099983215332,19.440000534057617,36.56999969482422,75.44999694824219,pop_2km,backhaul_km,rwi,-0.2324,0.2054,-0.089,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1014,Bayag,Ranau,116.6582476,5.8464074,665.0,16.17,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1017,Longut Lama,Ranau,116.591478,5.8442575,813.0,,44.130001068115234,20.030000686645508,24.09000015258789,64.16000366210938,pop_2km,rwi,n_schools_3km,-0.3204,-0.2322,-0.0785,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1051,Torolobou,Ranau,116.5096727,5.949506,926.0,15.079,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1056,Sikalabot,Nabawan,116.3966688,4.5119873,151.0,12.465,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1057,Kampung Sumantakawan,Nabawan,116.3001806,4.5132001,178.0,,54.72999954223633,7.079999923706055,47.650001525878906,61.810001373291016,rwi,pop_2km,place,0.4675,-0.365,0.1847,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1058,Payaton,Nabawan,116.2278355,4.438534,304.0,,58.36000061035156,28.219999313354492,30.139999389648438,86.58000183105469,rwi,pop_2km,n_schools_3km,0.3364,-0.3081,-0.0933,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1061,Kampung Sabungo,Nabawan,116.2361497,4.6180976,243.0,,58.459999084472656,17.520000457763672,40.93000030517578,75.9800033569336,pop_2km,rwi,place,-0.419,0.3078,0.1472,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1062,Kampung Sasalap,Nabawan,116.2370054,4.5473904,229.0,,26.989999771118164,11.579999923706055,15.40999984741211,38.560001373291016,pop_2km,backhaul_km,rwi,-0.5609,-0.2209,-0.1202,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1063,Samali,Nabawan,116.2373956,4.5415904,237.0,,23.93000030517578,9.210000038146973,14.720000267028809,33.130001068115234,pop_2km,backhaul_km,n_schools_3km,-0.63,-0.2534,-0.0761,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1065,Kampung Haungan,Nabawan,116.1969706,4.5580668,284.0,,52.18000030517578,15.859999656677246,36.31999969482422,68.04000091552734,pop_2km,rwi,place,-0.3775,0.3137,0.1749,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1075,Kampung Tatalaan Ulu,Keningau,116.2101493,5.0489146,363.0,,88.51000213623047,18.56999969482422,69.93000030517578,107.08000183105469,rwi,pop_2km,place,0.6953,-0.2453,0.1106,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1077,Balai Budaya Totogop,Keningau,116.175459,5.2283683,306.0,8.6595,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1082,Kampung Sendukut,Keningau,116.2286355,5.253915,440.0,9.265,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1084,Kampung Tinagalan Laut,Keningau,116.3006846,5.100738,358.0,5.395,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1085,Mangkubau Darat,Pitas,117.1426333,6.9546045,9.0,2.304,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1086,Serupil,Pitas,117.1761723,6.8976509,30.0,,53.13999938964844,6.300000190734863,46.84000015258789,59.45000076293945,backhaul_km,pop_2km,seasonal_water_px,0.5365,-0.4398,0.0607,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1087,Mangkubau Laut,Pitas,117.1327988,6.9959767,13.0,76.6355,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1088,Tanggui,Pitas,117.1379384,6.9722254,13.0,2.304,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1089,Dallas,Pitas,117.1133348,6.9742438,36.0,6.453,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1090,Estet Kakarangan,Pitas,117.2052235,6.8596406,25.0,,54.63999938964844,29.020000457763672,25.6200008392334,83.6500015258789,rwi,pop_2km,backhaul_km,0.2687,-0.2479,-0.1247,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1095,Pituru,Pitas,117.2063034,6.7780476,9.0,99.547,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1096,Mapan-Mapan,Pitas,117.2464376,6.8622992,9.0,,36.79999923706055,8.920000076293945,27.889999389648438,45.720001220703125,pop_2km,backhaul_km,rwi,-0.269,0.2058,-0.1765,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1098,Lok Kapas,Pitas,117.242507,6.8677008,10.0,,37.20000076293945,7.239999771118164,29.959999084472656,44.439998626708984,pop_2km,backhaul_km,rwi,-0.2721,0.1996,-0.1243,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1099,Mantaya,Pitas,117.1409317,6.9612125,9.0,2.304,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1100,Tanjung Malawali,Kudat,117.3025683,7.0451884,55.0,,65.55999755859375,20.690000534057617,44.869998931884766,86.25,pop_2km,rwi,backhaul_km,-0.2679,0.2061,0.1328,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1101,Kandinga,Pitas,117.2403773,6.8554142,3.0,,36.939998626708984,8.8100004196167,28.1299991607666,45.75,pop_2km,backhaul_km,rwi,-0.2625,0.2071,-0.1661,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1104,Tanjung Berungus,Pitas,117.0320892,6.9481337,13.0,,54.119998931884766,38.79999923706055,15.319999694824219,92.91000366210938,seasonal_water_px,pop_2km,rwi,-0.3099,-0.2323,0.1371,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1105,Malubang,Pitas,117.0584738,6.9627435,11.0,,60.7599983215332,7.710000038146973,53.04999923706055,68.4800033569336,pop_2km,rwi,backhaul_km,-0.349,0.3331,0.1711,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1107,Tiga Tarok,Pitas,117.0731101,6.9803126,7.0,,38.810001373291016,18.969999313354492,19.84000015258789,57.77000045776367,pop_2km,seasonal_water_px,n_schools_3km,-0.2674,-0.2025,-0.0787,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1108,Pancuran,Pitas,117.0578355,6.9647854,11.0,,54.52000045776367,6.860000133514404,47.65999984741211,61.380001068115234,pop_2km,rwi,n_schools_3km,-0.3928,0.356,-0.1106,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1109,Kampung Naruntung,Pitas,117.1599113,7.0024141,10.0,1.423,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1111,Kipahung,Pitas,117.1327134,6.920408,12.0,,41.09000015258789,14.739999771118164,26.350000381469727,55.83000183105469,pop_2km,n_schools_3km,rwi,-0.2979,-0.0705,-0.0621,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1112,Suangbat,Pitas,117.1174777,6.9811597,39.0,6.453,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1113,Sawangon,Pitas,117.0333464,6.9306229,11.0,,45.18000030517578,36.849998474121094,8.329999923706055,82.02999877929688,pop_2km,seasonal_water_px,backhaul_km,-0.4122,-0.2318,0.1466,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1123,Ulu Angkarut,Nabawan,116.0516406,4.4436134,1140.0,,68.76000213623047,18.670000076293945,50.09000015258789,87.43000030517578,rwi,pop_2km,n_schools_3km,0.2224,-0.1662,-0.0778,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1124,Salang,Nabawan,116.0150935,4.4504276,934.0,,94.58000183105469,23.489999771118164,71.08000183105469,118.06999969482422,backhaul_km,pop_2km,rwi,0.5067,-0.1145,0.0903,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1125,Namalasakan Butul,Nabawan,116.0233674,4.4712404,813.0,,94.16999816894531,23.6299991607666,70.54000091552734,117.80000305175781,backhaul_km,rwi,pop_2km,0.3938,0.1334,-0.1208,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1126,Pengolobon,Tenom,116.0101889,4.5309324,1201.0,,94.33000183105469,23.469999313354492,70.86000061035156,117.80000305175781,backhaul_km,pop_2km,rwi,0.4942,-0.119,0.0902,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1129,Kampung Simpang Tiga,Beluran,117.2494648,6.5611914,30.0,,73.04000091552734,17.809999465942383,55.22999954223633,90.83999633789062,pop_2km,backhaul_km,rwi,-0.2433,0.2171,0.17,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1131,Kampung Babagoh,Beluran,117.5029371,6.5952007,4.0,,67.66000366210938,27.40999984741211,40.25,95.06999969482422,backhaul_km,rwi,seasonal_water_px,0.4125,0.3294,-0.2118,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1132,Bakungan,Sandakan,118.1174268,6.1850273,7.0,,89.41000366210938,21.25,68.1500015258789,110.66000366210938,place,backhaul_km,rwi,0.1536,0.0802,0.0569,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1134,,Sandakan,118.2784148,5.8179655,2.0,,46.31999969482422,22.399999618530273,23.90999984741211,68.72000122070312,pop_2km,place,n_schools_3km,-0.26,0.1157,-0.0794,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1196,,Sipitang,115.7159811,4.7860492,759.0,,53.41999816894531,11.329999923706055,42.09000015258789,64.75,pop_2km,backhaul_km,seasonal_water_px,-0.255,0.2423,0.0807,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1197,Kem Sinar 9,Beluran,117.2092509,6.5016492,204.0,,115.7699966430664,27.959999084472656,87.80999755859375,143.72999572753906,backhaul_km,rwi,seasonal_water_px,0.4846,0.3868,0.1423,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1199,AFC Coupe 3,Pitas,117.0775157,6.5108546,348.0,,65.7300033569336,20.6200008392334,45.11000061035156,86.3499984741211,pop_2km,rwi,backhaul_km,-0.2679,0.2061,0.1328,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1200,Jesselton Estate,Pitas,117.081689,6.4730173,234.0,,64.48999786376953,19.25,45.2400016784668,83.73999786376953,pop_2km,rwi,backhaul_km,-0.2661,0.2058,0.1298,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1201,AFC Coupe 8,Beluran,117.1686621,6.4773921,72.0,,64.48999786376953,19.25,45.2400016784668,83.73999786376953,pop_2km,rwi,backhaul_km,-0.2661,0.2058,0.1298,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1202,AFC Coupe 2,Pitas,117.1084812,6.4757033,290.0,,72.05000305175781,19.829999923706055,52.209999084472656,91.87999725341797,rwi,pop_2km,backhaul_km,0.2114,-0.1754,0.0936,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1204,Mantalang,Pitas,117.1012896,6.4744786,314.0,,72.05000305175781,19.829999923706055,52.209999084472656,91.87999725341797,rwi,pop_2km,backhaul_km,0.2114,-0.1754,0.0936,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1206,Mangkabusu,Pitas,117.0030656,6.5692272,25.0,48.373,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1218,Lokos,Pitas,116.9967224,6.5726607,156.0,48.373,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1219,Sinanggip,Pitas,116.9869236,6.6103905,262.0,8.034,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1225,Vunoi,Pitas,116.9968887,6.5811176,29.0,,35.72999954223633,11.9399995803833,23.799999237060547,47.66999816894531,pop_2km,rwi,backhaul_km,-0.4391,-0.1166,0.1002,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1234,Tukar,Pitas,117.0918455,6.6266504,26.0,,59.4900016784668,17.450000762939453,42.040000915527344,76.94000244140625,rwi,pop_2km,backhaul_km,0.6603,-0.5906,0.0652,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1237,Bambangan Sook,Pitas,117.0101601,6.6388479,106.0,23.63,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1239,Mandurian Laut,Pitas,117.0206976,6.629788,23.0,,52.650001525878906,19.90999984741211,32.7400016784668,72.55999755859375,rwi,pop_2km,seasonal_water_px,0.6348,-0.4674,-0.1981,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1246,Kem Polai,Pitas,117.1017769,6.6343091,126.0,,35.41999816894531,21.079999923706055,14.34000015258789,56.5099983215332,pop_2km,n_schools_3km,seasonal_water_px,-0.6299,-0.0574,0.0413,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1258,Ulu Patian,Tenom,115.9701832,4.8889332,627.0,,22.40999984741211,7.159999847412109,15.239999771118164,29.56999969482422,pop_2km,backhaul_km,rwi,-0.7135,-0.1825,0.1602,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1260,Sumambu,Tenom,115.9927541,4.7707803,698.0,,74.12000274658203,25.420000076293945,48.70000076293945,99.54000091552734,backhaul_km,pop_2km,seasonal_water_px,0.2257,0.1098,0.07,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1261,Tinura,Tenom,115.8893519,4.6969219,469.0,38.605,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1269,Sosopon,Tenom,115.8610354,4.7570931,548.0,57.609,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1276,Ripanon,Tenom,115.9132903,4.8238348,362.0,,40.599998474121094,15.670000076293945,24.940000534057617,56.27000045776367,pop_2km,rwi,n_schools_3km,-0.4919,0.3704,-0.0961,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1277,Lohot,Tenom,115.8676654,4.7691,471.0,77.686,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1280,Titikom,Tenom,116.0409093,4.7655482,1196.0,,65.05999755859375,24.290000915527344,40.77000045776367,89.3499984741211,rwi,pop_2km,backhaul_km,0.2914,-0.2376,0.1828,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1281,Masanoi,Tenom,115.9558461,4.9660872,575.0,,43.40999984741211,14.109999656677246,29.309999465942383,57.52000045776367,pop_2km,backhaul_km,rwi,-0.5672,0.202,0.1452,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1284,Tilis,Tenom,115.9005547,4.7737699,401.0,,58.45000076293945,14.220000267028809,44.22999954223633,72.66999816894531,backhaul_km,seasonal_water_px,rwi,0.1489,0.0617,0.061,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1285,Titiku,Tenom,116.0182134,4.7560232,1013.0,,69.18000030517578,21.8799991607666,47.310001373291016,91.05999755859375,rwi,pop_2km,backhaul_km,0.2914,-0.2376,0.1828,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1298,Katubu,Tenom,115.9691419,4.8675052,516.0,,17.079999923706055,6.110000133514404,10.970000267028809,23.190000534057617,pop_2km,backhaul_km,rwi,-0.5782,-0.2817,-0.1475,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1301,Sinawangon,Tenom,116.034389,4.7568219,1227.0,,54.63999938964844,29.020000457763672,25.6200008392334,83.6500015258789,rwi,pop_2km,backhaul_km,0.2687,-0.2479,-0.1247,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1303,Aloh,Nabawan,116.1056739,4.831419,993.0,,66.69000244140625,24.190000534057617,42.5,90.87999725341797,pop_2km,backhaul_km,rwi,-0.2642,0.2474,0.1957,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1322,Bandar Fajar Harapan,LahadDatu,119.2067601,5.2335919,76.0,85.7735,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1358,Kampung Menampilik,Semporna,118.5703486,4.3458764,9.0,,77.19000244140625,22.469999313354492,54.720001220703125,99.66000366210938,rwi,place,n_schools_3km,0.3192,0.1459,-0.1159,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1360,Kampung Pamaguan,Sandakan,118.0563466,5.940402,8.0,,35.7400016784668,16.59000015258789,19.139999389648438,52.33000183105469,pop_2km,rwi,place,-0.4809,-0.1315,0.1157,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1362,Ladang Segaliud,Sandakan,117.7848788,5.7228561,18.0,20.569,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1363,Ladang Menggaris,Sandakan,117.7342929,5.7077547,15.0,52.0335,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1368,Kampung Luboh,Sandakan,118.0145731,6.0114307,10.0,2.44,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1369,"SK Nampasan, Ranau",Ranau,116.6578479,5.868349,703.0,30.953,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1371,Desa Orcid,Keningau,116.2407374,5.0576442,366.0,,33.0,6.789999961853027,26.209999084472656,39.790000915527344,pop_2km,rwi,backhaul_km,-0.4553,-0.1481,0.0657,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1429,Kampung Kumansi,Tongod,117.0890236,5.2775781,42.0,30.392,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
+S1430,Kampung Tronglit,Sandakan,117.9952884,5.7439076,3.0,,61.290000915527344,19.469999313354492,41.83000183105469,80.76000213623047,pop_2km,backhaul_km,place,-0.2473,0.2116,0.1006,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1431,Kampung Kababak,Semporna,118.5026014,4.5276344,8.0,,31.770000457763672,6.710000038146973,25.06999969482422,38.47999954223633,pop_2km,rwi,place,-0.3163,-0.1908,0.1651,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1432,Kampung Silawa,Semporna,118.5791731,4.5526744,3.0,,64.18000030517578,14.479999542236328,49.70000076293945,78.66000366210938,pop_2km,place,n_schools_3km,-0.207,0.2049,0.1844,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1433,Kampung Lumanggas,Semporna,118.5733795,4.5492253,10.0,,61.7599983215332,17.280000686645508,44.47999954223633,79.02999877929688,pop_2km,place,n_schools_3km,-0.3177,0.2697,0.1119,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1434,Kampung Rasak,Semporna,118.5320359,4.5430409,13.0,,52.29999923706055,5.449999809265137,46.84000015258789,57.75,pop_2km,place,n_schools_3km,-0.3331,0.2032,0.1264,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1438,Kampung Selakan,Semporna,118.6947897,4.5748288,8.0,,60.29999923706055,21.40999984741211,38.88999938964844,81.69999694824219,pop_2km,rwi,place,-0.4132,0.3919,0.1658,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1439,Kampung Larapan Hujung,Semporna,118.5939145,4.5534766,1.0,,57.25,12.539999961853027,44.709999084472656,69.79000091552734,place,pop_2km,n_schools_3km,0.197,-0.1753,0.1706,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1440,Kampung Bakong Bakong,Semporna,118.4752375,4.5737138,11.0,,53.75,32.65999984741211,21.09000015258789,86.41000366210938,rwi,pop_2km,seasonal_water_px,-0.1655,0.129,-0.1067,modelled,A_noterrain_v1,2026-08-07,34.06,0.33
+S1445,Kampung Tiger,Tawau,117.8187132,4.4075531,100.0,29.337,,,,,,,,,,,insufficient,A_noterrain_v1,2026-08-07,34.06,0.33
