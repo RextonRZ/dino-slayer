@@ -1,0 +1,54 @@
+{
+  "_what": "Distance-based candidate service areas for the 449 tower settlements. NOT predicted radio coverage: no terrain, no mast height, no line of sight. ITU-R P.1812 is the real calculation and it needs profiles we do not have.",
+  "_method": "Candidate sites are the settlement coordinates themselves. Greedy maximum coverage, which is the standard ln(n) approximation and not a proven minimum.",
+  "n_tower_settlements": 449,
+  "top50_dipi_in_tower": 31,
+  "terrain_shadowed": 55,
+  "cost_per_site_rm": {
+    "low": 350000,
+    "base": 520000,
+    "high": 780000
+  },
+  "one_per_settlement_base_rm": 233480000,
+  "scenarios": [
+    {
+      "radius_km": 3,
+      "masts": 189,
+      "covered": 449,
+      "uncovered": 0,
+      "top50_dipi_covered": "31/31",
+      "mean_km_to_mast": 0.96,
+      "max_km_to_mast": 3.0,
+      "shadowed_sites": 15,
+      "rm_low": 66150000,
+      "rm_base": 98280000,
+      "rm_high": 147420000
+    },
+    {
+      "radius_km": 5,
+      "masts": 145,
+      "covered": 449,
+      "uncovered": 0,
+      "top50_dipi_covered": "31/31",
+      "mean_km_to_mast": 1.7,
+      "max_km_to_mast": 4.96,
+      "shadowed_sites": 12,
+      "rm_low": 50750000,
+      "rm_base": 75400000,
+      "rm_high": 113100000
+    },
+    {
+      "radius_km": 10,
+      "masts": 86,
+      "covered": 449,
+      "uncovered": 0,
+      "top50_dipi_covered": "31/31",
+      "mean_km_to_mast": 3.97,
+      "max_km_to_mast": 9.99,
+      "shadowed_sites": 5,
+      "rm_low": 30100000,
+      "rm_base": 44720000,
+      "rm_high": 67080000
+    }
+  ]
+}
