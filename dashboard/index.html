@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  DINO SLAYER — Digital Inclusion Priority Index, Sabah
+  DINO SLAYER, Digital Inclusion Priority Index, Sabah
   ASEAN GeoAI Fusion 2026
 
   Serve it, don't open it from disk (the browser blocks file:// fetch):
@@ -14,7 +14,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dino Slayer — Digital Inclusion Priority Index, Sabah</title>
+<title>Dino Slayer, Digital Inclusion Priority Index, Sabah</title>
 <link rel="icon" type="image/png" href="public/favicon.png">
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.css">
 <style>
@@ -112,7 +112,7 @@ button,a,input,select{transition:background-color .18s var(--ease),color .18s va
 
 /* ══ 4. Shell ══════════════════════════════════════════════════════════════ */
 /* The single implicit column MUST be constrained. Left as `auto` it sizes to
-   the widest item's max-content — the nowrap credits line blew the shell out
+   the widest item's max-content, the nowrap credits line blew the shell out
    to 1460px in a 1366px window, pushing the header actions off-screen and
    over-sizing the map canvas. */
 .app{position:relative;z-index:1;height:100%;display:grid;
@@ -157,21 +157,44 @@ svg{display:block}
 .group{margin-bottom:22px;flex:none}
 /* The collapsible tools are siblings of the layer stack and used to run into
    it. A hairline and real space make each one read as its own thing. */
-.group.wgroup{margin-bottom:0;padding:11px 0;border-top:1px solid var(--hairline)}
-.group.wgroup + .group.wgroup{padding-top:11px}
+/* Collapsed, these are two lines of small caps with a hairline between them, and
+   at 11 px of padding they read as one block rather than two controls. */
+.group.wgroup{margin-bottom:0;padding:8px 0;border-top:1px solid var(--hairline)}
 .group.wgroup > summary{margin:0}
-.group.wgroup[open]{padding-bottom:15px}
+.group.wgroup[open]{padding-bottom:16px}
 .group.wgroup[open] > summary{margin-bottom:11px}
 .sidebar > .group:not(.wgroup):not(.grow){padding-top:16px;border-top:1px solid var(--hairline)}
 .group > .micro{display:block;margin:0 4px 9px}
+/* The modelled-estimates toggle is the only one that sits OUTSIDE a .group, so
+   it is a direct flex child of the sidebar column. Without the flex:none on
+   .toggle-row above, the column squeezed it under its own three lines of text
+   and they ran into the Layers heading. It stayed invisible until the coverage
+   model shipped, which is why nothing caught it earlier. The margins give it
+   the air the groups on either side already have. */
 .group.grow{flex:1 1 auto;min-height:15rem;display:flex;flex-direction:column;margin-bottom:18px}
 .group.grow .top-list{flex:1 1 auto;overflow-y:auto;min-height:0;margin-right:-6px;padding-right:6px}
 /* Weightings is a V6b exploration tool, not a primary control: closed by default. */
 .wgroup{margin-bottom:4px}
-.wsum{cursor:pointer;list-style:none;display:block;margin:0 4px 9px;padding:3px 0}
-.wsum::-webkit-details-marker{display:none}
-.wsum::before{content:"▸ ";font-size:8px}
-details[open] > .wsum::before{content:"▾ "}
+/* The marker used to be an 8 px triangle glyph, which is not something anyone
+   reads as "this opens". A real caret that turns, a row that highlights under
+   the cursor, and a target the full width of the rail. Still quiet: no borders,
+   no filled button, nothing that competes with the data below it. */
+/* .group.wgroup, not .wsum alone: the summary carries class="micro wsum", and
+   `.group > .micro{display:block}` outranks a single class, so display:flex was
+   silently losing and the caret never got centred. */
+.group.wgroup > .wsum{cursor:pointer;list-style:none;display:flex;align-items:center;gap:9px;
+  margin:0 -6px;padding:8px 10px;border-radius:8px;user-select:none;
+  transition:background-color .16s var(--ease),color .16s var(--ease)}
+.group.wgroup > .wsum::-webkit-details-marker{display:none}
+.group.wgroup > .wsum:hover{background:var(--tint);color:var(--ink)}
+.group.wgroup > .wsum:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.group.wgroup > .wsum::before{content:"";flex:none;width:0;height:0;
+  border-left:5px solid currentColor;
+  border-top:4px solid transparent;border-bottom:4px solid transparent;
+  transition:transform .18s var(--ease)}
+details[open] > .wsum{color:var(--ink-strong)}
+details[open] > .wsum::before{transform:rotate(90deg)}
+@media (prefers-reduced-motion:reduce){.wsum,.wsum::before{transition:none}}
 .field{width:100%;height:38px;padding:0 11px;border-radius:9px;border:1px solid var(--hairline);
   background:color-mix(in srgb,var(--surface) 55%,transparent);color:var(--ink-strong);font-size:13px}
 .field::placeholder{color:var(--ink-muted)}
@@ -191,7 +214,7 @@ select.field{appearance:none;cursor:pointer;
 .result-row small{display:block;color:var(--ink-muted);font-size:10.5px;margin-top:1px}
 
 .toggle-row{display:flex;align-items:flex-start;gap:10px;min-height:44px;padding:7px 9px;
-  border-radius:9px;cursor:pointer;user-select:none}
+  border-radius:9px;cursor:pointer;user-select:none;flex:none}
 /* display:flex beats the UA sheet's [hidden]{display:none}, so restate it. */
 .toggle-row[hidden]{display:none}
 .toggle-row:hover{background:var(--tint)}
@@ -203,15 +226,20 @@ select.field{appearance:none;cursor:pointer;
 .toggle-row input:checked::after{content:"";position:absolute;left:4.5px;top:1px;width:4px;height:8px;
   border:solid var(--bg);border-width:0 2px 2px 0;transform:rotate(43deg)}
 .toggle-row .lbl{font-size:12.5px;line-height:1.35;color:var(--ink)}
-/* The caption gets its own line. Inline, "Seasonal water adjacency" and
-   "Never scored." ran together into one broken sentence. */
+/* The caption gets its own line when it has words in it. Where it carries only
+   an info button, it sits inline with the label instead of stranding the button
+   on a line of its own. */
 .toggle-row .lbl .caption{display:block;margin-top:2px}
+.toggle-row .lbl .caption:has(> .info:only-child){display:inline;margin:0}
 
-/* Hairline separators only — no per-row cards, no left accent bars, and the
+/* Hairline separators only, no per-row cards, no left accent bars, and the
    DIPI reads as a coloured NUMBER, never a filled pill. */
 /* Basemap segmented control */
-.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:9px 0 2px;padding:3px;
-  border:1px solid var(--hairline);border-radius:9px}
+/* grid-auto-flow:column, not a fixed 1fr 1fr. Two buttons laid out fine, but the
+   budget's three wrapped and "High" dropped onto a row of its own, which read as
+   a broken control rather than a segmented one. */
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;margin:9px 0 2px;
+  padding:3px;border:1px solid var(--hairline);border-radius:9px}
 .seg-btn{height:30px;border-radius:6px;font-size:11.5px;font-weight:600;color:var(--ink-muted)}
 .seg-btn:hover{color:var(--ink)}
 .seg-btn[aria-pressed="true"]{background:var(--tint);color:var(--ink-strong)}
@@ -247,8 +275,13 @@ select.field{appearance:none;cursor:pointer;
   letter-spacing:.13em;text-transform:uppercase;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .top-row .dv{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+/* Two figures, not their product: stakes x Mbps has no unit, so the composite
+   could only be read against its neighbours. These are both quantities a
+   planner already knows how to weigh. */
+.sv-two{display:flex;align-items:baseline;justify-content:flex-end;gap:5px;white-space:nowrap}
+.sv-two i{font-style:normal;font-size:10.5px;font-weight:600;color:var(--ink-muted)}
 
-/* Weight sliders (V6b) — ink, never accent: four of these are always on screen. */
+/* Weight sliders (V6b), ink, never accent: four of these are always on screen. */
 .wrow{margin-bottom:11px}
 .wrow .bar-head{margin-bottom:2px}
 .wslider{-webkit-appearance:none;appearance:none;width:100%;height:18px;
@@ -272,7 +305,7 @@ select.field{appearance:none;cursor:pointer;
   display:grid;place-items:center;color:var(--ink)}
 .rail-toggle:hover{color:var(--ink-strong)}
 
-/* Division / district labels — HTML overlays, not symbol layers: no glyph
+/* Division / district labels, HTML overlays, not symbol layers: no glyph
    server to fail mid-pitch, and they inherit the house type scale exactly. */
 .map-labels{position:absolute;inset:0;pointer-events:none;z-index:4;overflow:hidden}
 .mlabel{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;
@@ -306,7 +339,7 @@ select.field{appearance:none;cursor:pointer;
   pointer-events:none;white-space:nowrap}
 .fac-label-note:empty{display:none}
 
-/* §D1 honesty caption — sits directly under the legend, always visible. */
+/* §D1 honesty caption, sits directly under the legend, always visible. */
 .map-note{position:absolute;left:12px;bottom:0;z-index:5;margin:0;padding:0 2px 8px;
   white-space:nowrap;font-size:11.5px;line-height:1.4;color:var(--ink-muted);
   text-shadow:0 0 4px var(--bg),0 0 8px var(--bg)}
@@ -321,6 +354,9 @@ select.field{appearance:none;cursor:pointer;
   font-variant-numeric:tabular-nums;margin-bottom:10px}
 .legend-item{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--ink-muted);margin-top:6px}
 .legend-item .glyph{flex:none;width:13px;height:13px;border-radius:50%}
+/* The tower glyph is a drawn shape, not a bordered box: no radius, no border,
+   and it takes the row's ink so it tracks the theme. */
+.legend-item svg.glyph{border-radius:0;color:var(--ink-muted);overflow:visible}
 .glyph.queueb{border:1.5px solid var(--neutral)}
 .glyph.lowev{border:1.5px solid var(--warn)}
 .glyph.sel{border:2px solid var(--accent)}
@@ -329,7 +365,7 @@ select.field{appearance:none;cursor:pointer;
 
 /* A facility tooltip is a click target, not just a label: the dots are a few
    pixels wide and the tooltip is the big obvious thing on screen, so people
-   aim at it. Settlement tooltips stay inert — their dots are easy to hit. */
+   aim at it. Settlement tooltips stay inert, their dots are easy to hit. */
 .tooltip[data-fac="1"]{pointer-events:auto;cursor:pointer}
 .tooltip[data-fac="1"]:hover{border-color:var(--accent)}
 .tooltip[data-fac="1"] .t-more{display:block;margin-top:5px;font-size:10px;
@@ -343,7 +379,7 @@ select.field{appearance:none;cursor:pointer;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tooltip .t-line{font-size:11px;color:var(--ink-muted);margin-top:3px;font-variant-numeric:tabular-nums}
 
-/* Facility popup card (§A3) — top-left, clear of the legend and the panel. */
+/* Facility popup card (§A3), top-left, clear of the legend and the panel. */
 .fac-card{position:absolute;left:12px;top:52px;z-index:14;width:21rem;max-width:calc(100% - 24px);
   background:var(--material-bg);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   border:1px solid var(--hairline);border-radius:var(--radius);padding:13px;box-shadow:var(--shadow);
@@ -458,8 +494,8 @@ select.field{appearance:none;cursor:pointer;
 .bub-table table{font-size:11px}
 .bub-table th{padding:5px 6px;font-size:9px;letter-spacing:.04em;position:static;white-space:nowrap}
 .bub-table td{height:29px;padding:0 6px;white-space:nowrap}
-/* Names wrap rather than truncate. A facility row carries two of them — the
-   school and the settlement its speed was borrowed from — and at 314 px a
+/* Names wrap rather than truncate. A facility row carries two of them, the
+   school and the settlement its speed was borrowed from, and at 314 px a
    nowrap pair pushed the whole table into a sideways scroll. */
 /* word-break:normal, so the column is at least as wide as its longest word and
    SEKOLAH KEBANGSAAN never wraps as KEBANGSAA / N. Other columns give up the
@@ -485,6 +521,55 @@ select.field{appearance:none;cursor:pointer;
 .bud-warn{color:var(--warn);margin:0 0 8px}
 .bud-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
 .bud-row .field{width:6.5rem;height:34px}
+/* Closed by default: most people will never touch it, and the benchmark is a
+   reasonable default. Open, it is the honest answer to a number we cannot source. */
+/* The answer, not a tile. "How far does my money go" is the whole question the
+   panel exists to answer, and it used to sit in a paragraph under four tiles. */
+/* The slider is the whole control, so it gets the room a control needs and
+   the two ends are labelled: "0.5" would mean nothing to a planner. */
+.seq-slider{display:block;margin:10px 0 4px}
+.seq-slider input{width:100%;margin:0;accent-color:var(--accent);cursor:pointer}
+.seq-ends{display:flex;justify-content:space-between;font-size:10px;
+  color:var(--ink-muted);margin-top:2px}
+.fund-list{margin-top:10px}
+.fund-list > summary{margin-bottom:6px}
+#fundBody{max-height:15rem;overflow-y:auto}
+.seq-stop{display:flex;align-items:baseline;gap:8px;padding:5px 6px;font-size:11px;
+  border-top:1px solid var(--hairline);width:100%;text-align:left;cursor:pointer;
+  border-radius:6px;transition:background-color .14s var(--ease)}
+.seq-stop:hover,.seq-stop:focus-visible,.seq-stop[data-on="1"]{background:var(--tint)}
+/* Bundles the budget does not reach are still listed, because "what would the
+   next million buy" is the question the panel exists to answer, but they are
+   dimmed so the funded set reads as the answer. */
+.seq-stop[data-out="1"]{opacity:.5}
+.seq-stop[data-out="1"] .km::before{content:"needs ";font-weight:400}
+.seq-stop:hover .nm,.seq-stop[data-on="1"] .nm{color:var(--ink-strong)}
+.seq-stop .rk{flex:none;width:1.1rem;font-size:10px;font-weight:700;
+  color:var(--ink-muted);font-variant-numeric:tabular-nums}
+.seq-stop .nm{flex:1;min-width:0;color:var(--ink);overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.seq-stop .km{flex:none;font-size:10px;color:var(--ink-muted);
+  font-variant-numeric:tabular-nums}
+#seqList{margin-top:8px;max-height:14rem;overflow-y:auto}
+
+.bud-lead{display:flex;align-items:baseline;gap:9px;margin:2px 0 5px}
+.bud-lead .v{font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.bud-lead .lbl{font-size:10px;text-transform:uppercase;letter-spacing:.11em;
+  color:var(--ink-muted);font-weight:600;line-height:1.35}
+.bud-money{margin:0 0 3px;font-size:12.5px;font-weight:600;color:var(--ink-strong);
+  font-variant-numeric:tabular-nums}
+.bud-span{margin:0 0 10px;font-size:11.5px;color:var(--ink-muted);
+  font-variant-numeric:tabular-nums}
+
+.own-costs{margin:11px 0 9px;padding-top:10px;border-top:1px solid var(--hairline)}
+.own-costs > .micro{display:block;margin-bottom:8px}
+.own-costs .bud-row{margin-bottom:6px}
+.own-costs .bud-row .field{width:7.2rem}
+.own-costs .caption{font-size:11.5px}
+/* Only offer the way back once there is something to go back from. */
+.ghost-btn[hidden]{display:none}
+.own-cost::placeholder{color:var(--ink-muted);opacity:.7}
+.own-cost:not(:placeholder-shown){border-color:var(--accent)}
 
 /* Grouped search results */
 .res-head{font-size:9.5px;text-transform:uppercase;letter-spacing:.16em;color:var(--ink-muted);
@@ -496,9 +581,9 @@ select.field{appearance:none;cursor:pointer;
 .fac-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:9px;align-items:center;
   padding:7px 2px;border-bottom:1px solid var(--hairline)}
 .fac-row:last-child{border-bottom:0}
-.fac-kind{width:9px;height:9px;flex:none;background:var(--ink-muted)}
-.fac-kind[data-kind="health"]{border-radius:50%;background:transparent;
-  border:1.6px solid var(--ink-muted);width:10px;height:10px}
+/* The same square and cross the map draws, at row size. currentColor keeps it
+   on the row's own ink, so it tracks the theme without a second palette. */
+.fac-kind{width:12px;height:12px;flex:none;color:var(--ink-muted);overflow:visible}
 .fac-nm{min-width:0}
 .fac-nm b{display:block;font-size:12px;font-weight:600;color:var(--ink-strong);
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -510,7 +595,7 @@ select.field{appearance:none;cursor:pointer;
 
 /* Google imagery (opt-in). Always captioned, never presented as evidence. */
 .g-mount{margin-top:10px}
-/* Lead image is full panel width — a thumbnail strip was too small to read. */
+/* Lead image is full panel width, a thumbnail strip was too small to read. */
 .g-hero{margin:0 0 8px}
 .g-hero img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:9px;
   border:1px solid var(--hairline);display:block}
@@ -527,7 +612,7 @@ select.field{appearance:none;cursor:pointer;
 .g-err{color:var(--warn)}
 .g-cap{margin-top:8px}
 
-/* Validation panel — ?debug=1 only. */
+/* Validation panel, ?debug=1 only. */
 .debug{position:absolute;top:12px;right:12px;z-index:20;width:27rem;max-height:calc(100% - 24px);
   overflow-y:auto;background:var(--material-bg);backdrop-filter:blur(10px);
   border:1px solid var(--hairline);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
@@ -560,16 +645,31 @@ select.field{appearance:none;cursor:pointer;
 .chip.accent{background:var(--accent-bg);color:var(--accent)}
 
 .bar-row{margin-bottom:13px}
+/* The row carries the raw figures behind its score, so hovering the bar, its
+   label or its number all reach the same explanation. */
+.pil-row{cursor:help;border-radius:7px;padding:3px 5px;margin:0 -5px 10px;
+  transition:background-color .14s var(--ease)}
+.pil-row:hover{background:var(--tint)}
+.pil-row:hover .track > i{background:var(--ink-strong)}
 .bar-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:5px}
 .bar-head .num{font-size:13px;font-weight:600}
 .track{height:6px;border-radius:99px;background:var(--track);overflow:hidden}
 .track > i{display:block;height:100%;border-radius:99px;background:var(--bar);width:0;
   transition:width .38s var(--ease)}
 
-.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.tile{background:var(--surface);border:1px solid var(--hairline);border-radius:10px;padding:9px 10px;min-width:0}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tile{background:var(--surface);border:1px solid var(--hairline);border-radius:10px;
+  padding:11px 12px;min-width:0}
+/* Wrapping, not truncating. At 376 px the panel gives a tile about 100 px, and
+   "HEIGHT IN ITS DISTRICT" clipped to "HEIGHT IN IT...", which tells a reader
+   nothing at all. Two lines are reserved for every label so the values below
+   still share one baseline across the row, which is what the ellipsis was
+   really protecting. */
 .tile .micro{display:block;margin-bottom:3px;font-size:9px;letter-spacing:.11em;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  white-space:normal;line-height:1.25}
+/* Two lines reserved only in the drill-down, where a row of three tiles has to
+   keep its values on one baseline. The sidebar's labels are short. */
+#panel .tile .micro{min-height:2.5em}
 .tile .v{font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink-strong);
   letter-spacing:-.01em}
 .tile .v.small{font-size:12px;font-weight:500;color:var(--ink-muted)}
@@ -579,19 +679,26 @@ select.field{appearance:none;cursor:pointer;
 .panel{position:absolute;top:0;right:0;bottom:0;width:23.5rem;max-width:100%;z-index:12;
   background:var(--material-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   border-left:1px solid var(--hairline);box-shadow:var(--shadow);
-  overflow-y:auto;padding:16px 16px 28px;
+  overflow-y:auto;padding:18px 18px 32px;
   transform:translateX(100%);visibility:hidden;transition:transform .22s var(--ease),visibility .22s}
 .panel[data-open="1"]{transform:none;visibility:visible}
 .panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}
 .panel-head h2{font-size:19px;font-weight:600;color:var(--ink-strong);margin:0 0 6px;letter-spacing:-.015em}
 .panel-meta{display:flex;flex-wrap:wrap;gap:6px}
-.hero{display:flex;align-items:flex-end;gap:10px;padding:14px 0 16px;border-bottom:1px solid var(--hairline);margin-bottom:16px}
+.hero{display:flex;align-items:flex-end;gap:10px;padding:14px 0 18px;
+  border-bottom:1px solid var(--hairline);margin-bottom:0}
 .hero .big{font-size:52px;font-weight:700;line-height:.92;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
 .hero .side{padding-bottom:5px}
 .hero .side .micro{display:block}
 .hero .side .sub{font-size:11.5px;color:var(--ink-muted);margin-top:2px}
-.block{margin-bottom:18px}
-.block > .micro{display:block;margin-bottom:9px}
+/* The same rhythm the sidebar uses, a hairline and real air between sections
+   rather than eighteen pixels and hope. Ten blocks stacked on 18 px ran into
+   one another, so terrain, evidence and the simulator read as one long column
+   with no seams. */
+.block{margin-bottom:0;padding:19px 0;border-top:1px solid var(--hairline)}
+.block:first-of-type{border-top:0;padding-top:0}
+.block:last-of-type{padding-bottom:0}
+.block > .micro{display:block;margin-bottom:12px}
 .evidence-block{border:1px solid var(--hairline);border-radius:var(--radius);padding:12px 13px;background:var(--surface)}
 .evidence-block .chip{margin-bottom:7px}
 .note{border-left:2px solid var(--hairline-strong);padding:2px 0 2px 10px;color:var(--ink-muted);font-size:11.5px}
@@ -714,13 +821,19 @@ details.math code{font-size:10.5px;color:var(--ink)}
 .rk-chip{height:30px;padding:0 11px;border-radius:99px;border:1px solid var(--hairline);
   font-size:11.5px;font-weight:600;color:var(--ink-muted);display:inline-flex;align-items:center;gap:6px}
 .rk-chip:hover{background:var(--tint);color:var(--ink)}
+/* The count rides inside the chip: a planner picking an option wants to know
+   how much of Sabah it covers before clicking. */
+.opt-n{font-size:10px;font-variant-numeric:tabular-nums;color:var(--ink-muted);margin-left:2px}
+.rk-chip[aria-pressed="true"] .opt-n{color:var(--ink-strong)}
+#optChips{gap:5px}
+#optChips .rk-chip{height:27px;padding:0 9px;font-size:11px}
 .rk-chip[aria-pressed="true"]{background:var(--tint);color:var(--ink-strong);border-color:var(--hairline-strong)}
 .rk-chip.preset[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
 .rk-sep{width:1px;height:18px;background:var(--hairline);margin:0 3px}
 .rk-count{font-size:11.5px;color:var(--ink-muted);margin:0 0 9px;font-variant-numeric:tabular-nums}
 thead th[data-tip]{cursor:help}
 /* A pillar cell carries its raw inputs. The dotted rule is the only hint that
-   there is more behind the score — anything louder would stripe the table. */
+   there is more behind the score, anything louder would stripe the table. */
 td.pil{cursor:help;text-decoration:underline dotted color-mix(in srgb,var(--ink) 26%,transparent);
   text-underline-offset:3px}
 td.pil:hover{text-decoration-color:var(--accent)}
@@ -728,7 +841,7 @@ thead th.sortable{cursor:pointer;user-select:none}
 /* Explains what a column actually measures. Fixed-position so the table's
    overflow:hidden cannot clip it, and typography reset out of the th. */
 /* The ⓘ that carries a method note. Small, quiet, and only meaningful on
-   hover or focus — it must never compete with the number beside it. */
+   hover or focus, it must never compete with the number beside it. */
 .info{display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;
   margin-left:5px;border-radius:50%;border:1px solid var(--hairline-strong);
   font-size:9px;font-weight:700;line-height:1;color:var(--ink-muted);cursor:help;
@@ -743,7 +856,7 @@ thead th.sortable{cursor:pointer;user-select:none}
 .th-tip[data-show="1"]{opacity:1}
 thead th.sortable:hover{color:var(--ink-strong)}
 thead th .arw{margin-left:4px;opacity:.45;font-size:9px}
-/* The idle "sortable" hint is one glyph, not two — nine sortable columns pay
+/* The idle "sortable" hint is one glyph, not two, nine sortable columns pay
    for that width, and the active column still shows a real direction. */
 thead th[data-active="0"] .arw{font-size:10px;letter-spacing:0}
 /* The unit drops to its own line rather than widening the column. A bare
@@ -754,7 +867,7 @@ thead th[data-active="1"]{color:var(--ink-strong)}
 thead th[data-active="1"] .arw{opacity:1}
 
 /* Thirteen columns of real data will not fit a laptop, and clipping them out
-   of existence is not an answer — the wrap scrolls instead. It owns the
+   of existence is not an answer, the wrap scrolls instead. It owns the
    vertical scroll too, which is what keeps the header pinned to it. */
 .table-wrap{border:1px solid var(--hairline);border-radius:var(--radius);overflow:auto;
   background:var(--surface);max-height:min(62vh,620px)}
@@ -820,14 +933,14 @@ tr.cmp-group td{position:sticky;left:0}
    inline text and every reading rendered as "39.2Mbps". */
 #cmpTable .u{font-size:9.5px;color:var(--ink-muted);font-weight:500;margin-left:3px}
 #cmpTable thead th{font-size:10px}
-/* A group heading is a row, not a second table — the columns must stay aligned
+/* A group heading is a row, not a second table, the columns must stay aligned
    with the numbers underneath them. */
 tr.cmp-group td{background:var(--tint);font-size:9.5px;font-weight:700;letter-spacing:.16em;
   text-transform:uppercase;color:var(--ink-muted);padding:9px 14px !important;border-bottom:0}
 td.cmp-worst{color:var(--warn);font-weight:700}
 /* The percentile rides alongside the value rather than taking a column of its
    own; at four areas a second column each would not fit. Fixed width, and a
-   blank one is emitted where an indicator has no direction — that keeps both
+   blank one is emitted where an indicator has no direction, that keeps both
    the chips AND the numbers above them on the same vertical line. */
 .cmp-pc{display:inline-block;width:26px;margin-left:9px;padding:1px 0;border-radius:4px;
   background:var(--tint);color:var(--ink-muted);font-size:9.5px;font-weight:700;cursor:help;
@@ -897,7 +1010,7 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
 .cmp-card-stat{display:flex;flex-direction:column;gap:3px;min-width:0}
 .cmp-card-stat .v{font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1}
 .cmp-card-stat .micro{font-size:9px;letter-spacing:.11em;white-space:nowrap}
-/* Full card width, so all three stats fit even at four areas — beside the map
+/* Full card width, so all three stats fit even at four areas, beside the map
    there were only ~150 px and "SETTLEMENTS" clipped mid-word. */
 .cmp-card-foot{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
   padding-top:12px;border-top:1px solid var(--hairline);margin-top:auto}
@@ -911,7 +1024,7 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
 
    Side by side only while the two cards are comparable in height. At twenty-five
    areas the bar card is 125 rows and the radar card is nine, and stretching them
-   to match left the radar card as a tall empty box — so past a handful they
+   to match left the radar card as a tall empty box, so past a handful they
    stack and each takes its own height and the full width. */
 .cmp-panels{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:stretch}
 .cmp-panels.stacked{grid-template-columns:1fr}
@@ -937,7 +1050,7 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
 .cmp-barhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
   margin-bottom:8px}
 .cmp-barhead > span:first-child{font-size:11.5px;font-weight:600;color:var(--ink-strong)}
-/* .cmp-brow, not .cmp-bar — that name is already the toolbar above, and
+/* .cmp-brow, not .cmp-bar, that name is already the toolbar above, and
    reusing it turned the toolbar into a three-column grid whose count span
    sat on top of the Divisions button and swallowed its clicks. */
 .cmp-brow{display:grid;grid-template-columns:6.4rem minmax(0,1fr) 4.6rem;gap:11px;
@@ -955,7 +1068,7 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
 .cmp-brow.worst .cmp-bar-nm{color:var(--warn)}
 
 /* A flow grid with a floor on the cell width, so two areas sit side by side,
-   four wrap 2x2 and twenty-five wrap into rows — and no radar is ever squeezed
+   four wrap 2x2 and twenty-five wrap into rows, and no radar is ever squeezed
    below the width at which its axis labels stop being readable. */
 /* 240 px is the pivot: in the side-by-side card (~620 px) it yields exactly two
    across, so four areas read as a clean 2x2 rather than a row of three and an
@@ -1006,7 +1119,7 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
 .bub-src{margin:7px 0 0;font-size:10.5px;line-height:1.45;color:var(--ink-muted)}
 .bub-src + .bub-note{margin-top:5px;padding-top:5px}
 
-/* The printed masthead. Hidden on screen — the section already has a heading —
+/* The printed masthead. Hidden on screen, the section already has a heading,
    and the only place the brand mark appears on the page. */
 .cmp-print-head,.cmp-print-foot{display:none}
 @media (max-width:900px){.cmp-cols{grid-template-columns:1fr}}
@@ -1108,7 +1221,7 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
   th,td{padding:1.9px 6px !important;height:auto !important;line-height:1.35}
   thead th{position:static !important;background:#fff !important;font-size:7.5px}
   /* The screen's table sizing is set on #cmpTable, and an id beats the bare
-     element selectors above — so a 15.5 rem label column and 13 px labels
+     element selectors above, so a 15.5 rem label column and 13 px labels
      followed the table into print, wrapped every row onto two lines and
      pushed the summary cards onto a second page. Undo all three here. */
   #cmpTable{table-layout:auto !important;width:100% !important;min-width:0 !important}
@@ -1163,7 +1276,7 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
   [data-print="rankings"] tbody tr{break-inside:avoid}
 
   /* ── One settlement ────────────────────────────────────────────────────
-     The drill-down as a field sheet. Everything interactive is dropped —
+     The drill-down as a field sheet. Everything interactive is dropped,
      a printed toggle, a printed video and a printed close button are all
      just noise on paper. */
   [data-print="settlement"] .panel{width:auto !important}
@@ -1181,10 +1294,42 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
   [data-print="settlement"] .fac-link,
   [data-print="settlement"] .g-mount,
   [data-print="settlement"] details.math > summary{display:none !important}
+  /* Boilerplate: the same paragraph on every settlement sheet, and the
+     footer already carries the contract sentence. The settlement's OWN
+     arithmetic, one disclosure above it, still prints. */
+  [data-print="settlement"] details.math.generic{display:none !important}
   /* The maths is the whole reason a planner would keep this page, so it
      prints open whatever state the disclosure was left in on screen. */
   [data-print="settlement"] details.math > .mathbody{display:block !important}
-  [data-print="settlement"] .block{break-inside:avoid;margin-bottom:11px}
+  /* The screen gives each block 19 px of air top and bottom; across ten of
+     them that is 380 px, which pushed the sheet from two pages to three.
+     The hairline stays, the padding does not. */
+  /* It came to 2049 px against 2034 px of two A4 pages, fifteen over, which
+     bounced the whole local-context block onto a third. These trims buy about
+     eighty, so a wordier settlement does not tip it again. */
+  /* Granularity matters more than height here. A 679 px simulator block with
+     break-inside:avoid cannot fit whatever is left of a page, so it leaps the
+     boundary whole and wastes the remainder, which is how a sheet measuring
+     UNDER two pages still printed three. A section may span a break; the
+     things inside it that must stay whole are named below. */
+  [data-print="settlement"] .block{break-inside:auto;margin-bottom:0;
+    padding:6px 0 !important}
+  [data-print="settlement"] .tiles,
+  [data-print="settlement"] .evidence-block,
+  [data-print="settlement"] .verdict,
+  [data-print="settlement"] .tier-grid,
+  [data-print="settlement"] .legs,
+  [data-print="settlement"] .bar-row,
+  [data-print="settlement"] .fac-row,
+  [data-print="settlement"] .rec-why{break-inside:avoid}
+  [data-print="settlement"] .sim{padding:9px 10px}
+  [data-print="settlement"] .tier-line{padding:2.5px 6px}
+  [data-print="settlement"] .verdict{padding:8px 10px;margin-bottom:7px}
+  [data-print="settlement"] .peruser{margin:6px 0 8px}
+  [data-print="settlement"] .ctx,[data-print="settlement"] .sim-q{margin-bottom:8px}
+  [data-print="settlement"] .hero{padding-bottom:8px !important}
+  [data-print="settlement"] .tile{padding:6px 8px !important}
+  [data-print="settlement"] .tile .micro{min-height:0 !important}
   [data-print="settlement"] .hero{padding:8px 0 10px;margin-bottom:11px}
   [data-print="settlement"] .hero .big{font-size:34px}
   [data-print="settlement"] .tiles{gap:5px}
@@ -1269,6 +1414,41 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
       </details>
 
       <!-- B4: budget what-if. Every ringgit figure inside is a placeholder. -->
+      <details class="group wgroup" id="seqGroup">
+        <summary class="micro wsum">Deployment bundles<button class="info" type="button" tabindex="0"
+          aria-label="What this does"
+          data-tip="Fibre-recommended settlements grouped by position alone, so a bundle is screened as a potential shared deployment rather than designed as one. Settlements too far from any neighbour stay unclustered and are costed on their own. Tower, satellite and community Wi-Fi sit outside this model, which is not a claim that they share nothing.">i</button></summary>
+        <div id="seqOut"></div>
+        <!-- The same budget as Budget what-if. Duplicated rather than shared
+             because the two groups collapse independently, and a figure you
+             cannot reach is worse than a second box. -->
+        <div class="bud-row">
+          <input class="field" id="seqBudget" type="number" min="0" step="5" value="50"
+                 aria-label="Budget in RM millions">
+          <span class="caption">RM million</span>
+        </div>
+        <div class="seg" role="group" aria-label="Ranking scenario" id="seqScen">
+          <button class="seg-btn" data-sc="need" aria-pressed="false">Need</button>
+          <button class="seg-btn" data-sc="balanced" aria-pressed="true">Balanced</button>
+          <button class="seg-btn" data-sc="reach" aria-pressed="false">Reach/RM</button>
+        </div>
+        <label class="bud-row" style="margin-top:2px">
+          <input class="field own-cost" id="seqFibre" type="number" min="0" step="1000"
+                 placeholder="140,000" aria-label="Your cost per km of fibre">
+          <span class="caption">RM / km fibre<button class="info" type="button" tabindex="0"
+            aria-label="Why this is here"
+            data-tip="No Malaysian per-km fibre price is published, so the default is a benchmark from ITU and published cost models rather than a quote. Put your own procurement figure in and every bundle is repriced with it. Blank means use the benchmark. This is the same field as Your unit costs in Budget what-if.">i</button></span>
+        </label>
+        <div id="seqResult"></div>
+        <button class="ghost-btn" id="seqAsk" type="button"
+                style="width:100%;justify-content:center;margin-top:9px">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+               stroke-width="1.6"><path d="M14 9.5A1.5 1.5 0 0112.5 11H5l-3 3V4.5A1.5 1.5 0
+               013.5 3h9A1.5 1.5 0 0114 4.5z"/></svg>
+          <span id="seqAskLabel">Ask Tanya Dino about this</span>
+        </button>
+        <div id="seqList"></div>
+      </details>
       <details class="group wgroup" id="budgetGroup">
         <summary class="micro wsum">Budget what-if<button class="info" type="button" tabindex="0"
           aria-label="What this does"
@@ -1283,24 +1463,45 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
           <button class="seg-btn" data-scen="base" aria-pressed="true">Base</button>
           <button class="seg-btn" data-scen="high" aria-pressed="false">High</button>
         </div>
+        <!-- No Malaysian unit price is published, so the honest default is a
+             benchmark the planner can overwrite with their own procurement
+             figures. Blank means use the benchmark. -->
+        <div class="own-costs" id="ownCostsBox">
+          <span class="micro">Your unit costs<button class="info" type="button" tabindex="0"
+            aria-label="Why this is here"
+            data-tip="No Malaysian per-unit cost is published. MCMC reports what was built, not what it cost each, so the defaults here are benchmarks from ITU and published cost models rather than quotes. If you have procurement figures, put them in and the tool stops relying on ours. Blank means use the benchmark.">i</button></span>
+          <label class="bud-row"><input class="field own-cost" id="ownFibre" type="number"
+                 min="0" step="1000" placeholder="140,000" aria-label="Your cost per km of fibre">
+            <span class="caption">RM / km fibre</span></label>
+          <label class="bud-row"><input class="field own-cost" id="ownFwa" type="number"
+                 min="0" step="1000" placeholder="520,000" aria-label="Your cost per tower site">
+            <span class="caption">RM / tower site</span></label>
+          <button class="ghost-btn" id="ownReset" hidden
+                  style="width:100%;justify-content:center;margin-top:2px">
+            Back to the benchmark</button>
+        </div>
         <div id="budgetOut"></div>
+        <!-- The rings on the map say how many. A stakeholder asking WHICH had
+             nowhere to look, and 271 white circles is not a list. -->
+        <details class="fund-list" id="fundList">
+          <summary class="micro wsum" id="fundSum">The funded settlements</summary>
+          <div id="fundBody"></div>
+        </details>
       </details>
 
-      <!-- Only rendered once the coverage model's columns are in the file. -->
-      <label class="toggle-row" id="modelledRow" data-on="0" hidden>
-        <input type="checkbox" id="modelledToggle">
-        <span class="lbl">Include modelled estimates
-          <span class="caption">Never replaces the official ranking.<button class="info"
-            type="button" tabindex="0" aria-label="How this is derived"
-            data-tip="DIPI-M recomputes the score using the model's predicted speed where no measurement exists, so an unmeasured settlement can be seen in context. It is shown alongside the official ranking and never replaces it.">i</button></span></span>
-      </label>
+      <div class="group" id="optGroup">
+        <span class="micro">Suggested option<button class="info" type="button" tabindex="0"
+          aria-label="What this does"
+          data-tip="Which delivery option the recommender suggests for each settlement, as a filter on the map. The dots keep their DIPI colour, so you can see where each option lands without losing the priority reading. These are illustrative decision criteria, not a procurement decision, and one of the four cut-offs is still ours rather than published.">i</button></span>
+        <div class="rk-chips" id="optChips"></div>
+      </div>
 
       <div class="group">
         <span class="micro">Layers</span>
-        <label class="toggle-row" id="floodRow" data-on="0" title="Historical seasonal-water presence from JRC Global Surface Water. Includes coastal/tidal zones — shown as context, not scored.">
+        <label class="toggle-row" id="floodRow" data-on="0" title="Historical seasonal-water presence from JRC Global Surface Water. Includes coastal/tidal zones, shown as context, not scored.">
           <input type="checkbox" id="floodToggle">
           <span class="lbl">Seasonal water adjacency
-            <span class="caption">Never scored.<button class="info" type="button" tabindex="0"
+            <span class="caption"><button class="info" type="button" tabindex="0"
               aria-label="How this is derived"
               data-tip="Historical seasonal-water presence from JRC Global Surface Water. It includes coastal and tidal zones, so it is drawn as context and never enters DIPI.">i</button></span></span>
         </label>
@@ -1316,12 +1517,19 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
               aria-label="How this is derived"
               data-tip="Schools, clinics, hospitals and doctors from OpenStreetMap. They appear from mid-zoom so the opening view stays readable. OSM coverage of rural facilities is incomplete.">i</button></span></span>
         </label>
+        <label class="toggle-row" id="towerRow" data-on="0">
+          <input type="checkbox" id="towerToggle">
+          <span class="lbl">Cell tower records
+            <span class="caption">1,217 crowdsourced points.<button class="info" type="button"
+              tabindex="0" aria-label="How this is derived"
+              data-tip="Cell records logged by volunteers through OpenCelliD, drawn where they were reported. Crowdsourced and incomplete: 29% of the records rest on fewer than five observations and are drawn fainter. An area with no marker has not been surveyed, which is not the same as an area with no tower, so this layer is never evidence of poor service. Loaded only once switched on.">i</button></span></span>
+        </label>
         <label class="toggle-row" id="terrainRow" data-on="0">
           <input type="checkbox" id="terrainToggle">
           <span class="lbl">Terrain relief
-            <span class="caption">Never scored.<button class="info" type="button"
+            <span class="caption"><button class="info" type="button"
               tabindex="0" aria-label="How this is derived"
-              data-tip="NASA SRTM hillshade, the same elevation source as the terrain reading in each settlement's panel. Tiles are only requested once this is switched on, so the map never waits on a third-party host to open.">i</button></span></span>
+              data-tip="NASA SRTM hillshade, the same elevation source as the terrain reading in each settlement's panel. Context only, it never enters the score. Tiles are only requested once this is switched on, so the map never waits on a third-party host to open.">i</button></span></span>
         </label>
         <!-- Only appears once a key is saved via ?setup=1. Off by default even
              then, so nothing is ever billed without a deliberate click. -->
@@ -1360,7 +1568,7 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
       </button>
 
       <!-- §D1: sparse areas are unmeasured, not uncovered. Says so, always. -->
-      <p class="map-note" id="mapNote">Blank areas ≠ no coverage — this layer shows settlement screening points only.</p>
+      <p class="map-note" id="mapNote">Blank areas ≠ no coverage. This layer shows settlement screening points only.</p>
 
       <div class="legend" id="legend">
         <span class="micro">DIPI &middot; priority score</span>
@@ -1369,6 +1577,8 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
         <div class="legend-item"><span class="glyph lowev"></span>Low evidence</div>
         <div class="legend-item"><span class="glyph queueb"></span>Evidence gap &middot; unscored</div>
         <div class="legend-item"><span class="glyph sel"></span>Selected</div>
+        <div id="legendFacilities"></div>
+        <div id="legendTower"></div>
         <div id="legendFlood"></div>
       </div>
 
@@ -1378,7 +1588,7 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
       <div class="tooltip" id="tooltip"></div>
 
       <!-- Validation report. Hidden unless the page is opened
-           with ?debug=1 — it must never appear during the pitch. -->
+           with ?debug=1, it must never appear during the pitch. -->
       <aside class="debug" id="debugPanel" hidden></aside>
 
       <!-- ── Rankings view ─────────────────────────────────────────────── -->
@@ -1415,7 +1625,7 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
             <thead><tr>
               <th class="r" data-tip="DIPI priority rank, 1 = assess first. Always the DIPI rank, whatever column the table is sorted by.">Rank</th>
               <th data-tip="Settlement name from OpenStreetMap. 38 have no name and show their ID instead.">Settlement</th>
-              <th data-tip="GADM district. Derived at load by point-in-polygon — the dataset does not carry it.">District</th>
+              <th data-tip="GADM district. Derived at load by point-in-polygon. The dataset does not carry it.">District</th>
               <th class="r sortable" data-sort="dipi" data-label="DIPI"
                   data-tip="Digital Inclusion Priority Index, 0–100. The weighted sum of the four pillars. Higher = screen this settlement sooner. It is a screening score, not a coverage measurement.">DIPI</th>
               <th class="r sortable" data-sort="p_connectivity" data-wcol="p_connectivity" data-label="Conn"
@@ -1480,10 +1690,10 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
           </div>
         </div>
 
-        <p class="note cmp-lede">Two areas, or every one in Sabah, on identical definitions —
+        <p class="note cmp-lede">Two areas, or every one in Sabah, on identical definitions,
           so &ldquo;why this one first?&rdquo; has an answer that is not a map read twice.
           <button class="info" type="button" tabindex="0" aria-label="How to read this"
-            data-tip="Compare two areas or all of them. Every indicator is a rate or a median, never a raw total — a district with 249 settlements would otherwise out-score one with 35 on every count. Service figures use measured settlements only: a settlement with no measurement is counted in the evidence gap and never counted as slow. Population merges overlapping 2 km buffers, because summing them counts the same people once per neighbour and inflates Ranau sevenfold.">i</button>
+            data-tip="Compare two areas or all of them. Every indicator is a rate or a median, never a raw total, a district with 249 settlements would otherwise out-score one with 35 on every count. Service figures use measured settlements only: a settlement with no measurement is counted in the evidence gap and never counted as slow. Population merges overlapping 2 km buffers, because summing them counts the same people once per neighbour and inflates Ranau sevenfold.">i</button>
         </p>
 
         <div class="cmp-bar">
@@ -1530,7 +1740,7 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
                 <div class="cmp-viscard-body"><div class="cmp-radars" id="cmpRadars"></div></div>
                 <p class="caption">Each axis is that area's percentile against every district in
                   Sabah, so further out is always worse. It shows which KIND of need an area has,
-                  and is not a combined score — the axes are never added together.</p>
+                  and is not a combined score, the axes are never added together.</p>
               </section>
             </div>
           </section>
@@ -1539,7 +1749,7 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
           <section class="cmp-zone cmp-zone-tail">
             <span class="eyebrow cmp-zone-label">Full table</span>
             <p class="caption cmp-zone-note">Every indicator, with each area's percentile against
-              all 25 districts. This is the sheet that prints — A4 portrait up to six areas, then
+              all 25 districts. This is the sheet that prints, A4 portrait up to six areas, then
               landscape. Nothing is ever dropped from it.</p>
           </section>
         </div>
@@ -1571,7 +1781,7 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
                    nothing that needs a server to exist. -->
               <div class="cmp-ai">
                 <p class="cmp-ai-note">Fixed-rule summary above is reproducible. Ask Tanya Dino
-                  for follow-up reasoning &mdash; it explains these same figures, it does not
+                  for follow-up reasoning, it explains these same figures, it does not
                   recompute them.</p>
                 <button class="ghost-btn cmp-ai-btn" id="cmpAsk" type="button">
                   <img class="cmp-ai-face" src="public/mascot/web/idle1.png" alt="" aria-hidden="true">
@@ -1664,12 +1874,23 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
    computed from the file: below 40.0 / 46.7 / 53.9 / 60.3 and above.
    ══════════════════════════════════════════════════════════════════════════ */
 const BREAKS = [40.0, 46.7, 53.9, 60.3];
+/* Low to high priority, left to right. Deep red is the top of the scale in
+   BOTH themes, because a planner switching theme should not have the colour
+   change meaning underneath them; the two ramps used to run in opposite
+   directions, so pale meant "urgent" on the dark map and "fine" on the light
+   one. Deep-red-for-worst is also the direction people already read.
+
+   The cost is measured and accepted: against the dark basemap the top class
+   now sits at 2.5:1 contrast where the old pale end was 11.4:1. Size carries
+   the difference instead, since radius grows with population and the top
+   class is never the smallest dot. If the top band ever reads as too quiet,
+   the fix is a hotter red at the top rather than flipping back to pale. */
 const RAMP = {
-  dark:  ["#992D00","#BF4922","#DE6640","#FE825C","#FFB6A0"],
+  dark:  ["#FFB6A0","#FE825C","#DE6640","#BF4922","#992D00"],
   light: ["#FF8D6A","#E96F49","#CD5630","#AE390C","#832500"]
 };
-// Light theme uses Voyager, not Positron: a map should look like a map —
-// blue sea, warm land, green vegetation — not a grey document.
+// Light theme uses Voyager, not Positron: a map should look like a map,
+// blue sea, warm land, green vegetation, not a grey document.
 const BASEMAP = {
   dark:  "https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
   light: "https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
@@ -1692,7 +1913,7 @@ const HILLSHADE = {
 };
 /* Sabah's five official divisions (Bahagian), keyed on the actual NAME_2
    strings in the GADM file. All 25 districts are assigned exactly once.
-   Telupid and Kalabakan are absent from GADM 4.1 — they were carved out of
+   Telupid and Kalabakan are absent from GADM 4.1, they were carved out of
    Beluran and Tawau after it was published, so their land is still drawn
    inside the parent districts and no territory goes unassigned. */
 const DIVISIONS = {
@@ -1710,15 +1931,30 @@ for (const [dv, ns] of Object.entries(DIVISIONS)) for (const n of ns) DIVISION_O
 
 // Land, boundary and label colours per theme. Land is lifted a few percent off
 // the basemap so every district reads as governed land, never as void.
+/* Towers get their own palette because they must stay legible on four
+   backgrounds that share no common tone: CARTO dark, Voyager cream, dark
+   forest and bright cloud. Ink and halo are always opposites, and satellite
+   carries the widest halo because its background varies most within a single
+   view. None of these are DIPI ramp colours: the mast must never read as a
+   priority score. */
+const TOWERCOL = {
+  dark:      { ink:"#C6D2E1", halo:"rgba(6,10,15,.82)",     haloW:1.5,
+               bub:"#7A8798", bubLine:"rgba(6,10,15,.75)", facInk:"#D5DFEC" },
+  light:     { ink:"#4E5A6B", halo:"rgba(255,255,255,.94)", haloW:1.7,
+               bub:"#94A0B0", bubLine:"rgba(255,255,255,.92)", facInk:"#3E4A5B" },
+  satellite: { ink:"#FFFFFF", halo:"rgba(0,0,0,.86)",       haloW:2.2,
+               bub:"#DCE5EF", bubLine:"rgba(0,0,0,.82)", facInk:"#FFFFFF" }
+};
+
 const MAPCOL = {
   dark:  { land:"#E2EBF5", landOp:0.055, landSel:0.115, dline:"#7C8899", dlineOp:0.30,
            vline:"#AEB9C7", vlineOp:0.50 },
   // Voyager already separates land from sea by colour, so the light land fill
-  // is barely there — enough for the selected-division lift, not enough to
+  // is barely there, enough for the selected-division lift, not enough to
   // dull Voyager's warmth.
   light: { land:"#0F1928", landOp:0.016, landSel:0.055, dline:"#5A6675", dlineOp:0.40,
            vline:"#33404F", vlineOp:0.48 },
-  // Imagery already shows the land, so no fill — only bright boundaries.
+  // Imagery already shows the land, so no fill, only bright boundaries.
   satellite: { land:"#FFFFFF", landOp:0, landSel:0.10, dline:"#FFFFFF", dlineOp:0.40,
                vline:"#FFFFFF", vlineOp:0.78 }
 };
@@ -1730,11 +1966,11 @@ const PILLARS = [
 ];
 const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/* ══ V6b — weightings ═════════════════════════════════════════════════════
+/* ══ V6b, weightings ═════════════════════════════════════════════════════
    The file's dipi is exactly Σwᵢpᵢ×100 at 40/25/15/20 rounded to 1 dp
    (verified: max error 0.0499 across all 1,114 scored). So at the team
-   default we show the file's own dipi and rank untouched — nothing is
-   recomputed — and only derive values once a slider actually moves.
+   default we show the file's own dipi and rank untouched, nothing is
+   recomputed, and only derive values once a slider actually moves.
    Queue B carries no pillar scores and is immune throughout.              */
 const W = {}; PILLARS.forEach(p => W[p.key] = p.weight);
 const wNorm = () => {                       // auto-normalised: always sums to 1
@@ -1765,7 +2001,7 @@ function recomputeRanks() {
   RANKS = new Map(arr.map((o, i) => [o.id, i + 1]));
 }
 // Ties are real (999 of 1,114 share a DIPI at 1 dp), so the order among them
-// must be stable rather than whatever the sort happens to do — name breaks it.
+// must be stable rather than whatever the sort happens to do, name breaks it.
 const scoredOrdered = () => [...SCORED].sort((a, b) =>
   (rankOf(a.properties) - rankOf(b.properties)) ||
   nameOf(a.properties).localeCompare(nameOf(b.properties)));
@@ -1777,8 +2013,8 @@ const int = v => (v === null || v === undefined) ? null : Number(v).toLocaleStri
 const nameOf = p => p.name || `Unnamed settlement (${p.settlement_id})`;
 /* A method note, parked behind an ⓘ. Use this for how a number was derived,
    what it was sampled from, and what it cannot support. Do NOT use it for the
-   labels that keep a claim honest — illustrative, simulated, context not
-   scored — those belong on the face of the component and stay visible. */
+   labels that keep a claim honest, illustrative, simulated, context not
+   scored, those belong on the face of the component and stay visible. */
 const info = t => `<button class="info" type="button" tabindex="0" aria-label="How this is derived"
   data-tip="${esc(t)}">i</button>`;
 /* 1st, 2nd, 3rd, 4th … 11th, 12th, 13th. The teens are the whole reason this
@@ -1848,8 +2084,8 @@ function districtOf(index, x, y) {
   return null;
 }
 /* A label anchor that is guaranteed to sit on land: the centroid of the
-   largest ring, or — where that ring is concave enough to throw its own
-   centroid into the sea — the inside grid point nearest to it. */
+   largest ring, or, where that ring is concave enough to throw its own
+   centroid into the sea, the inside grid point nearest to it. */
 function anchorOf(geom) {
   const polys = geom.type === "Polygon" ? [geom.coordinates] : geom.coordinates;
   let best = null, bestA = -1;
@@ -1883,11 +2119,14 @@ function anchorOf(geom) {
   return pick;
 }
 
+/* ?fixture=1 loads _fixture_dipi.geojson instead, so a candidate model file can
+   be exercised end to end before it replaces the real one. Module scope, not
+   boot scope: layers that fetch later, when their toggle is switched on, have
+   to resolve the same prefix. */
+const FX = new URLSearchParams(location.search).has("fixture") ? "_fixture_" : "";
+
 /* ══ Boot ════════════════════════════════════════════════════════════════ */
 (async function boot() {
-  // ?fixture=1 loads _fixture_dipi.geojson instead, so a candidate model file
-  // can be exercised end to end before it replaces the real one.
-  const FX = new URLSearchParams(location.search).has("fixture") ? "_fixture_" : "";
   let dipi, districts, divisions, facilities;
   try {
     [dipi, districts, divisions, facilities] = await Promise.all([
@@ -1913,7 +2152,7 @@ function anchorOf(geom) {
     // The comparison works over properties alone, and the file keeps the
     // coordinates on the geometry. Without these its distance test silently
     // returned NaN, nothing clustered, and "people in underserved areas" was
-    // the raw sum of overlapping buffers — Keningau read 815,990 against a
+    // the raw sum of overlapping buffers, Keningau read 815,990 against a
     // true 37,569.
     f.properties._lon = x;
     f.properties._lat = y;
@@ -1925,7 +2164,7 @@ function anchorOf(geom) {
   for (const f of districts.features) f.properties._division = DIVISION_OF[f.properties.NAME_2] || null;
 
   // Facilities: resolve district + division once at load, then cache. Same
-  // point-in-polygon the settlements use — no second source of truth.
+  // point-in-polygon the settlements use, no second source of truth.
   BACKHAUL = buildBackhaul(dipi.features);   // proxy: km to nearest town or city
   buildTerrain(dipi.features);               // Layer 2: elevation vs that town
   FACILITIES = facilities.features;
@@ -1961,17 +2200,33 @@ function anchorOf(geom) {
     catch (e) { MODEL = null; }
   }
 
+  // Optional and non-blocking: a missing registry costs a sentence, nothing more.
+  fetch("../dataset/web/sources.json").then(r => r.ok ? r.json() : null)
+    .then(j => { SOURCES = j; }).catch(() => {});
+
+  /* Fibre build clusters. Optional in the same way: without it costOf falls
+     back to charging each settlement its own full run to town, which is what
+     the panel did before, so a missing file is a worse answer and never a
+     broken one. Awaited because the budget panel must not render one number
+     and then silently change it a moment later. */
+  try {
+    CLUSTERS = await fetch(`../dataset/web/${FX}clusters.json`)
+      .then(r => r.ok ? r.json() : null);
+  } catch (e) { CLUSTERS = null; }
+
   buildLabels(districts, divisions);
   initMap(dipi, districts, divisions, facilities);
   validateData();
   renderLegend();
+  // After BACKHAUL exists, since recommend() reads the distance to town.
+  renderOptChips();
   renderTopList();
   renderRankings();
   wireUI();
 })();
 
 /* ══ Map ═════════════════════════════════════════════════════════════════ */
-// Class breaks stay fixed at the approved quintiles while weights move — if
+// Class breaks stay fixed at the approved quintiles while weights move, if
 // they re-quantised, the map would look identical at every weighting and the
 // whole point of dragging a slider would be invisible.
 const dipiValueExpr = () => {
@@ -1993,9 +2248,9 @@ const radiusExpr = (mult, add = 0) => {
   return ["interpolate", ["linear"], ["zoom"], 5, base(0.8 * mult), 8, base(1 * mult), 12, base(1.9 * mult)];
 };
 
-/* ══ §E — data validation, run once at boot ══════════════════════════════
+/* ══ §E, data validation, run once at boot ══════════════════════════════
    Prints to the console always; renders into a panel only with ?debug=1.
-   It asserts against the file — it never repairs or hides anything.        */
+   It asserts against the file, it never repairs or hides anything.        */
 const SABAH_BBOX = [115.0, 4.0, 119.7, 7.6];
 
 function validateData() {
@@ -2047,7 +2302,7 @@ function validateData() {
   add("Queue B toggle covers exactly the gap", qbShown === QUEUE_B.length, `${qbShown} settlements`);
 
   // Missing values must stay missing. A null coerced to 0 would read as
-  // "measured, and terrible" — the exact lie the contract sentence forbids.
+  // "measured, and terrible", the exact lie the contract sentence forbids.
   const zeros = P.filter(p => p.dl_mbps === 0 || p.ul_mbps === 0).length;
   add("Null speeds never coerced to 0", zeros === 0 && num(null) === null,
     `${P.filter(p => p.dl_mbps === null).length} null speeds, ${zeros} zeros`);
@@ -2087,8 +2342,8 @@ function validateData() {
   });
 
   const failed = L.filter(x => !x.pass);
-  console.group(`Dino Slayer — data validation (${L.length - failed.length}/${L.length} passed)`);
-  L.forEach(x => console.log(`${x.pass ? "PASS" : "FAIL"}  ${x.name} — ${x.detail}`));
+  console.group(`Dino Slayer, data validation (${L.length - failed.length}/${L.length} passed)`);
+  L.forEach(x => console.log(`${x.pass ? "PASS" : "FAIL"}  ${x.name}, ${x.detail}`));
   console.table(rows);
   console.groupEnd();
   if (failed.length) console.error("Validation FAILED:", failed.map(f => f.name));
@@ -2170,6 +2425,18 @@ function initMap(dipi, districts, divisions, facilities) {
            fetched until the toggle is switched on. */
         terrain:    { type:"raster-dem", tiles:[TERRAIN_TILES], tileSize:256,
                       encoding:"terrarium", maxzoom:13, attribution:TERRAIN_ATTRIB },
+        /* Crowdsourced cell records. Declared empty and filled by the
+           toggle, so 212 KB is never fetched for a reader who does not ask
+           for it and the opening reveal is unaffected. */
+        /* Clustered below z12. 1,217 masts drawn individually at province
+           zoom is a grey wash that buries the DIPI dots, which are the point
+           of the map. There is no `glyphs` URL in this style, so a MapLibre
+           text label cannot render a count: the bubble is sized by count
+           instead, and the exact number is in the hover. */
+        towers:     { type:"geojson", data:{ type:"FeatureCollection", features:[] },
+                      cluster:true, clusterMaxZoom:11, clusterRadius:42 },
+        /* The build sequence, rebuilt in place whenever the slider moves. */
+        corridors:  { type:"geojson", data:{ type:"FeatureCollection", features:[] } },
         districts:  { type:"geojson", data:districts },
         divisions:  { type:"geojson", data:divisions },
         facilities: { type:"geojson", data:facilities },
@@ -2195,7 +2462,7 @@ function initMap(dipi, districts, divisions, facilities) {
           paint:{ "fill-color":MAPCOL.dark.land, "fill-opacity":MAPCOL.dark.landOp } },
         /* The district under the cursor lifts and outlines itself, so it is
            obvious the shape is clickable. Same ink as the land fill, never a
-           new hue — this is an affordance, not a data class. */
+           new hue, this is an affordance, not a data class. */
         { id:"district-hover", type:"fill", source:"districts",
           filter:["==",["get","NAME_2"],""],
           paint:{ "fill-color":MAPCOL.dark.land, "fill-opacity":MAPCOL.dark.landSel } },
@@ -2212,8 +2479,33 @@ function initMap(dipi, districts, divisions, facilities) {
         { id:"division-line", type:"line", source:"divisions",
           paint:{ "line-color":MAPCOL.dark.vline, "line-opacity":MAPCOL.dark.vlineOp,
                   "line-width":["interpolate",["linear"],["zoom"], 5,1.1, 9,1.8, 12,2.4] } },
+        /* Cell records (OpenCelliD). A mast glyph rather than another dot,
+           because this layer is a different KIND of thing from a settlement
+           and must not read as one more score. Records resting on fewer than
+           five observations are drawn fainter, so the thin ones look thin.
+
+           BENEATH every settlement circle, deliberately. There are 1,217 of
+           these against 1,448 settlements, and a context layer that occludes
+           the priority dots would break the rule that DIPI colour is the only
+           loud thing on this map. It is ground, like the hillshade.
+
+           Position only. OpenCelliD's `range_m` is the uncertainty in WHERE
+           the mast is, not how far it reaches, and drawing it as a radius
+           would manufacture the coverage surface §F forbids. */
+        { id:"tower-cluster", type:"circle", source:"towers",
+          filter:["has","point_count"], layout:{ visibility:"none" },
+          paint:{ "circle-radius":["interpolate",["linear"],["get","point_count"],
+                                   2,6.5, 15,10, 60,14, 200,19],
+                  "circle-color":"#7A8798", "circle-opacity":0.5,
+                  "circle-stroke-width":1.1, "circle-stroke-color":"rgba(6,10,15,.75)" } },
+        { id:"tower-sites", type:"symbol", source:"towers",
+          filter:["!",["has","point_count"]],
+          layout:{ visibility:"none", "icon-image":"tower-dark",
+                   "icon-size":["interpolate",["linear"],["zoom"], 11,0.34, 14,0.58],
+                   "icon-allow-overlap":true, "icon-ignore-placement":true },
+          paint:{ "icon-opacity":["case",["<",["get","samples"],5], 0.45, 0.85] } },
         /* Flood context: a soft underglow beneath the dots. Context, never a
-           score — and teal, a hue used nowhere else in the product. */
+           score, and teal, a hue used nowhere else in the product. */
         { id:"flood-context", type:"circle", source:"settlements",
           filter:["==",["get","flood_prone"],true], layout:{ visibility:"none" },
           paint:{ "circle-radius":radiusExpr(2.4), "circle-color":FLOOD_TEAL, "circle-opacity":0.22,
@@ -2230,32 +2522,32 @@ function initMap(dipi, districts, divisions, facilities) {
                   "circle-opacity":0.92, "circle-stroke-width":0.6,
                   "circle-stroke-color":"rgba(0,0,0,.45)" } },
         /* Low evidence: a DETACHED ring with a basemap gap. Hue alone cannot
-           carry this — amber against the DIPI orange fails CVD separation. */
+           carry this, amber against the DIPI orange fails CVD separation. */
         { id:"low-evidence", type:"circle", source:"settlements",
           filter:["==",["get","evidence_tier"],"low_evidence"],
           paint:{ "circle-radius":radiusExpr(1, 2), "circle-opacity":0,
                   "circle-stroke-width":0.9, "circle-stroke-color":"#E3B341", "circle-stroke-opacity":0.55 } },
         /* Facilities (§A). Monochrome ink, two shapes: schools are squares,
            health points are circles with a cut-out. Small and deliberately
-           recessive — they annotate the DIPI layer, never compete with it.
+           recessive, they annotate the DIPI layer, never compete with it.
            Default OFF so the opening reveal stays clean. */
-        { id:"facility-school", type:"circle", source:"facilities",
-          filter:["==",["get","kind"],"school"], layout:{ visibility:"none" },
-          minzoom:8,
-          paint:{ "circle-radius":["interpolate",["linear"],["zoom"], 8,2.2, 12,4.4],
-                  "circle-color":"#7C8899", "circle-opacity":0.9,
-                  "circle-stroke-width":1, "circle-stroke-color":"rgba(0,0,0,.5)" } },
-        { id:"facility-health", type:"circle", source:"facilities",
-          filter:["==",["get","kind"],"health"], layout:{ visibility:"none" },
-          minzoom:8,
-          paint:{ "circle-radius":["interpolate",["linear"],["zoom"], 8,2.6, 12,5.2],
-                  "circle-color":"rgba(0,0,0,0)", "circle-opacity":1,
-                  "circle-stroke-width":1.6, "circle-stroke-color":"#B4BECB" } },
+        { id:"facility-school", type:"symbol", source:"facilities",
+          filter:["==",["get","kind"],"school"],
+          layout:{ visibility:"none", "icon-image":"school-dark",
+                   "icon-size":["interpolate",["linear"],["zoom"], 8,0.5, 12,0.85],
+                   "icon-allow-overlap":true, "icon-ignore-placement":true },
+          minzoom:8, paint:{ "icon-opacity":0.95 } },
+        { id:"facility-health", type:"symbol", source:"facilities",
+          filter:["==",["get","kind"],"health"],
+          layout:{ visibility:"none", "icon-image":"health-dark",
+                   "icon-size":["interpolate",["linear"],["zoom"], 8,0.5, 12,0.85],
+                   "icon-allow-overlap":true, "icon-ignore-placement":true },
+          minzoom:8, paint:{ "icon-opacity":0.95 } },
         { id:"facility-selected", type:"circle", source:"facilities",
           filter:["==",["get","facility_id"],""], minzoom:8,
-          paint:{ "circle-radius":["interpolate",["linear"],["zoom"], 8,6, 12,10],
+          paint:{ "circle-radius":["interpolate",["linear"],["zoom"], 8,7, 12,11.5],
                   "circle-opacity":0, "circle-stroke-width":2, "circle-stroke-color":"#3FC7E8" } },
-        /* Flood focus ring — concentric OUTSIDE the low-evidence ring, so a
+        /* Flood focus ring, concentric OUTSIDE the low-evidence ring, so a
            settlement carrying both shows both. Teal, never a DIPI class. */
         { id:"flood-ring", type:"circle", source:"settlements",
           filter:["==",["get","flood_prone"],true], layout:{ visibility:"none" },
@@ -2276,15 +2568,130 @@ function initMap(dipi, districts, divisions, facilities) {
         /* Selected: the only accent on the map. */
         { id:"selected", type:"circle", source:"settlements", filter:["==",["get","settlement_id"],""],
           paint:{ "circle-radius":radiusExpr(1, 7), "circle-opacity":0,
-                  "circle-stroke-width":2, "circle-stroke-color":"#3FC7E8" } }
+                  "circle-stroke-width":2, "circle-stroke-color":"#3FC7E8" } },
+        /* Deployment bundles, LAST so they sit above every dot. A numbered
+           marker that a settlement can cover is not a label, and the numbers
+           are the only thing tying the list to the map. There is deliberately
+           no line between bundles: an earlier version drew one and it read as
+           proposed fibre running the length of the province, which is the
+           inference this product exists to refuse. Bundles are independent
+           builds and nothing connects them.
+
+           Members of whichever bundle the reader is pointing at, under the
+           numbers so a ring never hides the marker it belongs to. */
+        { id:"corridor-members", type:"circle", source:"settlements",
+          filter:["==",["get","settlement_id"],""], layout:{ visibility:"none" },
+          paint:{ "circle-radius":radiusExpr(1, 3), "circle-opacity":0,
+                  "circle-stroke-width":1.8, "circle-stroke-color":"#3FC7E8",
+                  "circle-stroke-opacity":0.9 } },
+        { id:"corridor-stop", type:"symbol", source:"corridors",
+          filter:["==",["geometry-type"],"Point"], layout:{ visibility:"none",
+            "icon-image":["concat","stop-",["to-string",["get","order"]]],
+            "icon-size":["interpolate",["linear"],["zoom"], 6,0.72, 10,1.0],
+            "icon-allow-overlap":true, "icon-ignore-placement":true } }
       ]
     }
   });
 
   window.__m = map;   // handle for automated screenshot/acceptance checks
   map.addControl(new maplibregl.NavigationControl({ showCompass:false }), "bottom-right");
+  /* The mast, drawn rather than downloaded. A canvas keeps the promise that
+     this page pulls no image assets and adds no library, and it scales with
+     devicePixelRatio instead of blurring on a retina panel.
+
+     Drawn TWICE: a thick halo pass, then the ink pass on top. That is what
+     makes one glyph survive four different backgrounds. Satellite is the hard
+     case, because a single frame contains near-white cloud and near-black
+     forest, so no flat colour works: white ink is read against the forest and
+     the dark halo is read against the cloud. */
+  function towerPath(x, u) {
+    x.lineCap = "round";
+    x.lineJoin = "round";
+    // Legs, splayed from a narrow head to a wide base.
+    x.beginPath();
+    x.moveTo(13.2 * u, 12 * u);  x.lineTo(9.6 * u, 25.5 * u);
+    x.moveTo(16.8 * u, 12 * u);  x.lineTo(20.4 * u, 25.5 * u);
+    // One brace, low. Two evenly spaced rungs read as a stepladder; a single
+    // wide one near the base reads as a mast that tapers.
+    x.moveTo(11.1 * u, 20 * u);  x.lineTo(18.9 * u, 20 * u);
+    x.stroke();
+    // Emission arcs, with a clear GAP above the head. Without the gap the two
+    // sides close into a dome and the glyph reads as a hat. Each arc is its
+    // own path: two in one path get joined by the line between them.
+    for (const [a, b] of [[1.17, 1.35], [1.65, 1.83]]) {
+      x.beginPath();
+      x.arc(15 * u, 12 * u, 6.4 * u, Math.PI * a, Math.PI * b);
+      x.stroke();
+    }
+  }
+  /* A square for a school, a cross for a clinic. Same halo trick as the mast,
+     for the same reason: these sit on cream, on near-black, and on satellite. */
+  function facilityIcon(ratio, kind, ink, halo, haloW) {
+    const S = 22 * ratio, c = document.createElement("canvas");
+    c.width = c.height = S;
+    const x = c.getContext("2d"), u = S / 22;
+    const draw = () => {
+      if (kind === "school") {
+        x.beginPath();
+        x.rect(6.5 * u, 6.5 * u, 9 * u, 9 * u);
+        x.stroke();
+      } else {
+        x.lineCap = "round";
+        x.beginPath();
+        x.moveTo(11 * u, 5.5 * u);  x.lineTo(11 * u, 16.5 * u);
+        x.moveTo(5.5 * u, 11 * u);  x.lineTo(16.5 * u, 11 * u);
+        x.stroke();
+      }
+    };
+    x.lineJoin = "round";
+    x.strokeStyle = halo; x.lineWidth = (1.7 + haloW) * u; draw();
+    x.strokeStyle = ink;  x.lineWidth = 1.7 * u;           draw();
+    return x.getImageData(0, 0, S, S);
+  }
+
+  /* A numbered disc. The style has no `glyphs` URL, so MapLibre cannot render
+     a text layer at all; the numbers are baked as images instead, one per
+     stop. Cheap: 17 discs of 30 px, made once. */
+  function stopIcon(ratio, n) {
+    const S = 30 * ratio, c = document.createElement("canvas");
+    c.width = c.height = S;
+    const x = c.getContext("2d"), u = S / 30;
+    x.beginPath(); x.arc(15 * u, 15 * u, 11 * u, 0, Math.PI * 2);
+    x.fillStyle = "#0B2C36"; x.fill();
+    x.lineWidth = 2 * u; x.strokeStyle = "#3FC7E8"; x.stroke();
+    x.fillStyle = "#EAF9FE";
+    x.font = `700 ${(n > 9 ? 12.5 : 14) * u}px system-ui, -apple-system, Segoe UI, sans-serif`;
+    x.textAlign = "center"; x.textBaseline = "middle";
+    x.fillText(String(n), 15 * u, 15.8 * u);
+    return x.getImageData(0, 0, S, S);
+  }
+
+  function towerIcon(ratio, ink, halo, haloW) {
+    const S = 30 * ratio, c = document.createElement("canvas");
+    c.width = c.height = S;
+    const x = c.getContext("2d"), u = S / 30;   // one design unit
+    x.strokeStyle = halo; x.lineWidth = (1.5 + haloW) * u; towerPath(x, u);
+    x.strokeStyle = ink;  x.lineWidth = 1.5 * u;           towerPath(x, u);
+    return x.getImageData(0, 0, S, S);
+  }
+
   map.on("load", () => {
     mapReady = true;
+    if (!map.hasImage("tower-dark")) {
+      const r = Math.max(1, Math.round(window.devicePixelRatio || 1));
+      for (const k of Object.keys(TOWERCOL)) {
+        const t = TOWERCOL[k];
+        map.addImage("tower-" + k, towerIcon(r, t.ink, t.halo, t.haloW),
+                     { pixelRatio: r });
+        for (let i = 1; i <= 60; i++)
+          if (!map.hasImage("stop-" + i))
+            map.addImage("stop-" + i, stopIcon(r, i), { pixelRatio: r });
+        for (const kind of ["school", "health"])
+          map.addImage(kind + "-" + k,
+                       facilityIcon(r, kind, t.facInk, t.halo, t.haloW),
+                       { pixelRatio: r });
+      }
+    }
     applyMapTheme();          // covers a theme toggled before the map was ready
     el("loading").style.opacity = "0";
     setTimeout(() => el("loading").hidden = true, 300);
@@ -2300,13 +2707,20 @@ function initMap(dipi, districts, divisions, facilities) {
   const facHit = ["facility-school", "facility-health"];
   const layersNow = ls => ls.filter(l => map.getLayer(l));
   /* Facility circles are 2–5 px at the zooms people browse at. Querying a
-     single pixel makes them almost unhittable, so give them a 9 px box —
-     roughly a fingertip — while settlement dots keep the exact-pixel test. */
+     single pixel makes them almost unhittable, so give them a 9 px box,
+     roughly a fingertip, while settlement dots keep the exact-pixel test. */
   const PAD = 9;
   const box = pt => [[pt.x - PAD, pt.y - PAD], [pt.x + PAD, pt.y + PAD]];
   const facsAt = pt => map.queryRenderedFeatures(box(pt), { layers:layersNow(facHit) });
   // A dot or a facility always wins the cursor; the district underneath is the
   // fallback, so hovering a settlement never lights up its whole district.
+  /* A numbered marker you cannot hover is a picture of a list. */
+  const stopsAt = pt => (el("seqGroup").open && mapReady && map.getLayer("corridor-stop"))
+    ? map.queryRenderedFeatures(pt, { layers:layersNow(["corridor-stop"]) })
+    : [];
+  const towersAt = pt => towersOn
+    ? map.queryRenderedFeatures(pt, { layers:layersNow(["tower-cluster", "tower-sites"]) })
+    : [];
   const districtAt = pt => {
     const d = map.queryRenderedFeatures(pt, { layers:layersNow(["district-fill"]) });
     return d.length ? d[0].properties.NAME_2 : null;
@@ -2321,6 +2735,25 @@ function initMap(dipi, districts, divisions, facilities) {
                  : showTooltip(fs[0].properties, e.point);
       return;
     }
+    // Bundle markers sit ABOVE everything, so they get the look before towers
+    // but after the dots: a marker is a label for a group, and a settlement the
+    // planner is reaching for still wins.
+    const st = stopsAt(e.point);
+    if (st.length) {
+      hoverDistrict(null);
+      map.getCanvas().style.cursor = "pointer";
+      showBundleTooltip(st[0].properties, e.point);
+      return;
+    }
+    // Towers are drawn beneath the dots and get the last look, so a mast can
+    // never intercept a settlement the planner was reaching for.
+    const tw = towersAt(e.point);
+    if (tw.length) {
+      hoverDistrict(null);
+      map.getCanvas().style.cursor = tw[0].properties.point_count ? "zoom-in" : "default";
+      showTowerTooltip(tw[0].properties, e.point);
+      return;
+    }
     hideTooltip();
     const d = districtAt(e.point);
     hoverDistrict(d);
@@ -2331,8 +2764,37 @@ function initMap(dipi, districts, divisions, facilities) {
     // Facilities sit above the dots, so they get first refusal on a click.
     const fac = facsAt(e.point);
     if (fac.length) { selectFacility(fac[0].properties.facility_id); return; }
+    // A bundle marker rings its members; anything else clears that ring, so the
+    // highlight never outlives the thing it was explaining.
+    const st = stopsAt(e.point);
+    if (st.length) {
+      const cs = buildCorridors();
+      const c = cs.find(x => String(x.cl) === String(st[0].properties.cl));
+      if (c) {
+        highlightBundle(c, true);
+        for (const b of el("seqList").children)
+          b.dataset.on = (b.dataset.cl === String(c.cl)) ? "1" : "0";
+      }
+      return;
+    }
+    // Anything that is not a bundle marker drops the ring, including bare land.
+    // Scoping this to settlement clicks left the highlight alive over a map the
+    // reader had already moved on from.
+    clearBundleFocus();
     const fs = map.queryRenderedFeatures(e.point, { layers:layersNow(hit) });
     if (fs.length) { select(fs[0].properties.settlement_id, false); return; }
+    // A cluster expands. A single mast swallows the click rather than letting
+    // it fall through and silently re-filter the whole page to a district.
+    const tw = towersAt(e.point);
+    if (tw.length) {
+      const c = tw[0].properties.cluster_id;
+      if (c !== undefined) {
+        map.getSource("towers").getClusterExpansionZoom(c).then(z =>
+          map.easeTo({ center:tw[0].geometry.coordinates, zoom:z, duration:500 }))
+          .catch(() => {});
+      }
+      return;
+    }
     // Bare land: treat it as picking that district, exactly as the dropdown
     // would. Clicking the district already filtered on clears back to Sabah.
     const d = districtAt(e.point);
@@ -2344,7 +2806,7 @@ function initMap(dipi, districts, divisions, facilities) {
 
 /* ══ District as a click target ══════════════════════════════════════════
    The dropdown was the only way in. A planner looking at the map points at
-   the shape, so the shape has to answer — and it answers identically, by
+   the shape, so the shape has to answer, and it answers identically, by
    driving the same two selects rather than a second, parallel filter path. */
 function hoverDistrict(name) {
   if (!mapReady || hoveredDistrict === name) return;
@@ -2398,7 +2860,7 @@ function focusArea(level, name) {
   selectDistrict(name);
 }
 
-/* ══ FIX 6 — flood lens as a focus mode ══════════════════════════════════
+/* ══ FIX 6, flood lens as a focus mode ══════════════════════════════════
    On: flood_prone settlements gain a teal ring and underglow; everything
    else drops to a quarter opacity so the pattern is unmissable. Off: instant
    restore. District and division layers are untouched either way.          */
@@ -2406,6 +2868,8 @@ const DOT_LAYERS = ["settlements","queueb","low-evidence"];
 const BASE_OP     = { settlements:0.92, queueb:0, "low-evidence":0 };
 const BASE_STROKE = { settlements:1,    queueb:0.85, "low-evidence":0.55 };
 let floodOn = false;
+let towersOn  = false;    // OpenCelliD masts, off until asked for
+let surveyPick = null;    // settlement selected FROM the survey list, if any
 let terrainOn = false;    // Layer 2 hillshade, off until asked for
 const dimmed = base => floodOn
   ? ["case", ["==", ["get","flood_prone"], true], base, base * 0.25]
@@ -2463,7 +2927,7 @@ function showTooltip(p, pt) {
   placeTooltip(t, pt);
 }
 /* Hiding is deferred by a beat. Reaching a facility tooltip means crossing a
-   few pixels of bare map, which fires a "nothing under the cursor" mousemove —
+   few pixels of bare map, which fires a "nothing under the cursor" mousemove,
    without the delay the tooltip would vanish out from under the pointer on
    the way to it. */
 function hideTooltip() {
@@ -2472,13 +2936,50 @@ function hideTooltip() {
 }
 function placeTooltip(t, pt) {
   // Reaching here means the pointer is over the canvas, so it cannot also be
-  // inside the tooltip — clear the lock rather than trusting mouseleave, which
+  // inside the tooltip, clear the lock rather than trusting mouseleave, which
   // never fires if the tooltip is hidden out from under the pointer.
   clearTimeout(tipHideT);
   tipLock = false;
   t.style.left = pt.x + "px";
   t.style.top = (pt.y - 12) + "px";
   t.dataset.show = "1";
+}
+
+/* A tower tooltip says what the record is and how much is behind it, because
+   "1 observation" and "51 observations" are not the same claim and the map
+   cannot show that difference in a glyph. */
+/* The marker says which bundle it is and how big; the sidebar row carries the
+   money. Two places, one fact each, rather than the whole row twice. */
+function showBundleTooltip(p, pt) {
+  const t = el("tooltip");
+  t.innerHTML =
+    `<div class="t-name">Bundle ${int(p.order)} &middot; ${esc(p.district)}</div>
+     <div class="t-line">${int(p.n)} settlements that would share one build</div>
+     <span class="t-more">Click to ring them</span>`;
+  tipFacility = null;
+  t.dataset.fac = "0";
+  placeTooltip(t, pt);
+}
+
+function showTowerTooltip(p, pt) {
+  const t = el("tooltip");
+  if (p.point_count) {
+    t.innerHTML =
+      `<div class="t-name">${int(p.point_count)} cell records</div>
+       <div class="t-line">Zoom in to separate them</div>`;
+  } else {
+    const thin = p.samples < 5;
+    t.innerHTML =
+      `<div class="t-name">${esc(p.radio)} cell record</div>
+       <div class="t-line">${int(p.samples)} observation${p.samples === 1 ? "" : "s"}
+         &middot; last confirmed ${esc(String(p.updated))}</div>
+       <div class="t-line">Position uncertain to about ${int(p.range_m)} m</div>
+       ${thin ? `<div class="t-line" style="color:var(--warn)">Thin evidence,
+          fewer than five observations</div>` : ""}`;
+  }
+  tipFacility = null;
+  t.dataset.fac = "0";
+  placeTooltip(t, pt);
 }
 
 function showFacilityTooltip(p, pt) {
@@ -2582,7 +3083,7 @@ function renderPanel(p) {
       <span class="micro">Why this score</span>
       ${PILLARS.map(pl => {
         const v = p[pl.key] * 100;
-        return `<div class="bar-row">
+        return `<div class="bar-row pil-row" data-tip="${pillarTip(p, pl.key, wn)}">
           <div class="bar-head">
             <span class="micro" data-plab="${pl.key}">${pl.label.toUpperCase()} &middot; ${nf(wn[pl.key] * 100, 0)}%</span>
             <span class="num">${num(v)}</span>
@@ -2608,7 +3109,7 @@ function renderPanel(p) {
         ${tile("Clinics 3km", int(p.n_clinics_3km), "", "None")}
         ${tile("Wealth index", num(p.rwi, 2), "", "No wealth data")}
       </div>
-      <p class="note" style="margin-top:11px">Not scored — measurement needed first.</p>
+      <p class="note" style="margin-top:11px">Not scored, measurement needed first.</p>
     </div>`
     : `
     <div class="block">
@@ -2643,7 +3144,7 @@ function renderPanel(p) {
 
   const flood = p.flood_prone ? `
     <div class="block">
-      <span class="chip plain" title="Historical seasonal-water presence from JRC Global Surface Water. Includes coastal/tidal zones — shown as context, not scored.">
+      <span class="chip plain" title="Historical seasonal-water presence from JRC Global Surface Water. Includes coastal/tidal zones, shown as context, not scored.">
         Seasonal water adjacency &middot; context, not scored</span>
     </div>` : "";
 
@@ -2673,7 +3174,7 @@ function renderPanel(p) {
   if (GOOGLE.on()) loadGoogleContext(p.settlement_id, coordsOf(p.settlement_id));
 
   // The pillar bars fill once, staggered. The decomposition making itself
-  // legible — not decoration.
+  // legible, not decoration.
   requestAnimationFrame(() => {
     panel.querySelectorAll(".track > i").forEach((bar, i) => {
       const w = bar.dataset.w + "%";
@@ -2683,7 +3184,7 @@ function renderPanel(p) {
   });
 }
 
-/* ══ V6a — Experience Simulator ══════════════════════════════════════════
+/* ══ V6a, Experience Simulator ══════════════════════════════════════════
    Every verdict is computed from the file's own values against published
    thresholds. Nothing is imputed; nothing is invented.                     */
 const SND_ON = `<svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -2706,7 +3207,7 @@ const TASKS = [
 ];
 const V = { smooth:{cls:"safe",label:"Smooth"}, buffer:{cls:"warn",label:"May buffer"}, unlikely:{cls:"neutral",label:"Unlikely"} };
 /* One connection is rarely one person. Dividing the measured speed by the
-   number of people sharing it is plain arithmetic on the file's own number —
+   number of people sharing it is plain arithmetic on the file's own number,
    and the card says outright that the split is an assumption. */
 const SHARE = [{ n:1, label:"Just 1" }, { n:5, label:"Household (5)" }, { n:30, label:"Classroom (30)" }];
 let simUsers = 5;
@@ -2745,7 +3246,7 @@ function simulate(p, task) {
   if (task === "article") {
     if (dl === null || lat === null) return null;
     const t = (2 * 8) / dl + (3 * lat) / 1000;
-    const vq = t <= 2 ? "" : t <= 5 ? " — slow" : " — very slow";
+    const vq = t <= 2 ? "" : t <= 5 ? ", slow" : ", very slow";
     return { verdict: t <= 2 ? "smooth" : t <= 5 ? "buffer" : "unlikely",
       seconds:t, unit:"s", sub:"2 MB article",
       line: `Estimated load ${num(t)}s${vq}`,
@@ -2772,7 +3273,7 @@ function simulate(p, task) {
     const marginal = dl >= 1.5 && ul >= 1.5 && lat < 250;
     // Upload is usually what breaks a call, so each leg is shown pass/fail.
     const legs = [["Download", dl, 3, "Mbps"], ["Upload", ul, 3, "Mbps"]];
-    // Name the leg that actually fails — "upload-limited" is actionable in a
+    // Name the leg that actually fails, "upload-limited" is actionable in a
     // way that "unstable" is not.
     const limits = [];
     if (ul < 3) limits.push("upload-limited");
@@ -2796,25 +3297,25 @@ function simulate(p, task) {
   const best = [...VIDEO_TIERS].reverse().find(t => tierVerdict(dl, t.mbps) === "smooth");
   return { verdict, tier, ratio: dl / tier.mbps,
     headline: verdict === "smooth" ? `${tier.label} plays clean`
-      : best ? `Smooth at ${best.label}` : "Below 360p — video is a struggle",
+      : best ? `Smooth at ${best.label}` : "Below 360p, video is a struggle",
     line: verdict === "smooth" ? `Plays clean at ${tier.label}`
       : verdict === "buffer" ? `May buffer at ${tier.label}`
-      : best ? `Unlikely at ${tier.label} — may buffer at ${best.label}`
-             : `Unlikely at ${tier.label} — below 360p at this sharing level`,
+      : best ? `Unlikely at ${tier.label}, may buffer at ${best.label}`
+             : `Unlikely at ${tier.label}, below 360p at this sharing level`,
     foot: task === "4k" ? "YouTube's published recommendation ≈ 20 Mbps sustained." : null,
     math: `${tier.label} needs a sustained ${nf(tier.mbps, 1)} Mbps.<br>${shareLine(p)}
            <code>${num(dl, 2)} Mbps ÷ ${nf(tier.mbps, 1)} = ${num(dl / tier.mbps, 2)}× the threshold</code><br>
            Smooth at ≥ 1.5×, may buffer from 1.0×.` };
 }
 
-/* ══ V6a-video — the mock player ═════════════════════════════════════════
+/* ══ V6a-video, the mock player ═════════════════════════════════════════
    A visualisation of the arithmetic above, and it says so permanently.
    Stalls are injected only where the maths says the link cannot keep up:
    below 1.0x, each 2 s of video takes 2/ratio seconds to arrive.          */
 function stopPlayer() {
   if (playerRAF) { cancelAnimationFrame(playerRAF); playerRAF = null; }
   // Killing the loop is not enough. The panel only slides out of view, so its
-  // <video> stays alive in the DOM and would keep playing — audible — behind a
+  // <video> stays alive in the DOM and would keep playing, audible, behind a
   // panel the user has already closed. Pause it and rewind.
   const vid = el("player")?.querySelector("video");
   if (vid) { vid.pause(); try { vid.currentTime = 0; } catch (e) {} }
@@ -2845,7 +3346,7 @@ function runPlayer(ratio) {
   if (statEl) {
     statEl.innerHTML = ratio >= 1
       ? `10s of video arrives in 10s. No buffering at this quality.`
-      : `10s of video takes <b>${nf(total, 1)}s</b> to watch — <b>${nf(stalled, 1)}s</b> of it spent waiting.`;
+      : `10s of video takes <b>${nf(total, 1)}s</b> to watch, <b>${nf(stalled, 1)}s</b> of it spent waiting.`;
   }
   if (REDUCED) {                       // land on the finished state, no motion
     root.dataset.stalled = "0";
@@ -2883,7 +3384,7 @@ function renderSim(p) {
   // B5: the simulator runs on MEASURED speed only. A modelled estimate is not
   // a measurement, so it never silently drives a "what can people do" verdict.
   const basis = isModelled(p)
-    ? `<span class="chip warn"><i class="dot"></i>Modelled estimate — not simulated</span>`
+    ? `<span class="chip warn"><i class="dot"></i>Modelled estimate, not simulated</span>`
     : p.evidence_tier === "insufficient"
     ? `<span class="chip neutral"><i class="dot"></i>Insufficient evidence</span>`
     : `<span class="chip ${ev.cls}"><i class="dot"></i>Based on: ${ev.label} · ${int(p.n_tests)} tests · ${int(p.n_tiles)} tile${p.n_tiles === 1 ? "" : "s"}</span>`;
@@ -2913,7 +3414,7 @@ function renderSim(p) {
       <span class="num" style="font-size:13px">${num(ul, 2)}</span><span>up</span>
     </div>`;
 
-  // 360p is the floor that makes "cannot stream at all" sayable — 161 of the
+  // 360p is the floor that makes "cannot stream at all" sayable, 161 of the
   // 1,114 scored settlements fall below it once 30 people share the link, and
   // 46 of those have a school within 3 km. Both counted from dipi.geojson.
   const clip = isTier && r ? clipFor(r.tier.id) : null;
@@ -2929,7 +3430,7 @@ function renderSim(p) {
       <div class="player-spin"><i></i></div>
       <div class="player-bar"><i></i></div>
     </div>
-    <p class="player-note">Simulated preview — visualisation of estimated experience, not a live network test.</p>
+    <p class="player-note">Simulated preview. A visualisation of estimated experience, not a live network test.</p>
     <div class="player-stat" id="playerStat"></div>` : "";
 
   const legs = r && r.legs ? `<div class="legs">${r.legs.map(l =>
@@ -2976,7 +3477,7 @@ function renderSim(p) {
         <input class="share-num" id="shareNum" type="number" min="1" max="500" step="1"
                value="${simUsers}" aria-label="Custom number of people sharing">
       </div>
-      <p class="caption" style="margin:0 0 4px">Simplified equal-sharing model — an assumption, not a measurement.</p>
+      <p class="caption" style="margin:0 0 4px">Simplified equal-sharing model, an assumption, not a measurement.</p>
       ${perUserLine}
       ${ctx}
 
@@ -2988,12 +3489,14 @@ function renderSim(p) {
       </div>
       ${body}
       <div style="margin-top:10px">${basis}</div>
-      <details class="math"><summary>Thresholds and sources</summary>
+      <details class="math generic"><summary>Thresholds and sources</summary>
         <div class="mathbody">
           Video tiers use sustained-bitrate guidance of 0.7 / 1.1 / 2.5 / 5 / 20 Mbps
           for 360p / 480p / 720p / 1080p / 4K. Video-call floors are ≈ 3 Mbps in both
           directions with latency under 150 ms. Experience benchmarks are consistent
-          with Shayea et al. (IEEE Access, 2020/2021). Sharing divides the measured
+          with Shayea et al., IEEE Access 2020 and 2021, on Malaysian mobile broadband;
+          the ladder itself is published platform guidance rather than a finding of
+          those papers. Sharing divides the measured
           speed equally between people; real routers do not share equally.
         </div></details>
       <p class="disclaimer">Indicative, not a guarantee.<button class="info" type="button"
@@ -3022,17 +3525,30 @@ function renderSim(p) {
     simUsers = v;
     rerender();
     // The re-render replaces this input, so hand focus back and select the
-    // value — otherwise a second custom number means re-clicking the box.
+    // value, otherwise a second custom number means re-clicking the box.
     const again = el("shareNum");
     if (again) { again.focus(); try { again.select(); } catch (e) {} }
   };
   if (isTier && r && clipFor(r.tier.id)) runPlayer(r.ratio);
 }
 
-/* ══ §A — facilities ═════════════════════════════════════════════════════
+/* ══ §A, facilities ═════════════════════════════════════════════════════
    606 OSM points. They annotate the screening layer; they are never scoring
    evidence, and a facility missing from OSM is not proof none exists.       */
 const AMENITY = { school:"School", clinic:"Clinic", hospital:"Hospital", doctors:"Doctors" };
+
+/* One definition of what a school and a clinic look like, shared by the map
+   icons, the legend and the local-context list. They were drawn three separate
+   times before: when the map marks changed from circles to a square and a
+   cross, the panel kept its old filled square and hollow ring and quietly
+   disagreed with the map it was describing. */
+const FAC_PATH = {
+  school: `<rect x="6.5" y="6.5" width="9" height="9"/>`,
+  health: `<path d="M11 5.5v11M5.5 11h11"/>`,
+};
+const facGlyph = (kind, cls) =>
+  `<svg class="${cls}" viewBox="0 0 22 22" fill="none" stroke="currentColor"
+        stroke-width="2.6" stroke-linecap="round" aria-hidden="true">${FAC_PATH[kind] || ""}</svg>`;
 const facilityName = p => p.name || `Unnamed ${p.amenity} (${p.facility_id})`;
 
 function havKm(a, b) {
@@ -3043,7 +3559,7 @@ function havKm(a, b) {
   return 2 * R * Math.asin(Math.sqrt(s));
 }
 const km = d => d < 1 ? `${Math.round(d * 1000)} m` : `${nf(d, 1)} km`;
-/* No API key, no billing, no demo risk — just a deep link the browser opens.
+/* No API key, no billing, no demo risk, just a deep link the browser opens.
    Searching by coordinate alone lands on a bare pin ("5°09'56.5\"N…"), so when
    OSM gives us a real name we search THAT, centred on the point at zoom 17.
    Google then resolves the actual listing, with its photos and reviews.
@@ -3067,7 +3583,10 @@ function nearestFacilities(c, n) {
     .slice(0, n);
 }
 
+let facilitiesOn = false;   // drives the legend as well as the layers
+
 function setFacilitiesVisible(on) {
+  facilitiesOn = on;
   el("facToggle").checked = on;
   el("facRow").dataset.on = on ? "1" : "0";
   if (mapReady) {
@@ -3076,6 +3595,7 @@ function setFacilitiesVisible(on) {
     map.setLayoutProperty("facility-health", "visibility", vis);
   }
   if (!on) closeFacility();
+  renderLegend();
 }
 
 function closeFacility() {
@@ -3115,7 +3635,7 @@ function renderFacilityCard(f) {
       </button>
     </div>
     ${near ? `<div class="note" style="margin-bottom:10px">
-        ${km(near.d)} from <b style="color:var(--ink-strong)">${esc(nameOf(near.f.properties))}</b> —
+        ${km(near.d)} from <b style="color:var(--ink-strong)">${esc(nameOf(near.f.properties))}</b>,
         an area ranked <b style="color:var(--ink-strong)">#${int(rankOf(near.f.properties))}</b>
         of 1,114 for screening priority (DIPI ${num(dipiOf(near.f.properties))}).
       </div>` : ""}
@@ -3125,16 +3645,16 @@ function renderFacilityCard(f) {
       <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
         <path d="M6 2H3a1 1 0 00-1 1v10a1 1 0 001 1h10a1 1 0 001-1v-3M9.5 2H14v4.5M14 2L7 9"/></svg>
       Open in Google Maps</a>
-    <p class="caption" style="margin-top:9px">Context only — not scoring evidence.</p>`;
+    <p class="caption" style="margin-top:9px">Context only, not scoring evidence.</p>`;
   card.dataset.open = "1";
   el("facClose").onclick = closeFacility;
   if (GOOGLE.on()) loadFacilityPhoto(p, c);
 }
 
-/* ══ §B — Local Context ══════════════════════════════════════════════════
+/* ══ §B, Local Context ══════════════════════════════════════════════════
    Free tier, ships today, works offline: the three nearest points from OUR
    facilities layer plus a Maps deep link each. The Google Places / Street
-   View path below is written but DISABLED — see GOOGLE_CFG.               */
+   View path below is written but DISABLED, see GOOGLE_CFG.               */
 const GOOGLE = {
   KEY: "dino.gmapsKey", FLAG: "dino.gmapsOn",
   MAX_CALLS: 50,            // hard per-session ceiling; nothing can exceed it
@@ -3151,14 +3671,14 @@ const GOOGLE = {
 
 /* Street View. The metadata endpoint is FREE and tells us whether imagery
    exists, so the billable image is only ever requested for a location that
-   actually has one — no paying for grey "no imagery" tiles. */
+   actually has one, no paying for grey "no imagery" tiles. */
 async function streetViewFor(coords) {
   const [lng, lat] = coords;
   const key = GOOGLE.key();
   const meta = await fetch(
     `https://maps.googleapis.com/maps/api/streetview/metadata?location=${lat},${lng}&radius=3000&key=${encodeURIComponent(key)}`
   ).then(r => r.json());
-  // ZERO_RESULTS genuinely means no Street View car ever drove here — common
+  // ZERO_RESULTS genuinely means no Street View car ever drove here, common
   // in rural Sabah. Anything else is a CONFIG problem and must not be
   // disguised as "no imagery", or we'd be reporting a broken key as a fact
   // about the place.
@@ -3226,7 +3746,7 @@ async function loadFacilityPhoto(p, coords) {
   } catch (e) {
     html = `<p class="caption g-err">Photo unavailable (${esc(String(e.message || e))}).</p>`;
   }
-  // No "context only" line here — the card already carries one at its foot.
+  // No "context only" line here, the card already carries one at its foot.
   GOOGLE.cache.set(cacheKey, html);
   mount.innerHTML = html;
 }
@@ -3250,7 +3770,7 @@ async function placePhotosFor(coords) {
   if (!res.ok) throw new Error("Places HTTP " + res.status);
   const data = await res.json();
   const hits = (data.places || []).filter(p => p.photos && p.photos.length).slice(0, 3);
-  // 1 for the search itself, plus 1 per photo — each <img> below is its own
+  // 1 for the search itself, plus 1 per photo, each <img> below is its own
   // billable Places Photo request, so the meter must count them too.
   GOOGLE.spend(1 + hits.length);
   return hits.map(p => ({
@@ -3280,7 +3800,7 @@ async function loadGoogleContext(settlementId, coords) {
              loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
          <figcaption>Drag to look around, click the arrows to move along the road.</figcaption></figure>`;
     } else if (sv.none) {
-      html += `<p class="caption">No Street View here — no imagery has ever been captured at this
+      html += `<p class="caption">No Street View here, no imagery has ever been captured at this
                location. That says nothing about the settlement itself.</p>`;
     } else {
       html += `<p class="caption g-err">Street View request refused: <b>${esc(sv.error)}</b>.
@@ -3306,7 +3826,7 @@ async function loadGoogleContext(settlementId, coords) {
   } catch (e) {
     html += `<p class="caption g-err">Places photos unavailable (${esc(String(e.message || e))}).</p>`;
   }
-  html += `<p class="caption g-cap">Context only — not scoring evidence. Absence of imagery is not
+  html += `<p class="caption g-cap">Context only, not scoring evidence. Absence of imagery is not
            evidence that a place lacks facilities.</p>`;
   GOOGLE.cache.set(settlementId, html);
   mount.innerHTML = html;
@@ -3406,7 +3926,7 @@ function localContextBlock(coords) {
         ${near.map(({ f, d }) => {
           const p = f.properties;
           return `<div class="fac-row">
-            <span class="fac-kind" data-kind="${p.kind}"></span>
+            ${facGlyph(p.kind, "fac-kind")}
             <span class="fac-nm"><b>${esc(facilityName(p))}</b>
               <small>${esc(AMENITY[p.amenity])} &middot; ${esc(districtLabel(p._district))}</small></span>
             <span class="fac-d num">${km(d)}</span>
@@ -3424,7 +3944,7 @@ function localContextBlock(coords) {
     </div>`;
 }
 
-/* ══ B1 — modelled values ═════════════════════════════════════════════════
+/* ══ B1, modelled values ═════════════════════════════════════════════════
    The coverage-gap model adds pred_dl_mbps, pred_lo, pred_hi,
    speed_source and shap_top3 to dipi.geojson, plus a model_report.json.
    Until those land, every branch here is inert and the dashboard behaves
@@ -3433,11 +3953,45 @@ function localContextBlock(coords) {
    Two rules the UI must never break:
      1. observed and modelled numbers are NEVER shown as the same thing
      2. no modelled number appears without its validation metrics reachable  */
+/* The source registry, dataset/web/sources.json. Optional: if it is missing the
+   card still renders, it just says less. Keeping the prose in the file rather
+   than in here means there is one place to correct it. */
+let SOURCES = null;
+
+function srcTip() {
+  const P = SOURCES && SOURCES.parameters;
+  if (!P) return "Thresholds and unit costs, with their sources, are recorded in "
+                 + "dataset/web/sources.json.";
+  const of = st => Object.entries(P).filter(([, v]) => v.status === st);
+  const ours = of("unsourced").map(([k]) => `${P[k].value}${P[k].unit ? " " + P[k].unit : ""}`);
+  return `The ordering, the ${P.fac_near_km.value} km school anchor, the `
+    + `${P.fwa_max_km.value} km wireless limit and the ${P.fibre_min_pop.value} and `
+    + `${P.fwa_min_pop.value} population floors all come from published work, most of it `
+    + `ITU's Last-mile Guide. Unit costs are bracketed by published benchmarks rather `
+    + `than quoted for Malaysia. `
+    + (ours.length ? `Still ours: ${ours.join(", ")}. ` : "Nothing is unsourced. ")
+    + `${of("sourced").length} sourced, ${of("unsourced").length} not, `
+    + `${of("benchmarked").length} benchmarked. Full record with quotes and page numbers `
+    + `in dataset/web/sources.json.`;
+}
+
 let MODEL = null;            // model_report.json, or null when no model shipped
-let includeModelled = false; // DIPI-M toggle, off by default
 let CONN_LOOKUP = null;      // dl_mbps -> p_connectivity, read off the file
 
 const hasModel = () => MODEL !== null;
+/* The spanning-tree edge that attaches this settlement to its cluster's trunk,
+   or null when we have no clustering for it. Only fibre uses it: a mast or a
+   satellite terminal costs the same whether or not a neighbour has one. */
+let CLUSTERS = null;
+const trunkKm = p => {
+  const c = CLUSTERS && CLUSTERS[p.settlement_id];
+  return c && Number.isFinite(c.trunk_km) ? c.trunk_km : null;
+};
+const clusterOf = p => {
+  const c = CLUSTERS && CLUSTERS[p.settlement_id];
+  return c && c.cl >= 0 ? c.cl : null;
+};
+
 const speedSourceOf = p => p.speed_source || (p.dl_mbps !== null ? "observed" : null);
 const isModelled = p => speedSourceOf(p) === "modelled estimate";
 
@@ -3461,19 +4015,6 @@ function buildConnLookup(features) {
     const t = (x - xs[lo]) / (xs[hi] - xs[lo]);
     return ys[lo] + (ys[hi] - ys[lo]) * t;
   };
-}
-
-/* DIPI-M: the same weighted blend, but the connectivity pillar comes from the
-   predicted speed for settlements that have no measurement. Only ever shown
-   with the modelled badge, and never merged into the official DIPI column. */
-function dipiMOf(p) {
-  if (!hasModel() || !CONN_LOOKUP) return null;
-  if (p.pred_dl_mbps === null || p.pred_dl_mbps === undefined) return null;
-  const conn = isModelled(p) ? CONN_LOOKUP(p.pred_dl_mbps) : p.p_connectivity;
-  if (conn === null || p.p_population === null) return null;
-  const n = wNorm();
-  return 100 * (n.p_connectivity * conn + n.p_population * p.p_population
-              + n.p_institutions * p.p_institutions + n.p_equity * p.p_equity);
 }
 
 const sourceChip = p => isModelled(p)
@@ -3535,7 +4076,7 @@ function renderModelCard() {
   el("modelCardClose").onclick = () => { box.dataset.open = "0"; };
 }
 
-/* ══ B3 — Active-Survey Planner ═══════════════════════════════════════════
+/* ══ B3, Active-Survey Planner ═══════════════════════════════════════════
    Where to send a field team next. Ranked by the stakes already in the file;
    multiplied by prediction uncertainty once the model ships, because a wide
    interval means the model itself is admitting it does not know.            */
@@ -3549,6 +4090,15 @@ function surveyRanked() {
     return { f, p, stakes, band, score: stakes === null ? -1 : stakes * (band === null ? 1 : band) };
   }).filter(r => r.stakes !== null);
   rows.sort((a, b) => b.score - a.score);
+  /* The printed figure is the score that was sorted on, not a rescale of it.
+     An earlier version scaled the column so the top read 100, which descended
+     correctly but invented a number: 100 was the top of a list, not anything
+     measured. The product has no natural unit, so the row says what its two
+     factors were and the caption says how they were combined.
+
+     Before the model shipped the band was null, the score WAS stakes, and
+     printing stakes happened to be right; once uncertainty entered the sort the
+     column stopped matching its own order and nothing caught it. */
   return rows;
 }
 
@@ -3556,13 +4106,16 @@ function renderSurvey() {
   const rows = surveyRanked().slice(0, 10);
   const usingBand = hasModel() && rows.some(r => r.band !== null);
   el("surveyNote").innerHTML = (usingBand
-    ? `Ranked by <b>stakes x prediction uncertainty</b>.`
+    ? `<b>Stakes</b> out of 100, and how wide the model's range is in <b>Mbps</b>.
+         Ranked on the two multiplied.`
     : `Ranked by <b>stakes</b>, not by score.`)
     + info(usingBand
       ? "Stakes is what would be at risk if a settlement turns out to be badly served: "
       + "population within 2 km, schools and clinics within 3 km, and relative wealth. It is "
-      + "multiplied by how wide the model's predicted range is, so the places it is least "
-      + "sure about rise to the top. A survey priority, never a needs score."
+      + "multiplied by how wide the model's predicted range is in Mbps, so the places it "
+      + "is least sure about rise to the top. The figure shown is that product, which has "
+      + "no unit of its own: read it against the other rows, not on its own. A survey "
+      + "priority, never a needs score."
       : "These are the settlements with too little measurement to score. Stakes ranks them by "
       + "what would be at risk if they turn out to be badly served: population within 2 km, "
       + "schools and clinics within 3 km, and relative wealth. A survey priority, never a "
@@ -3572,22 +4125,32 @@ function renderSurvey() {
             aria-current="${r.p.settlement_id === selectedId}">
       <span class="rk">${i + 1}</span>
       <span class="nm"><b>${esc(nameOf(r.p))}</b><small>${esc(districtLabel(r.p._district))}</small></span>
-      <span class="dv" style="color:var(--neutral)">${num(r.stakes)}</span>
+      <span class="dv sv-two" style="color:var(--neutral)"
+            title="${r.band !== null
+              ? `Stakes ${num(r.stakes)} of 100, and the model puts this settlement anywhere `
+                + `across a ${num(r.band)} Mbps range. Ranked on the two multiplied.`
+              : `Stakes ${num(r.stakes)} of 100. No model range for this one.`}">
+        <b>${num(r.stakes)}</b>${r.band !== null
+          ? `<i>&plusmn;${int(Math.round(r.band))}</i>` : ""}</span>
     </button>`).join("")
     : `<p class="caption">No evidence-gap settlements in this filter.</p>`;
-  el("surveyList").querySelectorAll(".top-row").forEach(b => b.onclick = () => select(b.dataset.id));
+  el("surveyList").querySelectorAll(".top-row").forEach(b => b.onclick = () => {
+    surveyPick = b.dataset.id;         // so closing the group can undo it
+    select(b.dataset.id);
+  });
 }
 
-/* ══ B2 — Intervention Recommender ════════════════════════════════════════
-   Deterministic rules, not a model. Every threshold below is a PLACEHOLDER
-   awaiting a cited source; none of it is Malaysian policy, engineering
-   guidance or procurement fact, and the card says so on its face.
-   These are placeholders. Sourced criteria replace them once verified:
-     · ITU last-mile / technology-selection guidance   [TO VERIFY]
-     · MCMC JENDELA + USP publications                 [TO VERIFY]
-     · GSMA rural connectivity reports (secondary)     [TO VERIFY]  */
-const RULES_VERIFIED = false;   // flip to true only when §E sources land
-const RULE_PARAMS = {           // DEMO_PLACEHOLDER, every one of them
+/* ══ B2, Intervention Recommender ════════════════════════════════════════
+   Deterministic rules, not a model. Every threshold and unit cost is
+   recorded in dataset/web/sources.json, the quote, the page and how far it
+   was verified, so there is one place to correct and no prose here to
+   drift out of step with it.
+
+   Short version: the ordering, the 3 km school anchor, the 40 km wireless limit
+   and both population floors are sourced, most of them from ITU's Last-mile
+   Guide. Only fibre_max_km is still ours. */
+const RULES_VERIFIED = false;   // the ORDERING is sourced; these numbers are not
+const RULE_PARAMS = {           // OUR calibration, not a published threshold
   fibre_max_backhaul_km: 15,
   fibre_min_pop: 3000,
   fwa_max_backhaul_km: 40,
@@ -3617,7 +4180,11 @@ function buildBackhaul(features) {
       if (d < best) { best = d; bestAnchor = a; }
     }
     m.set(f.properties.settlement_id, {
-      km: best === Infinity ? null : best,
+      // Rounded to 2 dp because agent/tools.py stores it that way. Left raw,
+      // fibre cost differed in the last decimal and one extra settlement
+      // squeezed under the budget cap, so the panel funded 221 where the
+      // copilot funded 220.
+      km: best === Infinity ? null : Math.round(best * 100) / 100,
       anchor: bestAnchor ? nameOf(bestAnchor.properties) : null,
       anchorElev: bestAnchor ? bestAnchor.properties.elevation_m : null,
     });
@@ -3626,7 +4193,95 @@ function buildBackhaul(features) {
 }
 const backhaulKm = id => (BACKHAUL && BACKHAUL.get(id) ? BACKHAUL.get(id).km : null);
 
-/* ══ Layer 2 — terrain context ═══════════════════════════════════════════
+/* ══ Deployment bundles ══════════════════════════════════════════════════
+   Bundles come from clusters.json: settlements the recommender sends to fibre,
+   grouped so that members share one trench. HDBSCAN cannot run in the browser,
+   so the grouping is precomputed; everything below is arithmetic over it and
+   is cheap enough to redo on every keystroke.
+
+   Bundles are ranked against a BUDGET, not sequenced into a journey. Travel
+   between two builds is not a constraint anybody plans around, and an earlier
+   version that drew it produced a line across the province that read as
+   proposed fibre. */
+
+/* One row per bundle. Two things are counted carefully:
+
+     cost      from costOf, the same function Budget what-if uses, so the two
+               panels can never quote different prices for the same trench.
+     schools   DISTINCT facilities within 3 km of ANY member. Summing
+               n_schools_3km would count one school once per settlement that
+               can see it, which is the double count runBudget refuses to make.
+
+   Population is deliberately absent. The 2 km buffers overlap, so there is no
+   honest total, and "settlements" plus "distinct institutions" answers the
+   same question without inventing one. */
+const FAC_BY_CLUSTER = new Map();
+let FAC_KIND = new Map();
+
+function buildCorridors() {
+  if (!CLUSTERS) return [];
+  if (!FAC_KIND.size)
+    FAC_KIND = new Map(FACILITIES.map(g => [g.properties.facility_id, g.properties.kind]));
+  const by = new Map();
+  for (const f of FEATURES) {
+    const c = clusterOf(f.properties);
+    if (c === null) continue;
+    if (!by.has(c)) by.set(c, []);
+    by.get(c).push(f);
+  }
+  return [...by.entries()].map(([cl, fs]) => {
+    const ps = fs.map(f => f.properties);
+    const dipis = ps.map(x => dipiOf(x)).filter(v => v !== null).sort((a, b) => a - b);
+    /* Which facilities this bundle can reach, by id, so the portfolio can take
+       the UNION rather than adding twelve already-deduplicated counts: one
+       school can be within 3 km of settlements in two different bundles, and
+       summing the bundle counts would fund it twice. Cached because the
+       geometry never changes and this reruns on every keystroke. */
+    if (!FAC_BY_CLUSTER.has(cl)) {
+      const seen = new Set();
+      for (const f of fs)
+        for (const g of FACILITIES)
+          if (!seen.has(g.properties.facility_id)
+              && havKm(f.geometry.coordinates, g.geometry.coordinates) <= NEARBY_KM)
+            seen.add(g.properties.facility_id);
+      FAC_BY_CLUSTER.set(cl, [...seen]);
+    }
+    const facIds = FAC_BY_CLUSTER.get(cl);
+    const kinds = facIds.map(id => FAC_KIND.get(id));
+    return {
+      cl, n: fs.length, ids: ps.map(x => x.settlement_id), facIds,
+      lon: fs.reduce((a, f) => a + f.geometry.coordinates[0], 0) / fs.length,
+      lat: fs.reduce((a, f) => a + f.geometry.coordinates[1], 0) / fs.length,
+      trunk: ps.reduce((a, x) => a + (trunkKm(x) || 0), 0),
+      cost: ps.reduce((a, x) => { const c = costOf(x, budgetScenario); return a + (c ? c.cost : 0); }, 0),
+      schools: kinds.filter(k => k === "school").length,
+      clinics: kinds.filter(k => k === "health").length,
+      medDipi: dipis.length ? dipis[Math.floor(dipis.length / 2)] : null,
+      modelled: ps.filter(x => isModelled(x)).length,
+      unscored: ps.filter(x => dipiOf(x) === null).length,
+      district: districtLabel(ps[0]._district),
+    };
+  });
+}
+
+/* Three named scenarios rather than an unlabelled slider. Each is one sentence
+   a planner can check, and the sentence is on screen. */
+const SEQ_SCEN = {
+  need:     {
+              why:"<b>median DIPI of the bundle's members</b>, highest first. Cost is ignored.",
+              key: c => -(c.medDipi ?? 0) },
+  balanced: {
+              why:"<b>median DIPI &divide; cost in RM millions</b>, so need is weighed against price.",
+              key: c => -((c.medDipi ?? 0) / Math.max(c.cost / 1e6, 0.01)) },
+  reach:    {
+              why:"<b>(settlements + schools + clinics) &divide; cost in RM millions</b>. "
+                + "It favours bundles that touch the most places per ringgit, which is why "
+                + "it can pick a large low-DIPI bundle over a small urgent one.",
+              key: c => -((c.n + c.schools + c.clinics) / Math.max(c.cost / 1e6, 0.01)) },
+};
+let seqScenario = "balanced";
+
+/* ══ Layer 2, terrain context ═══════════════════════════════════════════
    The bootcamp's three-layer model for telecom GeoAI is network performance,
    physical landscape, and human demand. Ookla gives the first, WorldPop and
    RWI give the third; this is the second.
@@ -3635,7 +4290,7 @@ const backhaulKm = id => (BACKHAUL && BACKHAUL.get(id) ? BACKHAUL.get(id).km : n
 
      drop      how far the settlement sits below (or above) its nearest town.
                Masts cluster at towns, so a big drop means terrain is more
-               likely between the two. A PROXY, not a propagation model — we
+               likely between the two. A PROXY, not a propagation model, we
                have point elevations, not a surface, so no line-of-sight or
                Fresnel calculation is possible or claimed.
 
@@ -3729,18 +4384,20 @@ function recommenderBlock(p) {
                <span class="chip warn"><i class="dot"></i>Illustrative</span></div>
              <ul class="rec-why">${r.why.map(w => `<li>${esc(w)}</li>`).join("")}</ul>`
           : `<p class="caption">${esc(r.why[0])}</p>`}
-        <p class="caption rec-warn">Illustrative decision criteria pending source verification — prototype only.</p>
-        <p class="disclaimer">Rules-based decision support — not a trained model.</p>
+        <p class="caption rec-warn">The ordering, the school anchor, the distance limit
+          and the population floors are published; one cut-off is still ours${r.option === "Satellite"
+            ? ", and satellite is the least certain call" : ""}.${info(srcTip())}</p>
+        <p class="disclaimer">Australia&rsquo;s NBN does the same: a desktop prediction
+          first, then a technician on site. A rule like this screens; the field decides.</p>
       </div>
     </div>`;
 }
 
-/* ══ B4 — Budget What-If ══════════════════════════════════════════════════
-   The FORMULAS are fixed and honest. The RINGGIT FIGURES ARE PLACEHOLDERS
-   invented for layout only and must be replaced from cited sources before
-   this is shown to anyone as a number. Every one is tagged DEMO_PLACEHOLDER.
-   Candidate sources: MCMC USP project disclosures, JENDELA
-   quarterlies, ITU / World Bank / GSMA cost benchmarks.  [TO VERIFY] */
+/* ══ B4, Budget What-If ══════════════════════════════════════════════════
+   The formulas are honest; the ringgit figures are placeholders. No per-unit
+   Malaysian cost is public, so they are benchmarked against published models
+   rather than quoted, see dataset/web/sources.json. renderBudget reports a
+   range across all three cases rather than one confident depth. */
 const COSTS_VERIFIED = false;
 const COST_DEMO_PLACEHOLDER = {
   low:  { fibre_per_km: 90000,  fwa_per_site: 350000, satellite_per_terminal: 9000,  wifi_per_site: 45000 },
@@ -3749,11 +4406,42 @@ const COST_DEMO_PLACEHOLDER = {
 };
 let budgetScenario = "base";
 
+/* What the planner typed, or null where they left it alone. A blank, a zero or
+   anything unparseable all mean "use the benchmark" rather than "costs nothing",
+   which is the failure that would otherwise fund every settlement at once. */
+function ownCosts() {
+  const read = id => {
+    const v = parseFloat((el(id) || {}).value);
+    return Number.isFinite(v) && v > 0 ? v : null;
+  };
+  return { fibre_per_km: read("ownFibre"), fwa_per_site: read("ownFwa") };
+}
+const usingOwnCosts = () => Object.values(ownCosts()).some(v => v !== null);
+
 function costOf(p, scenario) {
-  const c = COST_DEMO_PLACEHOLDER[scenario], r = recommend(p);
+  const own = ownCosts();
+  const c = { ...COST_DEMO_PLACEHOLDER[scenario],
+              ...(own.fibre_per_km ? { fibre_per_km: own.fibre_per_km } : {}),
+              ...(own.fwa_per_site ? { fwa_per_site: own.fwa_per_site } : {}) };
+  const r = recommend(p);
   if (!r.option) return null;
   switch (r.option) {
-    case "Fibre":                  return { option:r.option, cost: c.fibre_per_km * Math.max(1, r.km) };
+    /* The trench this settlement ADDS, not the whole run to town. Ten villages
+       along one road used to be billed for the road ten times over, which
+       overstated fibre by 1.53x province-wide.
+
+       The CHEAPER of the two, because sharing is not always cheaper: 22 of the
+       288 bundled settlements sit further from their nearest bundle neighbour
+       than from the town itself, and charging the spur regardless wasted 254 km,
+       about RM 35.6m. A planner takes whichever run is shorter, so the cost
+       does too.
+
+       The floor sits OUTSIDE both, on purpose: a settlement at a town has a
+       distance of zero, and without the guard it would cost nothing and sort
+       first on people-per-ringgit. */
+    case "Fibre":                  return { option:r.option,
+                                            cost: c.fibre_per_km
+                                                  * Math.max(1, Math.min(trunkKm(p) ?? Infinity, r.km)) };
     case "Tower / fixed wireless": return { option:r.option, cost: c.fwa_per_site };
     case "Satellite":              return { option:r.option, cost: c.satellite_per_terminal };
     default:                       return { option:r.option, cost: c.wifi_per_site };
@@ -3791,26 +4479,249 @@ function runBudget(budget, scenario) {
   };
 }
 
+/* The unit costs are unverified placeholders, so the DEPTH this reaches is a
+   guess. The ORDER is not: the queue is people-per-ringgit and the scenarios
+   scale the same options together. So the honest output states the order as
+   the claim and shows the depth as a range across all three cost cases,
+   rather than a single confident count that rests entirely on a made-up price.
+
+   Whether the order really is stable is TESTED here, not asserted: if the
+   pessimistic case is a subset of the optimistic one, the queue only got cut
+   shorter. If it is not, the sentence says so instead. */
+/* The portfolio: what a budget funds, in the chosen order, with the money and
+   the reach it buys. Cumulative spend is the progress metric because that is
+   the constraint; kilometres between bundles are not. */
+function renderSequence() {
+  const box = el("seqOut"), list = el("seqList");
+  const cs = buildCorridors();
+  if (!cs.length) {
+    box.innerHTML = `<p class="caption">Build clusters are not loaded, so there are
+      no bundles to rank. Nothing else on the page is affected.</p>`;
+    el("seqResult").innerHTML = "";
+    list.innerHTML = "";
+    if (mapReady) setSequenceOnMap(null);
+    return;
+  }
+  const sc = SEQ_SCEN[seqScenario];
+  const ranked = [...cs].sort((a, b) => sc.key(a) - sc.key(b));
+  const budget = Math.max(0, +el("seqBudget").value || 0) * 1e6;
+
+  /* Whole bundles only: half a trench serves nobody. When one does not fit we
+     SKIP it and keep going, so a single expensive bundle cannot end the list
+     early. That makes this a greedy heuristic, not an optimiser: some other
+     combination of bundles may fit the same budget and serve more. Saying so
+     is cheaper than pretending otherwise. */
+  let spent = 0;
+  const funded = [];
+  for (const c of ranked) {
+    if (spent + c.cost > budget) continue;
+    spent += c.cost; funded.push(c);
+  }
+  const fN = funded.reduce((a, c) => a + c.n, 0);
+  /* The UNION across funded bundles. Adding each bundle's own deduplicated
+     count would still double-count a school that two bundles can both reach. */
+  const fFac = new Set();
+  for (const c of funded) for (const id of c.facIds) fFac.add(id);
+  const fS = [...fFac].filter(id => FAC_KIND.get(id) === "school").length;
+  const fC = [...fFac].filter(id => FAC_KIND.get(id) === "health").length;
+  const fMod = funded.reduce((a, c) => a + c.modelled, 0);
+  const total = cs.reduce((a, c) => a + c.cost, 0);
+  const nAll = cs.reduce((a, c) => a + c.n, 0);
+  /* Screening precision. A figure like RM 102,249,000 reads as a quotation;
+     the inputs are a benchmark catalogue and straight-line geometry, so one
+     decimal of a million is already generous. */
+  const mil = v => "RM " + (v / 1e6).toFixed(1) + "m";
+  const unclustered = FEATURES.filter(f =>
+    recommend(f.properties).option === "Fibre" && clusterOf(f.properties) === null).length;
+  /* How far this panel drifts from the ranking, measured rather than left for
+     the reader to notice. Fibre wants density, DIPI rewards remoteness and
+     poverty, so the two pull apart: a build panel that never says so invites
+     the reader to assume the bundles ARE the priority list. */
+  const byDipi = SCORED.map(f => f.properties).filter(x => dipiOf(x) !== null)
+    .sort((a, b) => dipiOf(b) - dipiOf(a));
+  const topInBundle = byDipi.slice(0, 50).filter(x => clusterOf(x) !== null).length;
+  const med = xs => { const v = xs.slice().sort((a, b) => a - b);
+    return v.length ? v[Math.floor(v.length / 2)] : 0; };
+  const bundledMed   = med(byDipi.filter(x => clusterOf(x) !== null).map(dipiOf));
+  const unbundledMed = med(byDipi.filter(x => clusterOf(x) === null).map(dipiOf));
+
+  /* Only what qualifies the figure it sits beside. What a bundle IS lives on
+     the group's own tooltip; repeating it here made a wall nobody reads. */
+  const caveats = info(
+    `Benchmark rates over straight-line distances, each settlement charged the shorter `
+    + `of its shared spur or its own run from town, so a real build costs more. `
+    + `Bundles are taken in ranked order while they fit and skipped when they do not, `
+    + `so this is greedy, not optimal. Institutions are counted once across the funded `
+    + `set; people are never totalled, because the 2 km buffers overlap.`);
+
+  box.innerHTML = `
+    <div class="bud-lead">
+      <span class="v num">${int(cs.length)}</span>
+      <span class="lbl">fibre bundles<br>${int(nAll)} of ${int(nAll + unclustered)} settlements</span>
+    </div>
+    <p class="bud-money">${mil(total)} for all ${int(cs.length)}</p>
+    <p class="bud-span">${ownCosts().fibre_per_km
+      ? `Priced at your RM ${int(ownCosts().fibre_per_km)}/km.`
+      : "Screening estimate, not a quotation."}${caveats}</p>
+    <p class="caption bud-warn"><b>This ranks fibre builds, not the priority list.</b>
+      Fibre wants ${int(RULE_PARAMS.fibre_min_pop)} people within 2 km and the highest-DIPI
+      settlements are mostly small and remote, so only ${int(topInBundle)} of the top 50 by
+      DIPI are in any bundle.${info(
+      "Median DIPI is " + nf(bundledMed, 1) + " across the bundled settlements against "
+      + nf(unbundledMed, 1) + " across those left out, so this panel points at denser and "
+      + "better-connected places than the ranking does. The rest are tower, satellite or "
+      + "community Wi-Fi: per-site builds with no trench to share. That is what fibre "
+      + "eligibility selects for, not a judgement about where help is needed.")}</p>`;
+
+  el("seqResult").innerHTML = `
+    <p class="bud-money" style="margin-top:2px">${funded.length
+      ? `${int(funded.length)} bundles fit ${mil(budget)}, for ${mil(spent)}`
+      : `Nothing fits ${mil(budget)}`}</p>
+    ${funded.length
+      ? `<p class="bud-span">${int(fN)} settlements &middot; ${int(fS)} schools
+         &middot; ${int(fC)} clinics</p>`
+      : `<p class="bud-span">The cheapest bundle is ${mil(Math.min(...cs.map(c => c.cost)))}.</p>`}
+    <p class="caption">Ranked by ${sc.why}</p>
+    ${fMod ? `<p class="caption bud-warn">${int(fMod)} of those settlements have a modelled
+      speed, not a measured one. Survey before committing.</p>` : ""}`;
+
+  let run = 0;
+  list.innerHTML = ranked.map((c, i) => {
+    const inBudget = funded.includes(c);
+    if (inBudget) run += c.cost;
+    const gap = c.cost - Math.max(0, budget - spent);
+    return `<button class="seq-stop" data-cl="${c.cl}" data-on="0"
+      ${inBudget ? "" : 'data-out="1"'}
+      title="${esc(c.district)} bundle. ${int(c.n)} settlements, median DIPI ${
+        c.medDipi === null ? "not scored" : num(c.medDipi)}. ${int(c.schools)} schools and ${
+        int(c.clinics)} clinics within ${nf(NEARBY_KM, 0)} km. ${nf(c.trunk, 0)} km of trench, ${
+        mil(c.cost)}.${c.modelled ? ` ${int(c.modelled)} member speeds are modelled, not measured.` : ""}${
+        c.unscored ? ` ${int(c.unscored)} members are unscored.` : ""} ${
+        inBudget ? "Funded." : `Needs ${mil(Math.max(gap, 0))} more than is left.`} Click to see it on the map.">
+      <span class="rk">${i + 1}</span>
+      <span class="nm">${esc(c.district)} &middot; ${int(c.n)} settlements${
+        c.medDipi !== null ? ` &middot; DIPI ${num(c.medDipi)}` : ""}${
+        c.modelled ? ` <span class="src-dot" style="background:var(--warn)"
+          title="${int(c.modelled)} member speeds are modelled"></span>` : ""}</span>
+      <span class="km">${inBudget ? mil(run) : mil(c.cost)}</span>
+    </button>`;
+  }).join("");
+
+  for (const btn of list.children) {
+    const c = cs.find(x => String(x.cl) === btn.dataset.cl);
+    btn.onmouseenter = () => highlightBundle(c);
+    btn.onmouseleave = () => highlightBundle(null);
+    btn.onclick = () => {
+      highlightBundle(c, true);
+      for (const o of list.children) o.dataset.on = (o === btn) ? "1" : "0";
+    };
+  }
+  if (mapReady) setSequenceOnMap(ranked);
+}
+
+/* Ring the members of one bundle. Never a line between bundles: they are
+   independent builds and a connector would read as infrastructure. */
+function clearBundleFocus() {
+  highlightBundle(null);
+  const l = el("seqList");
+  if (l) for (const b of l.children) b.dataset.on = "0";
+}
+
+function highlightBundle(c, fly) {
+  if (!mapReady || !map.getLayer("corridor-members")) return;
+  map.setFilter("corridor-members", c
+    ? ["in", ["get", "settlement_id"], ["literal", c.ids]]
+    : ["==", ["get", "settlement_id"], ""]);
+  if (c && fly) {
+    const pts = c.ids.map(id => coordsOf(id)).filter(Boolean);
+    if (!pts.length) return;
+    const b = pts.reduce((acc, q) => [Math.min(acc[0], q[0]), Math.min(acc[1], q[1]),
+                                      Math.max(acc[2], q[0]), Math.max(acc[3], q[1])],
+                         [180, 90, -180, -90]);
+    map.fitBounds([[b[0], b[1]], [b[2], b[3]]],
+      { padding:{ top:90, bottom:90, left:420, right:90 }, maxZoom:11.5,
+        duration: REDUCED ? 0 : 800 });
+  }
+}
+
+/* One numbered marker per bundle, at its centre. Points only. */
+function setSequenceOnMap(ranked) {
+  const src = map.getSource("corridors");
+  if (!src) return;
+  src.setData({ type:"FeatureCollection", features: (ranked || []).map((c, i) => ({
+    type:"Feature",
+    properties:{ order:i + 1, cl:c.cl, n:c.n, district:c.district },
+    geometry:{ type:"Point", coordinates:[c.lon, c.lat] },
+  })) });
+}
+
 function renderBudget() {
   const budget = Math.max(0, +el("budgetInput").value || 0) * 1e6;
   const res = runBudget(budget, budgetScenario);
   const money = v => "RM " + Math.round(v).toLocaleString("en-US");
+  const runs = { low: runBudget(budget, "low"), base: runBudget(budget, "base"),
+                 high: runBudget(budget, "high") };
+  const fundedIds = k => new Set(runs[k].funded.map(i => i.p.settlement_id));
+  const lo = fundedIds("low"), hiSet = fundedIds("high");
+  const nested = [...hiSet].every(i => lo.has(i));
+  const n = k => runs[k].funded.length;
+  const span = n("high") === n("low") ? null : `${int(n("high"))} to ${int(n("low"))}`;
+  const own = ownCosts(), mine = usingOwnCosts();
+  /* Named, in the order the money reached them, so the list and the rings on
+     the map are the same set read two ways. Capped at 300 rows because a
+     scrolling column of 600 is not a list either; the CSV in Rankings is the
+     route to all of them. */
+  const FUND_MAX = 300;
+  el("fundSum").textContent = res.funded.length
+    ? `The ${int(res.funded.length)} funded settlements`
+    : "Nothing is funded at this budget";
+  el("fundBody").innerHTML = res.funded.slice(0, FUND_MAX).map((it, i) => `
+    <button class="seq-stop" data-id="${it.p.settlement_id}"
+            title="${esc(nameOf(it.p))}: ${esc(it.option)}, ${money(it.cost)}. Click to open it.">
+      <span class="rk">${i + 1}</span>
+      <span class="nm">${esc(nameOf(it.p))} &middot; ${esc(districtLabel(it.p._district))}</span>
+      <span class="km">${money(it.cost).replace("RM ", "")}</span>
+    </button>`).join("")
+    + (res.funded.length > FUND_MAX
+       ? `<p class="caption" style="margin-top:7px">Showing the first ${int(FUND_MAX)}.
+          Rankings exports every row that matches your filters.</p>` : "");
+  for (const b of el("fundBody").children)
+    if (b.dataset && b.dataset.id) b.onclick = () => select(b.dataset.id);
+
   el("budgetOut").innerHTML = `
-    <p class="caption bud-warn">Illustrative costs, not procurement estimates.</p>
-    <div class="tiles" style="grid-template-columns:repeat(2,1fr);margin-bottom:8px">
-      <div class="tile"><span class="micro">Settlements funded</span>
-        <div class="v">${int(res.funded.length)}<span class="u">of ${int(res.considered)}</span></div></div>
-      <div class="tile"><span class="micro">With a school in 3 km</span>
+    <p class="caption bud-warn">${mine
+      ? `Using your figures${own.fibre_per_km ? ` (RM ${int(own.fibre_per_km)}/km` : " ("}${
+          own.fwa_per_site ? `${own.fibre_per_km ? ", " : ""}RM ${int(own.fwa_per_site)}/site` : ""
+        }), benchmark for the rest.`
+      : "Benchmark costs, not quotes."}</p>
+    <div class="bud-lead">
+      <span class="v num">${int(res.funded.length)}</span>
+      <span class="lbl">settlements funded<br>of ${int(res.considered)} screened</span>
+    </div>
+    <p class="bud-money">${money(res.spent)} allocated of ${money(res.budget)}</p>
+    ${span && !mine ? `<p class="bud-span">${span} depending on which cost case holds</p>` : ""}
+    <div class="tiles" style="grid-template-columns:repeat(3,1fr);margin-bottom:8px">
+      <div class="tile"><span class="micro">School 3km</span>
         <div class="v">${int(res.withSchool)}</div></div>
-      <div class="tile"><span class="micro">With a clinic in 3 km</span>
+      <div class="tile"><span class="micro">Clinic 3km</span>
         <div class="v">${int(res.withClinic)}</div></div>
-      <div class="tile"><span class="micro">Median population 2 km</span>
+      <div class="tile"><span class="micro">Median pop</span>
         <div class="v">${int(res.medianPop)}</div></div>
     </div>
-    <p class="caption">Allocates ${money(res.spent)} of ${money(res.budget)}.
-      Greedy by population per ringgit, so it is a good allocation, not a proven optimal one.</p>
-    <p class="caption">Counts are settlements, not people. The 2 km and 3 km buffers overlap,
-      so populations and facilities cannot be added up without double counting.</p>`;
+    <p class="caption">Read the order, not the depth.${info(
+      "Funding is greedy by population per ringgit, so it is a good allocation and not a "
+      + "proven optimal one. "
+      + (span && !mine
+         ? "The unit costs are placeholders, which is why the count is shown as a range. "
+           + (nested
+              ? "Every settlement the expensive case funds is also funded by the cheap one, "
+                + "so the cases disagree about how far the money reaches, not about which "
+                + "places come first. "
+              : "The queue itself also shifts between cases, so treat the membership as "
+                + "indicative too. ")
+         : "")
+      + "Counts are settlements, not people: the 2 km and 3 km buffers overlap, so "
+      + "populations and facilities cannot be added up without double counting.")}</p>`;
   // Highlight the funded set on the map.
   const ids = res.funded.map(i => i.p.settlement_id);
   if (mapReady) map.setFilter("budget-funded",
@@ -3830,6 +4741,10 @@ function clearBudgetRings() {
    n_clinics_3km, so what the map shows and what the institutions pillar
    counted are the same set. Any other radius would quietly disagree with the
    score on screen.                                                          */
+/* 3 km, and not arbitrarily: it is the radius behind n_schools_3km and
+   n_clinics_3km, AND it matches the 2.5-3 km MCMC fibres up around a school
+   under JENDELA. So what the map shows, what the institutions pillar counted,
+   and the unit Malaysia actually plans in are all the same distance. */
 const NEARBY_KM = 3;
 let nearbyFor = null;      // settlement_id currently focused, or null
 let FAC_LABELS = [];
@@ -3928,6 +4843,18 @@ function nearbyBlock(p) {
   const near = nearbyFacilities(coords);
   const claimed = (p.n_schools_3km || 0) + (p.n_clinics_3km || 0);
   const on = nearbyFor === p.settlement_id;
+  // Nothing within 3 km, and the pillar agrees there is nothing. "Show the 0
+  // facilities within 3 km" is a switch that cannot do anything, and the two
+  // tiles above already say 0 schools and 0 clinics.
+  if (!near.length && !claimed) return "";
+  // OSM maps none but the pillar counted some. Nothing to put on the map, but
+  // the disagreement is exactly the kind of thing this panel should not hide.
+  if (!near.length) return `
+    <div class="block">
+      <p class="note" style="color:var(--warn)">The institutions pillar counted
+        ${int(claimed)} within 3 km, but OpenStreetMap currently maps none here,
+        so there is nothing to show on the map.</p>
+    </div>`;
   return `
     <div class="block">
       <label class="toggle-row" id="nearbyRow" data-on="${on ? 1 : 0}" style="padding:9px">
@@ -3945,7 +4872,7 @@ function nearbyBlock(p) {
    that fall back to idle when they finish.
 
    The state is driven by `response_type`, which the SERVER computes from tool
-   output — so the character reacts to what the data actually said, not to how
+   output, so the character reacts to what the data actually said, not to how
    the model phrased it. A refusal or an evidence gap makes it look confused
    because a tool genuinely returned nothing, not because a string matched.  */
 const MASCOT = {
@@ -3992,7 +4919,7 @@ function setMascot(state, { hold = 0 } = {}) {
 
 /* response_type -> the face it pulls. One place, so the mapping is auditable. */
 const MASCOT_FOR = {
-  location:    "pointing",   // a ranking or a place — it points at the map
+  location:    "pointing",   // a ranking or a place, it points at the map
   answer:      "happy",      // tools returned rows
   no_evidence: "confused",   // a tool said "evidence needed" / no match
   refusal:     "confused",   // question the data cannot support
@@ -4027,7 +4954,7 @@ function startStatus(label) {
     // Only nag when the server has told us nothing at all. Once real steps are
     // arriving, inventing reassurance on a timer would be noise.
     const l = el("stLabel");
-    if (!liveSteps.length && l && s === 6) l.textContent = "Still working — the model is choosing tools.";
+    if (!liveSteps.length && l && s === 6) l.textContent = "Still working. The model is choosing tools.";
     if (!liveSteps.length && l && s === 20) l.textContent = "Taking longer than usual. The dashboard is unaffected.";
   }, 250);
 }
@@ -4102,7 +5029,7 @@ let streamOk = true;          // flipped off permanently if the server has no /s
 /* ══ The AI layer over the comparison ═════════════════════════════════════
    The fixed-rule summary is the product: reproducible, printable, and written
    in JS from the figures on screen. This is the layer ON TOP of it, for the
-   questions a fixed rule cannot answer — "which of these two first, and why?"
+   questions a fixed rule cannot answer, "which of these two first, and why?"
 
    Two things keep it honest:
      1. the dashboard sends the SELECTION, never the numbers. The server
@@ -4138,7 +5065,7 @@ function renderCmpAsk() {
   if (agentOnline === false) {
     b.dataset.state = "offline";
     b.disabled = false;                    // still clickable: clicking re-probes
-    l.textContent = "Copilot offline — retry";
+    l.textContent = "Copilot offline, retry";
     b.title = "The local agent server is not running. The summary above is unaffected.";
     return;
   }
@@ -4150,6 +5077,57 @@ function renderCmpAsk() {
   b.title = "Open the copilot with these " + n + " " + noun
           + "s and their figures as context.";
 }
+/* The deployment portfolio the chat is grounded in, or null. Settings only:
+   the server recomputes the figures, so a stale panel cannot feed the model a
+   number it no longer shows. Mutually exclusive with cmpCtx, because one
+   answer grounded in two different screens would have no honest provenance
+   line to write. */
+let seqCtx = null;
+
+/* Openers that only make sense against a portfolio. The comparison's three
+   are about two districts; asking those here would send the model hunting for
+   a comparison that is not attached. Each of these is answerable from the
+   grounded figures or from rank_bundles, never from the model's memory. */
+/* One friendly name per scenario. The chip and the context strip both read it,
+   because "reach" in one place and "reach per ringgit" in the other reads as
+   two different settings. */
+const SCEN_NAME = { need:"need", balanced:"balanced", reach:"reach per ringgit" };
+
+function seqChatEgs() {
+  const m = (seqCtx.budget_rm / 1e6).toFixed(0);
+  const cs = buildCorridors();
+  const top = cs.length
+    ? [...cs].sort((a, b) => SEQ_SCEN[seqScenario].key(a) - SEQ_SCEN[seqScenario].key(b))[0]
+    : null;
+  const named = SCEN_NAME[seqScenario];
+  return [
+    `What does RM ${m}m actually buy?`,
+    top ? `Why is ${top.district} first under ${named}?` : `Why is that one first?`,
+    `Which bundles just miss the budget?`,
+  ];
+}
+
+function openSeqChat() {
+  if (agentOnline === false) { agentOnline = null; probeAgent(); }
+  setCmpCtx(null);
+  seqCtx = { budget_rm: Math.max(0, +el("seqBudget").value || 0) * 1e6,
+             scenario: seqScenario };
+  setSeqCtxChip();
+  showView(null);
+  openChat(true);
+  el("chatPanel").querySelectorAll(".chat-eg").forEach((b, i) => {
+    const q = seqChatEgs()[i];
+    if (q) { b.textContent = q; b.hidden = false; } else b.hidden = true;
+  });
+  const m = (seqCtx.budget_rm / 1e6).toFixed(1);
+  pushBubble("bot", `<div class="bub-answer">Ready. I have the deployment bundles at
+    <b>RM ${esc(m)}m</b>, ranked by <b>${esc(seqScenario)}</b>, and the same figures the
+    panel shows.</div>
+    <p class="bub-note">Bundles are settlements grouped by position, a screening proxy for
+    a shared build rather than a design. I explain those figures, I do not recompute
+    them.</p>`);
+}
+
 /* True when the chat is already grounded in exactly what is on screen. */
 function cmpCtxMatches() {
   return !!cmpCtx && cmpCtx.level === cmp.level
@@ -4157,13 +5135,27 @@ function cmpCtxMatches() {
     && cmpCtx.areas.every(a => cmp.picked.includes(a));
 }
 
+/* The chat says what it is answering from, whichever screen that is. Without
+   this the portfolio grounding was invisible and the only way to tell was that
+   the answers happened to be right. */
+function setSeqCtxChip() {
+  const box = el("chatCtx");
+  if (!box || !seqCtx) return;
+  box.hidden = false;
+  el("chatCtxBody").innerHTML =
+    `<b>Deployment bundles</b> at RM ${esc((seqCtx.budget_rm / 1e6).toFixed(1))}m,
+     ranked by ${esc(SCEN_NAME[seqCtx.scenario] || seqCtx.scenario)}, on the figures
+     shown in that panel.`;
+}
+
 function setCmpCtx(ctx) {
   cmpCtx = ctx;
+  if (ctx) seqCtx = null;              // one grounding at a time
   const box = el("chatCtx");
   if (box) {
-    box.hidden = !ctx;
+    box.hidden = !ctx && !seqCtx;
     if (ctx) el("chatCtxBody").innerHTML =
-      `<b>${esc(ctx.areas.map(districtLabel).join(" · "))}</b> — the ${
+      `<b>${esc(ctx.areas.map(districtLabel).join(" · "))}</b>, the ${
         ctx.areas.length} ${esc(ctx.level)}s in the comparison, on the figures shown there.`;
   }
   renderCmpAsk();
@@ -4183,6 +5175,7 @@ function cmpChatEgs() {
 
 function openCmpChat() {
   if (agentOnline === false) { agentOnline = null; renderCmpAsk(); probeAgent(); }
+  seqCtx = null;                       // one grounding at a time
   setCmpCtx({ level: cmp.level, areas: [...cmp.picked] });
   showView(null);                      // the map and the chat, not the table
   openChat(true);
@@ -4358,7 +5351,7 @@ const isNumCol = (rows, c) => rows.some(r => typeof r[c] === "number")
    The number comes first for a reason. A facility table used to drop
    its_dl_mbps to make room for Type and District, so an answer that said "the
    best located school, at 312.7 Mbps" was followed by a table with no speed in
-   it — the one figure that justified the claim was the one column cut. */
+   it, the one figure that justified the claim was the one column cut. */
 const COL_RANK = ["rank","gap_rank","settlement","name","settlement_id","dipi","dipi_score",
   "stakes_score","dl_mbps","down_mbps","its_dl_mbps","nearest_settlement","km_to_it",
   "evidence_tier","evidence","its_evidence","district","division",
@@ -4406,7 +5399,9 @@ function renderAgentTable(rows) {
    start: the server trims history to twelve messages, so a context attached to
    the first question would silently fall out from about the fourth. */
 const askBody = q => JSON.stringify({ question: q, session_id: SESSION_ID,
-  ...(cmpCtx ? { context: { level: cmpCtx.level, areas: cmpCtx.areas } } : {}) });
+  ...(cmpCtx  ? { context: { level: cmpCtx.level, areas: cmpCtx.areas } }
+    : seqCtx  ? { context: { budget_rm: seqCtx.budget_rm, scenario: seqCtx.scenario } }
+    : {}) });
 
 async function askPlain(q) {
   const res = await fetch(ASK_URL, { method:"POST",
@@ -4415,7 +5410,7 @@ async function askPlain(q) {
   return res.json();
 }
 
-/* Server-sent events over POST, so EventSource (GET only) is not an option —
+/* Server-sent events over POST, so EventSource (GET only) is not an option,
    read the body stream and split on the blank line SSE uses as a separator.
    A server without /ask/stream falls back to plain POST, once, for good. */
 async function askStreamed(q) {
@@ -4476,8 +5471,11 @@ async function askAgent(q) {
        to add is not a provenance line. The server reports whether it actually
        seeded the comparison, so this can never claim grounding that did not
        happen. */
-    const src = d.grounded_in_comparison
-      ? `<p class="bub-src">Figures above are the District Decision Comparison's own —
+    const src = d.grounded_in_bundles
+      ? `<p class="bub-src">Figures above are the deployment panel's own, recomputed in
+           Python for this answer. Bundles are a screening proxy, not a design.</p>`
+      : d.grounded_in_comparison
+      ? `<p class="bub-src">Figures above are the District Decision Comparison's own,
          the same fixed values shown in the table, recomputed from the dataset rather than
          by the model. The fixed-rule summary on the sheet is unchanged.</p>`
       : "";
@@ -4558,6 +5556,25 @@ function initChat() {
 /* ══ Sidebar lists ═══════════════════════════════════════════════════════ */
 function renderLegend() {
   el("ramp").innerHTML = RAMP[theme].map(c => `<i style="background:${c}"></i>`).join("");
+  /* The mast at legend size, as SVG rather than the canvas glyph: it has to
+     sit on the panel, not on the map, so it takes the panel's ink and needs no
+     halo. currentColor keeps it correct in both themes for free. */
+  /* The layer toggles change what is on the map, so they change the legend
+     too. Schools and clinics arrive together from one toggle, so they share
+     one separator rather than getting a rule each. */
+  el("legendFacilities").innerHTML = facilitiesOn
+    ? `<div class="legend-item" style="margin-top:8px;padding-top:8px;border-top:1px solid var(--hairline)">
+         ${facGlyph("school", "glyph")}School</div>
+       <div class="legend-item">${facGlyph("health", "glyph")}Clinic or hospital</div>`
+    : "";
+  el("legendTower").innerHTML = towersOn
+    ? `<div class="legend-item" style="margin-top:8px;padding-top:8px;border-top:1px solid var(--hairline)">
+         <svg class="glyph" viewBox="0 0 30 30" fill="none" stroke="currentColor"
+              stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+           <path d="M13.2 12L9.6 25.5M16.8 12l3.6 13.5M11.1 20h7.8"/>
+           <path d="M10.2 8.6A6.4 6.4 0 0112.6 6.4M19.8 8.6a6.4 6.4 0 00-2.4-2.2"/>
+         </svg>Cell tower record</div>`
+    : "";
   el("legendFlood").innerHTML = floodOn
     ? `<div class="legend-item" style="margin-top:8px;padding-top:8px;border-top:1px solid var(--hairline)">
          <span class="glyph flood"></span>💧 Seasonal water adjacency</div>`
@@ -4576,7 +5593,7 @@ function renderTopList() {
   el("topList").querySelectorAll(".top-row").forEach(r => r.onclick = () => select(r.dataset.id));
 }
 
-/* ══ V6b — the sliders ═══════════════════════════════════════════════════ */
+/* ══ V6b, the sliders ═══════════════════════════════════════════════════ */
 let rankingsDirty = false;
 
 function renderWeights() {
@@ -4589,7 +5606,7 @@ function renderWeights() {
              data-k="${pl.key}" aria-label="${pl.label} weight">
     </div>`).join("");
   // Listeners bind once; drags only ever update text, never rebuild these
-  // inputs — rebuilding mid-drag would drop the pointer capture.
+  // inputs, rebuilding mid-drag would drop the pointer capture.
   el("weightBox").querySelectorAll(".wslider").forEach(s =>
     s.addEventListener("input", () => { W[s.dataset.k] = +s.value; applyWeights(); }));
   updateWeightLabels();
@@ -4603,7 +5620,7 @@ function updateWeightLabels() {
   });
   el("wNote").innerHTML = isCustomW()
     ? `<p class="note" style="margin-top:9px">Custom weighting. Evidence-gap communities are
-       unaffected — they carry no pillar scores to reweight.</p>`
+       unaffected, they carry no pillar scores to reweight.</p>`
     : "";
 }
 
@@ -4641,12 +5658,60 @@ function currentFilter() {
   const d = el("districtSel").value, v = el("divisionSel").value;
   return f => (d ? f.properties._district === d : (!v || f.properties._division === v));
 }
+/* Which option each settlement is suggested, and the id lists a map filter can
+   use. MapLibre cannot call recommend() inside an expression, so the ids are
+   resolved here once; the alternative, storing the option in dipi.geojson,
+   would let the file disagree with RULE_PARAMS after any rule change. */
+const OPTIONS = ["Fibre", "Tower / fixed wireless", "Satellite",
+                 "Community Wi-Fi at an institution"];
+const OPT_SHORT = { "Fibre":"Fibre", "Tower / fixed wireless":"Tower",
+                    "Satellite":"Satellite",
+                    "Community Wi-Fi at an institution":"Community Wi-Fi" };
+let OPT_IDS = null;                    // option -> [settlement_id]
+const optOn = new Set();               // empty means no filter, which is the default
+
+function buildOptionIndex() {
+  const m = new Map(OPTIONS.map(o => [o, []]));
+  for (const f of FEATURES) {
+    const o = recommend(f.properties).option;
+    if (o && m.has(o)) m.get(o).push(f.properties.settlement_id);
+  }
+  return m;
+}
+
+/* The ids the current chip selection allows, or null for "everything". Null
+   rather than a list of all 1,448 so the common case adds no filter at all. */
+function optFilterIds() {
+  if (!optOn.size || !OPT_IDS) return null;
+  const out = [];
+  for (const o of optOn) out.push(...(OPT_IDS.get(o) || []));
+  return out;
+}
+
+function renderOptChips() {
+  if (!OPT_IDS) OPT_IDS = buildOptionIndex();
+  el("optChips").innerHTML = OPTIONS.map(o =>
+    `<button class="rk-chip" data-opt="${esc(o)}" aria-pressed="${optOn.has(o)}"
+       data-tip="${esc(OPT_SHORT[o])}: ${int((OPT_IDS.get(o) || []).length)} settlements.">
+       ${esc(OPT_SHORT[o])} <span class="opt-n">${int((OPT_IDS.get(o) || []).length)}</span>
+     </button>`).join("");
+  el("optChips").querySelectorAll(".rk-chip").forEach(b => b.onclick = () => {
+    const o = b.dataset.opt;
+    optOn.has(o) ? optOn.delete(o) : optOn.add(o);
+    renderOptChips();
+    applyFilters();
+  });
+}
+
 function applyFilters() {
   const d = el("districtSel").value, v = el("divisionSel").value;
   const showQB = el("queueBToggle").checked;
   // District wins when set; otherwise the division scopes everything.
   const dist = d ? [["==", ["get","_district"], d]]
                  : v ? [["==", ["get","_division"], v]] : [];
+  // The suggested-option chips narrow the same set the district filter does.
+  const ids = optFilterIds();
+  if (ids) dist.push(["in", ["get","settlement_id"], ["literal", ids]]);
   map.setFilter("division-fill-sel", ["==", ["get","division"], v || ""]);
   positionLabels();
   map.setFilter("settlements",  ["all", ["!=",["get","evidence_tier"],"insufficient"], ...dist]);
@@ -4668,7 +5733,7 @@ const rkF = { q:"", evidence:"", place:"", school:false, clinic:false, flood:fal
 /* The one preset worth a chip, because it is the only filter here that asks a
    question the four pillars cannot: has a school AND the measured link cannot
    carry the lowest video tier once a classroom of 30 shares it. Same
-   arithmetic as the simulator — measured speed ÷ 30 against 360p's 0.7 Mbps —
+   arithmetic as the simulator, measured speed ÷ 30 against 360p's 0.7 Mbps,
    so the chip and the drill-down can never disagree. Unmeasured settlements
    are excluded: no measurement is not the same as a failing one. */
 const CLASSROOM_N = 30, FLOOR_MBPS = 0.7;
@@ -4708,7 +5773,7 @@ function rkSorted(rows) {
 function visibleRows() { return rkSorted(scoredOrdered().filter(currentFilter()).filter(rkMatch)); }
 
 /* Every chip explains itself on hover. Counts are of the 1,114 SCORED rows,
-   which is what this table holds — Queue B has its own section below and its
+   which is what this table holds, Queue B has its own section below and its
    own counts. A chip that filters on a threshold states the threshold. */
 const RK_CHIP_TIP = {
   "ev:measured":
@@ -4734,12 +5799,12 @@ const RK_CHIP_TIP = {
     "none exists. 230 settlements.",
   flood:
     "Seasonal surface water nearby, from JRC Global Surface Water. Includes coastal and " +
-    "tidal zones. Context only — it never enters the score. 462 scored settlements.",
+    "tidal zones. Context only, it never enters the score. 462 scored settlements.",
   classroom:
     "Has a school within 3 km AND the measured link cannot carry the lowest video tier once " +
     "a class of 30 shares it: download ÷ 30 falls under 0.7 Mbps. The same arithmetic the " +
     "Experience Simulator runs, so the two can never disagree. 46 settlements. Unmeasured " +
-    "settlements are excluded — no measurement is not the same as a failing one."
+    "settlements are excluded. No measurement is not the same as a failing one."
 };
 
 function renderRkChips() {
@@ -4794,11 +5859,11 @@ function renderRkHeaders() {
    already sit beside their raw inputs in this table; Pop and Equity had
    nothing on screen backing them, so 61 was a number a planner had to take on
    trust. Hover any pillar cell and the figures it was built from come up in
-   the same tooltip the headers use. The click still sorts — that is the more
+   the same tooltip the headers use. The click still sorts, that is the more
    useful thing to do with a header, so it keeps it. */
 const RAW_OF = {
   p_connectivity: p => p.dl_mbps === null
-    ? "no measurement here — this settlement is in the evidence gap"
+    ? "no measurement here, so this settlement is in the evidence gap"
     : `${num(p.dl_mbps)} Mbps down`
       + (p.latency_ms === null ? "" : `, ${num(p.latency_ms, 0)} ms latency`),
   p_population:   p => `${int(p.pop_2km) ?? "no"} people within 2 km`,
@@ -4811,7 +5876,7 @@ const pillarTip = (p, k, wn) => esc(`${RK_LABEL[k]} ${num(p[k] * 100)} of 100, f
   + `Counts for ${nf(wn[k] * 100, 0)}% of DIPI.`);
 
 /* ═══ District Decision Comparison ═══════════════════════════════════════════
-   "Why should District A be assessed before District B?" — the question this
+   "Why should District A be assessed before District B?", the question this
    product exists to answer, which until now needed two maps and a memory.
 
    Computed here in the browser, not fetched. The comparison is a core view, and
@@ -4847,7 +5912,7 @@ const pctOf = (part, whole) => whole ? halfUp(100 * part / whole, 0) : null;
 
    pop_2km is a 2 km buffer per settlement, and rural settlements sit far closer
    together than 4 km, so summing the column counts the same villagers once per
-   neighbour. Across Ranau it inflates 73,771 people to 566,012 — a factor of
+   neighbour. Across Ranau it inflates 73,771 people to 566,012, a factor of
    7.7, meaning most of any "population affected" total built that way is the
    same people over and over. Link settlements whose buffers touch, take one
    figure per cluster. Still an estimate of people NEAR them, not a census. */
@@ -4877,7 +5942,7 @@ function dedupPop(rows) {
 function areaStats(rows, facs) {
   // Insufficient-tier rows can still carry a dl_mbps, on a median of zero
   // tests. Judging service from those would turn "not measured" into "poorly
-  // served" — they belong in the evidence gap, not the underserved rate.
+  // served", they belong in the evidence gap, not the underserved rate.
   const meas = rows.filter(p => p.dl_mbps !== null && p.evidence_tier !== "insufficient");
   const scored = rows.filter(p => dipiOf(p) !== null);
   const under = meas.filter(p => p.dl_mbps < CMP_UNDERSERVED);
@@ -4948,7 +6013,7 @@ const CMP_MISSING = [
 ];
 
 /* How far apart two areas must be before this calls it a difference. Under
-   these, they are reported as comparable rather than ranked — a 2-point spread
+   these, they are reported as comparable rather than ranked, a 2-point spread
    on a screening index is not a planning signal. */
 const CMP_MEANINGFUL = { underserved_rate_pct:10, evidence_gap_pct:10, remote_rate_pct:10,
   terrain_shadow_pct:10 };
@@ -4959,7 +6024,7 @@ const CMP_MEANINGFUL = { underserved_rate_pct:10, evidence_gap_pct:10, remote_ra
 
    Built once per level and cached. The GADM districts carry 9,311 vertices
    between them, and drawing all of that four times over into a 130 px
-   thumbnail would cost more than the whole map does — so each ring is
+   thumbnail would cost more than the whole map does, so each ring is
    decimated to the thumbnail's own resolution first. */
 const polysOf = g => g.type === "Polygon" ? [g.coordinates]
                    : g.type === "MultiPolygon" ? g.coordinates : [];
@@ -4978,7 +6043,7 @@ function shapeIndex(fc, nameKey) {
   const kx = Math.cos(((mnY + mxY) / 2) * Math.PI / 180);
   const H = 100, s = H / (mxY - mnY);
   const W = (mxX - mnX) * kx * s;
-  const TOL = 0.5;                    // in view units — half a pixel at this size
+  const TOL = 0.5;                    // in view units, half a pixel at this size
   const pathOf = f => {
     let d = "";
     for (const poly of polysOf(f.geometry)) for (const ring of poly) {
@@ -5001,7 +6066,7 @@ function shapeIndex(fc, nameKey) {
     const d = pathOf(f);
     paths.set(f.properties[nameKey], d);
     // Where the area sits and how big it draws. Kota Kinabalu is 35 settlements
-    // in a corner and renders as a speck — too small to find without help — so
+    // in a corner and renders as a speck, too small to find without help, so
     // anything under a few view units gets a locator ring instead of relying
     // on a fill nobody can see.
     let ax = Infinity, ay = Infinity, bx = -Infinity, by = -Infinity;
@@ -5036,8 +6101,8 @@ const CMP_METRICS = [
 
 /* ── Layer 3: the profile ────────────────────────────────────────────────
    Every axis is the percentile of BADNESS against all 25 districts, which is
-   already computed for the table. That puts six unlike things — a percentage,
-   a speed, a headcount — on one honest 0–100 scale without inventing a
+   already computed for the table. That puts six unlike things, a percentage,
+   a speed, a headcount, on one honest 0–100 scale without inventing a
    composite score, and the shape shows WHICH KIND of need an area has. */
 const CMP_AXES = [
   ["Service",  "underserved_rate_pct"],
@@ -5082,7 +6147,7 @@ function cmpFacsFor(area) {
 
    Deterministic on purpose: it is the part a planner is most likely to paste
    into a paper, so it must say the same thing every time and cannot invent a
-   number. It never claims a cause either — terrain and remoteness are
+   number. It never claims a cause either, terrain and remoteness are
    ASSOCIATED with lower measured speed here, and this data cannot show more. */
 function cmpSummary(areas, stats) {
   if (areas.length < 2) return [];
@@ -5212,7 +6277,7 @@ function renderCmpStrip(picked, stats) {
 
 /* Layer 2. One row of bars per indicator, all bars in a row on one scale, so
    a difference is seen rather than read cell by cell. The Sabah median rides
-   on the track as a tick — a bar that beats every other bar on screen but
+   on the track as a tick, a bar that beats every other bar on screen but
    sits under the provincial median should not look like a win. */
 function renderCmpBars(picked, stats, sabah) {
   el("cmpMetrics").innerHTML = CMP_METRICS.map(([short, key]) =>
@@ -5254,7 +6319,7 @@ function renderCmpBars(picked, stats, sabah) {
   }).join("");
 }
 
-/* Layer 3. Six axes, one small radar per area rather than four overlaid —
+/* Layer 3. Six axes, one small radar per area rather than four overlaid,
    overlaid polygons stop being readable at three and become a knot at four.
    Every axis runs the same way: further out is worse. */
 function renderCmpRadar(picked, stats, all) {
@@ -5392,10 +6457,10 @@ function renderCompare() {
   el("cmpSummary").innerHTML = cmpSummary(picked, stats)
     .map(s => `<p>${esc(s)}</p>`).join("");
   el("cmpMissing").innerHTML = CMP_MISSING
-    .map(([n, why]) => `<li><b>${esc(n)}</b> — ${esc(why)}</li>`).join("");
+    .map(([n, why]) => `<li><b>${esc(n)}</b>, ${esc(why)}</li>`).join("");
   el("cmpStamp").textContent = new Date().toLocaleDateString("en-GB",
     { day: "numeric", month: "long", year: "numeric" });
-  /* Naming every area made the masthead a variable-height block — eighteen
+  /* Naming every area made the masthead a variable-height block, eighteen
      names wrapped to a third line and tipped the sheet onto a second page,
      while twenty-five did not. Past a handful the count is what a reader
      needs here; the table headers below name them all anyway. */
@@ -5445,7 +6510,7 @@ function setPrintPage(n) {
 /* ══ Printing any of the three sheets ═════════════════════════════════════
    One driver rather than three. The section being printed is tagged
    .print-target, the root says WHICH sheet so the per-sheet rules can bite,
-   and the shared masthead is lent to it and taken back afterwards — so the
+   and the shared masthead is lent to it and taken back afterwards, so the
    DOM is exactly as it was once the dialog closes, whether the user printed
    or cancelled. */
 let printBorrow = null;
@@ -5458,8 +6523,8 @@ function printSheet(kind, node, title, subject, { head = true } = {}) {
   /* A closed <details> prints as its summary and nothing else, which made the
      rankings sheet promise "11 evidence-gap rows" in its masthead above a
      collapsed empty section, and dropped the settlement sheet's workings.
-     CSS cannot open one — Chrome hides the contents through the shadow slot,
-     not through a display rule — so they are opened here and put back after. */
+     CSS cannot open one, Chrome hides the contents through the shadow slot,
+     not through a display rule, so they are opened here and put back after. */
   const shut = [...node.querySelectorAll("details:not([open])")];
   shut.forEach(d => d.open = true);
   printBorrow = { node, head: null, foot: null, shut };
@@ -5476,7 +6541,7 @@ function printSheet(kind, node, title, subject, { head = true } = {}) {
   }
   window.print();
   // Safari and Firefox fire afterprint; Chrome fires it too, but a cancelled
-  // dialog on some builds does not — so a timeout backstops it. Restoring
+  // dialog on some builds does not, so a timeout backstops it. Restoring
   // twice is harmless because restore() is idempotent.
   setTimeout(restorePrint, 800);
 }
@@ -5519,7 +6584,7 @@ function renderRankings() {
   renderRkHeaders();
   const notes = [];
   if (isCustomW()) notes.push(`Custom weighting · ${PILLARS.map(pl => nf(wn[pl.key] * 100, 0)).join(" / ")}
-    — not the team default. DIPI and ranks below are recomputed live from the file's pillar scores.`);
+   , not the team default. DIPI and ranks below are recomputed live from the file's pillar scores.`);
   if (rkSort.col && rkSort.col !== "dipi")
     notes.push(`Sorted by ${RK_LABEL[rkSort.col]} · DIPI rank preserved in first column.`);
   el("rkNote").innerHTML = notes.length
@@ -5583,7 +6648,7 @@ function renderRankings() {
 }
 
 function downloadCSV() {
-  // Exactly the rows on screen, in the order shown — chips, search, sort and
+  // Exactly the rows on screen, in the order shown, chips, search, sort and
   // the district filter all apply.
   const keep = currentFilter();
   const rows = [...visibleRows(), ...QUEUE_B.filter(keep).filter(rkMatch)];
@@ -5641,9 +6706,9 @@ function downloadCompareCSV() {
   /* Every note line is QUOTED so it occupies exactly one cell. Unquoted, a
      sentence like "roughly 1,196 against 0" split on its own commas and a
      spreadsheet drew the preamble as a ragged 1-to-4-column mess sitting
-     above the real header — which is what made the export look wrong. */
+     above the real header, which is what made the export look wrong. */
   const notes = [
-    "Dino Slayer — district decision comparison",
+    "Dino Slayer, district decision comparison",
     `${picked.map(districtLabel).join(" vs ")} · ${new Date().toISOString().slice(0, 10)}`,
     `${picked.length} ${cmp.level}s compared.`,
     "Rates and medians, never raw totals. Service figures use measured settlements only.",
@@ -5666,7 +6731,7 @@ const MOON = `<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke
   <path d="M13.4 9.6A5.8 5.8 0 016.4 2.6a5.8 5.8 0 107 7z"/></svg>`;
 
 /* Applied on load AND on every toggle. Gated on a mapReady flag set by the
-   load event — NOT on isStyleLoaded(), which reports false while the GeoJSON
+   load event, NOT on isStyleLoaded(), which reports false while the GeoJSON
    sources are still parsing and would silently skip the entire map repaint. */
 function applyMapTheme() {
   if (mapReady) {
@@ -5687,6 +6752,15 @@ function applyMapTheme() {
     map.setPaintProperty("queueb", "circle-stroke-color", theme === "dark" ? "#8B96A6" : "#6B7787");
     map.setPaintProperty("low-evidence", "circle-stroke-color", theme === "dark" ? "#E3B341" : "#9A6B00");
     map.setPaintProperty("selected", "circle-stroke-color", theme === "dark" ? "#3FC7E8" : "#0B7E9E");
+    // Towers: swap the whole glyph, because the halo is baked into the image
+    // and cannot be recoloured by a paint property.
+    const tc = satelliteOn ? "satellite" : theme, t = TOWERCOL[tc];
+    map.setLayoutProperty("tower-sites", "icon-image", "tower-" + tc);
+    map.setLayoutProperty("facility-school", "icon-image", "school-" + tc);
+    map.setLayoutProperty("facility-health", "icon-image", "health-" + tc);
+    map.setPaintProperty("tower-cluster", "circle-color", t.bub);
+    map.setPaintProperty("tower-cluster", "circle-stroke-color", t.bubLine);
+    map.setPaintProperty("tower-cluster", "circle-opacity", satelliteOn ? 0.62 : 0.5);
     const c = satelliteOn ? MAPCOL.satellite : MAPCOL[theme];
     map.setPaintProperty("district-fill", "fill-color", c.land);
     map.setPaintProperty("district-fill", "fill-opacity", c.landOp);
@@ -5733,7 +6807,7 @@ function showView(which) {
   }
   // Both full-bleed views sit UNDER the right-hand panels, so an open chat or
   // drill-down covers a quarter of the table and swallows clicks on whatever
-  // is beneath it — which is how a click on an "At a glance" card could land
+  // is beneath it, which is how a click on an "At a glance" card could land
   // on the chat log instead of the card.
   if (which) { closePanel(); openChat(false); }
   if (which === "rankings" && rankingsDirty) { renderRankings(); rankingsDirty = false; }
@@ -5779,7 +6853,10 @@ function wireUI() {
   });
   el("cmpClear").onclick = () => { cmp.picked = []; renderCompare(); };
   el("cmpAsk").onclick = openCmpChat;
-  el("chatCtxClear").onclick = () => { setCmpCtx(null); resetChatEgs(); };
+  el("seqAsk").onclick = openSeqChat;
+  el("chatCtxClear").onclick = () => {
+    seqCtx = null; setCmpCtx(null); el("chatCtx").hidden = true; resetChatEgs();
+  };
   el("cmpAll").onclick = () => { cmp.picked = cmpAreaNames(); renderCompare(); };
   el("cmpPrint").onclick = () =>
     printSheet("compare", el("compare"), "", "", { head: false });
@@ -5829,6 +6906,40 @@ function wireUI() {
 
   el("facToggle").onchange = e => setFacilitiesVisible(e.target.checked);
 
+  /* Cell records. Fetched on the first switch-on and kept thereafter. If the
+     file is missing the toggle says so and switches itself back off, because a
+     checked box over an empty map would read as "no towers here", which is the
+     one thing this layer must never say. */
+  let towersLoaded = false, towersLoading = false;
+  el("towerToggle").onchange = async e => {
+    const on = e.target.checked;
+    el("towerRow").dataset.on = on ? "1" : "0";
+    if (on && !towersLoaded && !towersLoading) {
+      towersLoading = true;
+      const cap = el("towerRow").querySelector(".caption");
+      const was = cap.innerHTML;
+      cap.textContent = "Loading\u2026";
+      try {
+        const fc = await fetch(`../dataset/web/${FX}towers.geojson`)
+          .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+        map.getSource("towers").setData(fc);
+        towersLoaded = true;
+        cap.innerHTML = was;
+      } catch (err) {
+        cap.textContent = "Tower records unavailable.";
+        e.target.checked = false;
+        el("towerRow").dataset.on = "0";
+        towersLoading = false;
+        return;
+      }
+      towersLoading = false;
+    }
+    towersOn = on;
+    if (mapReady) for (const l of ["tower-sites", "tower-cluster"])
+      map.setLayoutProperty(l, "visibility", on ? "visible" : "none");
+    renderLegend();
+  };
+
   /* Terrain relief. The DEM source is declared in the style but no tile is
      requested until this is switched on, so the opening reveal never waits
      on a third-party host. */
@@ -5847,7 +6958,7 @@ function wireUI() {
   el("baseMapBtn").onclick = () => setBasemap(false);
   el("baseSatBtn").onclick = () => setBasemap(true);
 
-  // §A2 — one box, two kinds of result, grouped and labelled.
+  // §A2, one box, two kinds of result, grouped and labelled.
   const search = el("search"), results = el("results");
   search.oninput = () => {
     const q = search.value.trim().toLowerCase();
@@ -5903,8 +7014,8 @@ function wireUI() {
   /* The panel and the sidebar join the same delegated tooltip. Method notes
      live behind an ⓘ rather than on the face of the component: a planner
      should see WHAT a number is, and reach for HOW it was derived only when
-     they doubt it. The labels that make an assumption honest — illustrative,
-     simulated, not scored — stay visible and are never moved in here. */
+     they doubt it. The labels that make an assumption honest, illustrative,
+     simulated, not scored, stay visible and are never moved in here. */
   for (const host of [el("rankTable"), el("rkChips"), el("panel"), el("body")]) {
     host.addEventListener("mouseover", e => {
       const t = e.target.closest("[data-tip]");
@@ -5930,16 +7041,97 @@ function wireUI() {
 
   renderSurvey();
 
-  el("budgetInput").oninput = renderBudget;
+  /* Three scenarios is ~170 ms of work, which is felt on every keystroke.
+     Same debounce the rankings search uses. */
+  let budDebounce = null;
+  el("budgetInput").oninput = () => {
+    clearTimeout(budDebounce);
+    el("seqBudget").value = el("budgetInput").value;
+    budDebounce = setTimeout(() => {
+      renderBudget();
+      // The bundles are priced and funded from the same number, so they move too.
+      if (el("seqGroup").open) renderSequence();
+    }, 180);
+  };
   el("budgetGroup").querySelectorAll(".seg-btn").forEach(b => b.onclick = () => {
     budgetScenario = b.dataset.scen;
     el("budgetGroup").querySelectorAll(".seg-btn")
       .forEach(x => x.setAttribute("aria-pressed", String(x === b)));
     renderBudget();
+    if (el("seqGroup").open) renderSequence();
+  });
+  let ownDebounce = null;
+  el("budgetGroup").querySelectorAll(".own-cost").forEach(i => i.oninput = () => {
+    el("ownReset").hidden = !usingOwnCosts();
+    el("seqFibre").value = el("ownFibre").value;   // one rate, two boxes
+    clearTimeout(ownDebounce);
+    ownDebounce = setTimeout(() => {
+      renderBudget();
+      if (el("seqGroup").open) renderSequence();
+    }, 220);
+  });
+  el("ownReset").onclick = () => {
+    el("budgetGroup").querySelectorAll(".own-cost").forEach(i => i.value = "");
+    el("seqFibre").value = "";
+    el("ownReset").hidden = true;
+    renderBudget();
+    if (el("seqGroup").open) renderSequence();
+  };
+  /* Closing the group clears only what the group put there. A settlement the
+     planner picked off the map is theirs and survives. */
+  el("surveyGroup").addEventListener("toggle", () => {
+    if (el("surveyGroup").open) { renderSurvey(); return; }
+    if (surveyPick && surveyPick === selectedId) closePanel();
+    surveyPick = null;
   });
   el("budgetGroup").addEventListener("toggle", () => {
     el("budgetGroup").open ? renderBudget() : clearBudgetRings();
   });
+
+  /* Build sequence. The line only exists while the group is open, so a closed
+     panel never leaves a route drawn over a map the reader is using for
+     something else. The slider redraws live: 17 centroids is fast enough that
+     debouncing it would only make the control feel broken. */
+  const seqVis = on => {
+    if (!mapReady) return;
+    for (const l of ["corridor-stop", "corridor-members"])
+      map.setLayoutProperty(l, "visibility", on ? "visible" : "none");
+  };
+  el("seqGroup").addEventListener("toggle", () => {
+    const open = el("seqGroup").open;
+    seqVis(open);
+    if (open) renderSequence(); else setSequenceOnMap(null);
+  });
+  /* The two budget boxes are one number. Each mirrors into the other and
+     redraws whichever panel is open, so they can never disagree on screen. */
+  let seqDebounce = null;
+  const syncBudget = (from, to, redraw) => {
+    el(to).value = el(from).value;
+    clearTimeout(seqDebounce);
+    seqDebounce = setTimeout(redraw, 180);
+  };
+  el("seqBudget").oninput = () => syncBudget("seqBudget", "budgetInput", () => {
+    if (el("seqGroup").open) renderSequence();
+    if (el("budgetGroup").open) renderBudget();
+  });
+  /* One fibre rate, two boxes. ownCosts() reads #ownFibre, so the mirror has to
+     land before anything reprices or the bundles would quote the benchmark
+     while the budget quoted the planner's figure. */
+  el("seqFibre").oninput = () => {
+    el("ownReset").hidden = !el("seqFibre").value;
+    syncBudget("seqFibre", "ownFibre", () => {
+      if (el("seqGroup").open) renderSequence();
+      if (el("budgetGroup").open) renderBudget();
+    });
+  };
+
+  for (const b of el("seqScen").querySelectorAll(".seg-btn"))
+    b.onclick = () => {
+      seqScenario = b.dataset.sc;
+      for (const o of el("seqScen").querySelectorAll(".seg-btn"))
+        o.setAttribute("aria-pressed", String(o === b));
+      renderSequence();
+    };
 
   /* The logo is the way home. Close whatever is covering the map, drop every
      transient highlight, and fly back to the opening view. It does NOT reset
@@ -5960,18 +7152,6 @@ function wireUI() {
     map.flyTo({ center:[116.8, 5.3], zoom:6.8, duration: REDUCED ? 0 : 900 });
   };
 
-  if (hasModel()) {
-    el("modelledRow").hidden = false;
-    el("modelledToggle").onchange = e => {
-      includeModelled = e.target.checked;
-      el("modelledRow").dataset.on = includeModelled ? "1" : "0";
-      renderRankings();
-      if (selectedId) {
-        const f = FEATURES.find(x => x.properties.settlement_id === selectedId);
-        if (f) renderPanel(f.properties);
-      }
-    };
-  }
 
   initChat();
   renderGoogleToggle();

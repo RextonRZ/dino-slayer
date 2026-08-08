@@ -1,0 +1,300 @@
+{
+  "_readme": [
+    "Where every threshold and unit cost in this project comes from, and where they do not.",
+    "This file is the record. Code should point at it rather than restate it, so there is",
+    "one place to correct and no prose to drift out of step.",
+    "",
+    "verified:",
+    "  read      the document was retrieved and the quoted text read directly",
+    "",
+    "each parameter carries:",
+    "  means     what the number actually does, in plain words",
+    "  status    sourced | benchmarked | unsourced",
+    "  note      where it came from and what that source does not say",
+    "  domain    confirmed across official domains, but direct retrieval was blocked",
+    "  search    seen in search results only. Good enough for direction, not for a number.",
+    "  citation  the bibliographic record is confirmed, but the specific claim was",
+    "            NOT read in the full text",
+    "  unverified  used, but no citation has been pinned. Say so rather than imply one."
+  ],
+  "updated": "2026-08-07",
+  "sources": {
+    "mcmc_jendela_schools": {
+      "title": "MCMC Draws Up More Solutions Under JENDELA 2 For Rural Connectivity",
+      "publisher": "Bernama",
+      "speaker": "Teo Nie Ching, Deputy Communications Minister",
+      "date": "2025-08-27",
+      "url": "https://www.bernama.com/en/general/news.php?id=2461184",
+      "quote": "We use schools as the centre point, and we will fibre-up surrounding areas within a 2.5 to 3-kilometre radius to ensure remote locations, even without commercial value, still have coverage.",
+      "verified": "read"
+    },
+    "oughton_2021": {
+      "title": "Policy options for digital infrastructure strategies: A simulation model for broadband universal service in Africa",
+      "author": "Edward J. Oughton",
+      "year": 2021,
+      "ref": "arXiv:2102.03561",
+      "url": "https://arxiv.org/abs/2102.03561",
+      "quotes": {
+        "backhaul_bands_p13": "Wireless backhaul costs are based on $10k, $20k and $40k for each small (<10km), medium (<20km) and large (<40km) backhaul unit (of which two are required to form a wireless connection). Connections over 40km require multiple hops.",
+        "fibre_per_metre_p13": "fiber costs per meter are $25, $15 and $10 for urban, suburban and rural respectively",
+        "site_capex_p12": "Per site capex costs include $39k for all active equipment, $47k to build a full 30m tower and $27k for installation.",
+        "site_opex_p12": "Per site opex costs include operation and maintenance of $7.4k, power of $2.2k, along with site rental of $15k (urban), $9.9k (suburban) and $2k (rural)."
+      },
+      "verified": "read"
+    },
+    "ogutu_oughton_2021": {
+      "title": "A Techno-Economic Cost Framework for Satellite Networks Applied to Low Earth Orbit Constellations: Assessing Starlink, OneWeb and Kuiper",
+      "author": "Osoro B. Ogutu, Edward J. Oughton",
+      "year": 2021,
+      "ref": "arXiv:2108.10834",
+      "url": "https://ar5iv.labs.arxiv.org/html/2108.10834",
+      "quote": "these mega-constellations will most likely have to operate below 0.1 users per km2 to provide a service that outcompetes other broadband connectivity options",
+      "verified": "read"
+    },
+    "analysys_mason_2022": {
+      "title": "Backhaul networks: comparing the economics of using satellite mega-constellations rather than fibre optics",
+      "author": "Carlos Placido",
+      "publisher": "Analysys Mason",
+      "date": "2022-10",
+      "url": "https://www.analysysmason.com/contentassets/e0db35bece0f4370b6715b589e62049b/analysys_mason_backhaul_satellite_fibre_oct2022_quarterly.pdf",
+      "quote": "We have assumed USD8000 per kilometre, which is low and may be misleading because terrain challenges and other local/regional conditions can increase such costs substantially.",
+      "verified": "read"
+    },
+    "nbn_australia": {
+      "title": "nbn Fixed Wireless coverage and service qualification",
+      "publisher": "NBN Co / data.gov.au",
+      "url": "https://www.nbnco.com.au/learn/network-technology/fixed-wireless-explained",
+      "summary": "Fixed wireless is assigned from a desktop prediction of coverage. A technician then performs a service qualification at the premises, and a failed signal test moves that address to satellite.",
+      "why_it_matters": "The closest comparable national programme does not assign technology by formula. It predicts, then verifies in the field. A threshold like ours is a screening step by design.",
+      "verified": "domain"
+    },
+    "oecd_worldbank_ordering": {
+      "title": "Rural broadband technology economics by population density",
+      "publisher": "OECD; World Bank",
+      "urls": [
+        "https://www.oecd.org/content/dam/oecd/en/publications/reports/2004/06/the-development-of-broadband-access-in-rural-and-remote-areas_g1gh4592/9789264032989-en.pdf",
+        "https://documents1.worldbank.org/curated/en/674601544534500678/pdf/Main-Report.pdf"
+      ],
+      "summary": "Wireless is more economic where users are few and spread out; fixed fibre where traffic is dense.",
+      "verified": "search"
+    },
+    "itu_fibre_repeaters": {
+      "title": "ITU rural and remote broadband study paper",
+      "publisher": "ITU",
+      "url": "https://www.itu.int/hub/2020/05/itu-launches-new-study-paper-on-broadband-and-connectivity-solutions-for-rural-and-remote-areas/",
+      "summary": "Optical fibre operates beyond 20 km without repeaters, which is why distance gates fibre at all.",
+      "verified": "search"
+    },
+    "mcmc_jendela_aggregate": {
+      "title": "First phase of JENDELA to cost RM28 billion",
+      "publisher": "MCMC, via The Vibes / Malay Mail",
+      "url": "https://www.malaymail.com/news/malaysia/2022/07/08/mcmc-implementation-of-first-phase-of-jendela-initiative-to-cost-rm28b/16347",
+      "summary": "RM 28 billion for phase 1, 2020-22. 60% commercial, 40% Universal Service Provision fund. Aggregate only, nothing per site or per km.",
+      "verified": "search"
+    },
+    "itu_lastmile_2020": {
+      "title": "The Last-mile Internet Connectivity Solutions Guide: Sustainable connectivity options for unconnected sites",
+      "author": "John Garrity, Aminata Amadou Garba",
+      "publisher": "ITU Telecommunication Development Bureau",
+      "year": 2020,
+      "ref": "ITU D-TND-01-2020, ISBN 978-92-61-32141-3",
+      "licence": "CC BY-NC-SA 3.0 IGO",
+      "url": "https://www.itu.int/hub/publication/d-tnd-01-2020/",
+      "note": "Gated behind a registration form. Obtained by the project team and read directly.",
+      "quotes": {
+        "population_bands_t28_p100": "Table 28, Estimating demand by population size and income, bands demand as Very small population (< 3 000 people), Small population (3 000 to 10 000 people) and Larger population (> 10 000 people). Fixed wired services appear only in the two upper bands, and in the 3 000 to 10 000 band only at higher income.",
+        "why_wired_needs_scale_p99": "For most entities (particularly commercial providers), fixed wired service is appropriate mostly for areas with large populations, even in areas which otherwise have a low ARPU, the reason being the cost of deploying new wired networks and the need for scale in order for wired services to become financially viable.",
+        "fibre_suits_density_p66": "As the cost of civil works for deployments benefits heavily from economies of scale, fibre is best suited to densely populated areas where multiple users can be reached by a single phase of deployment.",
+        "amn_rural_floor_p65": "AMN provides commercial service to remote communities with settled low populations (500 to 5 000 people) and low ARPUs (USD 1.20).",
+        "gsma_tower_reach_p63": "a tower over 30 m high can cover a wide area (8-15 km), while towers that are between 12 and 30 m high may only cover 4 to 8 km. Targeted solutions with tower heights between 9 and 19 m, meanwhile, can transmit signals over 2 to 4 km.",
+        "terrain_limits_options_t29_p101": "Table 29 lists microwave point-to-point and point-to-multipoint only for LARGE geographic areas with FLAT terrain. For large areas with mountainous terrain and non-line-of-sight across most of it, the options given are wide area cellular or satellite solutions only.",
+        "base_station_cost_p64": "The main drawback of cellular as an access technology is the implementation cost, such as the cost of tower infrastructure, with base stations ranging from USD 20 000 to 100 000.",
+        "fibre_cost_per_mile_p66": "from about USD 65 million for the most cost-effective 10 000 miles of fibre to nearly USD 820 million for the least cost-effective 10 000 miles, or USD 6 500 per most cost-effective mile to USD 82 000 per least cost-effective mile."
+      },
+      "verified": "read"
+    },
+    "mcmc_usp_2024": {
+      "title": "Universal Service Provision Annual Report 2024",
+      "publisher": "Malaysian Communications and Multimedia Commission (MCMC)",
+      "year": 2024,
+      "note": "Published under Regulation 36 of the Communications and Multimedia (Universal Service Provision) Regulations 2002. Obtained by the project team and read directly. Deep link to the PDF not recorded; the file name above is what it downloads as from the MCMC USP resources page.",
+      "figures": {
+        "jendela_expenditure_2024_rm": 801000000,
+        "new_towers_2024_total": 903,
+        "new_towers_2024_from_jendela": 823,
+        "base_stations_upgraded_2024": 319,
+        "new_towers_cumulative": 4040,
+        "base_stations_upgraded_cumulative": 11085,
+        "committed_cost_cumulative_rm": 8428800000,
+        "sabah_towers_cumulative": 796,
+        "sabah_base_stations_upgraded_cumulative": 2557
+      },
+      "what_it_does_not_say": "No per-tower or per-kilometre unit cost is published. The RM 801 million JENDELA line for 2024 also paid for base-station upgrades, tower fiberisation and premise fiberisation, so dividing it by the 823 towers gives a CEILING of about RM 973k per tower all-in, not the cost of a tower.",
+      "verified": "read",
+      "url": "https://www.mcmc.gov.my/en/resources/usp",
+      "file": "2-USP-Annual-Report-ENG_singles_FA_1.pdf"
+    },
+    "shayea_rural_2020": {
+      "title": "Performance Analysis of Mobile Broadband Networks with 5G Trends and Beyond: Rural Areas Scope in Malaysia",
+      "author": "I. Shayea, M. Ergen, M. H. Azmi, S. A. Nandi, A. A. El-Saleh, A. Zahedi, T. Han, N. Arsad",
+      "publisher": "IEEE Access",
+      "year": 2020,
+      "ref": "vol. 8, pp. 65211-65229, DOI 10.1109/ACCESS.2020.2978048",
+      "licence": "IEEE Access, open access CC BY",
+      "url": "https://ieeexplore.ieee.org/document/9025271",
+      "doi": "https://doi.org/10.1109/ACCESS.2020.2978048",
+      "summary": "Mobile broadband performance in rural Malaysia across coverage, latency, satisfaction and speed, for web browsing and video streaming.",
+      "verified": "citation"
+    },
+    "shayea_urban_2021": {
+      "title": "Performance Analysis of Mobile Broadband Networks with 5G Trends and Beyond: Urban Areas Scope in Malaysia",
+      "author": "I. Shayea, M. H. Azmi, M. Ergen, A. A. El-Saleh, T. Han, N. Arsad et al.",
+      "publisher": "IEEE Access",
+      "year": 2021,
+      "ref": "vol. 9, pp. 90767-90794, article 9446158",
+      "licence": "IEEE Access, open access CC BY",
+      "url": "https://ieeexplore.ieee.org/document/9446158",
+      "summary": "The urban counterpart to the 2020 rural study.",
+      "verified": "citation"
+    },
+    "platform_video_bitrates": {
+      "title": "Published sustained-bitrate guidance for video quality tiers",
+      "summary": "0.7 / 1.1 / 2.5 / 5 / 20 Mbps for 360p / 480p / 720p / 1080p / 4K. Widely published platform guidance; the dashboard already credits YouTube for the 20 Mbps 4K figure on the face of the simulator.",
+      "verified": "unverified",
+      "gap": "No single citation has been pinned for the full ladder. This is the weakest attribution left in the project."
+    }
+  },
+  "searched_and_not_found": [
+    {
+      "where": "ITU-D Study Group 1, Question 5/1 final report on rural and remote telecommunications",
+      "outcome": "Retrieved (9.2 MB) and read. States no numeric technology-selection threshold.",
+      "url": "https://www.itu.int/dms_pub/itu-d/opb/stg/D-STG-SG01.05-2017-PDF-E.pdf"
+    },
+    {
+      "where": "GSMA rural connectivity, backhaul and FWA reports",
+      "outcome": "Directional statements only. No freely published per-site cost benchmark."
+    },
+    {
+      "where": "NBN Australia premises-per-km2 or distance rule",
+      "outcome": "Does not exist. Each premises is tested instead of assigned by formula."
+    },
+    {
+      "where": "A Malaysian per-tower or per-kilometre unit cost",
+      "outcome": "Still not public. The USP Annual Report 2024 gives spend by project and counts by state, which bounds a tower from above (under RM 973k all-in) but does not price one. COSTS_VERIFIED stays false.",
+      "url": "https://www.mcmc.gov.my"
+    },
+    {
+      "where": "A pinned citation for the full 0.7 to 20 Mbps video tier ladder",
+      "outcome": "IEEE Xplore blocks automated retrieval, so the Shayea papers could not be read to confirm whether a tier table appears in either. The ladder is standard platform guidance and is labelled as such rather than attributed to a paper that may not contain it.",
+      "url": "https://ieeexplore.ieee.org/document/9025271"
+    }
+  ],
+  "parameters": {
+    "fac_near_km": {
+      "means": "The radius used to count schools and clinics 'near' a settlement. It decides the Institutions pillar, the school counts in every table, and which facilities the map shows when you focus one settlement.",
+      "value": 3,
+      "unit": "km",
+      "status": "sourced",
+      "source": "mcmc_jendela_schools",
+      "note": "MCMC fibres up a 2.5 to 3 km radius around schools, so the buffer matches the unit Malaysia plans in."
+    },
+    "wifi_min_institutions": {
+      "means": "How many schools or clinics have to sit within that radius before a shared community Wi-Fi hub is suggested. One is enough, because the school is the thing the connection gets anchored to.",
+      "value": 1,
+      "status": "sourced",
+      "source": "mcmc_jendela_schools",
+      "note": "Anchoring a shared connection on a school is Malaysia's own rural strategy."
+    },
+    "fwa_max_km": {
+      "means": "The furthest a settlement can be from the nearest town and still be offered a tower or fixed wireless link. Past this, one wireless hop stops reaching.",
+      "value": 40,
+      "unit": "km",
+      "status": "sourced",
+      "source": "oughton_2021",
+      "page": 13,
+      "note": "The largest wireless backhaul unit reaches under 40 km."
+    },
+    "sat_min_km": {
+      "means": "Beyond this distance from the nearest town, satellite is suggested instead, because a terrestrial link would need relaying through several hops.",
+      "value": 40,
+      "unit": "km",
+      "status": "sourced",
+      "source": "oughton_2021",
+      "page": 13,
+      "note": "Connections over 40 km require multiple hops, so one wireless link stops reaching there."
+    },
+    "fibre_max_km": {
+      "means": "How close a settlement has to be to a town before fibre is worth suggesting. Fibre itself reaches much further; this is about what it costs to dig.",
+      "value": 15,
+      "unit": "km",
+      "status": "unsourced",
+      "corroborating": "itu_lastmile_2020",
+      "note": "Still ours, and the one cut-off nothing fixes. ITU notes fibre itself reaches hundreds of kilometres, so distance is an economic limit rather than a technical one: at ITU's USD 6 500 to 82 000 per mile, 15 km costs roughly USD 60k to 765k, which is where the case turns. The number remains a calibration."
+    },
+    "fibre_min_pop": {
+      "means": "How many people must live within 2 km before fibre is worth suggesting. Laying cable only pays back when enough premises share the trench.",
+      "value": 3000,
+      "status": "sourced",
+      "source": "itu_lastmile_2020",
+      "page": 100,
+      "note": "ITU Table 28 puts the boundary between a very small and a small population at exactly 3 000, and lists fixed wired services only above it. Our rule requires 3 000 for fibre for the same reason ITU gives: wired deployment needs scale to be viable."
+    },
+    "fwa_min_pop": {
+      "means": "The smallest population within 2 km that still justifies building a tower. Below this, a mast has too few users to keep running.",
+      "value": 500,
+      "status": "sourced",
+      "source": "itu_lastmile_2020",
+      "page": 65,
+      "note": "ITU Box 4 records Africa Mobile Networks serving remote communities of 500 to 5 000 people commercially at USD 1.20 ARPU. 500 is the observed floor for rural cellular as a going concern, which is what this rule uses it as."
+    },
+    "fibre_per_km_rm": {
+      "means": "The assumed cost of laying one kilometre of fibre. Used only by the budget what-if, to work out how far a given sum reaches down the priority queue.",
+      "value": 140000,
+      "unit": "RM/km",
+      "status": "benchmarked",
+      "source": "oughton_2021",
+      "corroborating": "itu_lastmile_2020",
+      "note": "Bracketed by ITU's USD 6 500 to 82 000 per mile (about RM 18k to RM 224k per km), with Oughton at USD 10/m and Analysys Mason at USD 8k/km, the latter called low for difficult terrain. Ours sits inside the ITU range. MCMC publishes no per-kilometre figure, so this one has no Malaysian anchor."
+    },
+    "fwa_per_site_rm": {
+      "means": "The assumed cost of building one tower or fixed wireless site. Same use, and the same caveat: it sets the DEPTH the budget reaches, not the order.",
+      "value": 520000,
+      "unit": "RM/site",
+      "status": "benchmarked",
+      "source": "oughton_2021",
+      "page": 12,
+      "note": "Three independent anchors now, one of them Malaysian. MCMC's USP Fund spent RM 801m on JENDELA in 2024 and delivered 823 new towers alongside upgrades and fiberisation, so under RM 973k per tower ALL-IN is a ceiling rather than a unit cost. ITU puts a base station at USD 20k to 100k and Oughton itemises a greenfield site at USD 113k. Ours, RM 520k, is 53 per cent of the Malaysian ceiling and just above the two international figures. Still not a quote.",
+      "corroborating": "mcmc_usp_2024"
+    },
+    "satellite_density_check": {
+      "means": "Not one of our rules. It is the published user density below which satellite genuinely beats the alternatives, and we use it to CHECK our own satellite calls. Most of them sit above it, which is why satellite is flagged as the least certain of the four.",
+      "value": 0.1,
+      "unit": "users/km2",
+      "status": "sourced",
+      "source": "ogutu_oughton_2021",
+      "note": "Satellite outcompetes other options only below this density. Only 9 of the 22 settlements our rules send to satellite are that sparse, so satellite is the least certain of the four calls."
+    },
+    "video_tiers_mbps": {
+      "means": "The sustained speed each video quality needs. Drives the experience simulator, the 'below 360p at 30 users' test and the 46-school finding.",
+      "value": {
+        "360p": 0.7,
+        "480p": 1.1,
+        "720p": 2.5,
+        "1080p": 5,
+        "4k": 20
+      },
+      "status": "benchmarked",
+      "source": "platform_video_bitrates",
+      "corroborating": "shayea_rural_2020",
+      "note": "The ladder is published platform guidance, not a finding of any one paper. Shayea et al. is cited in the simulator as being CONSISTENT with these benchmarks for Malaysian mobile broadband, which is a weaker and more accurate claim than sourcing the numbers to it. IEEE Xplore blocks automated retrieval, so neither paper's full text has been read to confirm a tier table exists in it. Treat this as the least pinned figure in the project. MCMC publishes a 2.5 Mbps minimum for good HD mobile video, which would be a tighter Malaysian anchor if someone checks it."
+    },
+    "terrain_limits_options": {
+      "means": "Not a number, a constraint: in large mountainous areas without line of sight, microwave drops out and only cellular or satellite remain. Sabah is mountainous, which is why a terrain-shadowed settlement gets a siting caveat.",
+      "value": true,
+      "status": "sourced",
+      "source": "itu_lastmile_2020",
+      "page": 101,
+      "note": "ITU Table 29 offers microwave point-to-point only for large FLAT areas. Where a large area is mountainous and mostly non-line-of-sight, it lists wide area cellular or satellite only. Sabah is mountainous, which is why the terrain flag on a fixed-wireless recommendation matters rather than being decoration."
+    }
+  }
+}
