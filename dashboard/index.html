@@ -47,7 +47,9 @@
   color-scheme:dark;
 }
 [data-theme="light"]{
-  --bg:#F7F8FA;
+  /* Page is a cool grey and cards stay white, so a card has somewhere to
+     sit. At #F7F8FA the two were 3% apart and everything read as one sheet. */
+  --bg:#EDF0F4;
   --surface:#FFFFFF;
   --material-bg:rgba(255,255,255,.90);
   --hairline:rgba(15,25,40,.12);
@@ -1977,7 +1979,9 @@ const RAMP = {
   light: ["#FF8D6A","#E96F49","#CD5630","#AE390C","#832500"]
 };
 // Light theme uses Voyager, not Positron: a map should look like a map,
-// blue sea, warm land, green vegetation, not a grey document.
+// blue sea, warm land, green vegetation, not a grey document. It is muted
+// at the layer rather than swapped, because at full strength the basemap
+// competes with the dots drawn on top of it. See base-light paint below.
 const BASEMAP = {
   dark:  "https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
   light: "https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
@@ -2532,7 +2536,13 @@ function initMap(dipi, districts, divisions, facilities) {
       },
       layers: [
         { id:"base-dark",  type:"raster", source:"base_dark",  layout:{ visibility:"visible" } },
-        { id:"base-light", type:"raster", source:"base_light", layout:{ visibility:"none" } },
+        { id:"base-light", type:"raster", source:"base_light", layout:{ visibility:"none" },
+          /* Muted at the layer, not with a CSS filter on the canvas: the
+             settlement circles are drawn on that same canvas and would be
+             washed out with it. Dark needs none of this, dark_all is
+             already desaturated. */
+          paint:{ "raster-saturation":-0.55, "raster-contrast":-0.12,
+                  "raster-brightness-min":0.06 } },
         { id:"base-sat",   type:"raster", source:"base_sat",   layout:{ visibility:"none" } },
         /* Terrain sits directly on the basemap and under everything else, so it
            reads as ground the data lies on rather than as another score. Kept
