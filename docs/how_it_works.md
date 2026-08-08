@@ -507,20 +507,35 @@ infers *the kind of place that tends to be slow*, not coverage.
 
 **What you see.** "Where to measure next", the top 10 of the 334 unmeasured settlements.
 
-**How it is ranked.**
+**How it is ranked.** Three groups, ranked apart, never combined into one number.
 
-```
-score = stakes_score × (pred_hi - pred_lo)
-```
+| Group | n | Ranked by | Why it is where it is |
+|---|---|---|---|
+| **Would settle a decision** | 14 | `measurement_priority`, 0 to 1 | The model's interval crosses the 21 Mbps line, so the measurement decides which side it falls |
+| **Nothing known yet** | 223 | `stakes_score`, 0 to 100 | No usable estimate at all. 118 have no prediction whatsoever |
+| **Estimate already clear of the line** | 97 | `measurement_priority` | A trip here confirms what is already believed, which is the least useful thing a field team can do |
+
+**This replaced `stakes_score × (pred_hi - pred_lo)`, and the old formula asked the wrong
+question.** Interval width rewards a settlement the model is vague about even when it is
+confidently far from the threshold, where a measurement changes nothing. The two rankings
+are Spearman **-0.224** and share **none of their top ten**, because width and decisiveness
+genuinely point at different places.
+
+**The third group sits below the second on purpose.** It has a number and the unknowns do
+not, and it would be easy to let that put it on top. That would be exactly backwards: a
+place nothing is known about is a better use of a trip than one the model is confident about.
 
 `stakes_score` runs 28.9 to 97.1 and asks what would be at risk **if** this settlement turns
-out to be badly served: population within 2 km, schools and clinics within 3 km, and
-relative wealth. The second factor is how wide the model's range is in Mbps, so the places
-the model is least sure about rise.
+out to be badly served: population within 2 km, schools and clinics within 3 km, and relative
+wealth.
 
-**The row prints both factors, never the product.** Stakes times Mbps has no unit, and an
-earlier version rescaled it so the top read 100, which invented a number: 100 was the top of
-a list, not anything measured.
+**The two scales never share a column.** One is 0 to 1 from the model, the other is stakes
+out of 100, and reading straight down them would compare quantities that have nothing to do
+with each other. Each group carries its own header and its own count.
+
+Published by [dataset/export_survey.py](../dataset/export_survey.py), which refuses to write
+if the straddle gate stops separating the groups. Without `survey.json` the panel falls back
+to stakes alone, which is what it did before the model shipped.
 
 **This is a survey priority and never a needs score.** The dashboard never renders it as a
 DIPI, and the copilot is instructed to refuse to describe it as one.
@@ -809,10 +824,19 @@ same column as `dipi` and `rank`, because they are not the same kind of number a
 them in one list would imply an ordering between them that does not exist.
 
 **Queue B is a field-visit queue, so it carries what decides whether the trip is worth it**:
-stakes, a modelled speed estimate with its spread, distance to the nearest town, population,
-schools, clinics, nighttime light and water adjacency. The estimate is marked as modelled
-everywhere it appears and is never a measurement; settlements the model could not reach read
-`Not modelled` rather than a zero.
+why the row is where it is, stakes, a modelled speed estimate with its spread, distance to
+the nearest town, population, schools, clinics, nighttime light and water adjacency. The
+estimate is marked as modelled everywhere it appears and is never a measurement; settlements
+the model could not reach read `Not modelled` rather than a zero.
+
+**It is ordered by the same rule as the sidebar panel**, and the `Would settle` column names
+it: `Crosses the line`, then `Nothing known`, then `Clear of the line`. It used to order by
+the stored `gap_rank`, which ranks on stakes alone. That left the same 334 settlements in two
+different orders in two views with nothing on screen to explain the difference, which is the
+same failure as the notebook and the panel disagreeing. One queue, one order.
+
+The `Est. speed` column makes the first group self-evident: read the top rows and every
+range spans 21, 25.7 ±7, 23.0 ±4, 17.1 ±6.
 
 ---
 

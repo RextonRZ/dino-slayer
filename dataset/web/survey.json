@@ -1,0 +1,687 @@
+{
+ "_what": "Survey targeting for the settlements a measurement could actually settle. Higher is more decisive, not more needy.",
+ "_not": "NOT a needs score and NOT a DIPI. It covers a SUBSET of the queue, because decisiveness needs a model estimate and a population to serve. The rest of the queue is ranked by stakes on its own, and the two are never multiplied.",
+ "_source": "geoai_coveragemodel.py (Colab), measurement_priority v4. See docs/system_info.md section 7.2 for the three versions it replaced.",
+ "threshold_mbps": 21.0,
+ "threshold_note": "Ours: 0.7 Mbps at 360p shared by a classroom of 30.",
+ "counts": {
+  "scored_here": 111,
+  "straddle_the_line": 14,
+  "queue_total": 334,
+  "not_covered": 223
+ },
+ "fields": {
+  "p": "measurement_priority, 0 to 1",
+  "s": "1 if the interval crosses the line",
+  "d": "decisiveness before the gate",
+  "why": "the sentence shown in the row"
+ },
+ "rows": {
+  "S0593": {
+   "p": 0.918,
+   "s": 1,
+   "d": 0.5783,
+   "why": "est 25.7 \u00b16.5 Mbps (19.2\u201332.2) \u00b7 crosses the 21 Mbps line \u00b7 574 people within 2km"
+  },
+  "S0604": {
+   "p": 0.912,
+   "s": 1,
+   "d": 0.6473,
+   "why": "est 23.0 \u00b13.7 Mbps (19.3\u201326.7) \u00b7 crosses the 21 Mbps line \u00b7 435 people within 2km"
+  },
+  "S0409": {
+   "p": 0.908,
+   "s": 1,
+   "d": 0.5255,
+   "why": "est 31.0 \u00b111.1 Mbps (19.9\u201342.1) \u00b7 crosses the 21 Mbps line \u00b7 550 people within 2km"
+  },
+  "S0600": {
+   "p": 0.895,
+   "s": 1,
+   "d": 0.6856,
+   "why": "est 23.0 \u00b14.5 Mbps (18.6\u201327.5) \u00b7 crosses the 21 Mbps line \u00b7 213 people within 2km"
+  },
+  "S1298": {
+   "p": 0.885,
+   "s": 1,
+   "d": 0.6092,
+   "why": "est 17.1 \u00b16.1 Mbps (11.0\u201323.2) \u00b7 crosses the 21 Mbps line \u00b7 194 people within 2km"
+  },
+  "S1107": {
+   "p": 0.878,
+   "s": 1,
+   "d": 0.4572,
+   "why": "est 38.8 \u00b119.0 Mbps (19.8\u201357.8) \u00b7 crosses the 21 Mbps line \u00b7 245 people within 2km"
+  },
+  "S0518": {
+   "p": 0.876,
+   "s": 1,
+   "d": 0.789,
+   "why": "est 22.6 \u00b16.0 Mbps (16.6\u201328.6) \u00b7 crosses the 21 Mbps line \u00b7 93 people within 2km"
+  },
+  "S0123": {
+   "p": 0.873,
+   "s": 1,
+   "d": 0.758,
+   "why": "est 23.3 \u00b17.3 Mbps (16.0\u201330.6) \u00b7 crosses the 21 Mbps line \u00b7 99 people within 2km"
+  },
+  "S1258": {
+   "p": 0.87,
+   "s": 1,
+   "d": 0.8355,
+   "why": "est 22.4 \u00b17.2 Mbps (15.2\u201329.6) \u00b7 crosses the 21 Mbps line \u00b7 86 people within 2km"
+  },
+  "S0722": {
+   "p": 0.862,
+   "s": 1,
+   "d": 0.7009,
+   "why": "est 25.7 \u00b111.0 Mbps (14.7\u201336.7) \u00b7 crosses the 21 Mbps line \u00b7 88 people within 2km"
+  },
+  "S0425": {
+   "p": 0.854,
+   "s": 1,
+   "d": 0.7722,
+   "why": "est 19.6 \u00b14.8 Mbps (14.8\u201324.4) \u00b7 crosses the 21 Mbps line \u00b7 74 people within 2km"
+  },
+  "S0821": {
+   "p": 0.818,
+   "s": 1,
+   "d": 0.8724,
+   "why": "est 19.6 \u00b19.8 Mbps (9.8\u201329.3) \u00b7 crosses the 21 Mbps line \u00b7 23 people within 2km"
+  },
+  "S0299": {
+   "p": 0.792,
+   "s": 1,
+   "d": 0.5519,
+   "why": "est 26.6 \u00b17.0 Mbps (19.7\u201333.6) \u00b7 crosses the 21 Mbps line \u00b7 22 people within 2km"
+  },
+  "S0812": {
+   "p": 0.791,
+   "s": 1,
+   "d": 0.527,
+   "why": "est 33.3 \u00b113.7 Mbps (19.6\u201347.0) \u00b7 crosses the 21 Mbps line \u00b7 23 people within 2km"
+  },
+  "S0728": {
+   "p": 0.392,
+   "s": 0,
+   "d": 0.3274,
+   "why": "est 31.6 \u00b15.2 Mbps (26.5\u201336.8) \u00b7 clear of the line \u00b7 460 people within 2km"
+  },
+  "S1439": {
+   "p": 0.367,
+   "s": 0,
+   "d": 0.257,
+   "why": "est 57.2 \u00b112.5 Mbps (44.7\u201369.8) \u00b7 clear of the line \u00b7 645 people within 2km"
+  },
+  "S1431": {
+   "p": 0.365,
+   "s": 0,
+   "d": 0.3839,
+   "why": "est 31.8 \u00b16.7 Mbps (25.1\u201338.5) \u00b7 clear of the line \u00b7 301 people within 2km"
+  },
+  "S0601": {
+   "p": 0.365,
+   "s": 0,
+   "d": 0.3388,
+   "why": "est 36.7 \u00b18.1 Mbps (28.7\u201344.8) \u00b7 clear of the line \u00b7 586 people within 2km"
+  },
+  "S1371": {
+   "p": 0.364,
+   "s": 0,
+   "d": 0.3614,
+   "why": "est 33.0 \u00b16.8 Mbps (26.2\u201339.8) \u00b7 clear of the line \u00b7 417 people within 2km"
+  },
+  "S0626": {
+   "p": 0.361,
+   "s": 0,
+   "d": 0.3779,
+   "why": "est 36.3 \u00b19.3 Mbps (27.0\u201345.6) \u00b7 clear of the line \u00b7 315 people within 2km"
+  },
+  "S0408": {
+   "p": 0.355,
+   "s": 0,
+   "d": 0.3325,
+   "why": "est 40.3 \u00b19.6 Mbps (30.7\u201350.0) \u00b7 clear of the line \u00b7 531 people within 2km"
+  },
+  "S1225": {
+   "p": 0.348,
+   "s": 0,
+   "d": 0.4477,
+   "why": "est 35.7 \u00b111.9 Mbps (23.8\u201347.7) \u00b7 clear of the line \u00b7 132 people within 2km"
+  },
+  "S0014": {
+   "p": 0.34,
+   "s": 0,
+   "d": 0.3729,
+   "why": "est 36.6 \u00b19.3 Mbps (27.3\u201346.0) \u00b7 clear of the line \u00b7 193 people within 2km"
+  },
+  "S1433": {
+   "p": 0.335,
+   "s": 0,
+   "d": 0.269,
+   "why": "est 61.8 \u00b117.3 Mbps (44.5\u201379.0) \u00b7 clear of the line \u00b7 233 people within 2km"
+  },
+  "S1096": {
+   "p": 0.335,
+   "s": 0,
+   "d": 0.3608,
+   "why": "est 36.8 \u00b18.9 Mbps (27.9\u201345.7) \u00b7 clear of the line \u00b7 193 people within 2km"
+  },
+  "S0480": {
+   "p": 0.329,
+   "s": 0,
+   "d": 0.3338,
+   "why": "est 47.9 \u00b113.5 Mbps (34.4\u201361.4) \u00b7 clear of the line \u00b7 77 people within 2km"
+  },
+  "S1101": {
+   "p": 0.328,
+   "s": 0,
+   "d": 0.356,
+   "why": "est 36.9 \u00b18.8 Mbps (28.1\u201345.8) \u00b7 clear of the line \u00b7 193 people within 2km"
+  },
+  "S0008": {
+   "p": 0.325,
+   "s": 0,
+   "d": 0.3799,
+   "why": "est 39.7 \u00b111.5 Mbps (28.3\u201351.2) \u00b7 clear of the line \u00b7 97 people within 2km"
+  },
+  "S0581": {
+   "p": 0.325,
+   "s": 0,
+   "d": 0.3127,
+   "why": "est 48.0 \u00b112.3 Mbps (35.7\u201360.2) \u00b7 clear of the line \u00b7 90 people within 2km"
+  },
+  "S0046": {
+   "p": 0.323,
+   "s": 0,
+   "d": 0.3957,
+   "why": "est 42.0 \u00b113.8 Mbps (28.2\u201355.8) \u00b7 clear of the line \u00b7 80 people within 2km"
+  },
+  "S1281": {
+   "p": 0.32,
+   "s": 0,
+   "d": 0.3864,
+   "why": "est 43.4 \u00b114.1 Mbps (29.3\u201357.5) \u00b7 clear of the line \u00b7 84 people within 2km"
+  },
+  "S0431": {
+   "p": 0.318,
+   "s": 0,
+   "d": 0.4842,
+   "why": "est 26.4 \u00b15.1 Mbps (21.3\u201331.5) \u00b7 clear of the line \u00b7 61 people within 2km"
+  },
+  "S0271": {
+   "p": 0.317,
+   "s": 0,
+   "d": 0.4697,
+   "why": "est 23.8 \u00b12.5 Mbps (21.3\u201326.3) \u00b7 clear of the line \u00b7 62 people within 2km"
+  },
+  "S0583": {
+   "p": 0.315,
+   "s": 0,
+   "d": 0.2994,
+   "why": "est 49.4 \u00b112.1 Mbps (37.2\u201361.5) \u00b7 clear of the line \u00b7 90 people within 2km"
+  },
+  "S0827": {
+   "p": 0.314,
+   "s": 0,
+   "d": 0.2751,
+   "why": "est 41.2 \u00b17.7 Mbps (33.5\u201348.8) \u00b7 clear of the line \u00b7 437 people within 2km"
+  },
+  "S0802": {
+   "p": 0.311,
+   "s": 0,
+   "d": 0.3244,
+   "why": "est 37.6 \u00b18.0 Mbps (29.6\u201345.6) \u00b7 clear of the line \u00b7 165 people within 2km"
+  },
+  "S0482": {
+   "p": 0.302,
+   "s": 0,
+   "d": 0.2468,
+   "why": "est 58.5 \u00b112.3 Mbps (46.2\u201370.8) \u00b7 clear of the line \u00b7 159 people within 2km"
+  },
+  "S1098": {
+   "p": 0.301,
+   "s": 0,
+   "d": 0.3089,
+   "why": "est 37.2 \u00b17.2 Mbps (30.0\u201344.4) \u00b7 clear of the line \u00b7 193 people within 2km"
+  },
+  "S0376": {
+   "p": 0.298,
+   "s": 0,
+   "d": 0.1471,
+   "why": "est 57.7 \u00b16.3 Mbps (51.4\u201364.0) \u00b7 clear of the line \u00b7 498 people within 2km"
+  },
+  "S1284": {
+   "p": 0.297,
+   "s": 0,
+   "d": 0.2752,
+   "why": "est 58.5 \u00b114.2 Mbps (44.2\u201372.7) \u00b7 clear of the line \u00b7 220 people within 2km"
+  },
+  "S0142": {
+   "p": 0.293,
+   "s": 0,
+   "d": 0.4523,
+   "why": "est 39.0 \u00b114.9 Mbps (24.1\u201353.9) \u00b7 clear of the line \u00b7 38 people within 2km"
+  },
+  "S0739": {
+   "p": 0.293,
+   "s": 0,
+   "d": 0.1984,
+   "why": "est 55.1 \u00b18.4 Mbps (46.7\u201363.5) \u00b7 clear of the line \u00b7 1187 people within 2km"
+  },
+  "S0731": {
+   "p": 0.287,
+   "s": 0,
+   "d": 0.2532,
+   "why": "est 60.1 \u00b113.3 Mbps (46.9\u201373.4) \u00b7 clear of the line \u00b7 298 people within 2km"
+  },
+  "S0206": {
+   "p": 0.286,
+   "s": 0,
+   "d": 0.357,
+   "why": "est 48.0 \u00b120.0 Mbps (28.0\u201368.0) \u00b7 clear of the line \u00b7 71 people within 2km"
+  },
+  "S0097": {
+   "p": 0.284,
+   "s": 0,
+   "d": 0.2612,
+   "why": "est 60.4 \u00b113.9 Mbps (46.5\u201374.4) \u00b7 clear of the line \u00b7 206 people within 2km"
+  },
+  "S1434": {
+   "p": 0.282,
+   "s": 0,
+   "d": 0.1483,
+   "why": "est 52.3 \u00b15.4 Mbps (46.8\u201357.8) \u00b7 clear of the line \u00b7 247 people within 2km"
+  },
+  "S0451": {
+   "p": 0.281,
+   "s": 0,
+   "d": 0.2445,
+   "why": "est 61.3 \u00b113.1 Mbps (48.3\u201374.4) \u00b7 clear of the line \u00b7 319 people within 2km"
+  },
+  "S1234": {
+   "p": 0.281,
+   "s": 0,
+   "d": 0.2804,
+   "why": "est 59.5 \u00b117.5 Mbps (42.0\u201376.9) \u00b7 clear of the line \u00b7 158 people within 2km"
+  },
+  "S1017": {
+   "p": 0.275,
+   "s": 0,
+   "d": 0.3934,
+   "why": "est 44.1 \u00b120.0 Mbps (24.1\u201364.2) \u00b7 clear of the line \u00b7 27 people within 2km"
+  },
+  "S0557": {
+   "p": 0.275,
+   "s": 0,
+   "d": 0.252,
+   "why": "est 57.0 \u00b112.1 Mbps (44.9\u201369.1) \u00b7 clear of the line \u00b7 208 people within 2km"
+  },
+  "S0112": {
+   "p": 0.268,
+   "s": 0,
+   "d": 0.3601,
+   "why": "est 38.8 \u00b110.0 Mbps (28.8\u201348.8) \u00b7 clear of the line \u00b7 41 people within 2km"
+  },
+  "S0853": {
+   "p": 0.268,
+   "s": 0,
+   "d": 0.3862,
+   "why": "est 44.8 \u00b115.4 Mbps (29.5\u201360.2) \u00b7 clear of the line \u00b7 24 people within 2km"
+  },
+  "S0737": {
+   "p": 0.266,
+   "s": 0,
+   "d": 0.2087,
+   "why": "est 49.5 \u00b17.5 Mbps (42.0\u201357.1) \u00b7 clear of the line \u00b7 296 people within 2km"
+  },
+  "S1432": {
+   "p": 0.263,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 64.2 \u00b114.5 Mbps (49.7\u201378.7) \u00b7 clear of the line \u00b7 878 people within 2km"
+  },
+  "S1440": {
+   "p": 0.262,
+   "s": 0,
+   "d": 0.3141,
+   "why": "est 53.8 \u00b132.7 Mbps (21.1\u201386.4) \u00b7 clear of the line \u00b7 69 people within 2km"
+  },
+  "S0047": {
+   "p": 0.258,
+   "s": 0,
+   "d": 0.3175,
+   "why": "est 53.2 \u00b125.1 Mbps (28.2\u201378.3) \u00b7 clear of the line \u00b7 54 people within 2km"
+  },
+  "S0526": {
+   "p": 0.258,
+   "s": 0,
+   "d": 0.3179,
+   "why": "est 43.6 \u00b110.6 Mbps (33.1\u201354.2) \u00b7 clear of the line \u00b7 47 people within 2km"
+  },
+  "S0711": {
+   "p": 0.257,
+   "s": 0,
+   "d": 0.1596,
+   "why": "est 58.7 \u00b17.2 Mbps (51.5\u201365.9) \u00b7 clear of the line \u00b7 493 people within 2km"
+  },
+  "S1430": {
+   "p": 0.252,
+   "s": 0,
+   "d": 0.2713,
+   "why": "est 61.3 \u00b119.5 Mbps (41.8\u201380.8) \u00b7 clear of the line \u00b7 85 people within 2km"
+  },
+  "S0585": {
+   "p": 0.236,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 72.6 \u00b116.9 Mbps (55.7\u201389.5) \u00b7 clear of the line \u00b7 347 people within 2km"
+  },
+  "S0586": {
+   "p": 0.236,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 73.9 \u00b118.1 Mbps (55.7\u201392.0) \u00b7 clear of the line \u00b7 347 people within 2km"
+  },
+  "S0458": {
+   "p": 0.235,
+   "s": 0,
+   "d": 0.3102,
+   "why": "est 54.3 \u00b117.1 Mbps (37.2\u201371.5) \u00b7 clear of the line \u00b7 40 people within 2km"
+  },
+  "S0110": {
+   "p": 0.233,
+   "s": 0,
+   "d": 0.3035,
+   "why": "est 43.1 \u00b19.6 Mbps (33.5\u201352.8) \u00b7 clear of the line \u00b7 41 people within 2km"
+  },
+  "S0148": {
+   "p": 0.23,
+   "s": 0,
+   "d": 0.2382,
+   "why": "est 42.7 \u00b16.8 Mbps (35.9\u201349.5) \u00b7 clear of the line \u00b7 88 people within 2km"
+  },
+  "S0043": {
+   "p": 0.228,
+   "s": 0,
+   "d": 0.1171,
+   "why": "est 52.7 \u00b14.2 Mbps (48.5\u201356.9) \u00b7 clear of the line \u00b7 240 people within 2km"
+  },
+  "S0268": {
+   "p": 0.226,
+   "s": 0,
+   "d": 0.1862,
+   "why": "est 57.2 \u00b18.3 Mbps (48.9\u201365.5) \u00b7 clear of the line \u00b7 113 people within 2km"
+  },
+  "S0842": {
+   "p": 0.222,
+   "s": 0,
+   "d": 0.2367,
+   "why": "est 62.5 \u00b112.9 Mbps (49.7\u201375.4) \u00b7 clear of the line \u00b7 80 people within 2km"
+  },
+  "S1108": {
+   "p": 0.222,
+   "s": 0,
+   "d": 0.1699,
+   "why": "est 54.5 \u00b16.9 Mbps (47.7\u201361.4) \u00b7 clear of the line \u00b7 113 people within 2km"
+  },
+  "S0947": {
+   "p": 0.222,
+   "s": 0,
+   "d": 0.1116,
+   "why": "est 60.6 \u00b15.0 Mbps (55.6\u201365.5) \u00b7 clear of the line \u00b7 78 people within 2km"
+  },
+  "S0730": {
+   "p": 0.221,
+   "s": 0,
+   "d": 0.1775,
+   "why": "est 58.6 \u00b18.1 Mbps (50.5\u201366.7) \u00b7 clear of the line \u00b7 111 people within 2km"
+  },
+  "S1086": {
+   "p": 0.221,
+   "s": 0,
+   "d": 0.1639,
+   "why": "est 53.1 \u00b16.3 Mbps (46.8\u201359.5) \u00b7 clear of the line \u00b7 150 people within 2km"
+  },
+  "S0489": {
+   "p": 0.221,
+   "s": 0,
+   "d": 0.2829,
+   "why": "est 52.1 \u00b112.3 Mbps (39.8\u201364.3) \u00b7 clear of the line \u00b7 37 people within 2km"
+  },
+  "S0485": {
+   "p": 0.216,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 63.5 \u00b19.1 Mbps (54.4\u201372.6) \u00b7 clear of the line \u00b7 203 people within 2km"
+  },
+  "S1105": {
+   "p": 0.214,
+   "s": 0,
+   "d": 0.1624,
+   "why": "est 60.8 \u00b17.7 Mbps (53.0\u201368.5) \u00b7 clear of the line \u00b7 113 people within 2km"
+  },
+  "S0619": {
+   "p": 0.214,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 65.5 \u00b111.6 Mbps (53.8\u201377.1) \u00b7 clear of the line \u00b7 1613 people within 2km"
+  },
+  "S0621": {
+   "p": 0.211,
+   "s": 0,
+   "d": 0.1661,
+   "why": "est 52.0 \u00b16.2 Mbps (45.8\u201358.2) \u00b7 clear of the line \u00b7 92 people within 2km"
+  },
+  "S0588": {
+   "p": 0.209,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 141.6 \u00b156.2 Mbps (85.4\u2013197.8) \u00b7 clear of the line \u00b7 621 people within 2km"
+  },
+  "S0598": {
+   "p": 0.208,
+   "s": 0,
+   "d": 0.1073,
+   "why": "est 52.5 \u00b13.8 Mbps (48.7\u201356.3) \u00b7 clear of the line \u00b7 170 people within 2km"
+  },
+  "S0461": {
+   "p": 0.205,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 103.9 \u00b120.6 Mbps (83.3\u2013124.5) \u00b7 clear of the line \u00b7 561 people within 2km"
+  },
+  "S1358": {
+   "p": 0.201,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 77.2 \u00b122.5 Mbps (54.7\u201399.7) \u00b7 clear of the line \u00b7 524 people within 2km"
+  },
+  "S0517": {
+   "p": 0.198,
+   "s": 0,
+   "d": 0.2323,
+   "why": "est 49.7 \u00b18.7 Mbps (41.0\u201358.3) \u00b7 clear of the line \u00b7 47 people within 2km"
+  },
+  "S0738": {
+   "p": 0.19,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 115.8 \u00b130.7 Mbps (85.2\u2013146.5) \u00b7 clear of the line \u00b7 342 people within 2km"
+  },
+  "S0749": {
+   "p": 0.19,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 84.2 \u00b121.1 Mbps (63.1\u2013105.3) \u00b7 clear of the line \u00b7 342 people within 2km"
+  },
+  "S1196": {
+   "p": 0.188,
+   "s": 0,
+   "d": 0.259,
+   "why": "est 53.4 \u00b111.3 Mbps (42.1\u201364.8) \u00b7 clear of the line \u00b7 9 people within 2km"
+  },
+  "S0467": {
+   "p": 0.187,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 100.0 \u00b114.5 Mbps (85.4\u2013114.5) \u00b7 clear of the line \u00b7 90 people within 2km"
+  },
+  "S0625": {
+   "p": 0.185,
+   "s": 0,
+   "d": 0.2455,
+   "why": "est 43.5 \u00b17.3 Mbps (36.2\u201350.8) \u00b7 clear of the line \u00b7 28 people within 2km"
+  },
+  "S0521": {
+   "p": 0.176,
+   "s": 0,
+   "d": 0.1927,
+   "why": "est 60.0 \u00b19.3 Mbps (50.7\u201369.4) \u00b7 clear of the line \u00b7 38 people within 2km"
+  },
+  "S0527": {
+   "p": 0.174,
+   "s": 0,
+   "d": 0.1867,
+   "why": "est 59.3 \u00b18.8 Mbps (50.5\u201368.1) \u00b7 clear of the line \u00b7 38 people within 2km"
+  },
+  "S0948": {
+   "p": 0.172,
+   "s": 0,
+   "d": 0.073,
+   "why": "est 62.5 \u00b13.3 Mbps (59.3\u201365.8) \u00b7 clear of the line \u00b7 25 people within 2km"
+  },
+  "S0647": {
+   "p": 0.171,
+   "s": 0,
+   "d": 0.1184,
+   "why": "est 58.0 \u00b15.0 Mbps (53.0\u201363.0) \u00b7 clear of the line \u00b7 67 people within 2km"
+  },
+  "S0439": {
+   "p": 0.162,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 70.4 \u00b17.1 Mbps (63.3\u201377.5) \u00b7 clear of the line \u00b7 161 people within 2km"
+  },
+  "S0469": {
+   "p": 0.161,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 71.7 \u00b117.4 Mbps (54.3\u201389.1) \u00b7 clear of the line \u00b7 160 people within 2km"
+  },
+  "S0005": {
+   "p": 0.153,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 71.3 \u00b19.6 Mbps (61.7\u201380.9) \u00b7 clear of the line \u00b7 113 people within 2km"
+  },
+  "S1132": {
+   "p": 0.151,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 89.4 \u00b121.2 Mbps (68.2\u2013110.7) \u00b7 clear of the line \u00b7 45 people within 2km"
+  },
+  "S0442": {
+   "p": 0.147,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 173.8 \u00b176.1 Mbps (97.7\u2013249.9) \u00b7 clear of the line \u00b7 41 people within 2km"
+  },
+  "S0122": {
+   "p": 0.139,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 87.1 \u00b16.7 Mbps (80.4\u201393.8) \u00b7 clear of the line \u00b7 34 people within 2km"
+  },
+  "S0524": {
+   "p": 0.13,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 64.3 \u00b12.9 Mbps (61.5\u201367.2) \u00b7 clear of the line \u00b7 77 people within 2km"
+  },
+  "S0068": {
+   "p": 0.128,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 90.4 \u00b110.7 Mbps (79.8\u2013101.1) \u00b7 clear of the line \u00b7 75 people within 2km"
+  },
+  "S0932": {
+   "p": 0.126,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 80.1 \u00b119.2 Mbps (60.9\u201399.4) \u00b7 clear of the line \u00b7 73 people within 2km"
+  },
+  "S0427": {
+   "p": 0.124,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 126.9 \u00b110.3 Mbps (116.6\u2013137.2) \u00b7 clear of the line \u00b7 71 people within 2km"
+  },
+  "S0385": {
+   "p": 0.121,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 90.4 \u00b110.7 Mbps (79.8\u2013101.1) \u00b7 clear of the line \u00b7 67 people within 2km"
+  },
+  "S0695": {
+   "p": 0.119,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 107.6 \u00b139.4 Mbps (68.2\u2013147.0) \u00b7 clear of the line \u00b7 63 people within 2km"
+  },
+  "S1197": {
+   "p": 0.113,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 115.8 \u00b128.0 Mbps (87.8\u2013143.7) \u00b7 clear of the line \u00b7 47 people within 2km"
+  },
+  "S0786": {
+   "p": 0.11,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 96.5 \u00b122.9 Mbps (73.7\u2013119.4) \u00b7 clear of the line \u00b7 46 people within 2km"
+  },
+  "S0782": {
+   "p": 0.107,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 100.3 \u00b121.3 Mbps (79.0\u2013121.6) \u00b7 clear of the line \u00b7 45 people within 2km"
+  },
+  "S0784": {
+   "p": 0.107,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 100.8 \u00b121.3 Mbps (79.5\u2013122.1) \u00b7 clear of the line \u00b7 45 people within 2km"
+  },
+  "S0790": {
+   "p": 0.107,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 75.6 \u00b114.5 Mbps (61.1\u201390.1) \u00b7 clear of the line \u00b7 45 people within 2km"
+  },
+  "S0691": {
+   "p": 0.093,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 66.9 \u00b117.4 Mbps (49.4\u201384.3) \u00b7 clear of the line \u00b7 31 people within 2km"
+  },
+  "S1260": {
+   "p": 0.092,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 74.1 \u00b125.4 Mbps (48.7\u201399.5) \u00b7 clear of the line \u00b7 30 people within 2km"
+  },
+  "S0591": {
+   "p": 0.091,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 165.9 \u00b139.5 Mbps (126.4\u2013205.4) \u00b7 clear of the line \u00b7 29 people within 2km"
+  },
+  "S0838": {
+   "p": 0.081,
+   "s": 0,
+   "d": 0.0,
+   "why": "est 103.1 \u00b123.8 Mbps (79.3\u2013126.9) \u00b7 clear of the line \u00b7 21 people within 2km"
+  }
+ }
+}
