@@ -39,8 +39,10 @@ MAPPED = [
   "Unverified assumptions are labelled where the number they qualify appears, not on a collapsed "
   "heading nobody reads: \u201cIllustrative decision criteria pending source verification\u201d sits on the "
   "recommender, and \u201cIllustrative costs, not procurement estimates\u201d sits directly above the funded "
-  "figures, so the caveat is on screen whenever a cost is.",
-  "`recommenderBlock()`; `.bud-warn` above `renderBudget()` output; Open items table below"),
+  "figures, so the caveat is on screen whenever a cost is. The planner can also overrule the assumption "
+  "rather than only read about it: their own RM per km reprices the budget and the deployment panels "
+  "together, and each then states whose figure produced the result.",
+  "`recommenderBlock()`; `.bud-warn` above `renderBudget()` output; `ownCosts()`; Open items below"),
 
  ("MANAGE 2.1", "A non-AI alternative was chosen where one sufficed",
   "DIPI is deliberately arithmetic, not a model: a disclosed weighted sum of four pillars that a planner "
@@ -84,12 +86,18 @@ MAPPED = [
 
  ("MAP 3.5", "Human oversight boundary",
   "Queue B is rendered as a set needing measurement, never as a ranked leaderboard, and is immune to the "
-  "weight sliders. The recommender carries \u201cRules-based decision support \u2014 not a trained model.\u201d",
-  "Queue B section; `dipiOf()` returns null for Queue B; `recommenderBlock()` footer"),
+  "weight sliders. An attempt to give it a modelled score was built and then removed: it could reach only "
+  "146 of the 334, and a control whose effect is a column in another view is not oversight. The deployment "
+  "panel states on its own face that it ranks fibre builds and not the priority list, because only 6 of "
+  "the top 50 by DIPI are eligible for one.",
+  "Queue B section; `dipiOf()` returns null for Queue B; the fibre-scope warning in `renderSequence()`"),
 
  ("MAP 4.1", "Third-party data mapped with its licence",
-  "Seven upstream sources are credited with licence, quarter and access date in a footer visible in every "
-  "view. Ookla's CC BY-NC-SA non-commercial term is a live constraint on what this project may become.",
+  "Eight upstream sources are credited with licence, quarter and access date in a footer visible in every "
+  "view. Ookla's CC BY-NC-SA non-commercial term is a live constraint on what this project may become. "
+  "OpenCelliD is drawn as a map layer and deliberately never used as a model feature: how many records "
+  "sit near a settlement correlates 0.56 with its Ookla test count, so it records where volunteers "
+  "surveyed rather than what is built.",
   "footer `.credits`; Esri and CARTO attribution on the map control"),
 
  ("MEASURE 1.1", "Metrics chosen, and the unmeasurable named",
@@ -99,8 +107,11 @@ MAPPED = [
 
  ("MEASURE 2.1", "TEVV documented and runnable",
   "Sixteen data checks run on every page load and print to the console, with `?debug=1` rendering them as "
-  "a panel: counts, unique ids, geometry, bbox, coordinate order, filter round-trips and null handling.",
-  "`validateData()`; `?debug=1` panel"),
+  "a panel: counts, unique ids, geometry, bbox, coordinate order, filter round-trips and null handling. "
+  "A separate suite of 191 assertions drives the real agent graph with a scripted model and needs no API "
+  "key, including a parity check that the copilot and the dashboard cost a budget identically: at RM 50m "
+  "both fund 358, 271 and 203 across the three cost cases. That check has caught two real divergences.",
+  "`validateData()`; `?debug=1` panel; `agent/test_agent.py`"),
 
  ("MEASURE 2.5", "Validity and generalisability limits",
   "The connectivity transform used for DIPI-M was validated on held-out points: worst error 0.0021, "
@@ -142,10 +153,12 @@ MAPPED = [
   "`renderModelCard()` spatial-versus-random note"),
 
  ("MEASURE 3.2", "Tracking the risk we cannot yet measure",
-  "334 settlements have no usable measurement. Rather than leave that as a gap, the survey planner ranks "
-  "them by stakes, and by stakes \u00d7 prediction uncertainty once the model ships, turning the blind spot "
-  "into a field work queue.",
+  "334 settlements have no usable measurement. The survey planner ranks them by stakes times the width of "
+  "the model's prediction interval, so the places most is at stake in AND least is known about rise "
+  "together. Both factors are printed rather than their product: stakes times Mbps has no unit, and an "
+  "earlier version that scaled the top of the list to 100 was inventing a figure.",
   "`surveyRanked()`; \u201cWhere to measure next\u201d sidebar group"),
+
 ]
 
 SKIPPED = [
@@ -227,11 +240,18 @@ def main():
     add("## Open items\n")
     add("| Item | Owner | Status |")
     add("|---|---|---|")
-    add("| Intervention criteria sourced to ITU / MCMC guidance | Sourcing | `[TO VERIFY]` \u2014 rules ship labelled illustrative |")
-    add("| Cost figures sourced to USP / JENDELA / benchmarks | Sourcing | `[TO VERIFY]` \u2014 every value tagged DEMO_PLACEHOLDER |")
-    add("| Per-district residual check (MEASURE 2.11) | Modelling | pending \u2014 required by the coverage model guide |")
-    add("| Model report with spatial and random CV | Modelling | pending \u2014 display path built and tested against a fixture |")
-    add("| Agent trace evidence (LangSmith) | Tracing | pending |")
+    add("| Intervention criteria sourced | Sourcing | Done for seven of eight. `fibre_max_km` is the last "
+        "cut-off that is still ours, and `dataset/web/sources.json` says so per parameter |")
+    add("| Cost figures sourced | Sourcing | Closed as unresolvable. No Malaysian per-unit price is "
+        "published, so the figures are benchmarks and the planner can enter their own over them |")
+    add("| Model report with spatial and random CV | Modelling | Shipped. `dataset/web/model_report.json`, "
+        "spatial MAE 34.06 against a naive 25.31 |")
+    add("| Per-district residual check (MEASURE 2.11) | Modelling | Pending |")
+    add("| Sensitivity of the cluster radius | Modelling | Pending. The bundles use "
+        "`min_cluster_size = 5`; what the count does at other settings is not recorded |")
+    add("| Rural mast reach, for bundling towers | Sourcing | Pending, and blocking. About RM 150m turns "
+        "on it, and `fwa_max_km` is backhaul distance rather than coverage |")
+    add("| Agent trace evidence (LangSmith) | Tracing | Pending |")
 
     OUT.write_text("\n".join(L) + "\n", encoding="utf-8")
     print(f"wrote {OUT}")

@@ -33,7 +33,7 @@ for who to go and measure next. It screens. It does not certify.
 
 ## A walk through the dashboard
 
-**The map.** Every settlement, coloured by priority. The lighter the dot, the sooner it
+**The map.** Every settlement, coloured by priority. The deeper the red, the sooner it
 needs attention. Hollow rings are the settlements with too little measurement to score, so
 an evidence gap looks like an evidence gap and never like good news.
 
@@ -78,15 +78,49 @@ from the model.
 
 ![Ask Dino](docs/media/copilot-answer.png)
 
+**The coverage model.** 216 settlements have no usable measurement at all. A gradient
+model trained on the 850 measured ones estimates a speed for each, with a prediction
+interval and its top three SHAP drivers. It is validated with GroupKFold by district
+because 29% of settlements share an Ookla tile with a neighbour, and the honest number is
+the spatial one: MAE 34.1 Mbps against 25.3 under a naive random split. That 35% gap is
+the finding. No modelled number appears anywhere without a one-click model card carrying
+those figures, and a modelled speed is never merged into the official ranking.
+
 **Where to measure next.** The 334 unscored settlements ranked by what is at stake if they
-turn out to be badly served, so a field survey budget goes somewhere defensible.
+turn out to be badly served, times how wide the model's prediction interval is, so the
+survey goes where a lot is riding on an answer nobody has. Both factors are shown, never
+their product: stakes times Mbps has no unit.
 
 ![Survey planner](docs/media/survey-planner.png)
 
-**Budget what-if.** Set a budget, see how far down the priority list it reaches. The unit
-costs are labelled placeholders until real MCMC figures land, and the panel says so.
+**Budget what-if.** Set a budget, see how far down the priority list it reaches, and read
+the funded settlements by name. No Malaysian per-unit cost is published, so the defaults are
+benchmarks from ITU and published cost models rather than quotes, and a planner can type
+their own RM per km and per site over them.
 
 ![Budget what-if](docs/media/budget-whatif.png)
+
+**Deployment bundles.** Ranking settlements one at a time mis-prices the work: two villages
+that would share one trench were each billed for the whole thing. HDBSCAN groups the
+fibre-eligible settlements into 17 bundles, each settlement is charged the shorter of its
+shared spur and its own run from town, and the panel ranks whole bundles against a budget
+under three named scenarios. Pricing them individually overstated fibre at RM 190.9m
+against RM 89.0m.
+
+It also says what it cannot do. Fibre needs 3,000 people within 2 km, and the highest-DIPI
+settlements are mostly small and remote, so only 6 of the top 50 are in any bundle. The
+panel states that on its own face rather than letting a reader assume the bundles are the
+priority list.
+
+**Suggested option.** Filter the map by which of the four delivery options the recommender
+suggests: fibre 323, tower 449, satellite 22, community Wi-Fi 654. A filter and not a
+colour, so the dots keep their DIPI reading while you narrow which ones are on screen.
+
+**Cell tower records.** 1,217 crowdsourced OpenCelliD masts as a context layer, clustered
+at low zoom. It is never a model feature: how many records sit near a settlement correlates
+0.56 with its Ookla test count, so it records where volunteers surveyed rather than what is
+built. An area with no marker has not been surveyed, which is not the same as an area with
+no tower.
 
 **Argue with the weighting.** The four pillar weights are ours, not a law of nature. Move
 them and every score, rank and colour recomputes live. The panel and the CSV both stamp
@@ -95,7 +129,9 @@ which weighting produced them.
 ![Weightings](docs/media/weightings.png)
 
 **Light theme and satellite.** Both palettes are checked for colour-vision separation, and
-the dot outlines thicken over imagery so they hold their edge.
+the dot outlines thicken over imagery so they hold their edge. The two ramps used to run in
+opposite directions, so pale meant urgent on the dark map and fine on the light one; deep
+red is now the top of the scale in both.
 
 ![Light theme](docs/media/light-theme.png)
 
