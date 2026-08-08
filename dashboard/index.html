@@ -250,9 +250,11 @@ select.field{appearance:none;cursor:pointer;
 .seg-btn[aria-pressed="true"]{background:var(--tint);color:var(--ink-strong)}
 
 /* Over satellite imagery the label halo must be dark whatever the theme is. */
-[data-basemap="satellite"] .mlabel{color:#F4F8FC;
+[data-basemap="satellite"] .mlabel,
+[data-basemap="night"] .mlabel{color:#F4F8FC;
   text-shadow:0 0 3px rgba(0,0,0,.95),0 0 9px rgba(0,0,0,.8)}
-[data-basemap="satellite"] .map-note{color:#E9EFF6;
+[data-basemap="satellite"] .map-note,
+[data-basemap="night"] .map-note{color:#E9EFF6;
   text-shadow:0 0 4px rgba(0,0,0,.95),0 0 9px rgba(0,0,0,.8)}
 
 .top-list{display:flex;flex-direction:column}
@@ -366,6 +368,17 @@ select.field{appearance:none;cursor:pointer;
 .glyph.lowev{border:1.5px solid var(--warn)}
 .glyph.sel{border:2px solid var(--accent)}
 .glyph.flood{border:1.6px solid var(--flood)}
+/* Radiance ramp for the night view. A continuous gradient, not the five
+   discrete DIPI chips: radiance is a measured quantity on a skewed scale,
+   and chopping it into bands would imply classes the data does not have. */
+.ntl-ramp{height:8px;border-radius:3px;margin:5px 0 2px;
+  background:linear-gradient(90deg,#2A1B0A,#FFD98A,#FFB03A,#FFF8E8)}
+/* The mast violet is a literal, not a token: it is one layer's meaning rather
+   than part of the theme, and it must read the same in both. */
+.glyph.mast-dot{background:#9B7FEA;border:none}
+.glyph.mast-dot.solo{background:#6B5CA5}
+.glyph.mast-line{background:none;border:none;border-top:2px solid #9B7FEA;
+  border-radius:0;height:0;align-self:center}
 .toggle-row[data-on="1"]{background:var(--tint)}
 
 /* A facility tooltip is a click target, not just a label: the dots are a few
@@ -563,6 +576,79 @@ select.field{appearance:none;cursor:pointer;
   color:var(--ink-muted);font-weight:600;line-height:1.35}
 .bud-money{margin:0 0 3px;font-size:12.5px;font-weight:600;color:var(--ink-strong);
   font-variant-numeric:tabular-nums}
+/* ── Shared mast screening ────────────────────────────────────────────────
+   Five scan groups in a 280 px column, separated by rules rather than by
+   headings, so the eye can stop at the first one and still have an answer.
+   Body text is 14px here against the sidebar's usual 11.5: this panel is
+   read once and carefully, not glanced at repeatedly like the filters. */
+.mast-sub{margin:0 0 11px;font-size:12px;line-height:1.45;color:var(--ink-muted)}
+.mast-field{margin:0 0 12px}
+.mast-label{display:block;margin:0 0 5px;font-size:11px;font-weight:600;
+  letter-spacing:.04em;color:var(--ink)}
+
+/* 2x2. The two that answer "how big and how much" carry a tinted ground and a
+   larger figure; the two that qualify them share the grid at normal weight, so
+   the hierarchy is legible before a single word is read. */
+.mast-metrics{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:0 0 13px}
+.mast-m{background:var(--tint);border:1px solid var(--hairline);border-radius:8px;
+  padding:8px 9px 9px;display:flex;flex-direction:column;gap:1px;min-width:0}
+.mast-m[data-lead="1"]{background:var(--accent-bg);border-color:var(--accent)}
+.mast-m b{font-size:25px;font-weight:700;line-height:1.05;color:var(--ink-strong);
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.mast-m b.money{font-size:19px;letter-spacing:-.015em}
+.mast-m span{font-size:11.5px;line-height:1.3;color:var(--ink)}
+.mast-m i{font-size:9.5px;line-height:1.32;font-style:normal;color:var(--ink-muted);
+  font-variant-numeric:tabular-nums;margin-top:1px}
+/* No nowrap here. "RM95.9m" has no break opportunity inside it anyway, so the
+   only place this can wrap is at the dash, which is where a range should wrap.
+   Forcing the whole range onto one line overflowed the card at 280 px. */
+.mast-m i{overflow-wrap:anywhere}
+
+.mast-sec{border-top:1px solid var(--hairline);padding-top:11px;margin:0 0 13px}
+.mast-sec h4{margin:0 0 8px;font-size:12.5px;font-weight:700;color:var(--ink-strong)}
+/* A ladder, not three cards: the reader has to see that each step REMOVES
+   links and pushes the count up. Cards side by side implied three unrelated
+   answers to the same question. */
+.mast-flow{list-style:none;margin:0;padding:0}
+.mast-step{display:grid;grid-template-columns:1fr auto;align-items:baseline;
+  column-gap:8px;padding:6px 8px;border-radius:7px;background:var(--tint)}
+.mast-step[data-on="1"]{background:var(--accent-bg);
+  box-shadow:inset 0 0 0 1px var(--accent)}
+.mast-step .k{font-size:13px;font-weight:600;color:var(--ink-strong)}
+.mast-step b{font-size:17px;font-weight:700;color:var(--ink-strong);
+  font-variant-numeric:tabular-nums;line-height:1}
+.mast-step i{grid-column:1/-1;font-size:10.5px;font-style:normal;line-height:1.35;
+  color:var(--ink-muted);margin-top:1px}
+.mast-arrow{position:relative;margin:0 0 0 14px;padding:3px 0 3px 13px;
+  font-size:10px;line-height:1.3;color:var(--ink-muted);
+  border-left:1px solid var(--hairline-strong)}
+.mast-arrow::before{content:"↓";position:absolute;left:-6px;top:2px;font-size:10px;
+  color:var(--ink-muted);background:var(--surface);line-height:1}
+.mast-note{margin:9px 0 0;font-size:11.5px;line-height:1.45;color:var(--ink);
+  font-variant-numeric:tabular-nums}
+
+.mast-callout{border-left:3px solid var(--warn);background:var(--warn-bg);
+  border-radius:0 8px 8px 0;padding:9px 11px;margin:0 0 12px}
+.mast-callout b{display:block;font-size:12.5px;font-weight:700;color:var(--warn);
+  margin:0 0 3px}
+.mast-callout p{margin:0;font-size:11.5px;line-height:1.45;color:var(--ink);
+  font-variant-numeric:tabular-nums}
+
+.mast-toggle{margin:0 0 4px}
+/* Everything that used to be three paragraphs of caveat. Closed by default and
+   never longer than two lines a bullet, because the point of moving it here is
+   that it becomes readable, not that it becomes hidden. */
+.mast-method{border-top:1px solid var(--hairline);padding-top:9px;margin-top:9px}
+.mast-method>summary{cursor:pointer;font-size:11.5px;font-weight:600;
+  color:var(--ink-muted);list-style:none;padding:2px 0;
+  display:flex;align-items:center;gap:6px}
+.mast-method>summary::-webkit-details-marker{display:none}
+.mast-method>summary::before{content:"▸";font-size:9px;transition:transform .16s var(--ease)}
+.mast-method[open]>summary::before{transform:rotate(90deg)}
+.mast-method>summary:hover{color:var(--ink)}
+.mast-method ul{margin:7px 0 0;padding:0 0 0 15px;list-style:disc}
+.mast-method li{font-size:11.5px;line-height:1.45;color:var(--ink);margin:0 0 5px}
+.mast-method li::marker{color:var(--ink-muted)}
 .bud-span{margin:0 0 10px;font-size:11.5px;color:var(--ink-muted);
   font-variant-numeric:tabular-nums}
 
@@ -830,6 +916,10 @@ select.field{appearance:none;cursor:pointer;
 .verdict .vsub{font-size:11px;color:var(--ink-muted);margin-top:2px}
 .vline{font-size:12.5px;color:var(--ink-strong);font-weight:600;margin:0 0 9px;line-height:1.4}
 .sim-foot{margin:6px 0 0;color:var(--ink-muted);font-size:11.5px}
+/* Where a threshold came from, inside the maths expander. Quieter than the
+   arithmetic above it, because the sum is the point and the citation is the
+   receipt. */
+.sim-cite{display:inline-block;margin-top:5px;color:var(--ink-muted);font-size:11px;line-height:1.5}
 .verdict.safe{background:var(--safe-bg)}
 .verdict.warn{background:var(--warn-bg)}
 .verdict.neutral{background:var(--neutral-bg)}
@@ -957,13 +1047,53 @@ details[open] .qb-summary::before{content:"▾"}
 .empty{padding:34px 16px;text-align:center;color:var(--ink-muted);font-size:12.5px}
 
 /* ══ 10b. District Decision Comparison ═════════════════════════════════════ */
+/* The whole comparison column lines up under its title. .rk-head carries a
+   34px left pad to clear the hamburger; without matching it here the heading
+   sat one indent to the right of everything it introduced. #cmpSheet is
+   included and is safe: the print block resets its padding to 0. */
+#compare > .cmp-lede,
+#compare > .cmp-bar,
+#compare > .cmp-find,
+#compare > .cmp-chips,
+#compare > .empty,
+#compare > .cmp-vis,
+#compare > #cmpSheet{padding-left:34px}
 .cmp-lede{max-width:62ch;margin:-4px 0 14px}
 /* display:flex beats [hidden]'s user-agent display:none, so the export buttons
    stayed on screen with nothing to export. */
 .cmp-head-actions{display:flex;gap:8px}
 .cmp-head-actions[hidden]{display:none}
 .cmp-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
-.cmp-bar .seg{margin:0;width:190px}
+/* Push Clear to the right so the bar reads left to right as: what to compare,
+   how many so far, then the one destructive action, instead of three
+   controls and a caption jostling in the middle. */
+/* One column width for the whole header, so the toolbar, the chips and the
+   search box share an edge. Capping only the bar left it stopping at 830px
+   while 25 district chips ran on to 1600, which read as a broken layout
+   rather than a deliberate one. */
+#compare > .cmp-bar,
+#compare > .cmp-chips,
+#compare > .cmp-find{max-width:72rem;box-sizing:content-box}
+/* .seg-btn carries no horizontal padding, so in a 3-up grid every column is
+   the width of the longest label and "Settlements" sat hard against the
+   frame. Scoped to this bar: the mast panel's radius seg is 280px wide and
+   cannot afford the extra. */
+/* flex:0 0 auto, or the bar shrinks the seg below its content and the grid
+   columns overflow their own frame: "Settlements" printed straight over the
+   count beside it. width:max-content makes the intended size explicit rather
+   than leaving it to the flex basis. */
+.cmp-bar .seg{margin:0;flex:0 0 auto;width:max-content}
+.cmp-bar .seg-btn{padding:0 12px;white-space:nowrap}
+.cmp-bar .rk-count{flex:0 0 auto}
+/* A spacer rather than margin-left:auto on a button, because Select all is
+   hidden at settlement level and the auto would have moved with it, leaving
+   Clear stranded mid-row. */
+.cmp-bar-gap{flex:1 1 auto}
+#compare > .empty{max-width:64ch;padding:22px 0 22px 34px;text-align:left}
+/* Was width:190px, hard-coded when this control had two buttons. Adding
+   Settlements made the grid 237px wide inside a 190px box, so the third label
+   printed over the count beside it. Sized by content now, so a fourth level
+   would not repeat it. */
 .cmp-bar .rk-count{margin:0}
 .cmp-chips{margin-bottom:16px;max-height:96px;overflow-y:auto}
 .chip-btn{height:28px;padding:0 11px;border-radius:99px;border:1px solid var(--hairline);
@@ -979,6 +1109,23 @@ details[open] .qb-summary::before{content:"▾"}
 /* width:auto + min-width:100% so the table fills the panel at two areas and
    grows past it at twenty-five, where .table-wrap takes over and scrolls. The
    colgroup below fixes every data column at the same width either way. */
+/* Settlement picker. Districts fit in a chip grid; 1,448 settlements do not,
+   so this level searches instead of listing, and the chips below become the
+   selection rather than the menu. */
+.cmp-find{position:relative;margin:0 0 10px}
+.cmp-find input{width:100%;padding:9px 12px;font:inherit;font-size:13px;
+  color:var(--ink-strong);background:var(--tint);border:1px solid var(--hairline);
+  border-radius:8px}
+.cmp-find input:focus{outline:none;border-color:var(--accent)}
+.cmp-find-list{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:9;
+  background:var(--material-bg);border:1px solid var(--hairline);border-radius:8px;
+  box-shadow:0 8px 24px rgba(0,0,0,.28);overflow:hidden}
+.cmp-find-list:empty{display:none}
+.cmp-find-opt{display:flex;justify-content:space-between;gap:10px;width:100%;
+  padding:8px 12px;background:none;border:0;text-align:left;font:inherit;
+  font-size:12.5px;color:var(--ink-strong);cursor:pointer}
+.cmp-find-opt:hover,.cmp-find-opt:focus-visible{background:var(--tint);outline:none}
+.cmp-find-opt .d{color:var(--ink-muted);font-size:11px}
 #cmpTable{table-layout:fixed;width:auto;min-width:100%}
 #cmpTable col.cmp-col-label{width:15.5rem}
 #cmpTable col.cmp-col-area{width:8.2rem}
@@ -1033,12 +1180,42 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
 .cmp-zone{padding-top:22px;margin-top:26px;border-top:1px solid var(--hairline)}
 .cmp-zone:first-child{padding-top:0;margin-top:0;border-top:0}
 .cmp-zone-label{display:block;margin-bottom:14px}
+/* A zone header rather than a floating eyebrow: a title that reads as a
+   heading, and a count on the right so the size of the thing is known before
+   scrolling into it. */
+.cmp-zone-head{display:flex;align-items:baseline;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;margin:0 0 14px}
+.cmp-zone-head h2{margin:0;font-size:14.5px;font-weight:700;letter-spacing:-.012em;
+  color:var(--ink-strong)}
+.cmp-zone-n{font-size:11px;font-weight:500;color:var(--ink-muted);
+  font-variant-numeric:tabular-nums}
+/* Capped, scrollable panels. The page was 9,180px at 25 districts, which is
+   not a dashboard, it is a document. Each zone is now a viewport into its own
+   content and the page stays navigable. */
+.cmp-cap{max-height:min(58vh,540px);overflow-y:auto;overscroll-behavior:contain;
+  padding-right:6px;scrollbar-width:thin;
+  scrollbar-color:var(--hairline-strong) transparent}
+.cmp-cap::-webkit-scrollbar{width:9px}
+.cmp-cap::-webkit-scrollbar-track{background:transparent}
+.cmp-cap::-webkit-scrollbar-thumb{background:var(--hairline-strong);border-radius:99px;
+  border:3px solid transparent;background-clip:content-box}
+/* The cap lands mid-card, which without a cue reads as a clipping bug rather
+   than as more content. The gradient sits over blank page when the list is
+   short, so it costs nothing at two areas. */
+.cmp-capwrap{position:relative}
+.cmp-capwrap::after{content:"";position:absolute;left:0;right:9px;bottom:0;height:52px;
+  pointer-events:none;border-radius:0 0 var(--radius) var(--radius);
+  background:linear-gradient(to bottom,transparent,var(--bg) 88%)}
+.cmp-cap-note:empty{display:none}
+.cmp-cap-note{margin:-4px 0 10px;color:var(--ink-muted);font-size:11px;line-height:1.5}
 .cmp-zone-tail{padding-bottom:2px}
 .cmp-zone-note{color:var(--ink-muted);font-size:11.5px;margin:-8px 0 0;max-width:62ch}
 
 /* Every card is the same skeleton at any count: badge and name, then shape
    beside the headline figure, then one full-width row of three stats. */
-.cmp-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(244px,1fr));gap:14px}
+/* 208px rather than 244: five per row instead of four at full width, so 25
+   areas is five rows inside the cap instead of seven down the page. */
+.cmp-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(208px,1fr));gap:12px}
 .cmp-card{border:1px solid var(--hairline);border-radius:var(--radius);background:var(--surface);
   padding:15px 16px;min-width:0;display:flex;flex-direction:column;gap:13px;
   cursor:pointer;position:relative;
@@ -1090,6 +1267,13 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
    stack and each takes its own height and the full width. */
 .cmp-panels{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:stretch}
 .cmp-panels.stacked{grid-template-columns:1fr}
+/* A hairline highlight along the top edge. It is the cheapest way to make a
+   flat card read as a raised surface without a shadow that muddies on a dark
+   background. */
+.cmp-viscard{position:relative;overflow:hidden}
+.cmp-viscard::before{content:"";position:absolute;inset:0 0 auto;height:1px;
+  background:linear-gradient(90deg,transparent,var(--hairline-strong) 22%,
+    var(--hairline-strong) 78%,transparent);opacity:.75}
 .cmp-viscard{border:1px solid var(--hairline);border-radius:var(--radius);
   background:var(--surface);padding:17px 18px;min-width:0;
   display:flex;flex-direction:column}
@@ -1135,7 +1319,10 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
 /* 240 px is the pivot: in the side-by-side card (~620 px) it yields exactly two
    across, so four areas read as a clean 2x2 rather than a row of three and an
    orphan; in the stacked full-width card it opens out to five. */
-.cmp-radars{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+/* At full width auto-fit packs 6 across and leaves a ragged 6+2. Eight is the
+   cap, so four columns gives two even rows. */
+.cmp-panels.stacked .cmp-radars{grid-template-columns:repeat(4,minmax(0,1fr))}
+.cmp-radars{display:grid;grid-template-columns:repeat(auto-fit,minmax(176px,1fr));
   gap:18px 16px;align-items:start}
 .cmp-radar{margin:0;min-width:0;display:flex;flex-direction:column}
 /* The viewBox already reserves a margin for the labels; this stops two
@@ -1187,15 +1374,17 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
 @media (max-width:900px){.cmp-cols{grid-template-columns:1fr}}
 
 /* ══ 11. Footer ════════════════════════════════════════════════════════════ */
-/* The contract sentence may never truncate. It refuses to shrink and wraps
-   whole; the credits are what give way, dropping to a second line. */
-.footer{display:flex;align-items:center;justify-content:space-between;gap:4px 18px;
-  flex-wrap:wrap;padding:9px 20px;border-top:1px solid var(--hairline);
+/* The credits may not truncate: nowrap plus an ellipsis used to cut the line
+   at WorldPop, so five of the nine attributions were never on screen at any
+   width. Attribution is a licence condition for Ookla, WorldPop, RWI and
+   OpenCelliD, and a credit nobody can read is not displayed. They wrap across
+   the full width now, and the footer row is `auto` in the app grid so it can
+   grow into however many lines that takes. */
+.footer{display:flex;padding:9px 20px;border-top:1px solid var(--hairline);
   background:var(--material-bg);backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);font-size:12px}
-.contract{color:var(--ink);flex:1 0 auto;font-weight:500;white-space:normal;overflow:visible}
-.credits{color:var(--ink-muted);font-size:10.5px;flex:1 1 18rem;min-width:0;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right}
+.credits{color:var(--ink-muted);font-size:10.5px;flex:1 1 auto;min-width:0;
+  text-align:left;line-height:1.55;text-wrap:pretty}
 
 .loading{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:var(--bg);
   color:var(--ink-muted);font-size:12.5px;letter-spacing:.06em;transition:opacity .3s var(--ease)}
@@ -1517,6 +1706,62 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
         </button>
         <div id="seqList"></div>
       </details>
+      <!-- Five scan groups, in the order a first-time reader needs them: what
+           you are looking at, the one control, the answer, why the answer is
+           bigger than it looks, and only then the method. Everything that used
+           to be a paragraph of caveats now sits behind the last disclosure,
+           because a caveat nobody reads protects nobody. -->
+      <details class="group wgroup" id="mastGroup" hidden>
+        <summary class="micro wsum">Shared mast screening<button class="info" type="button"
+          tabindex="0" aria-label="What this does"
+          data-tip="Candidate sites for the 449 settlements the recommender sends to tower, screened against SRTM terrain. Preliminary screening, not predicted coverage. Open 'How this works and its limits' for the method.">i</button></summary>
+        <p class="mast-sub">Terrain-screened candidate sites for 449 tower settlements</p>
+
+        <div class="mast-field">
+          <span class="mast-label" id="mastRadiusLabel">Assumed service radius</span>
+          <div class="seg" role="group" aria-labelledby="mastRadiusLabel" id="mastRadius">
+            <button class="seg-btn" type="button" data-r="3" aria-pressed="true">3 km</button>
+            <button class="seg-btn" type="button" data-r="5" aria-pressed="false">5 km</button>
+            <button class="seg-btn" type="button" data-r="10" aria-pressed="false">10 km</button>
+          </div>
+        </div>
+
+        <div id="mastOut"></div>
+
+        <!-- The same RM per site as Budget what-if, mirrored rather than shared
+             because the two groups collapse independently and a field you
+             cannot reach is worse than a second box. -->
+        <label class="mast-field mast-cost">
+          <span class="mast-label">Your cost per site</span>
+          <span class="bud-row">
+            <input class="field own-cost" id="mastSite" type="number" min="0" step="10000"
+                   placeholder="520,000" aria-label="Your cost per mast site">
+            <span class="caption">RM / site</span>
+          </span>
+        </label>
+
+        <label class="toggle-row mast-toggle" id="mastRow" data-on="0">
+          <input type="checkbox" id="mastToggle">
+          <span class="lbl">Show screened radio paths
+            <span class="caption">LoS + Fresnel links only, not routes or predicted
+              coverage. Click a site to isolate its paths.</span></span>
+        </label>
+
+        <details class="mast-method">
+          <summary>How this works and its limits</summary>
+          <ul>
+            <li>Greedy set-cover heuristic; not guaranteed minimum.</li>
+            <li>Candidate locations are settlement-centre proxies.</li>
+            <li>SRTM terrain + LoS + 700 MHz 60%-Fresnel screen.</li>
+            <li>No land, access, clutter, vegetation, interference or capacity
+              validation.</li>
+            <li>Power is screened by nighttime light only. Dark means no radiance VIIRS
+              can detect, never a surveyed grid connection.</li>
+            <li>Preliminary screening, not predicted coverage or engineering design.</li>
+            <li>Blank map areas do not mean no coverage.</li>
+          </ul>
+        </details>
+      </details>
       <details class="group wgroup" id="budgetGroup">
         <summary class="micro wsum">Budget what-if<button class="info" type="button" tabindex="0"
           aria-label="What this does"
@@ -1572,6 +1817,14 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
             <span class="caption"><button class="info" type="button" tabindex="0"
               aria-label="How this is derived"
               data-tip="Historical seasonal-water presence from JRC Global Surface Water. It includes coastal and tidal zones, so it is drawn as context and never enters DIPI.">i</button></span></span>
+        </label>
+        <label class="toggle-row" id="nightRow" data-on="0" hidden
+          title="VIIRS nighttime radiance, peak 2013 to 2025, drawn at settlement points. Electrification, not coverage.">
+          <input type="checkbox" id="nightToggle">
+          <span class="lbl">Night view: where the lights are
+            <span class="caption"><button class="info" type="button" tabindex="0"
+              aria-label="How this is derived"
+              data-tip="NOAA VIIRS annual nighttime composites, peak radiance 2013 to 2025, max within 1 km of each settlement point. 703 of 1,448 settlements never register. This is ELECTRIFICATION, not coverage: a dark settlement may have perfectly good mobile service. Points are settlements, not the satellite raster, so empty ground means no settlement rather than no light.">i</button></span></span>
         </label>
         <label class="toggle-row">
           <input type="checkbox" id="queueBToggle" checked>
@@ -1639,15 +1892,19 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
       <p class="map-note" id="mapNote">Blank areas ≠ no coverage. This layer shows settlement screening points only.</p>
 
       <div class="legend" id="legend">
+<div id="legendDipi">
         <span class="micro">DIPI &middot; priority score</span>
         <div class="ramp" id="ramp"></div>
         <div class="ramp-ends"><span>20 lower</span><span>higher 77</span></div>
         <div class="legend-item"><span class="glyph lowev"></span>Low evidence</div>
         <div class="legend-item"><span class="glyph queueb"></span>Evidence gap &middot; unscored</div>
         <div class="legend-item"><span class="glyph sel"></span>Selected</div>
+        </div>
+        <div id="legendNight"></div>
         <div id="legendFacilities"></div>
         <div id="legendTower"></div>
         <div id="legendFlood"></div>
+        <div id="legendMasts"></div>
       </div>
 
       <aside class="fac-card" id="facCard" data-open="0" aria-label="Facility detail"></aside>
@@ -1714,6 +1971,10 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
                   data-tip="Clinics and hospitals within 3 km, from OpenStreetMap. Same 3 km buffer as Schools. OSM coverage of rural health posts is incomplete, so a 0 means none mapped, not none present.">Clinics</th>
               <th class="r sortable" data-sort="elevation_m" data-label="Elev" data-unit="m"
                   data-tip="Elevation from NASA SRTM, sampled at the settlement point. Terrain context, never part of the score. Across the scored settlements it correlates −0.25 with measured download speed, a stronger relationship than distance to the nearest town.">Elev</th>
+              <th class="r sortable" data-sort="ntl" data-label="Light"
+                  data-tip="Peak nighttime radiance 2013–2025, NOAA VIIRS, max within 1 km of the settlement point. Context, never part of the score. It measures ELECTRIFICATION, not coverage: a dark settlement may have perfectly good mobile service. 703 of 1,448 register nothing in thirteen years, which is a power constraint on any option sited there.">Light</th>
+              <th class="sortable" data-sort="flood_prone" data-label="Water"
+                  data-tip="Seasonal surface water within the settlement's buffer, JRC Global Surface Water. Context, never part of the score. It includes coastal and tidal zones, so it is water ADJACENCY rather than a flood-risk model, and it qualifies how a site would be built rather than how well it is served.">Water</th>
               <th data-tip="How much measurement backs the row. Measured = enough samples to score confidently. Low evidence = scored, but prioritised for field validation.">Evidence</th>
             </tr></thead>
             <tbody id="rankBody"></tbody>
@@ -1727,9 +1988,17 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
           <div class="table-wrap" style="border:0;border-radius:0;border-top:1px solid var(--hairline)">
             <table>
               <thead><tr>
-                <th>Settlement</th><th>District</th><th class="r">Stakes</th>
-                <th class="r">Population&nbsp;2km</th><th class="r">Schools</th>
-                <th class="r">Clinics</th><th>Evidence</th>
+                <th data-tip="Settlement name from OpenStreetMap. 38 have no name and show their ID instead.">Settlement</th>
+                <th data-tip="GADM district, derived at load by point-in-polygon.">District</th>
+                <th class="r" data-tip="What is at risk IF this settlement turns out to be badly served: population within 2 km, schools and clinics within 3 km, and relative wealth. It is a SURVEY priority, never a DIPI score, and the two are deliberately never shown in the same column.">Stakes</th>
+                <th class="r" data-tip="Modelled download estimate with the spread across the five fold models. Shown for the 216 settlements the model could reach. This is a MODELLED ESTIMATE, not a measurement, and it never enters DIPI. Spatial MAE is 34.1 Mbps, so treat it as a rough expectation of what a team would find, not a number to quote.">Est. speed</th>
+                <th class="r" data-tip="Straight-line distance to the nearest OpenStreetMap town or city. A proxy for how far a field team travels, and there is no road network behind it, so real driving is further.">To town</th>
+                <th class="r" data-tip="Population within a 2 km buffer, WorldPop. Never sum this column across settlements: the buffers overlap.">Population&nbsp;2km</th>
+                <th class="r" data-tip="Schools within 3 km, OpenStreetMap. A 0 means none mapped, which in rural Sabah is not the same as none present.">Schools</th>
+                <th class="r" data-tip="Clinics and hospitals within 3 km, OpenStreetMap.">Clinics</th>
+                <th class="r" data-tip="Peak VIIRS nighttime radiance 2013 to 2025. None means no detectable light in thirteen years, so a visiting team should expect no grid power on site. Electrification, never coverage.">Light</th>
+                <th data-tip="Seasonal surface water adjacency, JRC. Relevant to access and to siting, never to the score.">Water</th>
+                <th data-tip="Every row here is insufficient evidence by definition. That is why they are in this table and not in the ranking above.">Evidence</th>
               </tr></thead>
               <tbody id="qbBody"></tbody>
             </table>
@@ -1742,7 +2011,7 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
         <div class="rk-head">
           <div>
             <span class="eyebrow">Decision support</span>
-            <h1 class="sect-title" style="margin-top:6px">District decision comparison</h1>
+            <h1 class="sect-title" style="margin-top:6px" id="cmpTitle">District decision comparison</h1>
           </div>
           <div class="cmp-head-actions" id="cmpActions" hidden>
             <button class="ghost-btn" id="cmpCsv">
@@ -1768,10 +2037,17 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
           <div class="seg" role="group" aria-label="Compare level">
             <button class="seg-btn" data-level="district" aria-pressed="true">Districts</button>
             <button class="seg-btn" data-level="division" aria-pressed="false">Divisions</button>
+            <button class="seg-btn" data-level="settlement" aria-pressed="false">Settlements</button>
           </div>
           <span class="rk-count" id="cmpCount"></span>
+          <span class="cmp-bar-gap"></span>
           <button class="ghost-btn" id="cmpAll">Select all</button>
           <button class="ghost-btn" id="cmpClear">Clear</button>
+        </div>
+        <div class="cmp-find" id="cmpFind" hidden>
+          <input type="search" id="cmpSearch" autocomplete="off" spellcheck="false"
+                 placeholder="Search a settlement to add, by name or district">
+          <div class="cmp-find-list" id="cmpFindList"></div>
         </div>
         <div class="rk-chips cmp-chips" id="cmpChips"></div>
         <div class="empty" id="cmpEmpty" hidden></div>
@@ -1781,12 +2057,18 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
              and the one-page PDF stays exactly as it was. -->
         <div class="cmp-vis" id="cmpVis" hidden>
           <section class="cmp-zone">
-            <span class="eyebrow cmp-zone-label">At a glance</span>
-            <div class="cmp-strip" id="cmpStrip"></div>
+            <div class="cmp-zone-head">
+              <h2>At a glance</h2>
+              <span class="cmp-zone-n" id="cmpStripN"></span>
+            </div>
+            <div class="cmp-capwrap"><div class="cmp-strip cmp-cap" id="cmpStrip"></div></div>
           </section>
 
           <section class="cmp-zone">
-            <span class="eyebrow cmp-zone-label">Compare</span>
+            <div class="cmp-zone-head">
+              <h2>Compare</h2>
+              <span class="cmp-zone-n" id="cmpVisN"></span>
+            </div>
             <div class="cmp-panels" id="cmpPanels">
               <section class="cmp-viscard">
                 <div class="cmp-viscard-head">
@@ -1805,7 +2087,8 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
                   <h3>Shape of need</h3>
                   <span class="micro">vs all <span id="cmpRadarN"></span></span>
                 </div>
-                <div class="cmp-viscard-body"><div class="cmp-radars" id="cmpRadars"></div></div>
+                <p class="caption cmp-cap-note" id="cmpRadarCap"></p>
+                <div class="cmp-viscard-body"><div class="cmp-radars cmp-cap" id="cmpRadars"></div></div>
                 <p class="caption">Each axis is that area's percentile against every district in
                   Sabah, so further out is always worse. It shows which KIND of need an area has,
                   and is not a combined score, the axes are never added together.</p>
@@ -1815,7 +2098,10 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
 
           <!-- Sits outside #cmpSheet so the printed page never carries it. -->
           <section class="cmp-zone cmp-zone-tail">
-            <span class="eyebrow cmp-zone-label">Full table</span>
+            <div class="cmp-zone-head">
+              <h2>Full table</h2>
+              <span class="cmp-zone-n" id="cmpTableN"></span>
+            </div>
             <p class="caption cmp-zone-note">Every indicator, with each area's percentile against
               all 25 districts. This is the sheet that prints, A4 portrait up to six areas, then
               landscape. Nothing is ever dropped from it.</p>
@@ -1867,7 +2153,7 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
 
           <p class="cmp-print-foot">Dino Slayer · Digital Inclusion Priority Index · Sabah ·
             Ookla Open Data 2025 Q1–Q4, GADM districts, OpenStreetMap facilities, NASA SRTM.
-            Screening for further assessment — not a coverage determination.</p>
+            Screening for further assessment, not a coverage determination.</p>
         </div>
       </section>
 
@@ -1915,8 +2201,7 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
   </div>
 
   <footer class="footer">
-    <span class="contract">Screening for further assessment — not a coverage determination.</span>
-    <span class="credits">Network performance © Ookla Speedtest Open Data (CC BY-NC-SA 4.0), quarterly tile aggregates 2025 Q1–Q4, accessed Aug 2026 · © OpenStreetMap contributors (ODbL) · Population © WorldPop (CC BY 4.0) · Surface water © EC JRC/Google · Relative Wealth Index © Meta Data for Good (CC BY 4.0) · Elevation: NASA SRTM · Boundaries: GADM · Basemap © CARTO</span>
+    <span class="credits">Network performance © Ookla Speedtest Open Data (CC BY-NC-SA 4.0), quarterly tile aggregates 2025 Q1–Q4, accessed Aug 2026 · © OpenStreetMap contributors (ODbL) · Population © WorldPop (CC BY 4.0) · Surface water © EC JRC/Google · Relative Wealth Index © Meta Data for Good (CC BY 4.0) · Elevation: NASA SRTM · Boundaries: GADM 4.1 · Cell records © OpenCelliD contributors (CC BY-SA 4.0) · Basemap © CARTO</span>
   </footer>
 </div>
 
@@ -1929,7 +2214,7 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
 </div>
 <p class="print-foot" id="printFoot" hidden>Dino Slayer · Digital Inclusion Priority Index ·
   Sabah · Ookla Open Data 2025 Q1–Q4, GADM districts, OpenStreetMap facilities, NASA SRTM.
-  Screening for further assessment — not a coverage determination.</p>
+  Screening for further assessment, not a coverage determination.</p>
 
 <!-- Column explainer. Outside .app so the table's overflow cannot clip it. -->
 <div class="th-tip" id="thTip" role="tooltip" data-show="0"></div>
@@ -2020,6 +2305,18 @@ const DIVISIONS = {
 /* Teal is the flood lens and nothing else: not a DIPI class, not an evidence
    tier, and deliberately not the blue that would read as "good water". */
 const FLOOD_TEAL = "#2FB8B0";
+/* Night view palette, after NASA's Black Marble. Deep navy ground, warm
+   sodium-amber glow, near-white at the bright end. These hues are safe here
+   ONLY because the night view dims the DIPI ramp out of the way: amber sits
+   about 25 degrees from the ramp's salmon and would be unreadable beside it
+   in normal mode, which is exactly why this is a MODE and not an overlay. */
+const NIGHT = {
+  ground: "#04070F",
+  bloom:  "#FF7A15",
+  mid:    "#FFB03A",
+  coreLo: "#FFD98A",
+  coreHi: "#FFF8E8"
+};
 const DIVISION_OF = {};
 for (const [dv, ns] of Object.entries(DIVISIONS)) for (const n of ns) DIVISION_OF[n] = dv;
 
@@ -2050,7 +2347,13 @@ const MAPCOL = {
            vline:"#33404F", vlineOp:0.48 },
   // Imagery already shows the land, so no fill, only bright boundaries.
   satellite: { land:"#FFFFFF", landOp:0, landSel:0.10, dline:"#FFFFFF", dlineOp:0.40,
-               vline:"#FFFFFF", vlineOp:0.78 }
+               vline:"#FFFFFF", vlineOp:0.78 },
+  /* The night view has the same problem satellite does and the opposite of the
+     light theme's: a near-black ground, where the light theme's dark ink lines
+     vanish completely. Cool pale boundaries, slightly bluer than satellite's
+     flat white so they read as part of the night rather than as a cutout. */
+  night: { land:"#DCE6F5", landOp:0.045, landSel:0.10, dline:"#93A6C6", dlineOp:0.40,
+           vline:"#C9D8F0", vlineOp:0.62 }
 };
 const PILLARS = [
   { key:"p_connectivity", label:"Connectivity need",  short:"Conn",   weight:40 },
@@ -2308,6 +2611,31 @@ const FX = new URLSearchParams(location.search).has("fixture") ? "_fixture_" : "
       .then(r => r.ok ? r.json() : null);
   } catch (e) { CLUSTERS = null; }
 
+  /* Screened mast siting, 37 KB. Optional in the same way: without it the
+     panel says so and hides itself, and nothing else on the page changes.
+     Not awaited, because no other panel's numbers depend on it. */
+  fetch(`../dataset/web/${FX}towers_los.json`).then(r => r.ok ? r.json() : null)
+    .then(j => { TOWERS_LOS = j; renderMasts(); }).catch(() => {});
+
+  /* Nightlight power flag, 9 KB. Optional: without it the option panel simply
+     omits one qualifying line. It is a Set of ids and nothing else, because the
+     trend classes deliberately do not ship. See dataset/export_power.py. */
+  fetch(`../dataset/web/${FX}power.json`).then(r => r.ok ? r.json() : null)
+    .then(j => {
+      if (!j) return;
+      POWER = j; UNLIT = new Set(j.unlit || []);
+      /* This lands AFTER the first paint, so everything that can show a
+         radiance figure has already drawn an em-dash and has to be told.
+         Missing this left the Light column empty until the user happened to
+         sort it, which looked like no data rather than late data. */
+      if (selectedId) select(selectedId, false);   // the drill-down panel
+      renderMasts();                               // the self-site tile
+      renderRankings();                            // the Light column
+      if (typeof renderCompare === "function" && cmp.picked.length) renderCompare();
+      if (mapReady) buildNightlights();
+      const nrow = el("nightRow"); if (nrow) nrow.hidden = false;
+    }).catch(() => {});
+
   buildLabels(districts, divisions);
   initMap(dipi, districts, divisions, facilities);
   validateData();
@@ -2532,6 +2860,10 @@ function initMap(dipi, districts, divisions, facilities) {
                       cluster:true, clusterMaxZoom:11, clusterRadius:42 },
         /* The build sequence, rebuilt in place whenever the slider moves. */
         corridors:  { type:"geojson", data:{ type:"FeatureCollection", features:[] } },
+        /* Selected mast sites and the specific screened paths they serve.
+           Filled by the radius buttons, empty until the layer is asked for. */
+        masts:      { type:"geojson", data:{ type:"FeatureCollection", features:[] } },
+        mastlinks:  { type:"geojson", data:{ type:"FeatureCollection", features:[] } },
         districts:  { type:"geojson", data:districts },
         divisions:  { type:"geojson", data:divisions },
         facilities: { type:"geojson", data:facilities },
@@ -2685,6 +3017,33 @@ function initMap(dipi, districts, divisions, facilities) {
           paint:{ "circle-radius":radiusExpr(1, 3), "circle-opacity":0,
                   "circle-stroke-width":1.8, "circle-stroke-color":"#3FC7E8",
                   "circle-stroke-opacity":0.9 } },
+        /* Each line is one path that cleared the terrain screen, drawn from the
+           settlement to the mast chosen to serve it. Deliberately NOT a circle
+           of the assumed radius: a filled disc round a mast reads as predicted
+           coverage, which is the one thing this analysis cannot claim. */
+        /* Violet, and it had to be. Every other hue on this map is spoken for:
+           13-42deg is the DIPI ramp and the warning colour, 153-176deg is the
+           flood lens, 191deg the bundle highlight, 213deg the OpenCelliD
+           records. A mast drawn in orange would read as a priority score and
+           in teal as seasonal water. 255deg is the one gap wide enough to
+           take a new layer without colliding with a meaning already in use. */
+        { id:"mast-link", type:"line", source:"mastlinks",
+          layout:{ visibility:"none", "line-cap":"round" },
+          paint:{ "line-color":"#9B7FEA", "line-width":["interpolate",["linear"],["zoom"], 6,0.6, 12,1.6],
+                  "line-opacity":0.26 } },
+        /* One hue, two values. A site that serves only itself is the same kind
+           of thing as any other mast, just a lesser one, so it is a darker
+           violet rather than a second colour: introducing a new hue for it
+           would claim a distinction the data does not carry. */
+        { id:"mast-site", type:"circle", source:"masts",
+          layout:{ visibility:"none" },
+          paint:{ "circle-radius":["interpolate",["linear"],["zoom"],
+                    6,["case",["==",["get","serves"],1],1.8,3],
+                    12,["case",["==",["get","serves"],1],4,7]],
+                  "circle-color":["case",["==",["get","serves"],1],"#6B5CA5","#9B7FEA"],
+                  "circle-opacity":0.92,
+                  "circle-stroke-width":1, "circle-stroke-color":"#0B1016",
+                  "circle-stroke-opacity":0.55 } },
         { id:"corridor-stop", type:"symbol", source:"corridors",
           filter:["==",["geometry-type"],"Point"], layout:{ visibility:"none",
             "icon-image":["concat","stop-",["to-string",["get","order"]]],
@@ -2878,6 +3237,27 @@ function initMap(dipi, districts, divisions, facilities) {
       }
       return;
     }
+    /* A candidate site takes the click before the settlement underneath it,
+       because the site is drawn on top and clicking what you can see should do
+       what it looks like. It isolates that site's screened paths, which is the
+       answer to the fan of lines reading as a built network: on its own, one
+       site's paths are obviously a screen result and not a route. */
+    if (mastsOn && map.getLayer("mast-site")) {
+      // The same fingertip box the facilities get, and for the same reason: a
+      // site that serves only itself draws at 1.8 px, and an exact-pixel test
+      // makes it unclickable. Nearest to the cursor wins inside the box.
+      const ms = map.queryRenderedFeatures(box(e.point), { layers:["mast-site"] });
+      if (ms.length) {
+        const near = ms.reduce((a, f) => {
+          const p = map.project(f.geometry.coordinates);
+          return Math.hypot(p.x - e.point.x, p.y - e.point.y) < a.d
+            ? { d:Math.hypot(p.x - e.point.x, p.y - e.point.y), f } : a;
+        }, { d:Infinity, f:ms[0] }).f;
+        focusMast(near.properties.i);
+        return;
+      }
+      if (mastFocus !== null) { focusMast(null); return; }
+    }
     // Anything that is not a bundle marker drops the ring, including bare land.
     // Scoping this to settlement clicks left the highlight alive over a map the
     // reader had already moved on from.
@@ -2969,12 +3349,97 @@ const DOT_LAYERS = ["settlements","queueb","low-evidence"];
 const BASE_OP     = { settlements:0.92, queueb:0, "low-evidence":0 };
 const BASE_STROKE = { settlements:1,    queueb:0.85, "low-evidence":0.55 };
 let floodOn = false;
+let mastsOn = false;   // screened mast sites, drives the legend too
 let towersOn  = false;    // OpenCelliD masts, off until asked for
 let surveyPick = null;    // settlement selected FROM the survey list, if any
 let terrainOn = false;    // Layer 2 hillshade, off until asked for
-const dimmed = base => floodOn
-  ? ["case", ["==", ["get","flood_prone"], true], base, base * 0.25]
-  : base;
+let nightOn = false;
+/* Night mode wins over the flood lens: in the night view the DIPI dots are
+   scenery, and the whole point is that the only thing carrying information is
+   the glow. They stay drawn at a tenth so the map is still clickable. */
+const dimmed = base => nightOn
+  ? base * 0.10
+  : floodOn
+    ? ["case", ["==", ["get","flood_prone"], true], base, base * 0.25]
+    : base;
+
+/* == The night view ====================================================
+   Sabah as VIIRS actually recorded it: dark ground, and a glow wherever there
+   was measurable light. Every visible thing here is the MEASUREMENT, not a
+   judgement. That is why this view is allowed to exist when a plain "unlit"
+   overlay on the priority map was not: an overlay says these places are worse,
+   a nightlights view says these places emitted no light, and only the second
+   is a thing the data knows.
+
+   Radius and colour both track `ntl`, peak radiance 2013 to 2025. The stops
+   are the observed quantiles (p25 1.0, p50 2.0, p75 7.4, p90 23.8, p99 72.7)
+   rather than an even split, because the series runs 0.5 to 116 and a linear
+   ramp would render everything below Sandakan as one indistinguishable dot.
+
+   Three stacked circles make the bloom. One blurred circle reads as a smudge;
+   a wide dim halo, a mid body and a tight bright core reads as a light.   */
+const NIGHT_LAYERS = ["ntl-bloom", "ntl-mid", "ntl-core"];
+const BASE_LAYERS = ["base-dark", "base-light", "base-sat"];
+let nightBuilt = false;
+
+function buildNightlights() {
+  if (!map || !mapReady || nightBuilt || !POWER || !POWER.radiance) return;
+  const feats = [];
+  for (const f of FEATURES) {
+    const v = POWER.radiance[f.properties.settlement_id];
+    if (v === undefined) continue;          // dark, and dark draws nothing
+    feats.push({ type:"Feature", geometry:f.geometry,
+                 properties:{ ntl:v, name:f.properties.name } });
+  }
+  if (!feats.length) return;
+  map.addSource("nightlights", { type:"geojson",
+    data:{ type:"FeatureCollection", features:feats } });
+
+  /* MapLibre only accepts ["zoom"] as the input of a TOP-LEVEL interpolate, so
+     zoom cannot be a factor in a product. Instead zoom is the outer curve and
+     each of its stops carries the whole radiance ramp, pre-multiplied. Same
+     result, and it is the only form the style spec validates. */
+  const rf = k => ["interpolate", ["linear"], ["get","ntl"],
+    0.5, 2.6 * k, 2, 4.2 * k, 7.5, 6.6 * k, 24, 10.5 * k, 73, 15.5 * k, 116, 19 * k];
+  const glow = (id, scale, colour, opacity, blur) => ({
+    id, type:"circle", source:"nightlights", layout:{ visibility:"none" },
+    paint:{ "circle-radius":["interpolate", ["linear"], ["zoom"],
+              5, rf(scale * 0.62), 8, rf(scale), 11, rf(scale * 1.9), 14, rf(scale * 3.2)],
+            "circle-color":colour, "circle-opacity":opacity,
+            "circle-blur":blur } });
+
+  // Under the dots, so a selected settlement still reads on top of its glow.
+  const before = map.getLayer("flood-context") ? "flood-context" : "settlements";
+  map.addLayer({ id:"night-ground", type:"background",
+    layout:{ visibility:"none" },
+    paint:{ "background-color":NIGHT.ground, "background-opacity":0.82 } },
+    map.getStyle().layers[1].id);
+  map.addLayer(glow("ntl-bloom", 3.4, NIGHT.bloom, 0.11, 1), before);
+  map.addLayer(glow("ntl-mid",   1.85, NIGHT.mid,  0.30, 0.8), before);
+  map.addLayer(glow("ntl-core",  1,    ["interpolate", ["linear"], ["get","ntl"],
+      0.5, NIGHT.coreLo, 10, NIGHT.mid, 40, NIGHT.coreHi], 0.95, 0.35), before);
+  nightBuilt = true;
+}
+
+function applyNightMode() {
+  if (!mapReady) return;
+  buildNightlights();
+  const vis = nightOn && nightBuilt ? "visible" : "none";
+  for (const id of ["night-ground", ...NIGHT_LAYERS])
+    if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", vis);
+  /* The basemap is pushed down rather than hidden: the coastline is what makes
+     the glow legible as Sabah instead of as scattered dots. */
+  for (const id of BASE_LAYERS) {
+    if (!map.getLayer(id)) continue;
+    map.setPaintProperty(id, "raster-opacity", nightOn ? 0.26 : 1);
+    map.setPaintProperty(id, "raster-brightness-max", nightOn ? 0.46 : 1);
+    map.setPaintProperty(id, "raster-saturation", nightOn ? -0.2
+      : (id === "base-light" ? -0.55 : 0));
+  }
+  el("nightRow").dataset.on = nightOn ? "1" : "0";
+  applyMapTheme();           // swaps the basemap and the boundary palette
+  applyFloodLens();          // reapplies dot opacity through dimmed()
+}
 function applyFloodLens() {
   if (!mapReady) return;
   const vis = floodOn ? "visible" : "none";
@@ -3015,6 +3480,26 @@ let tipFacility = null;   // facility_id the tooltip is describing, or null
 let tipLock = false;      // pointer is inside the tooltip itself
 let tipHideT = null;
 
+/* An active context layer adds its own reading to the hover, in that layer's
+   colour, so the tooltip answers the question the layer just raised. Off means
+   absent: with nothing switched on the tooltip stays two lines, because a
+   permanent radiance figure beside a DIPI score would read as part of the
+   score. Each line is only ever the measurement, never a verdict. */
+function layerLines(p) {
+  const out = [];
+  if (nightOn) {
+    const r = POWER && POWER.radiance ? POWER.radiance[p.settlement_id] : undefined;
+    out.push([NIGHT.mid, r === undefined
+      ? "Night light &middot; none detected in 13 years"
+      : `Night light &middot; ${nf(r, r < 10 ? 2 : 1)} peak radiance`]);
+  }
+  if (floodOn) {
+    out.push([FLOOD_TEAL, `Seasonal water &middot; ${
+      p.flood_prone ? "adjacent" : "none at this point"}`]);
+  }
+  return out.map(([c, s]) => `<div class="t-line" style="color:${c}">${s}</div>`).join("");
+}
+
 function showTooltip(p, pt) {
   const t = el("tooltip");
   const speed = num(p.dl_mbps);
@@ -3022,7 +3507,8 @@ function showTooltip(p, pt) {
   t.innerHTML =
     `<div class="t-name">${esc(nameOf(p))}</div>
      <div class="t-line">${speed ? speed + " Mbps download" : "No speed measurement"}
-       &middot; ${dv !== null ? "DIPI " + num(dv) : "Evidence needed"}</div>`;
+       &middot; ${dv !== null ? "DIPI " + num(dv) : "Evidence needed"}</div>
+     ${layerLines(p)}`;
   tipFacility = null;
   t.dataset.fac = "0";
   placeTooltip(t, pt);
@@ -3249,7 +3735,7 @@ function renderPanel(p) {
         Seasonal water adjacency &middot; context, not scored</span>
     </div>` : "";
 
-  panel.innerHTML = head + hero + pillars + stats + terrainBlock(p)
+  panel.innerHTML = head + hero + pillars + stats + terrainBlock(p) + siteBlock(p)
     + modelledSpeedBlock(p) + evidence + flood
     + nearbyBlock(p) + recommenderBlock(p)
     + `<div class="block" id="simMount"></div>`
@@ -3390,7 +3876,11 @@ function simulate(p, task) {
       math: `A call needs about 3 Mbps in BOTH directions and latency under 150 ms.<br>
              ${shareLine(p)}
              <code>down ${num(dl, 2)} · up ${num(ul, 2)} · latency ${num(lat, 0)} ms</code><br>
-             Upload is the leg that usually fails first.` };
+             Upload is the leg that usually fails first.<br>
+             <span class="sim-cite">3 Mbps is Zoom's published figure for 1080p group calling,
+             1.5 Mbps is the FCC's HD personal video call, and 150 ms is the preferred
+             limit in ITU-T G.114. G.114 budgets one-way delay while this figure is a
+             round trip, so treat it as close, not exact.</span>` };
   }
   const tier = VIDEO_TIERS.find(t => t.id === task);
   if (!tier || dl === null) return null;
@@ -3403,7 +3893,7 @@ function simulate(p, task) {
       : verdict === "buffer" ? `May buffer at ${tier.label}`
       : best ? `Unlikely at ${tier.label}, may buffer at ${best.label}`
              : `Unlikely at ${tier.label}, below 360p at this sharing level`,
-    foot: task === "4k" ? "YouTube's published recommendation ≈ 20 Mbps sustained." : null,
+    foot: `YouTube publishes ${nf(tier.mbps, 1)} Mbps as the recommended sustained speed for ${tier.label}.`,
     math: `${tier.label} needs a sustained ${nf(tier.mbps, 1)} Mbps.<br>${shareLine(p)}
            <code>${num(dl, 2)} Mbps ÷ ${nf(tier.mbps, 1)} = ${num(dl / tier.mbps, 2)}× the threshold</code><br>
            Smooth at ≥ 1.5×, may buffer from 1.0×.` };
@@ -3982,6 +4472,52 @@ function renderGoogleToggle() {
    The drop below the nearest town is shown as a SITING CAVEAT, not as a
    predictor: at −0.08 against speed it barely moves, and it is a proxy from
    point elevations, not a line-of-sight calculation.                        */
+/* Site conditions: the two readings that describe the GROUND rather than the
+   service. Neither is in DIPI and the header says so twice, in the label and
+   in the tooltip, because a tile in a scoring panel is read as a score unless
+   it says otherwise.
+
+   They live together because they do the same job. Water adjacency and no grid
+   power are both things that change what it costs and how hard it is to build
+   at a site, and neither says anything about whether the people there have
+   coverage today. The recommender already prints a line for each when it
+   fires; this block is where you can see the reading whether or not it did. */
+function siteBlock(p) {
+  const rad = POWER && POWER.radiance ? POWER.radiance[p.settlement_id] : undefined;
+  const known = POWER !== null;
+  const dark = known && rad === undefined;
+  const wet = !!p.flood_prone;
+  const px = p.seasonal_water_px;
+  if (!known && px === null) return "";
+  return `
+    <div class="block">
+      <span class="micro">Site conditions &middot; context, not scored${info(
+        "Neither reading enters DIPI, the ranking or the recommended option. Nighttime light "
+      + "is NOAA VIIRS annual composites, peak radiance 2013 to 2025, max within 1 km of the "
+      + "settlement point: it measures electrification, so a dark settlement may still have "
+      + "perfectly good mobile service. Seasonal water is JRC Global Surface Water sampled at "
+      + "the point, and it includes coastal and tidal zones, so it is adjacency rather than a "
+      + "flood-risk model. Both qualify how a site would be built, never how badly it is served.")}</span>
+      <div class="tiles">
+        ${known ? `<div class="tile"><span class="micro">Nighttime light</span>
+          ${dark ? `<div class="v small" style="color:var(--warn)">None detected</div>`
+                 : `<div class="v">${nf(rad, rad < 10 ? 2 : 1)}<span class="u">peak</span></div>`}</div>` : ""}
+        <div class="tile"><span class="micro">Seasonal water</span>
+          ${px === null || px === undefined
+            ? `<div class="v small">Not sampled</div>`
+            : `<div class="v small" style="${wet ? "color:var(--warn)" : ""}">${
+                 wet ? "Adjacent" : "None at this point"}</div>`}</div>
+      </div>
+      ${dark ? `<p class="note" style="margin-top:11px;color:var(--warn)">No detectable light in
+        13 years. Budget for on-site power.${info(
+          "703 of 1,448 Sabah settlements never register above the 0.5 threshold. That is a "
+        + "power constraint on a mast, a satellite terminal or a community hub alike. It is "
+        + "NOT a statement about coverage, and it never changes the recommended option.")}</p>` : ""}
+      ${wet ? `<p class="note" style="margin-top:${dark ? "7" : "11"}px">Water adjacency: siting and
+        resilience need a field check.</p>` : ""}
+    </div>`;
+}
+
 function terrainBlock(p) {
   if (p.elevation_m === null || p.elevation_m === undefined) return "";
   const drop = p._elevDrop, pct = p._elevPct;
@@ -4063,7 +4599,12 @@ function srcTip() {
   const P = SOURCES && SOURCES.parameters;
   if (!P) return "Thresholds and unit costs, with their sources, are recorded in "
                  + "dataset/web/sources.json.";
-  const of = st => Object.entries(P).filter(([, v]) => v.status === st);
+  /* Only what this page actually uses. The registry also carries the offline
+     terrain screen's assumptions (mast and receiver height, band, Fresnel
+     clearance), and listing those here would tell a planner reading the
+     recommender that its option depends on a receiver height. It does not. */
+  const of = st => Object.entries(P)
+    .filter(([, v]) => v.status === st && v.in_dashboard !== false);
   const ours = of("unsourced").map(([k]) => `${P[k].value}${P[k].unit ? " " + P[k].unit : ""}`);
   return `The ordering, the ${P.fac_near_km.value} km school anchor, the `
     + `${P.fwa_max_km.value} km wireless limit and the ${P.fibre_min_pop.value} and `
@@ -4084,6 +4625,14 @@ const hasModel = () => MODEL !== null;
    or null when we have no clustering for it. Only fibre uses it: a mast or a
    satellite terminal costs the same whether or not a neighbour has one. */
 let CLUSTERS = null;
+/* towers_los.json, or null when the screen has not been run. The panel hides
+   itself rather than showing an empty shell. */
+let TOWERS_LOS = null;
+/* The most conservative of the three: the highest site count and the highest
+   cost. If the panel opens on one number it should be the cautious one, and
+   after the terrain screen the three are close enough (274 to 240) that
+   leading with the safe end costs the reader almost nothing. */
+let mastRadius = 3;
 const trunkKm = p => {
   const c = CLUSTERS && CLUSTERS[p.settlement_id];
   return c && Number.isFinite(c.trunk_km) ? c.trunk_km : null;
@@ -4433,6 +4982,28 @@ function buildTerrain(features) {
    is worth checking in the field before siting anything. */
 const terrainShadowed = p => p._elevDrop !== null && p._elevDrop <= TERRAIN_DROP;
 
+/* ── Nightlight power flag ──────────────────────────────────────────────
+   No detectable radiance in 13 years of VIIRS, so a site here has to bring
+   its own power. It reads exactly like the terrain drop: a line that
+   QUALIFIES an option and never picks, filters, sorts or colours one.
+
+   There is no map layer and there never should be. A dark dot on a priority
+   map reads as a worse-served dot, and nightlights measure ELECTRIFICATION,
+   not connectivity. A dark settlement may have perfectly good mobile service.
+   That inference is the one thing this whole product exists to refuse, so the
+   flag lives only where an option is already being discussed.
+
+   Absent file means absent line. Never "has power", because we would not
+   know that either. */
+let POWER = null;
+let UNLIT = new Set();
+const unlitSite = p => UNLIT.has(p.settlement_id);
+/* Peak radiance for a settlement, or null when power.json has not loaded.
+   An unlit settlement returns 0, NOT null: it was measured and found dark,
+   which is a different thing from unknown and has to sort differently. */
+const ntlOf = p => !POWER || !POWER.radiance ? null
+  : (POWER.radiance[p.settlement_id] ?? 0);
+
 function recommend(p) {
   const km = backhaulKm(p.settlement_id);
   const pop = p.pop_2km, inst = (p.n_schools_3km || 0) + (p.n_clinics_3km || 0);
@@ -4470,8 +5041,15 @@ function recommend(p) {
     why.push(`sits ${int(Math.abs(Math.round(p._elevDrop)))} m below ${p._elevAnchor}, `
       + `so a line of sight to a mast there cannot be assumed`);
   }
+  // Same rule as terrain: it qualifies, it does not decide. A mast, a satellite
+  // terminal and a community hub all need power, so this applies to whichever
+  // option the ladder already picked.
+  if (unlitSite(p)) {
+    why.push(`no detectable nighttime light in 13 years of VIIRS, so this site likely `
+      + `needs its own power`);
+  }
   if (p.flood_prone) why.push(`seasonal water adjacency: siting and resilience need field checks`);
-  return { option, why, km, pop, inst, shadowed: terrainShadowed(p) };
+  return { option, why, km, pop, inst, shadowed: terrainShadowed(p), unlit: unlitSite(p) };
 }
 
 function recommenderBlock(p) {
@@ -4488,6 +5066,12 @@ function recommenderBlock(p) {
         <p class="caption rec-warn">The ordering, the school anchor, the distance limit
           and the population floors are published; one cut-off is still ours${r.option === "Satellite"
             ? ", and satellite is the least certain call" : ""}.${info(srcTip())}</p>
+        ${r.unlit ? `<p class="disclaimer">Nighttime light measures grid electricity, not
+          coverage. A dark settlement may have perfectly good mobile service. It is here
+          because power is a cost line on any option, never as a signal about service.${
+            info("VIIRS annual composites 2013 to 2025, max within 1 km, lit threshold 0.5. "
+               + "703 of 1,448 Sabah settlements are dark by this measure. The threshold is "
+               + "ours: relaxing it to the VIIRS noise floor moves the count by 59.")}</p>` : ""}
         <p class="disclaimer">Australia&rsquo;s NBN does the same: a desktop prediction
           first, then a technician on site. A rule like this screens; the field decides.</p>
       </div>
@@ -4755,6 +5339,130 @@ function setSequenceOnMap(ranked) {
     geometry:{ type:"Point", coordinates:[c.lon, c.lat] },
   })) });
 }
+
+/* ══ Shared masts ════════════════════════════════════════════════════════
+   Three assumed reaches, never one. No published figure gives a rural mast
+   reach for Sabah, and on distance alone the choice swung the answer by
+   RM 53.6m. The terrain screen cut that to RM 17.7m, which is the finding
+   this panel exists to show: the parameter nobody can cite stopped being
+   load-bearing once the blocked paths were taken out.
+
+   Everything here is precomputed by dataset/tower_los.py. The browser does no
+   set cover; it reads a result and draws it. */
+function renderMasts() {
+  if (!TOWERS_LOS || !el("mastGroup")) return;
+  el("mastGroup").hidden = false;
+  const S = TOWERS_LOS.scenarios, pp = TOWERS_LOS.path_pass[String(mastRadius)];
+  const s = S.find(x => x.radius_km === mastRadius);
+  if (!s || !pp) return;
+  // Compact, unspaced: four of these have to fit a 280 px column, and
+  // "RM142.5m" reads as one token where "RM 142.5m" wraps.
+  const rm = v => `RM${(v / 1e6).toFixed(1)}m`;
+  const span = k => {
+    const v = S.map(x => cost(x[k], "base"));
+    return Math.max(...v) - Math.min(...v);
+  };
+  const n = TOWERS_LOS.n_tower_settlements, a = TOWERS_LOS.assumptions;
+  /* The planner's own RM per site, the same figure Budget what-if charges a
+     tower at. Without this the two panels disagreed: typing 600,000 repriced
+     the budget and left this panel quoting the benchmark. The stored rm_* are
+     masts x benchmark, so with an own figure the multiplication is redone here
+     rather than read off. */
+  const own = ownCosts().fwa_per_site;
+  const cost = (sc, band) => own ? sc.masts * own : sc[`rm_${band}`];
+  /* Isolated AND unlit: a settlement only a mast in its own village can serve,
+     that also shows no grid light. That is a different cost class, and neither
+     the terrain screen nor the nightlights can see it alone. Null when
+     power.json has not loaded, which drops the clause rather than showing a
+     zero that would read as "all of them have power". */
+  const darkIso = POWER && POWER.isolated_unlit
+    ? (POWER.isolated_unlit[String(mastRadius)] ?? null) : null;
+
+  /* Four numbers, then the reason the first one is bigger than a distance-only
+     reader expects, then the single thing worth remembering. The two that
+     answer "how big is this and what does it cost" lead; the two that qualify
+     them are the same grid at a smaller weight. */
+  el("mastOut").innerHTML = `
+    <div class="mast-metrics">
+      <div class="mast-m" data-lead="1">
+        <b>${int(s.fresnel.masts)}</b><span>Candidate mast proxies</span></div>
+      <div class="mast-m">
+        <b>${int(n)}</b><span>Settlements screened</span></div>
+      <div class="mast-m" data-lead="1">
+        <b class="money">${rm(cost(s.fresnel, "base"))}</b><span>${own
+          ? "At your RM/site" : "Base screening cost"}</span>
+        <i>${own ? `${int(s.fresnel.masts)} &times; RM${int(own).toLocaleString("en-US")}`
+                 : `${rm(s.fresnel.rm_low)}&ndash;${rm(s.fresnel.rm_high)} range`}</i></div>
+      <div class="mast-m">
+        <b>${int(s.fresnel.only_self_reachable)}</b><span>Self-site required</span>
+        <i>No shared reach found${darkIso === null ? ""
+          : `. ${int(darkIso)} of those also have no detectable grid light: own mast
+             AND own power`}</i></div>
+    </div>
+
+    <div class="mast-sec">
+      <h4>Why more masts are needed</h4>
+      <ol class="mast-flow">
+        <li class="mast-step"><span class="k">Distance only</span>
+          <b>${int(s.distance.masts)}</b><i>Nearby settlements only</i></li>
+        <li class="mast-arrow">terrain / LoS</li>
+        <li class="mast-step"><span class="k">Line of sight</span>
+          <b>${int(s.los.masts)}</b><i>Hills remove candidate links</i></li>
+        <li class="mast-arrow">${int(a.band_mhz)} MHz clearance</li>
+        <li class="mast-step" data-on="1"><span class="k">60% Fresnel</span>
+          <b>${int(s.fresnel.masts)}</b><i>Clearance removes additional links</i></li>
+      </ol>
+      <p class="mast-note">${int(pp.fresnel)} of ${int(pp.paths)} candidate links pass the
+        ${int(a.band_mhz)} MHz LoS + 60% first-Fresnel terrain screen.</p>
+    </div>
+
+    ${own ? `<p class="mast-note" style="margin:0 0 11px">Using your figure of
+      RM${int(own).toLocaleString("en-US")} per site, not the benchmark. Clear the box in
+      Budget what-if or here to go back.</p>` : ""}
+    <div class="mast-callout">
+      <b>Terrain matters more than radius</b>
+      <p>Across 3&ndash;10 km, terrain-aware cost changes by ${rm(span("fresnel"))}. Before
+        terrain screening, it changed by ${rm(span("distance"))}.</p>
+    </div>`;
+  if (mapReady) setMastsOnMap();
+}
+
+/* Sites and the specific paths they serve. Rebuilt on every radius change,
+   which is cheap: the largest case is 274 points and 209 lines. */
+function setMastsOnMap() {
+  if (!mapReady || !TOWERS_LOS || !map.getSource("masts")) return;
+  const m = TOWERS_LOS.map[String(mastRadius)];
+  if (!m) return;
+  map.getSource("masts").setData({ type:"FeatureCollection", features: m.sites.map(
+    ([id, lon, lat, serves], i) => ({ type:"Feature", properties:{ id, serves, i },
+      geometry:{ type:"Point", coordinates:[lon, lat] } })) });
+  // `mid` is the index of the site this path reaches, which is what the click
+  // filter matches on.
+  map.getSource("mastlinks").setData({ type:"FeatureCollection", features: m.links.map(
+    ([mi, lon, lat]) => ({ type:"Feature", properties:{ mid:mi },
+      geometry:{ type:"LineString",
+                 coordinates:[[m.sites[mi][1], m.sites[mi][2]], [lon, lat]] } })) });
+  focusMast(null);
+}
+
+/* Null shows every path faintly, an index shows one site's paths clearly.
+   The faint default is deliberate: 209 lines at full strength read as a
+   built network, which is the one thing this layer must not look like. */
+let mastFocus = null;
+function focusMast(i) {
+  if (!mapReady || !map.getLayer("mast-link")) return;
+  mastFocus = i;
+  map.setFilter("mast-link", i === null ? null : ["==", ["get", "mid"], i]);
+  map.setPaintProperty("mast-link", "line-opacity", i === null ? mastLinkFade() : 0.85);
+  map.setPaintProperty("mast-link", "line-width", i === null
+    ? ["interpolate", ["linear"], ["zoom"], 6, 0.6, 12, 1.6]
+    : ["interpolate", ["linear"], ["zoom"], 6, 1.1, 12, 2.4]);
+  map.setPaintProperty("mast-site", "circle-opacity",
+    i === null ? 0.92 : ["case", ["==", ["get", "i"], i], 1, 0.35]);
+}
+// Faint enough not to read as a network, dark enough to see. Imagery and the
+// cream basemap both need a little more than the dark one.
+const mastLinkFade = () => satelliteOn ? 0.34 : theme === "dark" ? 0.26 : 0.32;
 
 function renderBudget() {
   const budget = Math.max(0, +el("budgetInput").value || 0) * 1e6;
@@ -5386,7 +6094,7 @@ function splitNumbered(para) {
    any structure is inferred, or an inline numbered list swallows it into its
    last item. It then renders as the bubble's footer, the same way it does at
    the bottom of the page. */
-const AGENT_DISCLAIMER = "Screening for further assessment — not a coverage determination.";
+const AGENT_DISCLAIMER = "Screening for further assessment, not a coverage determination.";
 
 function renderAnswer(text) {
   if (!text) return `<p>(no answer returned)</p>`;
@@ -5657,6 +6365,23 @@ function initChat() {
 /* ══ Sidebar lists ═══════════════════════════════════════════════════════ */
 function renderLegend() {
   el("ramp").innerHTML = RAMP[theme].map(c => `<i style="background:${c}"></i>`).join("");
+  /* In the night view the DIPI dots are at a tenth opacity, so leaving their
+     ramp up would describe something nobody can see. The night legend replaces
+     it rather than stacking under it, and it carries the two sentences a
+     reader needs to not misread the picture: this is electrification and not
+     coverage, and these are settlement points and not the satellite raster.
+     Someone WILL think they are looking at the NASA image. */
+  el("legendDipi").hidden = nightOn;
+  el("legendNight").innerHTML = !nightOn ? "" : `
+    <span class="micro">Nighttime light &middot; VIIRS</span>
+    <div class="ntl-ramp"></div>
+    <div class="ramp-ends"><span>dark</span><span>brightest</span></div>
+    <div class="legend-item">${POWER ? int(POWER.counts.unlit) : "703"} of
+      ${POWER ? int(POWER.counts.total) : "1,448"} settlements never register</div>
+    <p class="caption" style="margin:5px 0 0">Peak radiance 2013 to 2025.
+      <b>Electrification, not coverage</b>: a dark settlement may have perfectly good
+      mobile service. Points are settlements, not the satellite raster, so empty ground
+      means no settlement rather than no light.</p>`;
   /* The mast at legend size, as SVG rather than the canvas glyph: it has to
      sit on the panel, not on the map, so it takes the panel's ink and needs no
      halo. currentColor keeps it correct in both themes for free. */
@@ -5679,6 +6404,21 @@ function renderLegend() {
   el("legendFlood").innerHTML = floodOn
     ? `<div class="legend-item" style="margin-top:8px;padding-top:8px;border-top:1px solid var(--hairline)">
          <span class="glyph flood"></span>💧 Seasonal water adjacency</div>`
+    : "";
+  /* Violet appears on the map the moment the toggle is clicked, so it has to
+     be readable from the legend and not only from the panel that drew it.
+     The last line is the important one: a reader seeing lines fan out from a
+     point will otherwise read them as coverage, which is the single claim
+     this layer is not allowed to make. */
+  el("legendMasts").innerHTML = mastsOn
+    ? `<div class="legend-item" style="margin-top:8px;padding-top:8px;border-top:1px solid var(--hairline)">
+         <span class="glyph mast-dot"></span>Candidate mast-site proxy</div>
+       <div class="legend-item"><span class="glyph mast-dot solo"></span>Self-site required
+         under this screen</div>
+       <div class="legend-item"><span class="glyph mast-line"></span>Screened radio path:
+         LoS + 60% Fresnel</div>
+       <p class="caption" style="margin:5px 0 0">Not a route or predicted coverage.
+         Click a site to isolate its paths.</p>`
     : "";
 }
 function renderTopList() {
@@ -5829,7 +6569,8 @@ function applyFilters() {
    nothing else, so a planner cannot mistake "row 1 when sorted by latency" for
    "the top-priority settlement".                                            */
 const rkSort = { col:null, dir:"desc" };
-const rkF = { q:"", evidence:"", place:"", school:false, clinic:false, flood:false, classroom:false };
+const rkF = { q:"", evidence:"", place:"", school:false, clinic:false, flood:false,
+  dark:false, classroom:false };
 
 /* The one preset worth a chip, because it is the only filter here that asks a
    question the four pillars cannot: has a school AND the measured link cannot
@@ -5844,7 +6585,7 @@ const failsClassroom = p =>
 const RK_LABEL = { dipi:"DIPI", p_connectivity:"Connectivity", p_population:"Population",
   p_institutions:"Institutions", p_equity:"Equity", dl_mbps:"Download", latency_ms:"Latency",
   n_schools_3km:"Schools within 3 km", n_clinics_3km:"Clinics within 3 km",
-  elevation_m:"Elevation" };
+  elevation_m:"Elevation", ntl:"Nighttime light", flood_prone:"Water adjacency" };
 
 function rkMatch(f) {
   const p = f.properties;
@@ -5857,6 +6598,7 @@ function rkMatch(f) {
   if (rkF.school && !(p.n_schools_3km >= 1)) return false;
   if (rkF.clinic && !(p.n_clinics_3km >= 1)) return false;
   if (rkF.flood && !p.flood_prone) return false;
+  if (rkF.dark && !unlitSite(p)) return false;
   if (rkF.classroom && !failsClassroom(p)) return false;
   return true;
 }
@@ -5864,8 +6606,11 @@ function rkSorted(rows) {
   if (!rkSort.col) return rows;                       // default: DIPI rank order
   const k = rkSort.col, s = rkSort.dir === "asc" ? 1 : -1;
   return [...rows].sort((a, b) => {
-    const av = k === "dipi" ? dipiOf(a.properties) : a.properties[k];
-    const bv = k === "dipi" ? dipiOf(b.properties) : b.properties[k];
+    const key = f => k === "dipi" ? dipiOf(f.properties)
+      : k === "ntl" ? ntlOf(f.properties)
+      : k === "flood_prone" ? (f.properties.flood_prone ? 1 : 0)
+      : f.properties[k];
+    const av = key(a), bv = key(b);
     if (av === null || av === undefined) return 1;    // missing values sink
     if (bv === null || bv === undefined) return -1;
     return (av - bv) * s || (rankOf(a.properties) - rankOf(b.properties));
@@ -5922,6 +6667,7 @@ function renderRkChips() {
     c("school", "Has school", rkF.school) +
     c("clinic", "Has clinic", rkF.clinic) +
     c("flood", "Flood context", rkF.flood) +
+    c("dark", "No grid light", rkF.dark) +
     `<span class="rk-sep"></span>` +
     c("classroom", "School below 360p at 30 users", rkF.classroom, "preset");
 
@@ -6013,10 +6759,17 @@ const pctOf = (part, whole) => whole ? halfUp(100 * part / whole, 0) : null;
 
    pop_2km is a 2 km buffer per settlement, and rural settlements sit far closer
    together than 4 km, so summing the column counts the same villagers once per
-   neighbour. Across Ranau it inflates 73,771 people to 566,012, a factor of
-   7.7, meaning most of any "population affected" total built that way is the
-   same people over and over. Link settlements whose buffers touch, take one
-   figure per cluster. Still an estimate of people NEAR them, not a census. */
+   neighbour. Across Ranau's 249 settlements it turns 22,303 into 566,012, a
+   factor of 25, meaning almost all of any "population affected" total built
+   that way is the same people over and over.
+
+   Two 2 km circles touch when their centres are 4 km apart, so that is the
+   link distance. Take one figure per cluster.
+
+   This errs LOW and says so. 246 of Ranau's 249 settlements have a neighbour
+   within 4 km, so single linkage chains the district into 9 blobs and the max
+   of a blob undercounts a chain that is genuinely long. A conservative
+   estimate of people NEAR them, never a census, and never a total to quote. */
 function dedupPop(rows) {
   const n = rows.length;
   if (!n) return 0;
@@ -6066,6 +6819,12 @@ function areaStats(rows, facs) {
     remote_rate_pct: pctOf(rows.filter(p => (backhaulKm(p.settlement_id) ?? 0) > CMP_REMOTE_KM).length, rows.length),
     median_elevation_m: med(rows.map(p => p.elevation_m)),
     terrain_shadow_pct: pctOf(rows.filter(p => p._elevDrop !== null && p._elevDrop <= TERRAIN_DROP).length, rows.length),
+    /* Both are SITING conditions, not service. A district being dark says its
+       builds need their own power, never that its people are badly served.
+       no_grid_light_pct is null rather than 0 when power.json is absent, so a
+       missing file reads as "not known" instead of "everywhere has power". */
+    no_grid_light_pct: POWER ? pctOf(rows.filter(unlitSite).length, rows.length) : null,
+    water_adjacent_pct: pctOf(rows.filter(p => p.flood_prone).length, rows.length),
     schools: facs.filter(f => f.kind === "school").length,
     health: facs.filter(f => f.kind === "health").length,
     schools_underserved: under.filter(p => p.n_schools_3km > 0).length,
@@ -6093,8 +6852,10 @@ const CMP_ROWS = [
   ["Median tests per settlement", "median_tests", "", false, "Evidence"],
   ["Median distance to a town", "median_backhaul_km", "km", true, "Remoteness"],
   ["More than 20 km from a town", "remote_rate_pct", "%", true, "Remoteness"],
-  ["Median elevation", "median_elevation_m", "m", null, "Terrain"],
-  ["150 m below nearest town", "terrain_shadow_pct", "%", true, "Terrain"],
+  ["Median elevation", "median_elevation_m", "m", null, "Terrain and siting"],
+  ["150 m below nearest town", "terrain_shadow_pct", "%", true, "Terrain and siting"],
+  ["No detectable grid light", "no_grid_light_pct", "%", true, "Terrain and siting"],
+  ["Seasonal water adjacent", "water_adjacent_pct", "%", true, "Terrain and siting"],
   ["Schools", "schools", "", null, "Institutions"],
   ["Health points", "health", "", null, "Institutions"],
   ["Underserved with a school", "schools_underserved", "", true, "Institutions"],
@@ -6215,6 +6976,41 @@ const CMP_AXES = [
 ];
 
 const cmp = { level: "district", picked: [], metric: "median_dipi" };
+const RADAR_MAX = 8;
+
+/* Settlement comparison. A separate row set rather than areaStats, because
+   aggregating one settlement produces nonsense a reader would have to squint
+   past: "settlements screened 1", "underserved rate 100%", a median that is
+   just the value. These are the fields that actually differ between two
+   places a planner is choosing between.
+
+   [label, getter, unit, worseHigh, group]. worseHigh flags the worse cell and
+   is null where neither direction is bad. */
+const SET_CAP = 20;
+const SET_ROWS = [
+  ["DIPI", p => dipiOf(p), "", true, "Priority"],
+  ["Rank in Sabah", p => rankOf(p), "", false, "Priority"],
+  ["Connectivity need", p => p.p_connectivity === null ? null : p.p_connectivity * 100, "", true, "Pillars"],
+  ["Population at stake", p => p.p_population === null ? null : p.p_population * 100, "", true, "Pillars"],
+  ["Institutions served", p => p.p_institutions === null ? null : p.p_institutions * 100, "", true, "Pillars"],
+  ["Equity", p => p.p_equity === null ? null : p.p_equity * 100, "", true, "Pillars"],
+  ["Download", p => p.dl_mbps, "Mbps", false, "Measured service"],
+  ["Upload", p => p.ul_mbps, "Mbps", false, "Measured service"],
+  ["Latency", p => p.latency_ms, "ms", true, "Measured service"],
+  ["Speed source", p => isModelled(p) ? "Modelled estimate" : (p.dl_mbps === null ? "None" : "Observed"), "", null, "Measured service"],
+  ["Evidence tier", p => (EVIDENCE[p.evidence_tier] || {}).label || p.evidence_tier, "", null, "Measured service"],
+  ["Tests behind it", p => p.n_tests, "", false, "Measured service"],
+  ["People within 2 km", p => p.pop_2km, "", true, "People and places"],
+  ["Schools within 3 km", p => p.n_schools_3km, "", true, "People and places"],
+  ["Clinics within 3 km", p => p.n_clinics_3km, "", true, "People and places"],
+  ["Relative wealth", p => p.rwi, "", false, "People and places"],
+  ["Distance to a town", p => backhaulKm(p.settlement_id), "km", true, "Terrain and siting"],
+  ["Elevation", p => p.elevation_m === null ? null : Math.round(p.elevation_m), "m", null, "Terrain and siting"],
+  ["Drop to nearest town", p => p._elevDrop === null ? null : Math.round(p._elevDrop), "m", false, "Terrain and siting"],
+  ["Nighttime light", p => ntlOf(p) === null ? null : (ntlOf(p) === 0 ? "None detected" : nf(ntlOf(p), ntlOf(p) < 10 ? 2 : 1)), "", null, "Terrain and siting"],
+  ["Seasonal water", p => p.flood_prone ? "Adjacent" : "None at this point", "", null, "Terrain and siting"],
+  ["Suggested option", p => (recommend(p).option || "Insufficient evidence"), "", null, "Screening outcome"]
+];
 
 /* Text-only formatter for the visual layers. cmpFmt() emits markup for the
    table cells; a bar label and an SVG title need a plain string. */
@@ -6385,7 +7181,10 @@ function renderCmpBars(picked, stats, sabah) {
     `<button class="chip-btn${cmp.metric === key ? " on" : ""}" data-metric="${esc(key)}"
        aria-pressed="${cmp.metric === key}">${esc(short)}</button>`).join("");
 
-  el("cmpBars").innerHTML = CMP_METRICS.map(([, key]) => {
+  /* One indicator at a time. Five stacked groups is 125 bar rows at 25 areas,
+     and the reader has to hold the first off the screen to compare it to the
+     last. The chips above are the switch, one click each. */
+  el("cmpBars").innerHTML = CMP_METRICS.filter(([, key]) => key === cmp.metric).map(([, key]) => {
     const row = CMP_ROWS.find(r => r[1] === key);
     const label = row[0], unit = row[2], worseHigh = row[3];
     const vals = picked.map(a => stats[a][key]);
@@ -6433,7 +7232,19 @@ function renderCmpRadar(picked, stats, all) {
   const ring = f => CMP_AXES.map((_, i) => at(i, 100 * f).map(n => n.toFixed(1)).join(",")).join(" ");
   el("cmpRadarN").textContent = `${cmpAreaNames().length} ${cmp.level}s`;
 
-  el("cmpRadars").innerHTML = picked.map(a => {
+  /* Past RADAR_MAX the grid stops being a comparison and becomes a contact
+     sheet: the shapes are too small to hold two of in your head, let alone
+     twenty-five. It shows the highest-priority ones by median DIPI, which is
+     the same order the rest of the product ranks by, and says so rather than
+     silently truncating. The full table below still carries every area. */
+  const shown = picked.length <= RADAR_MAX ? picked
+    : [...picked].sort((x, y) => (stats[y].median_dipi ?? -1) - (stats[x].median_dipi ?? -1))
+        .slice(0, RADAR_MAX);
+  el("cmpRadarCap").innerHTML = picked.length <= RADAR_MAX ? ""
+    : `Showing the ${RADAR_MAX} highest-priority of ${picked.length} by median DIPI. Every
+       area is in the full table below.`;
+
+  el("cmpRadars").innerHTML = shown.map(a => {
     const col = cmpColor(stats[a]);
     const pcs = CMP_AXES.map(([, key]) => {
       const row = CMP_ROWS.find(r => r[1] === key);
@@ -6470,7 +7281,141 @@ function renderCmpRadar(picked, stats, all) {
   }).join("");
 }
 
+/* The settlement level owns its own render. Sharing renderCompare would mean
+   threading a conditional through the strip, the bars, the radar and the
+   written summary, all four of which are area constructs: a radar axis is a
+   "percentile of badness against all 25 districts", which is a category error
+   for a single point. It reuses #cmpSheet and #cmpTable, so Print and the PDF
+   export work here with no second stylesheet. */
+function settlementByName(q) {
+  const s = q.trim().toLowerCase();
+  if (!s) return [];
+  return FEATURES.map(f => f.properties).filter(p =>
+    (p.name && p.name.toLowerCase().includes(s))
+    || districtLabel(p._district).toLowerCase().includes(s)
+    || p.settlement_id.toLowerCase() === s).slice(0, 40);
+}
+
+function renderCmpFind() {
+  const q = el("cmpSearch").value;
+  const full = cmp.picked.length >= SET_CAP;
+  const hits = full ? [] : settlementByName(q).filter(p => !cmp.picked.includes(p.settlement_id));
+  el("cmpFindList").innerHTML = hits.slice(0, 8).map(p =>
+    `<button class="cmp-find-opt" data-add="${esc(p.settlement_id)}">
+       <span>${esc(nameOf(p))}</span>
+       <span class="d">${esc(districtLabel(p._district))} &middot; ${
+         dipiOf(p) === null ? "unscored" : "DIPI " + num(dipiOf(p))}</span>
+     </button>`).join("");
+  el("cmpFindList").querySelectorAll("[data-add]").forEach(b => b.onclick = () => {
+    if (cmp.picked.length < SET_CAP) cmp.picked.push(b.dataset.add);
+    el("cmpSearch").value = "";
+    renderCompare();
+    el("cmpSearch").focus();
+  });
+}
+
+function renderSettlementCompare() {
+  const byId = new Map(FEATURES.map(f => [f.properties.settlement_id, f.properties]));
+  cmp.picked = cmp.picked.filter(id => byId.has(id)).slice(0, SET_CAP);
+  const picked = cmp.picked.map(id => byId.get(id));
+
+  el("cmpFind").hidden = false;
+  el("cmpChips").innerHTML = picked.map(p =>
+    `<button class="chip-btn on" data-area="${esc(p.settlement_id)}" aria-pressed="true"
+       data-tip="Click to remove">${esc(nameOf(p))} &times;</button>`).join("");
+  el("cmpCount").textContent = picked.length < 2
+    ? `Pick ${2 - picked.length} more to compare`
+    : picked.length >= SET_CAP ? `${SET_CAP} selected, the maximum`
+    : `${picked.length} selected, up to ${SET_CAP}`;
+  el("cmpAll").hidden = true;            // there is no "select all 1,448"
+  renderCmpFind();
+
+  if (picked.length < 2) {
+    el("cmpEmpty").textContent = "Search for at least two settlements above. Unlike the "
+      + "district view these are single points, so every figure is that settlement's own "
+      + "value rather than a median, and an unscored settlement shows a dash rather than a "
+      + "zero.";
+    el("cmpEmpty").hidden = false;
+    el("cmpSheet").hidden = true;
+    el("cmpActions").hidden = true;
+    el("cmpVis").hidden = true;
+    for (const id of ["cmpTable", "cmpSummary", "cmpMissing", "cmpStrip", "cmpBars", "cmpRadars"])
+      el(id).innerHTML = "";
+    el("cmpSubject").textContent = "";
+    el("cmpStamp").textContent = "";
+    return;
+  }
+  el("cmpEmpty").hidden = true;
+  el("cmpSheet").hidden = false;
+  el("cmpActions").hidden = false;
+  el("cmpVis").hidden = true;            // strip, bars and radar are area constructs
+
+  const fmt = v => v === null || v === undefined ? `<span class="sub">&mdash;</span>`
+    : typeof v === "string" ? esc(v)
+    : nf(v, Number.isInteger(v) ? 0 : 1);
+
+  let html = "", group = "";
+  for (const [label, get, unit, worseHigh, g] of SET_ROWS) {
+    if (g !== group) {
+      group = g;
+      html += `<tr class="cmp-group"><td colspan="${picked.length + 1}">${esc(group)}</td></tr>`;
+    }
+    const vals = picked.map(get);
+    const nums = vals.filter(v => typeof v === "number" && isFinite(v));
+    const worst = worseHigh === null || nums.length < 2 ? null
+      : (worseHigh ? Math.max(...nums) : Math.min(...nums));
+    html += `<tr><th scope="row">${esc(label)}</th>`;
+    for (const v of vals) {
+      const bad = worst !== null && v === worst && Math.min(...nums) !== Math.max(...nums);
+      html += `<td class="r num${bad ? " cmp-worst" : ""}">${fmt(v)}${
+        unit && typeof v === "number" ? `<span class="u">${unit}</span>` : ""}</td>`;
+    }
+    html += `</tr>`;
+  }
+  el("cmpTable").innerHTML =
+    `<colgroup><col class="cmp-col-label">${
+      picked.map(() => `<col class="cmp-col-area">`).join("")}</colgroup>
+     <thead><tr><th>Indicator</th>${picked.map(p =>
+      `<th class="r">${esc(nameOf(p))}</th>`).join("")}</tr></thead>
+     <tbody>${html}</tbody>`;
+
+  el("cmpSummary").innerHTML = `<p>Single settlements, so every figure is that settlement's
+    own value and not a median. There is no Sabah reference column here for the same reason:
+    a state-wide median is not a like-for-like comparison for one point. Unscored settlements
+    show a dash rather than a zero.</p>`;
+  el("cmpMissing").innerHTML = CMP_MISSING
+    .map(([n, why]) => `<li><b>${esc(n)}</b>, ${esc(why)}</li>`).join("");
+  el("cmpStamp").textContent = new Date().toLocaleDateString("en-GB",
+    { day: "numeric", month: "long", year: "numeric" });
+  el("cmpSubject").textContent = picked.length <= 6
+    ? picked.map(nameOf).join(" \u00b7 ")
+    : `${picked.length} settlements`;
+  setPrintPage(picked.length);
+}
+
+/* The heading and the lede describe what is being compared, so they follow
+   the level. Leaving "District decision comparison" over a settlement table
+   is a small lie that a reader notices before anything else on the page. */
+const CMP_TITLE = {
+  district:   ["District decision comparison",
+    "Two areas, or every one in Sabah, on identical definitions, so \u201cwhy this one first?\u201d has an answer that is not a map read twice."],
+  division:   ["Division decision comparison",
+    "Two areas, or every one in Sabah, on identical definitions, so \u201cwhy this one first?\u201d has an answer that is not a map read twice."],
+  settlement: ["Settlement decision comparison",
+    "Up to 20 individual settlements side by side. Every figure is that settlement\u2019s own value, not a median, so this answers \u201cwhich of these two, and why?\u201d"]
+};
+function applyCmpHeading() {
+  const [title, lede] = CMP_TITLE[cmp.level] || CMP_TITLE.district;
+  el("cmpTitle").textContent = title;
+  const p = document.querySelector("#compare .cmp-lede");
+  if (p) p.firstChild.nodeValue = lede + " ";
+}
+
 function renderCompare() {
+  applyCmpHeading();
+  if (cmp.level === "settlement") return renderSettlementCompare();
+  el("cmpFind").hidden = true;
+  el("cmpAll").hidden = false;
   const picked = cmp.picked.filter(a => cmpAreaNames().includes(a));
   el("cmpChips").innerHTML = cmpAreaNames().map(a => {
     const on = picked.includes(a);
@@ -6516,6 +7461,10 @@ function renderCompare() {
   // The three visual layers read the SAME stats object the table does, so a
   // bar and its cell can never disagree.
   el("cmpPanels").classList.toggle("stacked", picked.length > 6);
+  const noun = cmp.level === "division" ? "divisions" : "districts";
+  el("cmpStripN").textContent = `${picked.length} ${noun}, ranked by median DIPI in the table below`;
+  el("cmpVisN").textContent = `one indicator at a time, ${RADAR_MAX} profiles at most`;
+  el("cmpTableN").textContent = `${CMP_ROWS.length} indicators \u00d7 ${picked.length} ${noun}`;
   renderCmpStrip(picked, stats);
   renderCmpBars(picked, stats, sabah);
   renderCmpRadar(picked, stats, all);
@@ -6721,9 +7670,14 @@ function renderRankings() {
       <td class="r num">${cell(int(p.elevation_m === null ? null : Math.round(p.elevation_m)), "—")}${
         terrainShadowed(p) ? `<span class="src-dot" style="background:var(--warn)"
           title="Sits ${int(Math.abs(Math.round(p._elevDrop)))} m below ${esc(p._elevAnchor)}"></span>` : ""}</td>
+      <td class="r num">${ntlOf(p) === null ? `<span class="sub">&mdash;</span>`
+        : ntlOf(p) === 0 ? `<span class="sub" style="color:var(--warn)">None</span>`
+        : nf(ntlOf(p), ntlOf(p) < 10 ? 2 : 1)}</td>
+      <td>${p.flood_prone ? `<span class="sub" style="color:var(--flood)">Adjacent</span>`
+        : `<span class="sub">&mdash;</span>`}</td>
       <td><span class="chip ${ev.cls}"><i class="dot"></i>${ev.label}</span></td>
     </tr>`;
-  }).join("") : `<tr><td colspan="14"><div class="empty">No scored settlements in this district.</div></td></tr>`;
+  }).join("") : `<tr><td colspan="16"><div class="empty">No scored settlements in this district.</div></td></tr>`;
 
   el("qbCount").textContent = `${int(qb.length)} settlements`;
   el("qbBody").innerHTML = qb.length ? qb.map(f => {
@@ -6732,12 +7686,23 @@ function renderRankings() {
       <td class="nm">${esc(nameOf(p))} <span class="sub">${esc(p.place)}</span></td>
       <td>${esc(districtLabel(p._district))}</td>
       <td class="r num">${cell(num(p.stakes_score), "No stakes score")}</td>
+      <td class="r num">${p.pred_dl_mbps === null || p.pred_dl_mbps === undefined
+        ? `<span class="sub">Not modelled</span>`
+        : `${num(p.pred_dl_mbps)}<span class="sub"> &plusmn;${
+            int(Math.round(Math.max(0, (p.pred_hi ?? 0) - (p.pred_lo ?? 0)) / 2))}</span>` +
+          `<span class="src-dot" title="Modelled estimate, not a measurement"></span>`}</td>
+      <td class="r num">${cell(num(backhaulKm(p.settlement_id), 1), "—")}</td>
       <td class="r num">${int(p.pop_2km)}</td>
       <td class="r num">${int(p.n_schools_3km)}</td>
       <td class="r num">${int(p.n_clinics_3km)}</td>
+      <td class="r num">${ntlOf(p) === null ? `<span class="sub">&mdash;</span>`
+        : ntlOf(p) === 0 ? `<span class="sub" style="color:var(--warn)">None</span>`
+        : nf(ntlOf(p), ntlOf(p) < 10 ? 2 : 1)}</td>
+      <td>${p.flood_prone ? `<span class="sub" style="color:var(--flood)">Adjacent</span>`
+        : `<span class="sub">&mdash;</span>`}</td>
       <td><span class="chip neutral"><i class="dot"></i>Insufficient evidence</span></td>
     </tr>`;
-  }).join("") : `<tr><td colspan="7"><div class="empty">No evidence-gap communities in this district.</div></td></tr>`;
+  }).join("") : `<tr><td colspan="11"><div class="empty">No evidence-gap communities in this district.</div></td></tr>`;
 
   const totalScored = SCORED.filter(keep).length;
   el("rkCount").textContent = scored.length === totalScored
@@ -6837,10 +7802,15 @@ const MOON = `<svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke
 function applyMapTheme() {
   if (mapReady) {
     const sat = satelliteOn;
-    map.setLayoutProperty("base-dark",  "visibility", (!sat && theme === "dark")  ? "visible" : "none");
-    map.setLayoutProperty("base-light", "visibility", (!sat && theme === "light") ? "visible" : "none");
-    map.setLayoutProperty("base-sat",   "visibility", sat ? "visible" : "none");
-    document.documentElement.setAttribute("data-basemap", sat ? "satellite" : "map");
+    /* Same reason: the dark basemap is the only one that reads under a glow, so
+       night borrows it regardless of theme or satellite, and hands it back on
+       exit because applyMapTheme runs again from applyNightMode. */
+    const nb = nightOn;
+    map.setLayoutProperty("base-dark",  "visibility", (nb || (!sat && theme === "dark")) ? "visible" : "none");
+    map.setLayoutProperty("base-light", "visibility", (!nb && !sat && theme === "light") ? "visible" : "none");
+    map.setLayoutProperty("base-sat",   "visibility", (!nb && sat) ? "visible" : "none");
+    document.documentElement.setAttribute("data-basemap",
+      nightOn ? "night" : sat ? "satellite" : "map");
     map.setPaintProperty("settlements", "circle-color", dipiColorExpr());
     // Imagery is busy: dots need a heavier dark halo to hold their edge.
     // On Voyager's cream land a thin dark outline does the same job; a white
@@ -6860,6 +7830,14 @@ function applyMapTheme() {
       (sat || theme === "dark") ? "#F2F6FA" : "#0E1620");
     map.setPaintProperty("budget-funded", "circle-stroke-opacity",
       theme === "dark" ? 0.75 : 0.62);
+    // Mast halo separates the dot from whatever is behind it, so it follows
+    // the ground rather than the ink: dark over the dark basemap and imagery,
+    // white over Voyager's cream. The violet fill never changes, because the
+    // colour is carrying a meaning and a meaning cannot flip with a theme.
+    map.setPaintProperty("mast-site", "circle-stroke-color",
+      (sat || theme === "dark") ? "#0B1016" : "#FFFFFF");
+    map.setPaintProperty("mast-site", "circle-stroke-opacity", sat ? 0.8 : 0.6);
+    if (mastFocus === null) map.setPaintProperty("mast-link", "line-opacity", mastLinkFade());
     // Towers: swap the whole glyph, because the halo is baked into the image
     // and cannot be recoloured by a paint property.
     const tc = satelliteOn ? "satellite" : theme, t = TOWERCOL[tc];
@@ -6869,7 +7847,10 @@ function applyMapTheme() {
     map.setPaintProperty("tower-cluster", "circle-color", t.bub);
     map.setPaintProperty("tower-cluster", "circle-stroke-color", t.bubLine);
     map.setPaintProperty("tower-cluster", "circle-opacity", satelliteOn ? 0.62 : 0.5);
-    const c = satelliteOn ? MAPCOL.satellite : MAPCOL[theme];
+    /* Night outranks both. A night view is a night view: it must look the same
+       whichever theme the app is in, or the light theme renders dark ink
+       boundaries onto a navy ground and the districts disappear. */
+    const c = nightOn ? MAPCOL.night : satelliteOn ? MAPCOL.satellite : MAPCOL[theme];
     map.setPaintProperty("district-fill", "fill-color", c.land);
     map.setPaintProperty("district-fill", "fill-opacity", c.landOp);
     map.setPaintProperty("district-hover", "fill-color", c.land);
@@ -6966,6 +7947,11 @@ map: [
     body:"Villages close enough to share one trench, priced as a group instead of each "
        + "paying for its own cable to town. It ranks fibre builds and says so: only 6 of "
        + "the top 50 by priority are eligible for one." },
+  { at:"#mastGroup", dim:false, face:"talking", title:"Shared masts",
+    body:"One mast serves several villages, so pricing a tower per settlement overstates "
+       + "it. This picks sites from the paths that actually clear Sabah's terrain, which "
+       + "is far fewer than the distance alone suggests: at 10 km only one path in five "
+       + "survives." },
   { at:"#budgetGroup", dim:false, face:"thinking", title:"Budget what-if",
     body:"Type a budget and see how far down the queue it reaches. The unit costs are "
        + "published benchmarks rather than quotes, and you can type your own over them." },
@@ -7219,6 +8205,9 @@ function wireUI() {
   el("cmpToggle").onclick = () =>
     showView(el("compare").dataset.open === "1" ? null : "compare");
 
+  el("cmpSearch").addEventListener("input", renderCmpFind);
+  el("cmpSearch").addEventListener("blur", () =>
+    setTimeout(() => { el("cmpFindList").innerHTML = ""; }, 160));
   el("compare").addEventListener("click", e => {
     const lvl = e.target.closest(".seg-btn[data-level]");
     if (lvl) {
@@ -7231,6 +8220,10 @@ function wireUI() {
     const met = e.target.closest(".chip-btn[data-metric]");
     if (met) { cmp.metric = met.dataset.metric; return renderCompare(); }
     const chip = e.target.closest(".chip-btn[data-area]");
+    if (chip && !chip.disabled && cmp.level === "settlement") {
+      cmp.picked = cmp.picked.filter(id => id !== chip.dataset.area);
+      return renderCompare();
+    }
     if (chip && !chip.disabled) {
       const a = chip.dataset.area;
       cmp.picked = cmp.picked.includes(a)
@@ -7291,6 +8284,7 @@ function wireUI() {
   };
   el("queueBToggle").onchange = applyFilters;
   el("floodToggle").onchange = e => { floodOn = e.target.checked; applyFloodLens(); };
+  el("nightToggle").onchange = e => { nightOn = e.target.checked; applyNightMode(); };
 
   el("facToggle").onchange = e => setFacilitiesVisible(e.target.checked);
 
@@ -7451,19 +8445,23 @@ function wireUI() {
   let ownDebounce = null;
   el("budgetGroup").querySelectorAll(".own-cost").forEach(i => i.oninput = () => {
     el("ownReset").hidden = !usingOwnCosts();
-    el("seqFibre").value = el("ownFibre").value;   // one rate, two boxes
+    el("seqFibre").value = el("ownFibre").value;   // one fibre rate, two boxes
+    el("mastSite").value = el("ownFwa").value;     // one site rate, two boxes
     clearTimeout(ownDebounce);
     ownDebounce = setTimeout(() => {
       renderBudget();
       if (el("seqGroup").open) renderSequence();
+      if (el("mastGroup").open) renderMasts();
     }, 220);
   });
   el("ownReset").onclick = () => {
     el("budgetGroup").querySelectorAll(".own-cost").forEach(i => i.value = "");
     el("seqFibre").value = "";
+    el("mastSite").value = "";
     el("ownReset").hidden = true;
     renderBudget();
     if (el("seqGroup").open) renderSequence();
+    if (el("mastGroup").open) renderMasts();
   };
   /* Closing the group clears only what the group put there. A settlement the
      planner picked off the map is theirs and survives. */
@@ -7520,6 +8518,35 @@ function wireUI() {
         o.setAttribute("aria-pressed", String(o === b));
       renderSequence();
     };
+
+  /* One site rate, two boxes. ownCosts() reads #ownFwa, so the mirror has to
+     land before anything reprices or this panel would quote the planner while
+     the budget quoted the benchmark. */
+  el("mastSite").oninput = () => {
+    el("ownReset").hidden = !el("mastSite").value && !usingOwnCosts();
+    syncBudget("mastSite", "ownFwa", () => {
+      renderMasts();
+      if (el("budgetGroup").open) renderBudget();
+      if (el("seqGroup").open) renderSequence();
+    });
+  };
+
+  for (const b of el("mastRadius").querySelectorAll(".seg-btn"))
+    b.onclick = () => {
+      mastRadius = +b.dataset.r;
+      for (const o of el("mastRadius").querySelectorAll(".seg-btn"))
+        o.setAttribute("aria-pressed", String(o === b));
+      renderMasts();
+    };
+
+  el("mastToggle").onchange = e => {
+    mastsOn = e.target.checked;
+    el("mastRow").dataset.on = mastsOn ? "1" : "0";
+    if (mastsOn) setMastsOnMap();
+    for (const id of ["mast-link", "mast-site"])
+      map.setLayoutProperty(id, "visibility", mastsOn ? "visible" : "none");
+    renderLegend();
+  };
 
   /* The logo is the way home. Close whatever is covering the map, drop every
      transient highlight, and fly back to the opening view. It does NOT reset

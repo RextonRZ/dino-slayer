@@ -591,11 +591,35 @@ check("RULES_VERIFIED is false while any cut-off is unsourced",
 check("the dead ends are recorded too, with a reason each",
       _S["searched_and_not_found"] and
       all(x.get("where") and x.get("outcome") for x in _S["searched_and_not_found"]))
-# fibre_max_km is the last one nothing fixes. If that ever changes, this fails
-# and RULES_VERIFIED becomes a live question rather than a permanent false.
-check("only fibre_max_km is still ours",
-      [k for k, v in _P.items() if v["status"] == "unsourced"] == ["fibre_max_km"],
-      [k for k, v in _P.items() if v["status"] == "unsourced"])
+# fibre_max_km is the last one nothing fixes ON THE PAGE. If that ever changes,
+# this fails and RULES_VERIFIED becomes a live question rather than a permanent
+# false. The registry also carries the offline terrain screen's assumptions,
+# which have their own unsourced entries and are checked separately below: they
+# decide no recommendation and no price the dashboard shows.
+_live = {k: v for k, v in _P.items() if v.get("in_dashboard") is not False}
+check("only fibre_max_km is still ours, among what the page uses",
+      [k for k, v in _live.items() if v["status"] == "unsourced"] == ["fibre_max_km"],
+      [k for k, v in _live.items() if v["status"] == "unsourced"])
+# Anything held back from the page has to say what does use it, or it is just
+# an unsourced number hiding from the tooltip that would otherwise print it.
+_offline = {k: v for k, v in _P.items() if v.get("in_dashboard") is False}
+check("every offline parameter names what uses it",
+      all(v.get("used_by") for v in _offline.values()),
+      [k for k, v in _offline.items() if not v.get("used_by")])
+# The screen's admitted guesses. Sourcing one is real progress, so this fails
+# loudly rather than letting the set quietly drift in either direction.
+# los_band_mhz left this set once 700 MHz was confirmed as Malaysia's assigned
+# sub-1 GHz band; the residual there is bounded by the los row instead.
+check("the offline analyses' guesses are still declared as guesses",
+      {k for k, v in _offline.items() if v["status"] == "unsourced"}
+      == {"receiver_height_m", "mast_reach_km", "ntl_lit_threshold"},
+      sorted(k for k, v in _offline.items() if v["status"] == "unsourced"))
+# Nightlights are electrification, never coverage. If ntl ever reaches the page
+# it must not arrive as a service statement, so the guard is written now rather
+# than after someone wires it to a map layer.
+check("the nightlight threshold is kept out of the product until it is wired deliberately",
+      _P["ntl_lit_threshold"].get("in_dashboard") is False
+      and "never a coverage statement" in _P["ntl_lit_threshold"]["note"])
 
 print()
 print("=== 20. the copilot answers about bundles with the panel's own numbers ===")
