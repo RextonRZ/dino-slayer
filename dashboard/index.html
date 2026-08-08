@@ -347,6 +347,14 @@ select.field{appearance:none;cursor:pointer;
 .fac-label-note:empty{display:none}
 
 /* §D1 honesty caption, sits directly under the legend, always visible. */
+/* Divider inside the survey list. The two groups answer different questions,
+   so the eye must not read straight down the numbers: 0.92 and 74.8 are not
+   on the same scale and never should be compared. */
+.sv-group{display:flex;justify-content:space-between;align-items:baseline;gap:8px;
+  margin:11px 0 4px;padding:0 2px;font-size:9.5px;font-weight:700;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--ink-muted)}
+.sv-group span{letter-spacing:0;font-variant-numeric:tabular-nums;opacity:.75}
+.sv-group:first-child{margin-top:2px}
 .map-note{position:absolute;left:12px;bottom:0;z-index:5;margin:0;padding:0 2px 8px;
   white-space:nowrap;font-size:11.5px;line-height:1.4;color:var(--ink-muted);
   text-shadow:0 0 4px var(--bg),0 0 8px var(--bg)}
@@ -2620,6 +2628,11 @@ const FX = new URLSearchParams(location.search).has("fixture") ? "_fixture_" : "
   /* Nightlight power flag, 9 KB. Optional: without it the option panel simply
      omits one qualifying line. It is a Set of ids and nothing else, because the
      trend classes deliberately do not ship. See dataset/export_power.py. */
+  /* Survey targeting, 20 KB. Optional: without it the queue falls back to
+     ranking on stakes alone, which is what it did before the model shipped. */
+  fetch(`../dataset/web/${FX}survey.json`).then(r => r.ok ? r.json() : null)
+    .then(j => { if (j) { SURVEY = j.rows || {}; renderSurvey(); } }).catch(() => {});
+
   fetch(`../dataset/web/${FX}power.json`).then(r => r.ok ? r.json() : null)
     .then(j => {
       if (!j) return;
@@ -4730,59 +4743,112 @@ function renderModelCard() {
    Where to send a field team next. Ranked by the stakes already in the file;
    multiplied by prediction uncertainty once the model ships, because a wide
    interval means the model itself is admitting it does not know.            */
+/* Survey targeting, keyed by settlement_id. Empty until survey.json lands,
+   and empty forever if it never does, which drops the panel to stakes only. */
+let SURVEY = {};
+
+/* TWO REASONS TO SEND A TEAM, AND THEY ARE NOT THE SAME NUMBER.
+
+   This panel used to rank on `stakes x (pred_hi - pred_lo)`, the WIDTH of the
+   model's interval. That asks the wrong question. A wide interval on a place
+   the model puts confidently at 90 Mbps is not worth a trip: whichever way the
+   measurement lands it lands well clear of the service line, and nothing about
+   the decision changes.
+
+   The right question is DECISIVENESS: is the estimate close enough to the
+   threshold, against the model's own disagreement, that a measurement could
+   fall on either side? The two rankings disagree almost completely, Spearman
+   -0.224 with no overlap in their top ten, because interval width rewards the
+   places furthest from the line.
+
+   That splits the queue three ways, and the order matters more than any
+   formula in it:
+
+     settles    14   the interval crosses the line, so a measurement decides
+     unknown   223   no usable estimate, so nothing is known either way
+     confident  97   an estimate that sits clear of the line. A trip here
+                     confirms what is already believed, which is the least
+                     useful thing a field team can do
+
+   `confident` sits LAST, below the places nothing is known about. It has a
+   number and they do not, and it would be easy to let that put it on top;
+   that would be exactly backwards.
+
+   The three are ranked apart and never multiplied. Blending them would make
+   "nobody looked here" and "we looked and it is borderline" into one number,
+   which is the same error as folding evidence confidence into DIPI. */
+const SV_GROUPS = ["settles", "unknown", "confident"];
+const SV_LABEL = { settles: "Would settle a decision", unknown: "Nothing known yet",
+                   confident: "Estimate already sits clear of the line" };
 function surveyRanked() {
   const rows = QUEUE_B.filter(currentFilter()).map(f => {
     const p = f.properties;
-    const stakes = p.stakes_score;
+    const sv = SURVEY[p.settlement_id] || null;
     const band = (hasModel() && p.pred_hi !== null && p.pred_hi !== undefined
                   && p.pred_lo !== null && p.pred_lo !== undefined)
       ? Math.max(0, p.pred_hi - p.pred_lo) : null;
-    return { f, p, stakes, band, score: stakes === null ? -1 : stakes * (band === null ? 1 : band) };
-  }).filter(r => r.stakes !== null);
-  rows.sort((a, b) => b.score - a.score);
-  /* The printed figure is the score that was sorted on, not a rescale of it.
-     An earlier version scaled the column so the top read 100, which descended
-     correctly but invented a number: 100 was the top of a list, not anything
-     measured. The product has no natural unit, so the row says what its two
-     factors were and the caption says how they were combined.
-
-     Before the model shipped the band was null, the score WAS stakes, and
-     printing stakes happened to be right; once uncertainty entered the sort the
-     column stopped matching its own order and nothing caught it. */
+    return { f, p, sv, band, stakes: p.stakes_score,
+             basis: !sv ? "unknown" : sv.s ? "settles" : "confident" };
+  }).filter(r => r.stakes !== null || r.sv);
+  /* Within a group the sort is that group's own number, and the numbers never
+     meet across groups: one is 0 to 1 from the model, the other is stakes out
+     of 100. Sorting the whole list on one column would be meaningless. */
+  const rank = r => SV_GROUPS.indexOf(r.basis);
+  rows.sort((a, b) => rank(a) - rank(b) ||
+    (a.basis === "unknown" ? (b.stakes ?? -1) - (a.stakes ?? -1) : b.sv.p - a.sv.p));
   return rows;
 }
 
 function renderSurvey() {
-  const rows = surveyRanked().slice(0, 10);
-  const usingBand = hasModel() && rows.some(r => r.band !== null);
-  el("surveyNote").innerHTML = (usingBand
-    ? `<b>Stakes</b> out of 100, and how wide the model's range is in <b>Mbps</b>.
-         Ranked on the two multiplied.`
+  const all = surveyRanked();
+  const n = g => all.filter(r => r.basis === g).length;
+  /* Six and four rather than the top ten. There are 14 straddlers, so a plain
+     top ten was all of one group and the reader never saw that a second reason
+     to travel existed. */
+  const rows = [...all.filter(r => r.basis === "settles").slice(0, 6),
+                ...all.filter(r => r.basis === "unknown").slice(0, 4)];
+  const nDec = n("settles");
+  const hasSurvey = Object.keys(SURVEY).length > 0;
+  el("surveyNote").innerHTML = (hasSurvey
+    ? `<b>${int(nDec)}</b> where a measurement decides the answer, then the ones
+       <b>nothing is known</b> about. Ranked apart, never combined.`
     : `Ranked by <b>stakes</b>, not by score.`)
-    + info(usingBand
-      ? "Stakes is what would be at risk if a settlement turns out to be badly served: "
-      + "population within 2 km, schools and clinics within 3 km, and relative wealth. It is "
-      + "multiplied by how wide the model's predicted range is in Mbps, so the places it "
-      + "is least sure about rise to the top. The figure shown is that product, which has "
-      + "no unit of its own: read it against the other rows, not on its own. A survey "
-      + "priority, never a needs score."
+    + info(hasSurvey
+      ? "Different reasons to send a team, so separate rankings rather than one blended "
+      + "number. WOULD SETTLE A DECISION: " + nDec + " settlements whose predicted range "
+      + "crosses the 21 Mbps line, so the measurement decides which side they fall. "
+      + "NOTHING KNOWN: " + int(n("unknown")) + " with no usable estimate at all, ranked by "
+      + "stakes, what would be at risk if they turn out badly served. Below both sit the "
+      + int(n("confident")) + " whose estimate is already clear of the line, because "
+      + "confirming what you believe is the least useful trip. An earlier version ranked on "
+      + "stakes times the WIDTH of the interval, which pushed up the settlements the model "
+      + "was most confident were far from the line. All of these are survey priorities, "
+      + "never needs scores."
       : "These are the settlements with too little measurement to score. Stakes ranks them by "
       + "what would be at risk if they turn out to be badly served: population within 2 km, "
       + "schools and clinics within 3 km, and relative wealth. A survey priority, never a "
-      + "needs score. Once the coverage model ships, prediction uncertainty joins the ranking.");
-  el("surveyList").innerHTML = rows.length ? rows.map((r, i) => `
+      + "needs score.");
+  let group = null;
+  el("surveyList").innerHTML = rows.length ? rows.map((r, i) => {
+    let head = "";
+    if (hasSurvey && r.basis !== group) {
+      group = r.basis;
+      head = `<p class="sv-group">${SV_LABEL[group]}<span>${int(n(group))}</span></p>`;
+    }
+    const dec = r.basis !== "unknown";
+    return head + `
     <button class="top-row" data-id="${r.p.settlement_id}" data-top="${i + 1}"
             aria-current="${r.p.settlement_id === selectedId}">
       <span class="rk">${i + 1}</span>
       <span class="nm"><b>${esc(nameOf(r.p))}</b><small>${esc(districtLabel(r.p._district))}</small></span>
       <span class="dv sv-two" style="color:var(--neutral)"
-            title="${r.band !== null
-              ? `Stakes ${num(r.stakes)} of 100, and the model puts this settlement anywhere `
-                + `across a ${num(r.band)} Mbps range. Ranked on the two multiplied.`
-              : `Stakes ${num(r.stakes)} of 100. No model range for this one.`}">
-        <b>${num(r.stakes)}</b>${r.band !== null
-          ? `<i>&plusmn;${int(Math.round(r.band))}</i>` : ""}</span>
-    </button>`).join("")
+            title="${dec
+              ? esc(r.sv.why || "A measurement here could land on either side of the line.")
+              : `Stakes ${num(r.stakes)} of 100. No usable estimate, so nothing is known here.`}">
+        ${dec ? `<b>${nf(r.sv.p, 2)}</b>${r.sv.s ? `<i>crosses</i>` : ""}`
+              : `<b>${num(r.stakes)}</b><i>stakes</i>`}</span>
+    </button>`;
+  }).join("")
     : `<p class="caption">No evidence-gap settlements in this filter.</p>`;
   el("surveyList").querySelectorAll(".top-row").forEach(b => b.onclick = () => {
     surveyPick = b.dataset.id;         // so closing the group can undo it

@@ -236,11 +236,13 @@ Two things are not optional, and both are recorded in [ml/model_ablations.json](
   connectivity. A model trained to predict DIPI from its own components learns the weights
   and reports a fit that means nothing.
 
-**One divergence to know about.** `ml/measurement_priority_v1.csv` carries the offline
-survey formula, which gates on whether a measurement could cross the service threshold. The
-dashboard's live panel uses a simpler product of stakes and prediction spread, and does not
-read those columns. The two rank differently. Use the file for the method and the panel for
-what currently ships, and do not quote them as the same thing.
+**How the survey queue is ranked.** `ml/measurement_priority_v1.csv` gates on whether a
+measurement could cross the 21 Mbps line, and `web/survey.json` publishes it to the
+dashboard. It covers 111 of the 334, because decisiveness needs both an estimate and a
+population to serve, so the panel ranks three groups apart rather than blending them: the 14
+whose interval crosses the line, then the 223 nothing is known about by stakes, then the 97
+whose estimate already sits clear of it. The last group is last on purpose. Confirming what
+you already believe is the least useful trip a field team can make.
 
 ---
 

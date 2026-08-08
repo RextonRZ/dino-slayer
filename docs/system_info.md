@@ -707,14 +707,24 @@ sufficed", and DIPI being plain arithmetic is a control under it.
 
 ## 9. Limitations and known gaps
 
-### 9.1 Known internal divergence
+### 9.1 Resolved: the survey planner now ships one method
 
-**The survey planner ships two formulas.** `measurement_priority_v1.csv` carries the notebook's
-v4 columns (`straddles`, `decisiveness`, `measurement_priority`). The dashboard's live panel
-computes `stakes_score x (pred_hi - pred_lo)` instead and **never reads those columns**. The two
-rankings are Spearman **-0.224** and share **0 of their top 10**. The notebook's formula is the
-better one, because asking "would measuring this flip a decision" beats raw interval width.
-**This must be resolved before either ranking is quoted.**
+The dashboard used to rank on `stakes_score x (pred_hi - pred_lo)`, the width of the model's
+interval, while `measurement_priority_v1.csv` carried the notebook's decisiveness formula.
+The two were Spearman **-0.224** with no overlap in their top ten.
+
+The notebook's question is the right one, so it ships. But it can only speak for 111 of the
+334, because decisiveness needs an estimate and a population, so it does not simply replace
+the queue. The panel now ranks three groups apart and never multiplies them:
+
+| Group | n | Ranked by |
+|---|---|---|
+| Would settle a decision | 14 | `measurement_priority` |
+| Nothing known yet | 223 | `stakes_score` |
+| Estimate already clear of the line | 97 | `measurement_priority` |
+
+The third sits below the second deliberately. It has a number and the unknowns do not, and
+letting that put it on top would be backwards.
 
 ### 9.2 Model limitations
 
