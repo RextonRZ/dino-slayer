@@ -1,0 +1,30 @@
+{
+  "target": "dl_mbps",
+  "n_train": 850,
+  "n_predicted": 216,
+  "cv_mae_random": 25.31,
+  "cv_r2_random": 0.557,
+  "cv_mae_spatial": 34.06,
+  "cv_r2_spatial": 0.33,
+  "baseline_mae": 43.1,
+  "beats_baseline": true,
+  "uncertainty_method": "fold-ensemble disagreement (std across 5 GroupKFold models); NOT a calibrated interval",
+  "feature_importance": {
+    "pop_2km": 0.2677,
+    "rwi": 0.2224,
+    "backhaul_km": 0.2069,
+    "seasonal_water_px": 0.0684,
+    "n_schools_3km": 0.0683,
+    "place": 0.039,
+    "n_clinics_3km": 0.0238,
+    "flood_prone": 0.0113,
+    "rwi_missing": 0.0
+  },
+  "model_version": "A_v1",
+  "run_date": "2026-08-07",
+  "data_version": {
+    "ookla": "2025Q1-Q4",
+    "table": "training_table.csv",
+    "table_sha256": "fd0d29125cc21286e11a1ea74cdc167bc961fc8f15e147634618fb75a0d01845"
+  }
+}
