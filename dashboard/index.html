@@ -613,6 +613,47 @@ select.field{appearance:none;cursor:pointer;
 .g-cap{margin-top:8px}
 
 /* Validation panel, ?debug=1 only. */
+/* ── First run guide ───────────────────────────────────────────────
+   A spotlight walk through the sidebar. Sits above the chat panel (60),
+   so nothing it points at can be covered by something it did not open. */
+.guide{position:fixed;inset:0;z-index:70;pointer-events:none}
+.guide[hidden]{display:none}
+/* Catches the click that dismisses, and stops the page being used behind. */
+.guide-shield{position:fixed;inset:0;width:100%;height:100%;padding:0;border:0;
+  background:transparent;cursor:default;pointer-events:auto}
+/* The dim is one enormous spread on the cut-out itself. Four positioned
+   panels would need keeping in sync with the hole on every resize. */
+.guide-hole{position:fixed;border:1.5px solid var(--accent);border-radius:10px;
+  box-shadow:0 0 0 100vmax rgba(4,7,11,.74), 0 0 0 5px var(--accent-bg);
+  transition:top .32s var(--ease),left .32s var(--ease),
+             width .32s var(--ease),height .32s var(--ease)}
+[data-theme="light"] .guide-hole{box-shadow:0 0 0 100vmax rgba(15,25,40,.5), 0 0 0 5px var(--accent-bg)}
+.guide-card{position:fixed;width:21rem;max-width:calc(100vw - 24px);pointer-events:auto;
+  background:var(--surface);border:1px solid var(--hairline-strong);
+  border-radius:var(--radius);box-shadow:var(--shadow);padding:13px 15px 12px;
+  transition:top .32s var(--ease),left .32s var(--ease)}
+.guide-head{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+/* Overhangs the padding so it reads as standing beside the card, not boxed in. */
+.guide-face{width:58px;height:58px;object-fit:contain;flex:none;margin:-6px 0 -6px -8px}
+[data-theme="light"] .guide-face{filter:drop-shadow(0 2px 6px rgba(15,25,40,.18))}
+.guide-card h3{margin:1px 0 0;font-size:14.5px;line-height:1.25;color:var(--ink-strong)}
+.guide-card p{margin:0;font-size:12.5px;line-height:1.55;color:var(--ink)}
+.guide-dots{display:flex;gap:3px;margin:11px 0 10px}
+.guide-dots i{height:2px;flex:1;border-radius:1px;background:var(--track)}
+.guide-dots i.done{background:var(--ink-muted)}
+.guide-dots i.now{background:var(--accent)}
+.guide-foot{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.guide-foot>div{display:flex;gap:6px}
+.guide-skip{background:none;border:0;padding:2px 0;cursor:pointer;
+  font:inherit;font-size:11.5px;color:var(--ink-muted);text-decoration:underline}
+.guide-skip:hover{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){.guide-hole,.guide-card{transition:none}}
+@media (max-width:620px){
+  .guide-card{width:calc(100vw - 24px)}
+  .guide-foot{flex-direction:column;align-items:stretch}
+  .guide-foot>div{display:grid;grid-template-columns:1fr 1fr}
+}
+
 .debug{position:absolute;top:12px;right:12px;z-index:20;width:27rem;max-height:calc(100% - 24px);
   overflow-y:auto;background:var(--material-bg);backdrop-filter:blur(10px);
   border:1px solid var(--hairline);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
@@ -1375,6 +1416,12 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
           <path d="M14 9.5a2 2 0 01-2 2H6l-3.5 2.5V4a2 2 0 012-2h7.5a2 2 0 012 2z"/></svg>
         Ask Dino
       </button>
+      <button class="icon-btn" id="guideBtn" aria-label="Show me around" title="Show me around">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+             stroke-width="1.6" stroke-linecap="round">
+          <circle cx="8" cy="8" r="6.4"/><path d="M6.2 6.1a1.85 1.85 0 113.1 1.4c-.6.5-1.3.8-1.3 1.7"/>
+          <path d="M8 11.6v.05"/></svg>
+      </button>
       <button class="icon-btn" id="themeToggle" aria-label="Switch to light theme" title="Switch theme"></button>
     </div>
   </header>
@@ -1382,7 +1429,7 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
   <div class="body" id="body" data-rail="open">
     <!-- ── Sidebar ─────────────────────────────────────────────────────── -->
     <aside class="sidebar" id="sidebar">
-      <div class="group">
+      <div class="group" id="findGroup">
         <span class="micro">Find</span>
         <div class="search-wrap">
           <input class="field" id="search" type="search" autocomplete="off" placeholder="Search settlement or ID…" aria-label="Search settlement">
@@ -1546,7 +1593,7 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
         </div>
       </div>
 
-      <details class="group wgroup">
+      <details class="group wgroup" id="weightGroup">
         <summary class="micro wsum">Explore weightings</summary>
         <div id="weightBox"></div>
         <button class="ghost-btn" id="wReset" style="width:100%;margin-top:4px;justify-content:center">
@@ -1865,6 +1912,32 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
 
 <!-- Column explainer. Outside .app so the table's overflow cannot clip it. -->
 <div class="th-tip" id="thTip" role="tooltip" data-show="0"></div>
+
+<!-- First run guide. Outside .app for the same reason: the cut-out is
+     positioned against the viewport, not against any scrolling parent. -->
+<div class="guide" id="guide" hidden role="dialog" aria-modal="true" aria-labelledby="guideTitle">
+  <button class="guide-shield" id="guideShield" aria-label="Close the guide"></button>
+  <div class="guide-hole" id="guideHole" hidden></div>
+  <article class="guide-card" id="guideCard">
+    <div class="guide-head">
+      <img class="guide-face" id="guideFace" src="" alt="" aria-hidden="true"
+           width="58" height="58">
+      <div>
+        <span class="micro" id="guideStep"></span>
+        <h3 id="guideTitle"></h3>
+      </div>
+    </div>
+    <p id="guideBody"></p>
+    <div class="guide-dots" id="guideDots" aria-hidden="true"></div>
+    <div class="guide-foot">
+      <button class="guide-skip" id="guideSkip" type="button">Skip</button>
+      <div>
+        <button class="ghost-btn" id="guidePrev" type="button">Back</button>
+        <button class="ghost-btn" id="guideNext" type="button">Next</button>
+      </div>
+    </div>
+  </article>
+</div>
 
 <script src="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.js"></script>
 <script>
@@ -2223,6 +2296,7 @@ const FX = new URLSearchParams(location.search).has("fixture") ? "_fixture_" : "
   renderTopList();
   renderRankings();
   wireUI();
+  maybeOpenGuide();
 })();
 
 /* ══ Map ═════════════════════════════════════════════════════════════════ */
@@ -6814,8 +6888,188 @@ function showView(which) {
   if (which === "compare") { renderCompare(); if (agentOnline === null) probeAgent(); }
 }
 
+/* ══ First run guide ═════════════════════════════════════════════════════
+   A first visit opens on a map of 1,448 dots and five collapsed panels, and
+   nothing on screen says which one answers which question. This walks the
+   sidebar once, in the order the work is actually done: read the map, pick a
+   settlement, then the three panels that spend money.
+
+   Steps name an element rather than a screen position, so moving a panel in
+   the markup cannot leave the spotlight pointing at empty space. A step whose
+   element is missing is skipped rather than shown against nothing.       */
+const GUIDE_KEY = "dino.guide.v1";
+const GUIDE = [
+  { face:"happy1", title:"1,448 villages, one ranked list",
+    body:"Every mapped settlement in Sabah, scored on how badly it needs a connectivity "
+       + "intervention. Two minutes and you will know what to press." },
+  { at:"#legend", face:"pointing1", title:"Read the map first",
+    body:"Every dot is a settlement and the deeper the red, the sooner it needs attention. "
+       + "Hollow rings have too little measurement to score, so an evidence gap looks like "
+       + "a gap and never like good news." },
+  { at:"#map", face:"pointing2", title:"Click any settlement",
+    body:"The full case for its score: four pillars, the raw numbers behind each one, and "
+       + "how much measurement is standing behind them." },
+  { at:"#findGroup", face:"thinking1", title:"Or go straight to one",
+    body:"Search by name or ID, or narrow the whole page to a division and district." },
+  { at:"#topList", face:"pointing3", title:"The current top of the list",
+    body:"It follows your filters and your weightings, so it answers where to look first "
+       + "given what you have selected." },
+  { at:"#surveyGroup", face:"thinking2", title:"Where to measure next",
+    body:"334 settlements have too little data to score at all. This ranks them by what is "
+       + "at stake and by how wide the model's range is, so a survey goes where a lot is "
+       + "riding on an answer nobody has." },
+  { at:"#seqGroup", face:"talking1", title:"Deployment bundles",
+    body:"Villages close enough to share one trench, priced as a group instead of each "
+       + "paying for its own cable to town. It ranks fibre builds and says so: only 6 of "
+       + "the top 50 by priority are eligible for one." },
+  { at:"#budgetGroup", face:"thinking3", title:"Budget what-if",
+    body:"Type a budget and see how far down the queue it reaches. The unit costs are "
+       + "published benchmarks rather than quotes, and you can type your own over them." },
+  { at:"#weightGroup", face:"confused1", title:"Argue with the weighting",
+    body:"The four pillar weights are ours, not a law of nature. Move them and every score, "
+       + "rank and colour recomputes. The panel and the CSV both stamp which weighting "
+       + "produced them." },
+  { at:".topbar-actions", face:"happy2", title:"Three more ways in",
+    body:"Rankings for the full sortable table, Compare for districts side by side, and Ask "
+       + "Dino to ask a question in plain English and watch the map follow the answer. "
+       + "This guide is the ? button whenever you want it again." },
+];
+
+let gStep = 0;
+let gOpened = [];        // panels this guide opened, closed again on the way out
+let gRail = false;       // true when the guide had to expand a collapsed sidebar
+
+function guideAt(i) {
+  const sel = GUIDE[i] && GUIDE[i].at;
+  return sel ? document.querySelector(sel) : null;
+}
+/* Steps whose element never rendered are dropped up front, so Back and Next
+   never land on a blank card and the progress dots stay truthful. */
+function guideLive() {
+  return GUIDE.map((s, i) => i).filter(i => !GUIDE[i].at || guideAt(i));
+}
+
+function guideOpen() {
+  // Six of the ten steps live in the sidebar, so a collapsed rail would leave
+  // the spotlight on nothing. Expanded here and put back on the way out.
+  const body = el("body");
+  if (body.dataset.rail === "collapsed") { body.dataset.rail = "open"; gRail = true; }
+  const live = guideLive();
+  if (!live.length) return;
+  gStep = live[0];
+  el("guide").hidden = false;
+  guideShow();
+  el("guideNext").focus();
+}
+
+function guideClose() {
+  el("guide").hidden = true;
+  for (const d of gOpened) d.open = false;
+  gOpened = [];
+  if (gRail) { el("body").dataset.rail = "collapsed"; gRail = false; }
+  try { localStorage.setItem(GUIDE_KEY, "1"); } catch (e) {}
+  const b = el("guideBtn");
+  if (b) b.focus();
+}
+
+function guideShow() {
+  const live = guideLive(), pos = live.indexOf(gStep), s = GUIDE[gStep];
+  el("guideFace").src = MASCOT_DIR + s.face + ".png";
+  el("guideStep").textContent = `Step ${pos + 1} of ${live.length}`;
+  el("guideTitle").textContent = s.title;
+  el("guideBody").textContent = s.body;
+  el("guideDots").innerHTML = live
+    .map((_, i) => `<i class="${i === pos ? "now" : i < pos ? "done" : ""}"></i>`).join("");
+  el("guidePrev").disabled = pos === 0;
+  el("guideNext").textContent = pos === live.length - 1 ? "Done" : "Next";
+
+  const node = guideAt(gStep);
+  if (!node) { guidePlace(null); return; }
+  // A collapsed panel cannot be pointed at. Opened here and closed on exit,
+  // so the sidebar is left the way it was found.
+  const d = node.closest("details");
+  if (d && !d.open) { d.open = true; gOpened.push(d); }
+  node.scrollIntoView({ block:"nearest", behavior:REDUCED ? "auto" : "smooth" });
+  // After the scroll, or the rectangle describes where the element used to be.
+  setTimeout(() => { if (!el("guide").hidden) guidePlace(node.getBoundingClientRect()); }, 220);
+}
+
+/* Cut the hole, then put the card on whichever side has room for it. */
+function guidePlace(r) {
+  const hole = el("guideHole"), card = el("guideCard"), pad = 14;
+  const vw = innerWidth, vh = innerHeight;
+  if (!r) {
+    hole.hidden = true;
+    card.style.top = Math.max(pad, (vh - card.offsetHeight) / 2) + "px";
+    card.style.left = Math.max(pad, (vw - card.offsetWidth) / 2) + "px";
+    return;
+  }
+  hole.hidden = false;
+  hole.style.top = (r.top - 4) + "px";
+  hole.style.left = (r.left - 4) + "px";
+  hole.style.width = (r.width + 8) + "px";
+  hole.style.height = (r.height + 8) + "px";
+
+  const cw = card.offsetWidth, ch = card.offsetHeight;
+  let top, left;
+  if (r.right + pad + cw < vw)      { left = r.right + pad;  top = r.top; }
+  else if (r.left - pad - cw > 0)   { left = r.left - pad - cw; top = r.top; }
+  else if (r.bottom + pad + ch < vh){ left = r.left;         top = r.bottom + pad; }
+  else if (r.top - pad - ch > 0)    { left = r.left;         top = r.top - pad - ch; }
+  // The map fills the stage, so no side has room. Sit inside its lower left
+  // instead of being clamped over the middle of what we are pointing at.
+  else                              { left = r.left + pad * 2;
+                                      top = r.bottom - ch - pad * 2; }
+  card.style.top = Math.max(pad, Math.min(top, vh - ch - pad)) + "px";
+  card.style.left = Math.max(pad, Math.min(left, vw - cw - pad)) + "px";
+}
+
+function guideMove(dir) {
+  const live = guideLive(), pos = live.indexOf(gStep);
+  if (pos + dir >= live.length) { guideClose(); return; }
+  if (pos + dir < 0) return;
+  gStep = live[pos + dir];
+  guideShow();
+}
+
+function wireGuide() {
+  el("guideBtn").onclick = guideOpen;
+  el("guideSkip").onclick = guideClose;
+  el("guideShield").onclick = guideClose;
+  el("guidePrev").onclick = () => guideMove(-1);
+  el("guideNext").onclick = () => guideMove(1);
+  addEventListener("keydown", e => {
+    if (el("guide").hidden) return;
+    if (e.key === "Escape")     { e.preventDefault(); guideClose(); }
+    if (e.key === "ArrowRight") { e.preventDefault(); guideMove(1); }
+    if (e.key === "ArrowLeft")  { e.preventDefault(); guideMove(-1); }
+  });
+  // The spotlight is drawn in viewport coordinates, so anything that moves the
+  // page underneath it has to redraw it.
+  let t = null;
+  const redraw = () => {
+    if (el("guide").hidden) return;
+    clearTimeout(t);
+    t = setTimeout(() => {
+      const node = guideAt(gStep);
+      guidePlace(node ? node.getBoundingClientRect() : null);
+    }, 120);
+  };
+  addEventListener("resize", redraw);
+  addEventListener("scroll", redraw, true);
+}
+
+/* First visit only. A blocked or full localStorage means the guide opens
+   again next time, which is a smaller failure than never opening at all. */
+function maybeOpenGuide() {
+  let seen = false;
+  try { seen = localStorage.getItem(GUIDE_KEY) === "1"; } catch (e) {}
+  if (!seen) setTimeout(guideOpen, 900);   // after the reveal sweep settles
+}
+
 /* ══ Wiring ══════════════════════════════════════════════════════════════ */
 function wireUI() {
+  wireGuide();
   el("themeToggle").innerHTML = SUN;
   el("themeToggle").onclick = () => setTheme(theme === "dark" ? "light" : "dark");
 
