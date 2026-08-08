@@ -6853,6 +6853,13 @@ function applyMapTheme() {
     map.setPaintProperty("queueb", "circle-stroke-color", theme === "dark" ? "#8B96A6" : "#6B7787");
     map.setPaintProperty("low-evidence", "circle-stroke-color", theme === "dark" ? "#E3B341" : "#9A6B00");
     map.setPaintProperty("selected", "circle-stroke-color", theme === "dark" ? "#3FC7E8" : "#0B7E9E");
+    // Funded is drawn in ink, and ink flips with the theme. This ring was
+    // hardcoded to the dark ink, so on light it was near-white on pale land.
+    // Imagery keeps the light ring, which is the one that shows there.
+    map.setPaintProperty("budget-funded", "circle-stroke-color",
+      (sat || theme === "dark") ? "#F2F6FA" : "#0E1620");
+    map.setPaintProperty("budget-funded", "circle-stroke-opacity",
+      theme === "dark" ? 0.75 : 0.62);
     // Towers: swap the whole glyph, because the halo is baked into the image
     // and cannot be recoloured by a paint property.
     const tc = satelliteOn ? "satellite" : theme, t = TOWERCOL[tc];
