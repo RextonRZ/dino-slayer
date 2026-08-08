@@ -47,9 +47,14 @@
   color-scheme:dark;
 }
 [data-theme="light"]{
-  --bg:#F7F8FA;
+  /* Page is a cool grey and cards stay white, so a card has somewhere to
+     sit. At #F7F8FA the two were 3% apart and everything read as one sheet. */
+  --bg:#EDF0F4;
   --surface:#FFFFFF;
-  --material-bg:rgba(255,255,255,.90);
+  /* Grey is ground, white is a thing you can act on. White chrome made
+     the fields white on white, so only their border said they existed.
+     Kept translucent, or the blur over the map stops reading. */
+  --material-bg:rgba(241,244,248,.92);
   --hairline:rgba(15,25,40,.12);
   --hairline-strong:rgba(15,25,40,.20);
   --ink-strong:#0E1620;
@@ -1977,7 +1982,9 @@ const RAMP = {
   light: ["#FF8D6A","#E96F49","#CD5630","#AE390C","#832500"]
 };
 // Light theme uses Voyager, not Positron: a map should look like a map,
-// blue sea, warm land, green vegetation, not a grey document.
+// blue sea, warm land, green vegetation, not a grey document. It is muted
+// at the layer rather than swapped, because at full strength the basemap
+// competes with the dots drawn on top of it. See base-light paint below.
 const BASEMAP = {
   dark:  "https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
   light: "https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
@@ -2532,7 +2539,13 @@ function initMap(dipi, districts, divisions, facilities) {
       },
       layers: [
         { id:"base-dark",  type:"raster", source:"base_dark",  layout:{ visibility:"visible" } },
-        { id:"base-light", type:"raster", source:"base_light", layout:{ visibility:"none" } },
+        { id:"base-light", type:"raster", source:"base_light", layout:{ visibility:"none" },
+          /* Muted at the layer, not with a CSS filter on the canvas: the
+             settlement circles are drawn on that same canvas and would be
+             washed out with it. Dark needs none of this, dark_all is
+             already desaturated. */
+          paint:{ "raster-saturation":-0.55, "raster-contrast":-0.12,
+                  "raster-brightness-min":0.06 } },
         { id:"base-sat",   type:"raster", source:"base_sat",   layout:{ visibility:"none" } },
         /* Terrain sits directly on the basemap and under everything else, so it
            reads as ground the data lies on rather than as another score. Kept
@@ -6840,6 +6853,13 @@ function applyMapTheme() {
     map.setPaintProperty("queueb", "circle-stroke-color", theme === "dark" ? "#8B96A6" : "#6B7787");
     map.setPaintProperty("low-evidence", "circle-stroke-color", theme === "dark" ? "#E3B341" : "#9A6B00");
     map.setPaintProperty("selected", "circle-stroke-color", theme === "dark" ? "#3FC7E8" : "#0B7E9E");
+    // Funded is drawn in ink, and ink flips with the theme. This ring was
+    // hardcoded to the dark ink, so on light it was near-white on pale land.
+    // Imagery keeps the light ring, which is the one that shows there.
+    map.setPaintProperty("budget-funded", "circle-stroke-color",
+      (sat || theme === "dark") ? "#F2F6FA" : "#0E1620");
+    map.setPaintProperty("budget-funded", "circle-stroke-opacity",
+      theme === "dark" ? 0.75 : 0.62);
     // Towers: swap the whole glyph, because the halo is baked into the image
     // and cannot be recoloured by a paint property.
     const tc = satelliteOn ? "satellite" : theme, t = TOWERCOL[tc];
