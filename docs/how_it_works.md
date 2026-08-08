@@ -824,10 +824,19 @@ same column as `dipi` and `rank`, because they are not the same kind of number a
 them in one list would imply an ordering between them that does not exist.
 
 **Queue B is a field-visit queue, so it carries what decides whether the trip is worth it**:
-stakes, a modelled speed estimate with its spread, distance to the nearest town, population,
-schools, clinics, nighttime light and water adjacency. The estimate is marked as modelled
-everywhere it appears and is never a measurement; settlements the model could not reach read
-`Not modelled` rather than a zero.
+why the row is where it is, stakes, a modelled speed estimate with its spread, distance to
+the nearest town, population, schools, clinics, nighttime light and water adjacency. The
+estimate is marked as modelled everywhere it appears and is never a measurement; settlements
+the model could not reach read `Not modelled` rather than a zero.
+
+**It is ordered by the same rule as the sidebar panel**, and the `Would settle` column names
+it: `Crosses the line`, then `Nothing known`, then `Clear of the line`. It used to order by
+the stored `gap_rank`, which ranks on stakes alone. That left the same 334 settlements in two
+different orders in two views with nothing on screen to explain the difference, which is the
+same failure as the notebook and the panel disagreeing. One queue, one order.
+
+The `Est. speed` column makes the first group self-evident: read the top rows and every
+range spans 21, 25.7 ±7, 23.0 ±4, 17.1 ±6.
 
 ---
 

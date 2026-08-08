@@ -1998,6 +1998,7 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
               <thead><tr>
                 <th data-tip="Settlement name from OpenStreetMap. 38 have no name and show their ID instead.">Settlement</th>
                 <th data-tip="GADM district, derived at load by point-in-polygon.">District</th>
+                <th data-tip="Why this row is where it is. CROSSES THE LINE: the model's range spans 21 Mbps, so a measurement decides which side it falls and the trip settles something. NOTHING KNOWN: no usable estimate exists, so it is ranked by stakes alone. CLEAR OF THE LINE: the model is already confident which side it falls, so a trip mostly confirms what is believed. The table is ordered in that order, the same one the sidebar uses.">Would settle</th>
                 <th class="r" data-tip="What is at risk IF this settlement turns out to be badly served: population within 2 km, schools and clinics within 3 km, and relative wealth. It is a SURVEY priority, never a DIPI score, and the two are deliberately never shown in the same column.">Stakes</th>
                 <th class="r" data-tip="Modelled download estimate with the spread across the five fold models. Shown for the 216 settlements the model could reach. This is a MODELLED ESTIMATE, not a measurement, and it never enters DIPI. Spatial MAE is 34.1 Mbps, so treat it as a rough expectation of what a team would find, not a number to quote.">Est. speed</th>
                 <th class="r" data-tip="Straight-line distance to the nearest OpenStreetMap town or city. A proxy for how far a field team travels, and there is no road network behind it, so real driving is further.">To town</th>
@@ -4780,22 +4781,33 @@ let SURVEY = {};
 const SV_GROUPS = ["settles", "unknown", "confident"];
 const SV_LABEL = { settles: "Would settle a decision", unknown: "Nothing known yet",
                    confident: "Estimate already sits clear of the line" };
+const SV_SHORT = { settles: "Crosses the line", unknown: "Nothing known",
+                   confident: "Clear of the line" };
+const svBasis = p => {
+  const sv = SURVEY[p.settlement_id];
+  return !sv ? "unknown" : sv.s ? "settles" : "confident";
+};
+/* Within a group the sort is that group's own number, and the numbers never
+   meet across groups: one is 0 to 1 from the model, the other is stakes out
+   of 100. Sorting the whole list on one column would be meaningless. */
+const svCompare = (a, b) => {
+  const ra = SV_GROUPS.indexOf(svBasis(a)), rb = SV_GROUPS.indexOf(svBasis(b));
+  if (ra !== rb) return ra - rb;
+  return SV_GROUPS[ra] === "unknown"
+    ? (b.stakes_score ?? -1) - (a.stakes_score ?? -1)
+    : SURVEY[b.settlement_id].p - SURVEY[a.settlement_id].p;
+};
+
 function surveyRanked() {
   const rows = QUEUE_B.filter(currentFilter()).map(f => {
     const p = f.properties;
-    const sv = SURVEY[p.settlement_id] || null;
     const band = (hasModel() && p.pred_hi !== null && p.pred_hi !== undefined
                   && p.pred_lo !== null && p.pred_lo !== undefined)
       ? Math.max(0, p.pred_hi - p.pred_lo) : null;
-    return { f, p, sv, band, stakes: p.stakes_score,
-             basis: !sv ? "unknown" : sv.s ? "settles" : "confident" };
+    return { f, p, sv: SURVEY[p.settlement_id] || null, band,
+             stakes: p.stakes_score, basis: svBasis(p) };
   }).filter(r => r.stakes !== null || r.sv);
-  /* Within a group the sort is that group's own number, and the numbers never
-     meet across groups: one is 0 to 1 from the model, the other is stakes out
-     of 100. Sorting the whole list on one column would be meaningless. */
-  const rank = r => SV_GROUPS.indexOf(r.basis);
-  rows.sort((a, b) => rank(a) - rank(b) ||
-    (a.basis === "unknown" ? (b.stakes ?? -1) - (a.stakes ?? -1) : b.sv.p - a.sv.p));
+  rows.sort((a, b) => svCompare(a.p, b.p));
   return rows;
 }
 
@@ -7693,7 +7705,13 @@ function pctileOf(all, key, v, worseHigh) {
 function renderRankings() {
   const keep = currentFilter();
   const scored = visibleRows();
-  const qb = QUEUE_B.filter(keep).filter(rkMatch);
+  /* Ordered by the same rule as the sidebar. Two views of one queue must not
+     disagree about where to go first; the stored gap_rank ranks on stakes
+     alone, which is only the right answer for the group that has nothing
+     else. Falls back to gap_rank order when survey.json is absent, because
+     svCompare then puts every row in one group and the sort is stable. */
+  const qb = QUEUE_B.filter(keep).filter(rkMatch)
+    .slice().sort((a, b) => svCompare(a.properties, b.properties));
   const wn = wNorm();
 
   renderRkChips();
@@ -7751,6 +7769,9 @@ function renderRankings() {
     return `<tr data-id="${p.settlement_id}">
       <td class="nm">${esc(nameOf(p))} <span class="sub">${esc(p.place)}</span></td>
       <td>${esc(districtLabel(p._district))}</td>
+      <td>${(() => { const bs = svBasis(p);
+        return `<span class="sub"${bs === "settles" ? ' style="color:var(--accent)"' : ""}>${
+          SV_SHORT[bs]}</span>`; })()}</td>
       <td class="r num">${cell(num(p.stakes_score), "No stakes score")}</td>
       <td class="r num">${p.pred_dl_mbps === null || p.pred_dl_mbps === undefined
         ? `<span class="sub">Not modelled</span>`
@@ -7768,7 +7789,7 @@ function renderRankings() {
         : `<span class="sub">&mdash;</span>`}</td>
       <td><span class="chip neutral"><i class="dot"></i>Insufficient evidence</span></td>
     </tr>`;
-  }).join("") : `<tr><td colspan="11"><div class="empty">No evidence-gap communities in this district.</div></td></tr>`;
+  }).join("") : `<tr><td colspan="12"><div class="empty">No evidence-gap communities in this district.</div></td></tr>`;
 
   const totalScored = SCORED.filter(keep).length;
   el("rkCount").textContent = scored.length === totalScored
