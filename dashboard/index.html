@@ -628,6 +628,11 @@ select.field{appearance:none;cursor:pointer;
   transition:top .32s var(--ease),left .32s var(--ease),
              width .32s var(--ease),height .32s var(--ease)}
 [data-theme="light"] .guide-hole{box-shadow:0 0 0 100vmax rgba(15,25,40,.5), 0 0 0 5px var(--accent-bg)}
+/* Deployment bundles and Budget what-if both draw on the map, so dimming it
+   hides the thing being described. Those steps keep the outline, lose the dim.
+   Written flat rather than nested, like the rest of this sheet. */
+.guide-hole[data-dim="0"],
+[data-theme="light"] .guide-hole[data-dim="0"]{box-shadow:0 0 0 5px var(--accent-bg)}
 .guide-card{position:fixed;width:21rem;max-width:calc(100vw - 24px);pointer-events:auto;
   background:var(--surface);border:1px solid var(--hairline-strong);
   border-radius:var(--radius);box-shadow:var(--shadow);padding:13px 15px 12px;
@@ -6907,7 +6912,17 @@ function showView(which) {
    the markup cannot leave the spotlight pointing at empty space. A step whose
    element is missing is skipped rather than shown against nothing.       */
 const GUIDE_KEY = "dino.guide.v1";
-const GUIDE = [
+
+/* Which of the three screens is showing. Rankings and Compare are full bleed
+   sheets over the map, so the ? button has to walk the one in front. */
+function guideView() {
+  if (el("rankings").dataset.open === "1") return "rankings";
+  if (el("compare").dataset.open === "1") return "compare";
+  return "map";
+}
+
+const GUIDES = {
+map: [
   { face:"happy", title:"1,448 villages, one ranked list",
     body:"Every mapped settlement in Sabah, scored on how badly it needs a connectivity "
        + "intervention. Two minutes and you will know what to press." },
@@ -6927,11 +6942,11 @@ const GUIDE = [
     body:"334 settlements have too little data to score at all. This ranks them by what is "
        + "at stake and by how wide the model's range is, so a survey goes where a lot is "
        + "riding on an answer nobody has." },
-  { at:"#seqGroup", face:"talking", title:"Deployment bundles",
+  { at:"#seqGroup", dim:false, face:"talking", title:"Deployment bundles",
     body:"Villages close enough to share one trench, priced as a group instead of each "
        + "paying for its own cable to town. It ranks fibre builds and says so: only 6 of "
        + "the top 50 by priority are eligible for one." },
-  { at:"#budgetGroup", face:"thinking", title:"Budget what-if",
+  { at:"#budgetGroup", dim:false, face:"thinking", title:"Budget what-if",
     body:"Type a budget and see how far down the queue it reaches. The unit costs are "
        + "published benchmarks rather than quotes, and you can type your own over them." },
   { at:"#weightGroup", face:"confused", title:"Argue with the weighting",
@@ -6941,9 +6956,49 @@ const GUIDE = [
   { at:".topbar-actions", face:"happy", title:"Three more ways in",
     body:"Rankings for the full sortable table, Compare for districts side by side, and Ask "
        + "Dino to ask a question in plain English and watch the map follow the answer. "
-       + "This guide is the ? button whenever you want it again." },
-];
+       + "Open one and press ? again for a walk through that screen." },
+],
 
+rankings: [
+  { face:"happy", title:"The whole list, sortable",
+    body:"All 1,114 scored settlements. The same numbers as the map, laid out so you can "
+       + "sort, filter and export them." },
+  { at:"#kpis", face:"pointing", title:"What the current selection adds up to",
+    body:"These follow your filters, so narrowing to one district restates every figure for "
+       + "that district." },
+  { at:".rk-toolbar", face:"thinking", title:"Narrow it down",
+    body:"Search, then filter by district, evidence tier, place type, or whether a classroom "
+       + "of 30 could stream 360p at once." },
+  { at:"#rankTable", face:"pointing", title:"Sorting never renumbers the rank",
+    body:"Sort by latency and row one is still the settlement ranked first overall, not the "
+       + "worst latency. The rank column always means priority." },
+  { at:"#csvBtn", face:"talking", title:"Take it with you",
+    body:"The CSV is exactly what you see, filters and all, stamped with the weighting that "
+       + "produced it. PDF prints the same sheet." },
+],
+
+compare: [
+  { face:"happy", title:"Districts side by side",
+    body:"Pick any number of districts or divisions and read them against each other on one "
+       + "scale." },
+  { at:"#cmpChips", face:"pointing", title:"Choose what to compare",
+    body:"Add areas here. There is no cap, so all 25 districts or all 5 divisions fit." },
+  { at:"#cmpEmpty", face:"thinking", title:"Nothing picked yet",
+    body:"Add two or more areas above and this fills with cards, bars and radar profiles. "
+       + "Add them all if you want the whole state at once." },
+  { at:"#cmpStrip", face:"pointing", title:"At a glance",
+    body:"One card per area. Click one and the map filters and frames that area behind this "
+       + "sheet." },
+  { at:"#cmpBars", face:"thinking", title:"Shared scale bars",
+    body:"Every bar in a row runs on one scale, so the longest really is the largest. A "
+       + "missing value stays missing and says so rather than reading as a zero." },
+  { at:"#cmpAsk", face:"talking", title:"Ask about what is on screen",
+    body:"The copilot is told which areas you picked, never their numbers. It recomputes "
+       + "them here, so it explains this comparison rather than trusting it." },
+],
+};
+
+let gView = "map";
 let gStep = 0;
 let gOpened = [];        // panels this guide opened, closed again on the way out
 let gRail = false;       // true when the guide had to expand a collapsed sidebar
@@ -6957,33 +7012,48 @@ function guideFace(state) {
   clearTimeout(gFaceTimer);
   const img = el("guideFace");
   if (!img) return;
-  let st = MASCOT[state] ? state : "idle", f = 0;
+  const st = MASCOT[state] ? state : "idle", cfg = MASCOT[st];
+  let f = 0, dir = 1;
   const paint = () => { img.src = `${MASCOT_DIR}${st}${f + 1}.png`; img.dataset.state = st; };
   paint();
   if (REDUCED) return;
   const tick = () => {
-    if (++f >= MASCOT[st].n) { if (MASCOT[st].loop) f = 0; else { st = "idle"; f = 0; } }
+    f += dir;
+    // A looping set wraps. A one shot was drawn to play once, so it plays
+    // back down through its own frames rather than borrowing idle's.
+    if (f >= cfg.n) { if (cfg.loop) f = 0; else { dir = -1; f = cfg.n - 2; } }
+    else if (f < 0) { dir = 1; f = 1; }
     paint();
-    gFaceTimer = setTimeout(tick, MASCOT[st].ms);
+    gFaceTimer = setTimeout(tick, cfg.ms);
   };
-  gFaceTimer = setTimeout(tick, MASCOT[st].ms);
+  gFaceTimer = setTimeout(tick, cfg.ms);
 }
 
+function guideSteps() { return GUIDES[gView] || GUIDES.map; }
+
 function guideAt(i) {
-  const sel = GUIDE[i] && GUIDE[i].at;
-  return sel ? document.querySelector(sel) : null;
+  const st = guideSteps()[i];
+  const node = st && st.at ? document.querySelector(st.at) : null;
+  // Present but collapsed to nothing counts as absent, or the spotlight lands
+  // on a zero sized rectangle in the corner.
+  return node && node.getBoundingClientRect().width > 0 ? node : null;
 }
 /* Steps whose element never rendered are dropped up front, so Back and Next
    never land on a blank card and the progress dots stay truthful. */
 function guideLive() {
-  return GUIDE.map((s, i) => i).filter(i => !GUIDE[i].at || guideAt(i));
+  const steps = guideSteps();
+  return steps.map((s, i) => i).filter(i => !steps[i].at || guideAt(i));
 }
 
 function guideOpen() {
-  // Six of the ten steps live in the sidebar, so a collapsed rail would leave
-  // the spotlight on nothing. Expanded here and put back on the way out.
+  gView = guideView();
+  // Six of the map guide's ten steps live in the sidebar, so a collapsed rail
+  // would leave the spotlight on nothing. Expanded here, put back on the way
+  // out. Rankings and Compare cover the sidebar, so they leave it alone.
   const body = el("body");
-  if (body.dataset.rail === "collapsed") { body.dataset.rail = "open"; gRail = true; }
+  if (gView === "map" && body.dataset.rail === "collapsed") {
+    body.dataset.rail = "open"; gRail = true;
+  }
   const live = guideLive();
   if (!live.length) return;
   gStep = live[0];
@@ -7004,7 +7074,7 @@ function guideClose() {
 }
 
 function guideShow() {
-  const live = guideLive(), pos = live.indexOf(gStep), s = GUIDE[gStep];
+  const live = guideLive(), pos = live.indexOf(gStep), s = guideSteps()[gStep];
   guideFace(s.face);
   el("guideStep").textContent = `Step ${pos + 1} of ${live.length}`;
   el("guideTitle").textContent = s.title;
@@ -7019,7 +7089,10 @@ function guideShow() {
   // A collapsed panel cannot be pointed at. Opened here and closed on exit,
   // so the sidebar is left the way it was found.
   const d = node.closest("details");
-  if (d && !d.open) { d.open = true; gOpened.push(d); }
+  if (d) {
+    for (const other of gOpened) if (other !== d) other.open = false;
+    if (!d.open) { d.open = true; gOpened.push(d); }
+  }
   node.scrollIntoView({ block:"nearest", behavior:REDUCED ? "auto" : "smooth" });
   // After the scroll, or the rectangle describes where the element used to be.
   setTimeout(() => { if (!el("guide").hidden) guidePlace(node.getBoundingClientRect()); }, 220);
@@ -7036,6 +7109,7 @@ function guidePlace(r) {
     return;
   }
   hole.hidden = false;
+  hole.dataset.dim = guideSteps()[gStep].dim === false ? "0" : "1";
   hole.style.top = (r.top - 4) + "px";
   hole.style.left = (r.left - 4) + "px";
   hole.style.width = (r.width + 8) + "px";
@@ -7434,8 +7508,9 @@ function wireUI() {
   el("brandHome").onclick = () => {
     closePanel();
     openChat(false);
-    el("rankings").dataset.open = "0";
-    el("viewToggle").setAttribute("aria-pressed", "false");
+    // showView clears both sheets. This used to close Rankings by hand and
+    // leave Compare open, so the logo said "Back to the map" and stayed put.
+    showView(null);
     if (el("body").dataset.rail === "collapsed") {
       el("body").dataset.rail = "open";
       setTimeout(() => map.resize(), 240);
