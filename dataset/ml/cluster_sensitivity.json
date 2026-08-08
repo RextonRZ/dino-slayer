@@ -1,0 +1,41 @@
+{
+  "_what": "What the fibre bundling does at settings other than the one that ships. The governance register listed this as pending; this file answers it.",
+  "_source": "geoai_coveragemodel.py (Colab), min_cluster_size sweep.",
+
+  "parameter": "min_cluster_size",
+  "algorithm": "HDBSCAN, haversine metric, run on the 323 fibre-recommended settlements only",
+  "not_a_radius": "HDBSCAN has no eps. It builds a hierarchy and cuts it per region, which is why it was chosen over DBSCAN: a single global radius cannot fit both the packed coast and the scattered interior. The tunable is the smallest group allowed to count as a cluster.",
+
+  "measured": "trunk_km, the sum of spanning-tree spurs over all 323 fibre settlements with a 1 km floor. Unclustered settlements keep their full run to town.",
+  "baseline_km": 1363.5,
+  "baseline_note": "What it costs if every settlement is billed its own full run, floored at 1 km.",
+
+  "results": [
+    { "min_cluster_size": 3,  "clusters": 40, "noise": 45, "trunk_km": 932.7,  "ratio_vs_baseline": 1.46 },
+    { "min_cluster_size": 4,  "clusters": 22, "noise": 36, "trunk_km": 933.5,  "ratio_vs_baseline": 1.46 },
+    { "min_cluster_size": 5,  "clusters": 17, "noise": 35, "trunk_km": 890.0,  "ratio_vs_baseline": 1.53, "shipped": true },
+    { "min_cluster_size": 6,  "clusters": 15, "noise": 41, "trunk_km": 1022.8, "ratio_vs_baseline": 1.33 },
+    { "min_cluster_size": 8,  "clusters": 11, "noise": 59, "trunk_km": 976.9,  "ratio_vs_baseline": 1.40 },
+    { "min_cluster_size": 10, "clusters": 10, "noise": 63, "trunk_km": 978.5,  "ratio_vs_baseline": 1.39 }
+  ],
+
+  "verdict": "NOT A PLATEAU, and the shipped value is the most flattering one in the sweep.",
+  "verdict_detail": [
+    "890.0 km at min_cluster_size = 5 is the minimum across the whole sweep. Its immediate neighbours are 933.5 km and 1022.8 km, so the setting that ships is a local best rather than a stable region.",
+    "The full range is 890 to 1023 km, a 15% spread, or 1.33x to 1.53x against the 1,363.5 km baseline.",
+    "Noise does not move monotonically with the parameter: 45, 36, 35, 41, 59, 63. There is no clean trade between cluster count and leftovers.",
+    "What is robust is the DIRECTION. Every setting in the sweep bundles, and every setting saves at least 25% against billing each settlement its own run. The conclusion that per-settlement pricing overstates fibre survives the whole sweep. Only the size of the saving moves."
+  ],
+
+  "relationship_to_shipped_cost": {
+    "note": "This sweep measures the RAW spanning-tree spur. The panel charges min(spur, own run to town) with the floor applied after the min, which takes 890.0 km down to 636 km. The cap is what handles the 22 settlements that sit further from their bundle neighbour than from town. So the sensitivity here bounds the input to the cap, not the billed figure.",
+    "raw_km_at_shipped_setting": 890.0,
+    "billed_km_at_shipped_setting": 636
+  },
+
+  "other_findings": {
+    "clusters_crossing_district_lines": 7,
+    "of_total_clusters": 17,
+    "why_it_matters": "Those corridors need two or three budget holders to co-fund. A bundle is not automatically one authority's problem."
+  }
+}

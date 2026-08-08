@@ -1,0 +1,170 @@
+{
+  "_what": "The five models that were run, four of which were rejected. model_report.json carries the shipped model's card; this file carries the experiments behind the choice. Not fetched by the dashboard.",
+  "_source": "geoai_coveragemodel.py (Colab), cells 7-13. Raw run output is dataset/ml/metrics.json; this file is the curated view of it. Frozen folds in dataset/ml/fold_assignment.csv: 850 training rows across 5 folds (181/169/167/166/167), plus 598 rows marked fold_id -1 as not trained on.",
+  "algorithm": "XGBoost regression (XGBRegressor)",
+  "target": "log1p(dl_mbps), inverted with expm1 before every metric",
+  "params": {
+    "n_estimators": 400,
+    "learning_rate": 0.05,
+    "max_depth": 5,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "random_state": 42,
+    "enable_categorical": true,
+    "tree_method": "hist"
+  },
+  "preprocessing": "No imputation is fitted anywhere. XGBoost takes NaN natively, missingness is expressed as row-wise flags, and `place` is a fixed categorical. Nothing is fitted across folds, so nothing can leak.",
+  "validation": {
+    "scheme": "GroupKFold(5), grouped by district",
+    "why": "29% of settlements share an exact speed value with a neighbour because they share an Ookla tile. A random split puts those twins on both sides of the fold line and the model scores itself on data it has effectively seen.",
+    "fold_0_caveat": "Fold 0 is Ranau alone, 181 rows, 21% of the training set. It is the largest district so GroupKFold cannot split it. Verifiable in fold_assignment.csv: fold 0 contains exactly one district. Fold-to-fold variance partly reflects that, not model instability."
+  },
+  "banned_as_predictors": {
+    "lon_lat": "location memorisation; used for grouping and mapping only",
+    "district": "it IS the CV group, so a held-out district is an unseen category",
+    "split_and_evidence_tier": "derived from n_tests and n_tiles, which are derived from the target"
+  },
+  "baseline": {
+    "rule": "global median, computed inside each fold's training half",
+    "mae": 43.1,
+    "r2": -0.177,
+    "rmse_note": "RMSE from metrics.json: 48.841 spatial, 39.717 random."
+  },
+  "models": [
+    {
+      "id": "A",
+      "selected": true,
+      "features": [
+        "pop_2km",
+        "n_schools_3km",
+        "n_clinics_3km",
+        "rwi",
+        "seasonal_water_px",
+        "flood_prone",
+        "place",
+        "backhaul_km",
+        "rwi_missing"
+      ],
+      "mae_spatial": 34.06,
+      "r2_spatial": 0.33,
+      "mae_random": 25.31,
+      "r2_random": 0.557,
+      "verdict": "Selected. Beats the baseline by 21% on MAE under spatial CV.",
+      "rmse_spatial": 48.841,
+      "rmse_random": 39.717
+    },
+    {
+      "id": "B1",
+      "adds": [
+        "elevation_m"
+      ],
+      "mae_spatial": 34.48,
+      "r2_spatial": 0.312,
+      "folds_better": "2/5",
+      "verdict": "Rejected. Worse on both metrics and better in only 2 of 5 folds. Elevation was the strongest terrain candidate (Spearman -0.28 against speed) and it still did not survive."
+    },
+    {
+      "id": "B2",
+      "adds": [
+        "elevation_m",
+        "elev_drop_m",
+        "elev_pct_district",
+        "elev_drop_missing"
+      ],
+      "mae_spatial": 34.06,
+      "r2_spatial": 0.317,
+      "folds_better": "3/5",
+      "verdict": "Rejected. MAE ties to two decimal places, R2 is worse. Three terrain features buy nothing, because terrain already reaches the model through backhaul_km and place."
+    },
+    {
+      "id": "A+division",
+      "adds": [
+        "division"
+      ],
+      "mae_spatial": 36.51,
+      "r2_spatial": 0.266,
+      "verdict": "Rejected. This was the remediation attempt for the district bias below, and it made both the error and the bias worse. Division has only 5 categories, so the model learns a division-level average from the districts it can see and applies it to a held-out district that may sit at the other end of that division's range. Fold 0 (Ranau, West Coast) fell from R2 0.020 to -0.385."
+    },
+    {
+      "id": "C",
+      "adds": [
+        "nearest_ocid_site_km",
+        "ocid_sites_5km",
+        "ocid_networks_5km",
+        "ocid_data_present"
+      ],
+      "mae_spatial": 36.55,
+      "r2_spatial": 0.262,
+      "folds_better": "1/5",
+      "verdict": "Rejected. OpenCelliD is crowdsourced and 62% of settlements have no record within 10 km. Tawau city, 40,000 people and 205 Mbps measured, shows its nearest recorded cell 115 km away because volunteers never surveyed there. District bias did improve (Tawau -69.3 to -61.6, Pitas +32.0 to +24.5) but overall error rose, so the feature group is not carried.",
+      "source": "OpenCelliD CC BY-SA 4.0, 1,217 Sabah cell records"
+    }
+  ],
+  "known_bias": {
+    "measure": "mean out-of-fold residual per district, residual = predicted - observed",
+    "flagged": "6 districts exceed half the overall MAE, counting only districts with 10 or more training rows",
+    "direction": "19 of 25 districts have a negative mean residual, so the model under-predicts speed almost everywhere and regresses toward a Sabah-wide average",
+    "worst_over_predicted": {
+      "district": "Pitas",
+      "mean_residual": 32.05,
+      "n": 39,
+      "why_it_matters": "Positive means the model thinks Pitas is faster than it measures, so its settlements look better served than they are and get pushed DOWN a ranking. Pitas is poor and rural, exactly the kind of place this project exists to surface."
+    },
+    "worst_under_predicted": {
+      "district": "Tawau",
+      "mean_residual": -69.32,
+      "n": 12,
+      "correction": "This said Tuaran (-53.73) until metrics.json was added. Tawau is worse and clears the same 10-row inclusion rule, so it is the correct answer. Tuaran remains the worst under-prediction among the LARGE districts, n=51 against Tawau's 12, which is why it is the more stable figure."
+    },
+    "cause": "With districts held out and no location features, the model has no way to learn regional level. Fast districts get pulled down and slow ones pulled up.",
+    "stability": "Present in all three model variants, so it is structural rather than a fitting artefact.",
+    "all_flagged": {
+      "Tawau": {
+        "mean_residual": -69.32,
+        "n": 12
+      },
+      "Tuaran": {
+        "mean_residual": -53.73,
+        "n": 51
+      },
+      "Pitas": {
+        "mean_residual": 32.05,
+        "n": 39
+      },
+      "Nabawan": {
+        "mean_residual": -23.46,
+        "n": 15
+      },
+      "Papar": {
+        "mean_residual": -22.97,
+        "n": 24
+      },
+      "Sandakan": {
+        "mean_residual": -18.31,
+        "n": 33
+      }
+    },
+    "second_worst_under_predicted": {
+      "district": "Tuaran",
+      "mean_residual": -53.73,
+      "n": 51
+    }
+  },
+  "limitations": [
+    "No network-side predictors at all. Every feature is demographic, economic or geographic, so the model infers the KIND OF PLACE that tends to have poor coverage. It does not infer coverage.",
+    "pop_2km is the strongest SHAP feature, and four of the ten slowest predictions have pop_2km = 0. For the emptiest settlements the estimate is largely driven by emptiness.",
+    "Systematic per-district bias, above. Pitas is under-prioritised by it.",
+    "The predictions support survey targeting only. They are NOT valid as a DIPI ranking input and the dashboard does not use them as one.",
+    "SHAP values are in log1p space, not Mbps. A SHAP value of +0.25 is a 1.28x multiplier on the estimate, so its effect in Mbps depends on the settlement and is not additive.",
+    "The model tracks the diagonal to about 75 Mbps and then flattens. Above 150 Mbps observed it never predicts the top. It identifies slow places reasonably and cannot identify fast ones."
+  ],
+  "reproducibility": {
+    "seed": 42,
+    "table_sha256": "fd0d29125cc21286e11a1ea74cdc167bc961fc8f15e147634618fb75a0d01845",
+    "table_shape": [
+      1448,
+      20
+    ],
+    "note": "Folds are frozen before any model is fitted, so A, B1, B2, A+division and C all see identical splits. Run All reproduces every number here."
+  }
+}

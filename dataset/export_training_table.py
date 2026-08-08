@@ -8,7 +8,7 @@ Writes dataset/ml/training_table.csv, one row per settlement, with:
   * a `split` column: train / validate / check / predict
 
 Nothing is imputed. Missing stays empty so XGBoost sees NaN.
-See COVERAGE_MODEL_GUIDE.md for why each column is in or out.
+See ml/model_ablations.json for why each column is in or out.
 """
 import csv
 import bisect
