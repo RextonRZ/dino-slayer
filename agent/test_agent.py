@@ -294,8 +294,37 @@ check("the speed is now quotable without tripping the number guardrail",
       not [x for x in G._scan(f"Kampung Melati reads 328.6 Mbps down. {T.DISCLAIMER}",
                               [{"tool": "explain_priority", "result": e}])
            if "no tool result" in x])
-check("predict_coverage is still honest about not having shipped",
-      "not shipped" in T.predict_coverage("Kampung Melati")["note"])
+# The model has shipped, so this section asserts the guardrail rather than the
+# absence. The string "modelled estimate" is the one both the dashboard and the
+# flag below compare against: if an export ever writes plain "modelled", the
+# flag stops firing and a modelled number can be narrated as a measurement.
+if T.HAS_MODEL:
+    pc = T.predict_coverage("Kampung Melati")
+    check("an observed settlement is not flagged as modelled",
+          pc["flags"] == [] and "observed measurement" in pc["note"], pc)
+    mod = T.DF[T.DF["speed_source"] == "modelled estimate"]
+    check("the modelled set is exactly the 216 with no measurement",
+          len(mod) == 216 and mod["dl_mbps"].isna().all(), len(mod))
+    pm = T.predict_coverage(mod.iloc[0]["name"])
+    check("a modelled settlement raises the modelled flag",
+          pm["flags"] == ["modelled"], pm["flags"])
+    check("and says so in words, not only in a flag",
+          "not a measurement" in pm["note"], pm["note"])
+    check("every modelled row carries an interval, never a bare point",
+          mod["pred_lo"].notna().all() and mod["pred_hi"].notna().all())
+    check("the interval contains the estimate",
+          bool(((mod["pred_lo"] <= mod["pred_dl_mbps"])
+                & (mod["pred_dl_mbps"] <= mod["pred_hi"])).all()))
+    check("no observed settlement was given a prediction",
+          T.DF[T.DF["speed_source"] == "observed"]["pred_dl_mbps"].isna().all())
+    check("a draft quoting a modelled speed as measured is rejected",
+          any("modelled" in x.lower() for x in
+              G._scan(f"{mod.iloc[0]['name']} measures "
+                      f"{mod.iloc[0]['pred_dl_mbps']:.2f} Mbps down. {T.DISCLAIMER}",
+                      [{"tool": "predict_coverage", "result": pm}])))
+else:
+    check("predict_coverage is honest about not having shipped",
+          "not shipped" in T.predict_coverage("Kampung Melati")["note"])
 
 print("\n=== 14. district decision comparison ===")
 c = T.compare_areas(["Ranau", "Kota Kinabalu"])
@@ -416,6 +445,197 @@ check("the dashboard's selection is recomputed, not trusted",
       _initial("x", {"level": "district", "areas": ["Kudat", "Tawau"],
                      "stats": {"Kudat": {"median_dl_mbps": 999.9}}})["context"]["stats"]
       == _ctx["stats"])
+
+print()
+print("=== 16. the 46-school finding is reachable by the agent ===")
+_f = T.find_failing_schools()
+check("it agrees with the dashboard's own preset chip", _f["total_failing"] == 46,
+      _f["total_failing"])
+check("every row really has a school within 3 km",
+      all(r["schools_3km"] >= 1 for r in _f["rows"]))
+check("every row really fails the tier once shared",
+      all(r["per_user_mbps"] < T.VIDEO_TIERS["360p"] for r in _f["rows"]))
+check("the worst is first", _f["rows"] == sorted(_f["rows"], key=lambda r: r["per_user_mbps"]))
+check("ids line up with rows", len(_f["ids"]) == len(_f["rows"]))
+# The rule the whole product rests on: no measurement is not a failing one.
+_ins = {r["evidence"] for r in _f["rows"]}
+check("no unmeasured settlement is called failing", "insufficient" not in _ins, _ins)
+_gap = T.DF[(T.DF["evidence_tier"] == "insufficient") & (T.DF["n_schools_3km"] >= 1)]
+check("evidence-gap schools are excluded, not counted",
+      not (set(_gap["settlement_id"]) & set(_f["ids"])), f"{len(_gap)} gap rows with a school")
+check("the note says so in words", "not the same as a failing one" in _f["note"])
+check("low evidence is warned about when present",
+      T.LOW_EV_WARNING in _f["note"] or _f["low_evidence_rows"] == 0)
+check("it scopes to a district",
+      T.find_failing_schools(district="Kota Marudu")["scope"] == "Kota Marudu")
+check("it scopes to a division",
+      T.find_failing_schools(division="Kudat")["total_failing"] <= _f["total_failing"])
+check("a harder tier finds more", T.find_failing_schools(tier="1080p")["total_failing"] > 46)
+check("fewer users finds fewer", T.find_failing_schools(users=1)["total_failing"] < 46)
+check("an unknown tier is refused clearly",
+      "Unknown tier" in T.find_failing_schools(tier="banana")["note"])
+check("the sharing assumption is flagged", "assumption_equal_sharing" in _f["flags"])
+from agent.graph import find_failing_schools as _ffs
+check("the agent can call it through the tool boundary",
+      _ffs.invoke(_coerce_args(_ffs, {"district": ["Kota Marudu"], "users": "30"}))["scope"]
+      == "Kota Marudu")
+check("it is registered in both registries",
+      "find_failing_schools" in T.TOOLS and len(G.TOOL_LIST) == 15)
+
+print()
+print("=== 17. the panel and the copilot cost a budget the same way ===")
+# This has caught two real divergences. First a flat ten-kilometre fibre
+# assumption, where at RM 50m the agent funded 52 and the dashboard 171. Then
+# the marginal-trench change, which moves the numbers again: both sides now
+# charge fibre the spanning-tree edge from clusters.json rather than each
+# settlement's full run to town, so RM 50m reaches 263 instead of 171.
+_b = {sc: len(T.optimise_budget(50_000_000, "", sc)["ids"]) for sc in ("low", "base", "high")}
+_exp = (358, 271, 203) if T.CLUSTERS else (220, 171, 140)
+check("fibre is costed the same way on both sides",
+      (_b["low"], _b["base"], _b["high"]) == _exp, {"got": _b, "expected": _exp})
+check("a dearer scenario never funds more", _b["high"] <= _b["base"] <= _b["low"], _b)
+# The clustering may only ever make a shared build cheaper, never dearer, and
+# it must not touch the three per-site options.
+if T.CLUSTERS:
+    _f = T.DF[(T.DF.backhaul_km <= T.RULE_PARAMS["fibre_max_km"])
+              & (T.DF.pop_2km >= T.RULE_PARAMS["fibre_min_pop"])]
+    _tr = _f.settlement_id.map(lambda s: T.CLUSTERS[s]["trunk_km"])
+    check("every settlement has a trunk_km, so no lookup silently misses",
+          len(T.CLUSTERS) == len(T.DF))
+    check("no trunk_km falls below the 1 km floor", bool((_tr >= 1.0).all()))
+    check("sharing a trench never costs more than paying alone",
+          bool(_tr.sum() < _f.backhaul_km.clip(lower=1).sum()))
+    # Sharing is not universally cheaper, only cheaper on aggregate: 22 of the
+    # 288 bundled settlements sit further from a bundle neighbour than from the
+    # town. The costing takes the shorter run, so it can never be worse than
+    # what the panel charged before clustering existed.
+    _bh = _f.backhaul_km.clip(lower=1)
+    _cheaper = _tr.combine(_bh, min)
+    check("some spurs really are longer than going direct",
+          bool((_tr > _bh + 1e-9).any()), int((_tr > _bh + 1e-9).sum()))
+    check("costing takes the shorter of the two, never the spur regardless",
+          bool(_cheaper.sum() < _tr.sum()),
+          {"shorter": round(_cheaper.sum(), 1), "always spur": round(_tr.sum(), 1)})
+    check("and so can never cost more than before clustering",
+          bool(_cheaper.sum() <= _bh.sum()))
+    check("fibre is overstated by about 1.5x without it",
+          1.4 < _f.backhaul_km.clip(lower=1).sum() / _tr.sum() < 1.7,
+          round(_f.backhaul_km.clip(lower=1).sum() / _tr.sum(), 2))
+    _nf = T.DF[~T.DF.settlement_id.isin(_f.settlement_id)]
+    check("non-fibre settlements were not given a cluster",
+          all(T.CLUSTERS[s]["cl"] == -1 for s in _nf.settlement_id))
+
+print()
+print("=== 18. the delivery rules match the published direction ===")
+# OECD and World Bank state the ordering: fibre where dense, wireless and
+# satellite where sparse. The cut-offs are ours, but the ORDER they produce is
+# checkable, so it is checked rather than asserted in a comment.
+import numpy as _np
+_R, _d = T.RULE_PARAMS, T.DF.copy()
+_km = _d["backhaul_km"].fillna(999.0)
+_pop = _d["pop_2km"].fillna(0.0)
+_d["opt"] = _np.where((_km <= _R["fibre_max_km"]) & (_pop >= _R["fibre_min_pop"]), "Fibre",
+            _np.where((_km <= _R["fwa_max_km"]) & (_pop >= _R["fwa_min_pop"]), "FWA",
+            _np.where(_km > _R["sat_min_km"], "Satellite", "WiFi")))
+_d["dens"] = _pop / (_np.pi * 4)          # pop_2km spread over its own 2 km buffer
+_med = {o: _d[_d["opt"] == o]["dens"].median() for o in ("Fibre", "FWA", "Satellite", "WiFi")}
+check("fibre goes to the densest places", _med["Fibre"] > _med["FWA"], _med)
+check("fixed wireless sits between fibre and satellite",
+      _med["FWA"] > _med["Satellite"], _med)
+check("the ordering is monotonic, dense to sparse",
+      _med["Fibre"] > _med["FWA"] > _med["Satellite"], _med)
+# Ogutu & Oughton (2021): LEO satellite outcompetes other options below
+# 0.1 users/km2. Most of our satellite calls are denser than that, which is a
+# disclosed limitation, this test exists so the disclosure stays true.
+_sat = _d[_d["opt"] == "Satellite"]
+_sparse = int((_sat["dens"] < 0.1).sum())
+check("the satellite caveat on the card still matches the data",
+      len(_sat) == 22 and _sparse == 9, f"{_sparse} of {len(_sat)} below 0.1/km2")
+
+print()
+print("=== 19. the source registry matches the code it documents ===")
+import json as _json
+_sp = Path(__file__).resolve().parent.parent / "dataset" / "web" / "sources.json"
+check("dataset/web/sources.json exists", _sp.exists(), str(_sp))
+_S = _json.loads(_sp.read_text(encoding="utf8"))
+_P = _S["parameters"]
+# Every value the registry claims must be the value the code actually uses.
+for _k, _actual in [("fibre_max_km", T.RULE_PARAMS["fibre_max_km"]),
+                    ("fibre_min_pop", T.RULE_PARAMS["fibre_min_pop"]),
+                    ("fwa_max_km", T.RULE_PARAMS["fwa_max_km"]),
+                    ("fwa_min_pop", T.RULE_PARAMS["fwa_min_pop"]),
+                    ("sat_min_km", T.RULE_PARAMS["sat_min_km"]),
+                    ("fac_near_km", T.FAC_NEAR_KM),
+                    ("fibre_per_km_rm", T.COSTS["base"]["fibre_per_km"]),
+                    ("fwa_per_site_rm", T.COSTS["base"]["fwa"])]:
+    check(f"registry {_k} = {_actual}", _P[_k]["value"] == _actual,
+          f'registry says {_P[_k]["value"]}')
+check("the video tiers match too", _P["video_tiers_mbps"]["value"] == T.VIDEO_TIERS,
+      _P["video_tiers_mbps"]["value"])
+# Every parameter names a real status, and a sourced one names a real source.
+_ok_status = {"sourced", "unsourced", "benchmarked"}
+check("every parameter explains what it does in plain words",
+      all(len(v.get("means", "")) > 40 for v in _P.values()),
+      [k for k, v in _P.items() if len(v.get("means", "")) <= 40])
+check("every parameter has a known status",
+      all(v["status"] in _ok_status for v in _P.values()),
+      {k: v["status"] for k, v in _P.items() if v["status"] not in _ok_status})
+_dangling = [k for k, v in _P.items()
+             if v.get("source") and v["source"] not in _S["sources"]]
+check("no parameter points at a source that is not there", not _dangling, _dangling)
+_unsourced = [k for k, v in _P.items() if v["status"] == "sourced" and not v.get("source")]
+check("nothing is called sourced without naming one", not _unsourced, _unsourced)
+# The flags must agree with the registry rather than being set by hand.
+check("RULES_VERIFIED is false while any cut-off is unsourced",
+      any(v["status"] == "unsourced" for v in _P.values()))
+check("the dead ends are recorded too, with a reason each",
+      _S["searched_and_not_found"] and
+      all(x.get("where") and x.get("outcome") for x in _S["searched_and_not_found"]))
+# fibre_max_km is the last one nothing fixes. If that ever changes, this fails
+# and RULES_VERIFIED becomes a live question rather than a permanent false.
+check("only fibre_max_km is still ours",
+      [k for k, v in _P.items() if v["status"] == "unsourced"] == ["fibre_max_km"],
+      [k for k, v in _P.items() if v["status"] == "unsourced"])
+
+print()
+print("=== 20. the copilot answers about bundles with the panel's own numbers ===")
+if T.CLUSTERS:
+    _rb = T.rank_bundles(50_000_000, "balanced")
+    check("it returns bundles, not settlements", _rb["bundles_total"] == 17, _rb["bundles_total"])
+    check("a budget funds whole bundles only",
+          _rb["spent_rm"] <= _rb["budget_rm"], (_rb["spent_rm"], _rb["budget_rm"]))
+    check("the scenario it used is named in words, not a code",
+          "divided by cost" in _rb["ranked_by"], _rb["ranked_by"])
+    # Facility totals are the UNION across funded bundles. Summing each bundle's
+    # own deduplicated count double-funds a school two bundles can both reach,
+    # which is exactly the mistake the panel had before this was fixed.
+    _fundedrows = [r for r in _rb["rows"] if r["funded"]]
+    check("institutions are deduplicated across the whole funded set, not summed",
+          _rb["schools_funded"] < sum(r["schools"] for r in _fundedrows),
+          {"union": _rb["schools_funded"], "naive sum": sum(r["schools"] for r in _fundedrows)})
+    check("a dearer cost scenario never funds more",
+          T.rank_bundles(50_000_000, "balanced", "high")["bundles_funded"]
+          <= T.rank_bundles(50_000_000, "balanced", "low")["bundles_funded"])
+    check("each scenario really orders differently",
+          len({T.rank_bundles(50_000_000, s)["rows"][0]["district"]
+               for s in ("need", "balanced", "reach")}) > 1)
+    check("a settlement outside every bundle is told so plainly",
+          "not in a bundle" in T.explain_bundle("Kampung Tangkol")["note"])
+
+    # The guardrail: a bundle is a proximity screen, and an answer that presents
+    # one as a surveyed design must be rejected.
+    _v = G._scan(f"Build the Tenom corridor first, it costs RM 2.3 million. {T.DISCLAIMER}",
+                 [{"tool": "rank_bundles", "result": _rb}])
+    check("calling a bundle a build plan is rejected",
+          any("SCREENING proxy" in x for x in _v), _v)
+    _ok = G._scan("The Tenom group screens as the best value bundle. Bundles are settlements "
+                  "grouped by position, a screening proxy and not an engineering design, and "
+                  f"the costs are illustrative. {T.DISCLAIMER}",
+                  [{"tool": "rank_bundles", "result": _rb}])
+    check("and a careful answer passes", _ok == [], _ok)
+else:
+    check("rank_bundles is honest when the clusters are absent",
+          "not been generated" in T.rank_bundles()["note"])
 
 print(f"\n{ok} passed, {fail} failed")
 sys.exit(1 if fail else 0)

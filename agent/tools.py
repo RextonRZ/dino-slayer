@@ -1,7 +1,7 @@
 """The grounded tool layer. Python computes; the agent only narrates.
 
 Every number Tanya Dino says must come out of a function in this file. Nothing
-here imports an LLM, and nothing here is prompted — these are plain pandas
+here imports an LLM, and nothing here is prompted, these are plain pandas
 functions over the project's own parquet, testable on their own:
 
     python -m agent.tools        # runs a self-test over real rows
@@ -11,6 +11,7 @@ and the map can never disagree about a number.
 """
 from __future__ import annotations
 
+import json
 import math
 import re
 from pathlib import Path
@@ -22,16 +23,20 @@ ROOT = Path(__file__).resolve().parent.parent
 SETTLEMENTS = ROOT / "dataset" / "settlements"
 
 DISCLAIMER = "Screening for further assessment — not a coverage determination."
-LOW_EV_WARNING = ("Some rows rest on limited tests — prioritise field validation.")
+LOW_EV_WARNING = ("Some rows rest on limited tests, prioritise field validation.")
 
 # Same numbers as the dashboard simulator.
 VIDEO_TIERS = {"360p": 0.7, "480p": 1.1, "720p": 2.5, "1080p": 5.0, "4k": 20.0}
 WEIGHTS = {"p_connectivity": 0.40, "p_population": 0.25,
            "p_institutions": 0.15, "p_equity": 0.20}
-# Illustrative rules. They ship labelled as such until the ITU and MCMC
-# criteria they stand in for have been sourced and verified.
+# Where each of these comes from is recorded in dataset/web/sources.json,
+# parameter by parameter, with the quote and how far it was verified.
+# Short version: everything here is sourced except fibre_max_km, most of it
+# from ITU's Last-mile Guide. RULES_VERIFIED stays false until that one is.
 RULE_PARAMS = {"fibre_max_km": 15, "fibre_min_pop": 3000,
                "fwa_max_km": 40, "fwa_min_pop": 500, "sat_min_km": 40}
+# No per-unit Malaysian cost is public. These are benchmarked against
+# published models rather than quoted -- see dataset/web/sources.json.
 COSTS = {  # DEMO_PLACEHOLDER, not procurement figures
     "low":  {"fibre_per_km": 90000,  "fwa": 350000, "sat": 9000,  "wifi": 45000},
     "base": {"fibre_per_km": 140000, "fwa": 520000, "sat": 14000, "wifi": 70000},
@@ -66,6 +71,15 @@ def _load() -> pd.DataFrame:
 
 DF = _load()
 HAS_MODEL = "speed_source" in DF.columns
+
+# Fibre build clusters, written by dataset/export_clusters.py. Optional: an
+# empty dict makes optimise_budget charge the full run to town, which is what
+# it did before the clustering existed. The dashboard reads the same file.
+try:
+    CLUSTERS = json.loads((ROOT / "dataset" / "web" / "clusters.json")
+                          .read_text(encoding="utf8"))
+except (OSError, ValueError):
+    CLUSTERS = {}
 
 
 # ── facilities, with a district each ─────────────────────────────────────────
@@ -237,7 +251,7 @@ def _s(v) -> str:
     An LLM does not always honour its own tool schema. Gemini has been observed
     sending {"district": ["Kota Marudu"]} where the schema says string, which
     reached .lower() and killed the turn with "'list' object has no attribute
-    'lower'". A tool must never fail on the SHAPE of its arguments — only on
+    'lower'". A tool must never fail on the SHAPE of its arguments, only on
     their meaning.
     """
     if v is None or isinstance(v, bool):
@@ -338,7 +352,7 @@ def explain_priority(name_or_id: str) -> dict:
     # settlement actually read?" was unanswerable: the agent fell through to
     # predict_coverage, got "the model has not shipped", and told the user it
     # could not confirm a speed that was sitting in the file all along. It also
-    # makes a connectivity pillar of 0.2 legible — that is 0.2 NEED, because the
+    # makes a connectivity pillar of 0.2 legible, that is 0.2 NEED, because the
     # place is fast, and without the speed beside it the score reads backwards.
     measured = {"dl_mbps": _num(row["dl_mbps"]), "ul_mbps": _num(row["ul_mbps"]),
                 "latency_ms": _num(row["latency_ms"], 0), "n_tests": int(row["n_tests"]),
@@ -377,7 +391,7 @@ def simulate_experience(name_or_id: str, task: str = "720p", users: int = 5) -> 
     dl = row["dl_mbps"]
     if pd.isna(dl):
         return {"rows": [], "ids": [row["settlement_id"]],
-                "note": (f"Evidence needed — {display_name(row)} has no speed measurement, "
+                "note": (f"Evidence needed, {display_name(row)} has no speed measurement, "
                          f"so this cannot be simulated.")}
     users = max(1, int(users))
     per = float(dl) / users
@@ -390,7 +404,7 @@ def simulate_experience(name_or_id: str, task: str = "720p", users: int = 5) -> 
             "measured_mbps": _num(dl), "users": users, "per_user_mbps": round(per, 2),
             "highest_smooth_tier": best, "evidence": row["evidence_tier"],
             "flags": ["assumption_equal_sharing"],
-            "assumption": "Simplified equal-sharing model — an assumption, not a measurement.",
+            "assumption": "Simplified equal-sharing model, an assumption, not a measurement.",
             "note": ""}
 
 
@@ -445,8 +459,8 @@ def recommend_intervention(name_or_id: str) -> dict:
     return {"rows": [{"option": opt, "reasons": "; ".join(why)}], "ids": [row["settlement_id"]],
             "terrain": t,
             "flags": ["illustrative_rules"],
-            "label": "Illustrative decision criteria pending source verification — prototype only.",
-            "note": "Rules-based decision support — not a trained model."}
+            "label": "Illustrative decision criteria pending source verification. Prototype only.",
+            "note": "Rules-based decision support, not a trained model."}
 
 
 def optimise_budget(budget_rm: float, district: str = "", scenario: str = "base") -> dict:
@@ -460,7 +474,18 @@ def optimise_budget(budget_rm: float, district: str = "", scenario: str = "base"
         if not rec["rows"]:
             continue
         opt = rec["rows"][0]["option"]
-        cost = (c["fibre_per_km"] * 10 if opt == "Fibre" else c["fwa"] if "wireless" in opt
+        # Fibre is costed over the ACTUAL distance to the nearest town, the same
+        # way the dashboard does it. A flat ten-kilometre assumption here meant
+        # the copilot and the panel gave different answers to the same question:
+        # at RM 50m the agent funded 52 settlements and the panel 171.
+        km = float(r["backhaul_km"]) if pd.notna(r["backhaul_km"]) else 10.0
+        # The cheaper of the shared spur and the direct run, matching the
+        # dashboard. Sharing is not always cheaper: some settlements sit further
+        # from their bundle neighbour than from the town. CLUSTERS is the same
+        # file the panel loads; without it both fall back to the full run in.
+        km = min(km, CLUSTERS.get(r["settlement_id"], {}).get("trunk_km", km))
+        cost = (c["fibre_per_km"] * max(1.0, km) if opt == "Fibre"
+                else c["fwa"] if "wireless" in opt
                 else c["sat"] if opt == "Satellite" else c["wifi"])
         pop = float(r["pop_2km"] or 0)
         items.append((pop / cost, cost, r, opt))
@@ -475,7 +500,7 @@ def optimise_budget(budget_rm: float, district: str = "", scenario: str = "base"
     return {"rows": funded[:25], "ids": [f["id"] for f in funded],
             "funded_count": len(funded), "spent_rm": int(spent), "budget_rm": int(budget_rm),
             "flags": ["illustrative_cost"],
-            "label": "Illustrative planning assumptions — not procurement estimates.",
+            "label": "Illustrative planning assumptions, not procurement estimates.",
             "note": ("Counts are settlements. Population buffers overlap, so people cannot "
                      "be summed without double counting.")}
 
@@ -676,16 +701,16 @@ def generate_validation_report(district: str = "", top_k: int = 10) -> dict:
     top = rank_settlements(district=district, top_k=top_k)
     survey = plan_survey(district=district, top_k=5)
     where = district or "Sabah"
-    md = [f"# Field validation shortlist — {where}", "",
+    md = [f"# Field validation shortlist, {where}", "",
           f"{len(top['rows'])} highest-priority settlements by DIPI, and "
           f"{len(survey['rows'])} with no usable measurement.", "", "## Priority shortlist", ""]
     for r in top["rows"]:
-        md.append(f"- **#{r['rank']} {r['name']}** ({r['district']}) — DIPI {r['dipi']}, "
+        md.append(f"- **#{r['rank']} {r['name']}** ({r['district']}), DIPI {r['dipi']}, "
                   f"{'no speed measurement' if r['dl_mbps'] is None else str(r['dl_mbps']) + ' Mbps'}, "
                   f"evidence: {r['evidence']}")
     md += ["", "## Measure these first (no usable data)", ""]
     for r in survey["rows"]:
-        md.append(f"- **{r['name']}** ({r['district']}) — stakes {r['stakes']}, "
+        md.append(f"- **{r['name']}** ({r['district']}), stakes {r['stakes']}, "
                   f"{r['pop_2km']} people within 2 km, {r['schools_3km']} school(s) within 3 km")
     md += ["", "## Recommended measurements", "",
            "- Speed tests at peak hours, multiple operators", "- School and clinic connectivity check",
@@ -766,7 +791,7 @@ def _half_up(v, nd=0):
 
     Python rounds halves to even and JavaScript rounds them up, so a district
     at exactly 62.5% measured came out 62 from the tool and 63 from the
-    dashboard — the same disagreement that cost a percentile on the terrain
+    dashboard, the same disagreement that cost a percentile on the terrain
     columns. The comparison exists to be quoted in a paper, so the two
     implementations have to agree to the digit.
     """
@@ -785,12 +810,12 @@ def _area_stats(sub, fac) -> dict:
     """One area's indicators. Measured-only wherever service is judged.
 
     Nothing here infers service from absence. A settlement with no measurement
-    is counted in the evidence gap and is excluded from every speed statistic —
+    is counted in the evidence gap and is excluded from every speed statistic,
     it is never counted as slow.
     """
     # Service is judged only where the evidence supports judging it. 118
     # settlements in the insufficient tier still carry a dl_mbps, but the median
-    # test count behind those readings is ZERO — they are tile artefacts. Letting
+    # test count behind those readings is ZERO, they are tile artefacts. Letting
     # them into an underserved rate would turn "we have not measured here" into
     # "the service here is poor", which is the one inference this project refuses
     # to make. They stay in the evidence-gap share instead, which is where a
@@ -805,34 +830,34 @@ def _area_stats(sub, fac) -> dict:
         "measured": int(len(meas)),
         "scored": int(len(scored)),
 
-        # connectivity — medians, never means; one fibre-fed town skews a mean
+        # connectivity, medians, never means; one fibre-fed town skews a mean
         "median_dl_mbps": _half_up(meas["dl_mbps"].median(), 1),
         "median_ul_mbps": _half_up(meas["ul_mbps"].median(), 1),
         "median_latency_ms": _half_up(meas["latency_ms"].median(), 0),
         "underserved_rate_pct": _pct(len(under), len(meas)),
         "severe_rate_pct": _pct(len(severe), len(meas)),
 
-        # people — deduplicated, and only for settlements actually measured slow
+        # people, deduplicated, and only for settlements actually measured slow
         "people_underserved": _dedup_population(under),
         "people_all": _dedup_population(sub),
         "median_pop_2km": _half_up(sub["pop_2km"].median(), 0),
 
-        # evidence — the three tiers as shares, plus the sample behind them
+        # evidence, the three tiers as shares, plus the sample behind them
         "measured_pct": _pct(int((sub["evidence_tier"] == "measured").sum()), len(sub)),
         "low_evidence_pct": _pct(int((sub["evidence_tier"] == "low_evidence").sum()), len(sub)),
         "evidence_gap_pct": _pct(len(gap), len(sub)),
         "median_tests": _half_up(sub["n_tests"].median(), 0),
 
-        # accessibility — distance to the nearest town is the only remoteness
+        # accessibility, distance to the nearest town is the only remoteness
         # measure this dataset supports. There is no road network in it.
         "median_backhaul_km": _half_up(sub["backhaul_km"].median(), 1),
         "remote_rate_pct": _pct(int((sub["backhaul_km"] > REMOTE_KM).sum()), len(sub)),
 
-        # terrain — context, never a pillar
+        # terrain, context, never a pillar
         "median_elevation_m": _half_up(sub["elevation_m"].median(), 0),
         "terrain_shadow_pct": _pct(int((sub["elev_drop_m"] <= TERRAIN_DROP_M).sum()), len(sub)),
 
-        # institutions — point-in-polygon, not summed 3 km buffers
+        # institutions, point-in-polygon, not summed 3 km buffers
         "schools": int((fac["kind"] == "school").sum()),
         "health": int((fac["kind"] == "health").sum()),
         "schools_underserved": int((under["n_schools_3km"] > 0).sum()),
@@ -971,7 +996,7 @@ def _summarise(areas: list, stats: dict, level: str) -> list:
                      ". Remoteness and terrain are associated with lower measured speed in "
                      "this dataset; neither is shown to cause it.")
 
-    # 5. what to do about it — the only actionable sentence, and it is hedged
+    # 5. what to do about it, the only actionable sentence, and it is hedged
     worst_gap = max(areas, key=lambda x: stats[x]["evidence_gap_pct"] or 0)
     worst_svc = max(areas, key=lambda x: stats[x]["underserved_rate_pct"] or 0)
     if worst_gap == worst_svc:
@@ -1056,7 +1081,7 @@ def compare_areas(names, level: str = "district") -> dict:
     ids = list(DF[DF[col].isin(resolved) & DF["dipi"].notna()]["settlement_id"])
     note = [f"{len(labels)} {col}s compared on identical definitions, from the same Ookla "
             f"2025 Q1–Q4 aggregates and the same DIPI weights"]
-    note.append("every service figure uses measured settlements only — a settlement with no "
+    note.append("every service figure uses measured settlements only, a settlement with no "
                 "measurement is counted in the evidence gap and never counted as slow")
     note.append("population merges overlapping 2 km buffers, so it estimates people near the "
                 "settlements and is not a census headcount")
@@ -1072,13 +1097,225 @@ def compare_areas(names, level: str = "district") -> dict:
             "note": ". ".join(note) + "."}
 
 
+def find_failing_schools(district: str = "", division: str = "", users: int = CLASSROOM_USERS,
+                        tier: str = "360p", top_k: int = 25) -> dict:
+    """Settlements with a school nearby whose measured link cannot carry a class.
+
+    The same arithmetic the Experience Simulator and the rankings preset run,
+    measured download divided by `users` against the tier's sustained bitrate,
+    so the three can never disagree.
+
+    Unmeasured settlements are EXCLUDED rather than counted as failing. No
+    measurement is not the same as a failing measurement, and a settlement in
+    the evidence gap belongs to plan_survey, not here.
+    """
+    district, division = _s(district), _s(division)
+    tier = _s(tier).lower() or "360p"
+    users = max(1, _i(users, CLASSROOM_USERS))
+    top_k = max(1, _i(top_k, 25))
+    if tier not in VIDEO_TIERS:
+        return {"rows": [], "ids": [], "flags": [],
+                "note": f"Unknown tier '{tier}'. Use {', '.join(VIDEO_TIERS)}."}
+    need = VIDEO_TIERS[tier]
+
+    d = DF[DF["n_schools_3km"] >= 1]
+    d = d[d["dl_mbps"].notna() & (d["evidence_tier"] != "insufficient")]
+    scope = "Sabah"
+    if district:
+        d = d[d["district"].map(_key) == _key(district)]
+        scope = _label(district)
+    elif division:
+        d = d[d["division"].map(_key) == _key(division)]
+        scope = _label(division)
+
+    per = d["dl_mbps"] / users
+    fail = d[per < need].copy()
+    fail["_per"] = fail["dl_mbps"] / users
+    fail = fail.sort_values("_per")
+
+    rows = [{"name": display_name(r), "district": _label(r["district"]),
+             "dl_mbps": _num(r["dl_mbps"]), "per_user_mbps": round(float(r["_per"]), 2),
+             "schools_3km": int(r["n_schools_3km"]),
+             "clinics_3km": int(r["n_clinics_3km"]),
+             "pop_2km": _num(r["pop_2km"]),
+             "dipi": _num(r["dipi"]), "rank": None if pd.isna(r["rank"]) else int(r["rank"]),
+             "evidence": r["evidence_tier"]}
+            for _, r in fail.head(top_k).iterrows()]
+
+    low_ev = int((fail["evidence_tier"] == "low_evidence").sum())
+    note = [f"{len(fail)} settlement(s) in {scope} have at least one school within "
+            f"{FAC_NEAR_KM:.0f} km and a measured link that falls below {tier} "
+            f"({need} Mbps) once {users} people share it"]
+    note.append(f"a school within {FAC_NEAR_KM:.0f} km is a buffer count from OpenStreetMap, "
+                f"not a catchment, the school may serve a different village")
+    note.append("settlements with no usable measurement are excluded, because no measurement "
+                "is not the same as a failing one")
+    if low_ev:
+        note.append(f"{low_ev} of them are low_evidence. {LOW_EV_WARNING}")
+    return {"rows": rows, "ids": list(fail.head(top_k)["settlement_id"]),
+            "total_failing": len(fail), "considered": len(d), "scope": scope,
+            "tier": tier, "needs_mbps": need, "users": users,
+            "low_evidence_rows": low_ev,
+            "flags": ["assumption_equal_sharing", "osm_incomplete"],
+            "assumption": "Simplified equal-sharing model, an assumption, not a measurement.",
+            "note": ". ".join(note) + "."}
+
+
+# ── deployment bundles ───────────────────────────────────────────────────────
+# The same arithmetic the panel does, in the same order, so the copilot and the
+# sidebar can never quote different figures for the same budget. Any change here
+# has to be mirrored in renderSequence() in the dashboard, and the parity test
+# in test_agent.py is what catches it when it is not.
+SEQ_SCEN = {
+    "need":     ("median DIPI of the bundle's members, highest first, cost ignored",
+                 lambda c: -(c["median_dipi"] or 0)),
+    "balanced": ("median DIPI divided by cost in RM millions",
+                 lambda c: -((c["median_dipi"] or 0) / max(c["cost_rm"] / 1e6, 0.01))),
+    "reach":    ("settlements plus schools plus clinics, divided by cost in RM millions",
+                 lambda c: -((c["settlements"] + c["schools"] + c["clinics"])
+                             / max(c["cost_rm"] / 1e6, 0.01))),
+}
+
+
+def _fibre_cost(row, costs) -> float:
+    """What one fibre settlement adds: the SHORTER of its shared spur and its own
+    run in from the town. Sharing is not always cheaper."""
+    km = float(row["backhaul_km"]) if pd.notna(row["backhaul_km"]) else 10.0
+    km = min(km, CLUSTERS.get(row["settlement_id"], {}).get("trunk_km", km))
+    return costs["fibre_per_km"] * max(1.0, km)
+
+
+def _bundles(cost_scenario: str = "base") -> list:
+    """One row per fibre bundle. Facility counts are DISTINCT ids inside the
+    bundle, never a sum of per-settlement counts, because one school sits within
+    3 km of several settlements at once."""
+    if not CLUSTERS:
+        return []
+    c = COSTS.get(cost_scenario, COSTS["base"])
+    d = DF.copy()
+    d["_cl"] = d["settlement_id"].map(lambda s: CLUSTERS.get(s, {}).get("cl", -1))
+    out = []
+    R = 6371.0
+    fla = np.radians(FAC["lat"].to_numpy())[:, None]
+    flo = np.radians(FAC["lon"].to_numpy())[:, None]
+    for cl, g in d[d["_cl"] >= 0].groupby("_cl"):
+        # Every facility against every member at once, then the nearest member.
+        # A facility counts once for the bundle however many members can see it.
+        sla = np.radians(g["lat"].to_numpy())[None, :]
+        slo = np.radians(g["lon"].to_numpy())[None, :]
+        h = (np.sin((sla - fla) / 2) ** 2
+             + np.cos(fla) * np.cos(sla) * np.sin((slo - flo) / 2) ** 2)
+        near = FAC[(2 * R * np.arcsin(np.sqrt(np.clip(h, 0, 1)))).min(axis=1) <= FAC_NEAR_KM]
+        dip = g["dipi"].dropna()
+        out.append({
+            "bundle": int(cl),
+            "district": _label(g["district"].mode().iloc[0]) if len(g["district"].mode()) else "",
+            "settlements": int(len(g)),
+            "median_dipi": _half_up(float(dip.median()), 1) if len(dip) else None,
+            "schools": int((near["kind"] == "school").sum()),
+            "clinics": int((near["kind"] == "health").sum()),
+            "trench_km": _half_up(sum(
+                max(1.0, min(float(r["backhaul_km"]) if pd.notna(r["backhaul_km"]) else 10.0,
+                             CLUSTERS.get(r["settlement_id"], {}).get(
+                                 "trunk_km", float("inf"))))
+                for _, r in g.iterrows()), 1),
+            "cost_rm": int(round(sum(_fibre_cost(r, c) for _, r in g.iterrows()))),
+            "modelled_members": int((g.get("speed_source", pd.Series(dtype=object))
+                                     == "modelled estimate").sum()) if HAS_MODEL else 0,
+            "names": [display_name(r) for _, r in g.head(6).iterrows()],
+            "ids": g["settlement_id"].tolist(),
+            "fac_ids": set(near["facility_id"]),
+        })
+    return out
+
+
+def rank_bundles(budget_rm: float = 50_000_000, scenario: str = "balanced",
+                 cost_scenario: str = "base", top_k: int = 25) -> dict:
+    """Which fibre bundles a budget funds, in the chosen order."""
+    if not CLUSTERS:
+        return {"rows": [], "ids": [], "note": "Build clusters have not been generated yet."}
+    scenario = _s(scenario).lower() or "balanced"
+    if scenario not in SEQ_SCEN:
+        scenario = "balanced"
+    why, key = SEQ_SCEN[scenario]
+    bs = sorted(_bundles(cost_scenario), key=key)
+
+    spent, funded = 0.0, []
+    for b in bs:                      # skip what does not fit, keep going
+        if spent + b["cost_rm"] > budget_rm:
+            continue
+        spent += b["cost_rm"]; funded.append(b)
+
+    # The UNION of facility ids across funded bundles. Adding each bundle's own
+    # deduplicated count would still double-count a school two bundles can reach.
+    fs = set()
+    for b in funded:
+        fs |= b["fac_ids"]
+    rows = [{k: v for k, v in b.items() if k not in ("ids", "names", "fac_ids")}
+            for b in bs[:top_k]]
+    for r, b in zip(rows, bs[:top_k]):
+        r["funded"] = b in funded
+    return {
+        "rows": rows,
+        "ids": [i for b in funded for i in b["ids"]],
+        "bundles_total": len(bs),
+        "bundles_funded": len(funded),
+        "settlements_funded": sum(b["settlements"] for b in funded),
+        "schools_funded": int(FAC[FAC["facility_id"].isin(fs)]["kind"].eq("school").sum()),
+        "clinics_funded": int(FAC[FAC["facility_id"].isin(fs)]["kind"].eq("health").sum()),
+        "spent_rm": int(round(spent)),
+        "budget_rm": int(budget_rm),
+        "cost_all_rm": int(round(sum(b["cost_rm"] for b in bs))),
+        "scenario": scenario,
+        "ranked_by": why,
+        "flags": ["illustrative_cost", "bundle_proxy"],
+        "label": "Illustrative planning costs, not procurement estimates.",
+        "note": ("Bundles are fibre-recommended settlements grouped by position alone, so "
+                 "they are screened as a potential shared deployment, not designed as one. "
+                 "Costs use benchmark rates over straight-line distances and each settlement "
+                 "is charged the shorter of its shared spur or its own run from town, so a "
+                 "real build costs more. Bundles are taken in the ranked order while they "
+                 "fit and skipped when they do not, which is a greedy heuristic and not a "
+                 "proven optimum."),
+    }
+
+
+def explain_bundle(name_or_id: str) -> dict:
+    """Which bundle a settlement belongs to, and what else is in it."""
+    if not CLUSTERS:
+        return {"rows": [], "ids": [], "note": "Build clusters have not been generated yet."}
+    row, _ = find(name_or_id)
+    if row is None:
+        return {"rows": [], "ids": [], "note": f"No settlement matches '{name_or_id}'."}
+    cl = CLUSTERS.get(row["settlement_id"], {}).get("cl", -1)
+    if cl < 0:
+        return {"rows": [], "ids": [row["settlement_id"]],
+                "flags": ["bundle_proxy"],
+                "note": (f"{display_name(row)} is not in a bundle. Either the recommender "
+                         "does not send it to fibre, or it sits too far from any neighbour "
+                         "to screen as a shared build under the proximity rule, so it would "
+                         "be costed on its own.")}
+    b = next(x for x in _bundles() if x["bundle"] == cl)
+    return {
+        "rows": [{k: v for k, v in b.items() if k not in ("ids", "fac_ids")}],
+        "ids": b["ids"],
+        "flags": ["illustrative_cost", "bundle_proxy"],
+        "label": "Illustrative planning costs, not procurement estimates.",
+        "note": (f"{display_name(row)} is in the {b['district']} bundle with "
+                 f"{b['settlements'] - 1} others. Grouped on position alone, so this is a "
+                 "screening proxy for a shared build rather than an engineering design."),
+    }
+
+
 TOOLS = {"rank_settlements": rank_settlements, "explain_priority": explain_priority,
          "compare_areas": compare_areas,
          "compare_settlements": compare_settlements, "simulate_experience": simulate_experience,
          "predict_coverage": predict_coverage, "recommend_intervention": recommend_intervention,
          "optimise_budget": optimise_budget, "plan_survey": plan_survey,
          "generate_validation_report": generate_validation_report,
-         "district_summary": district_summary, "list_facilities": list_facilities}
+         "district_summary": district_summary, "list_facilities": list_facilities,
+         "find_failing_schools": find_failing_schools,
+         "rank_bundles": rank_bundles, "explain_bundle": explain_bundle}
 
 
 if __name__ == "__main__":

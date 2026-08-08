@@ -45,6 +45,10 @@ class CmpContext(BaseModel):
     """
     level: str = Field(default="district", max_length=16)
     areas: list[str] = Field(default_factory=list, max_length=25)
+    # Or the deployment portfolio, sent the same way: the SETTINGS, never the
+    # figures, so the graph recomputes what the panel drew.
+    budget_rm: float | None = Field(default=None, ge=0, le=1e12)
+    scenario: str = Field(default="", max_length=16)
 
 
 class Ask(BaseModel):
