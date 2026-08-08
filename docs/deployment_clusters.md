@@ -167,7 +167,7 @@ one mast serves several villages. An earlier draft of this section estimated the
 a quick cluster count and **was wrong at every radius**, so here is the run that replaced it.
 
 **Method.** Candidate mast sites are the settlement coordinates themselves, so every site is
-somewhere a mast could actually stand. Greedy maximum coverage: take the site that adds the
+somewhere a mast could actually stand. Greedy set-cover heuristic: take the site that adds the
 most uncovered settlements, repeat. `dataset/tower_scenarios.py`.
 
 | Assumed reach | Masts | Cost (base) | Saving | Mean km to mast |
@@ -196,8 +196,61 @@ coverage. The radius alone moves the answer by **RM 53.6m** across the table abo
 the `fibre_max_km` problem again with far more money riding on it.
 
 So the table ships as a range and is labelled **candidate service areas, distance only**.
-It is not predicted coverage. Real propagation needs terrain and ground-cover profiles
-(ITU-R P.1812), and until it is run, no single row of that table is the answer.
+It is not predicted coverage.
+
+### 7a. Then we screened the terrain, and the table above got worse
+
+Every one of the 10,070 candidate paths was run against an SRTM mosaic: a profile sample, a
+4/3 earth radius for refraction, a 30 m mast, a 10 m receiver, and a 60% first-Fresnel-zone
+clearance test. `dataset/tower_los.py` then re-ran the identical greedy cover over only the
+paths that survived.
+
+| Radius | Paths | LoS clear | Fresnel clear | Masts, distance | Masts, Fresnel | Cost, Fresnel |
+|---|---|---|---|---|---|---|
+| 3 km | 1,412 | 62.3% | 50.4% | 189 | **274** | RM 142.5m |
+| 5 km | 2,596 | 50.8% | 36.2% | 145 | **253** | RM 131.6m |
+| 10 km | 6,062 | 33.2% | **19.1%** | 86 | **240** | RM 124.8m |
+
+Median path clearance is **-9.0 m**: more than half of all candidate paths are blocked
+outright. Zero DEM voids.
+
+**Distance alone suggested 86 to 189 masts. Terrain-aware screening suggests 240 to 274.**
+But the finding is not that the count rose. It is that the radius stopped mattering. The
+unsourced radius swung the answer by RM 53.6m distance-only. Screened, it swings it by
+**RM 17.7m**. Once four paths in five are blocked, extra reach stops buying coverage, so the
+parameter we cannot cite is now three times less load-bearing than it was. The blocking open
+item in [ai_governance.md](ai_governance.md) is not closed, but it is substantially defused,
+and it was defused by our own analysis rather than by a judge.
+
+**The optimistic end is gone.** RM 44.7m at 10 km assumed every in-radius path was clear.
+The screened figure is RM 124.8m.
+
+**And terrain isolation is far worse than distance implied.** Settlements no other site can
+reach, so they force a mast of their own: **92 to 191** at 3 km, **60 to 169** at 5 km,
+**23 to 157** at 10 km. At 10 km a third of the tower settlements in Sabah cannot be served
+by any mast but one in their own village. That is not a coverage optimisation problem.
+
+**What the screen still is not.** A terrain screen is not a propagation model: no ground
+cover, no clutter loss, no interference, no capacity. ITU-R P.1812 is the real calculation,
+and ITU-R P.530 treats Fresnel clearance as only one input to line-of-sight link design,
+alongside fading, rain and multipath. Passing this screen is not a prediction that a link
+works. The site counts are greedy upper bounds, not proven minima.
+SRTM is C-band radar, so over dense forest the reading sits partway up the canopy rather
+than at ground. This **over-blocks cleared land** and **under-blocks tall forest**, and
+Sabah is heavily forested, so both errors are live. The 30 m mast is sourced, Oughton 2021
+p12. The **10 m receiver height** is ours, unsourced, and it moves the answer.
+
+**The band was checked and it holds.** 700 MHz is Malaysia's assigned sub-1 GHz coverage
+spectrum: DNB holds 2×20 MHz from 2021, and Ministerial Direction No. 1 of 2024 assigned two
+more blocks to U Mobile. It is also the **lowest** assigned band, which makes it the widest
+Fresnel zone and therefore the **strictest** screen we could have run. Any higher band passes
+more paths, and in the limit the test becomes plain line of sight, which is the `los` column
+above. So the band cannot make things worse than the numbers we published, only better, and
+the ceiling is bounded: **240 masts at 10 km falls to at most 192**, RM 124.8m to RM 99.8m,
+still nowhere near the RM 44.7m distance-only figure. Only 12% to 15% of paths are in play
+at all, because a path blocked by terrain stays blocked at every frequency.
+
+The screen narrows the uncertainty. It does not close it.
 
 **Community Wi-Fi** is worth about RM 6.2m: 74 distinct institutions could anchor 162
 settlements. The real problem there is not clustering, it is that **492 of the 654 have no
@@ -212,7 +265,7 @@ institution within 3 km at all**, so the recommendation does not apply to them.
 | File | Change |
 |---|---|
 | `dataset/export_clusters.py` | validates `clusters.json` on every regeneration, then publishes it |
-| `dataset/tower_scenarios.py` | greedy maximum coverage over the 449 tower settlements at 3, 5 and 10 km |
+| `dataset/tower_scenarios.py` | greedy set-cover heuristic over the 449 tower settlements at 3, 5 and 10 km |
 | `dashboard/index.html` | `costOf` charges the cheaper run; the bundles panel; a suggested-option filter |
 | `agent/tools.py` | the same costing, plus `rank_bundles` and `explain_bundle` |
 | `agent/graph.py` | both tools registered, and a `bundle_proxy` guardrail |
@@ -239,7 +292,7 @@ difference is the whole claim.
 | **Graph methods** | **In place.** Minimum spanning tree for the trench. Classical optimisation, not a GNN, because it is exact and explainable. |
 | **Remote sensing classification** | **Not used.** No land-cover step here. Saying so beats bolting one on. |
 | **CNN, GNN, foundation models** | **Not used.** No labelled imagery task, no training signal for a GNN. |
-| **Spatiotemporal modelling** | **Rejected on Ookla.** Four quarters examined: 22% tile completeness and the swing is sampling noise at Spearman -0.57 against test count. VIIRS nighttime lights is the candidate that could give a real time axis. |
+| **Spatiotemporal modelling** | **Rejected on both candidates.** Ookla: four quarters, 22% tile completeness, and the swing is sampling noise at Spearman -0.57 against test count. VIIRS: thirteen annual composites extracted cleanly, but **703 of 1,448** settlements register no radiance in any year, 192 of the 216 unmeasured settlements are dark and the other 24 sit barely over the cutoff, and the 745 that are lit are largely the already-measured ones. A first pass using a mean over a 2 km buffer reported 778 dark and was corrected: max within 1 km gives 703, and the corrected series also cuts brightening from 70% of lit settlements to 37%. Retained as a power availability flag, not as a time axis. See [viirs_nightlights.md](viirs_nightlights.md). |
 
 Five models were tested on identical folds and seeds and four were rejected, including
 OpenCelliD, which came last. That table is worth more than the R² of the one that survived.
@@ -279,10 +332,25 @@ OpenCelliD, which came last. That table is worth more than the R² of the one th
 > build view answers a narrower question than the ranking does.
 >
 > The larger saving is in shared masts, and we have now measured it rather than estimated it:
-> greedy maximum coverage over the 449 tower settlements needs 189 masts at a 3 km reach and
+> a greedy set-cover heuristic over the 449 tower settlements needs 189 masts at a 3 km reach and
 > 86 at 10 km, RM 98.3m against RM 44.7m, versus RM 233.5m if every settlement gets its own.
 > An earlier estimate of ours was 18% to 39% too low at every radius, which is in §7 because
-> the correction matters more than the original guess. We still do not put a single figure on
-> it: the radius alone swings the answer by RM 53.6m, we have no sourced number for rural
-> mast reach, and 55 of the 449 sit at least 150 m below their anchor town. Distance is not
-> coverage until someone runs the propagation.
+> the correction matters more than the original guess.
+>
+> Then we screened those numbers against terrain and they got worse, which is the result we
+> would rather find ourselves than have you find. Every one of the 10,070 candidate paths was
+> run against SRTM with a 4/3 earth radius, a 30 m mast, a 10 m receiver and a 60% Fresnel
+> clearance. At 10 km only **19% of paths survive**, the median path is blocked by 9 m, and
+> the mast count goes from 86 to **240**, RM 44.7m to RM 124.8m. **157 of the 449 can only be
+> served by a mast in their own village**, against 23 on distance alone.
+>
+> The useful part is what that did to our worst parameter. Rural mast reach is unsourced and
+> it swung the answer by RM 53.6m. Screened, it swings it by RM 17.7m, because once four
+> paths in five are blocked, extra reach stops buying coverage. The number we could not
+> defend now matters three times less.
+>
+> We still do not put a single figure on it. A terrain screen is not propagation: no ground
+> cover, no clutter loss, no capacity, and SRTM is C-band radar so over Sabah's forest it
+> reads partway up the canopy, which over-blocks cleared land and under-blocks tall forest.
+> Two of the screen's own inputs are ours rather than sourced, the 10 m receiver height and
+> the 700 MHz band. Distance is not coverage, and neither is line of sight.

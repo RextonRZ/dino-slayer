@@ -1,0 +1,141 @@
+{
+  "_what": "Mast counts for the 449 tower settlements once each candidate path is screened for line of sight and 60% Fresnel clearance against SRTM. Supersedes the distance-only figures in tower_scenarios.json, which assumed every in-radius path worked.",
+  "_still_not": "A terrain screen, not a propagation model. No ground cover, clutter loss, interference or capacity. ITU-R P.1812 is the real calculation. SRTM is C-band radar so over forest it reads partway up the canopy, which over-blocks cleared land and under-blocks tall forest.",
+  "_assumptions": {
+    "mast_height_m": 30,
+    "mast_height_source": "Oughton 2021 (arXiv:2102.03561) p12, 30 m tower",
+    "receiver_height_m": 10,
+    "receiver_height_source": "UNSOURCED, ours, and it moves the answer",
+    "band_mhz": 700,
+    "band_source": "ASSUMED, needs confirming against MCMC/JENDELA before it is quoted",
+    "earth_radius_factor": "4/3",
+    "fresnel_clearance": 0.6
+  },
+  "n_tower_settlements": 449,
+  "screened_paths": 10070,
+  "dem_voids": 0,
+  "cost_per_site_rm": {
+    "low": 350000,
+    "base": 520000,
+    "high": 780000
+  },
+  "one_per_settlement_base_rm": 233480000,
+  "path_pass_rates": {
+    "3": {
+      "paths": 1412,
+      "los_pct": 62.3,
+      "fresnel_pct": 50.4
+    },
+    "5": {
+      "paths": 2596,
+      "los_pct": 50.8,
+      "fresnel_pct": 36.2
+    },
+    "10": {
+      "paths": 6062,
+      "los_pct": 33.2,
+      "fresnel_pct": 19.1
+    }
+  },
+  "scenarios": [
+    {
+      "radius_km": 3,
+      "distance": {
+        "masts": 189,
+        "only_self_reachable": 92,
+        "mean_km_to_mast": 0.96,
+        "max_km_to_mast": 3.0,
+        "shadowed_sites": 15,
+        "rm_low": 66150000,
+        "rm_base": 98280000,
+        "rm_high": 147420000
+      },
+      "los": {
+        "masts": 256,
+        "only_self_reachable": 165,
+        "mean_km_to_mast": 0.63,
+        "max_km_to_mast": 3.0,
+        "shadowed_sites": 30,
+        "rm_low": 89600000,
+        "rm_base": 133120000,
+        "rm_high": 199680000
+      },
+      "fresnel": {
+        "masts": 274,
+        "only_self_reachable": 191,
+        "mean_km_to_mast": 0.54,
+        "max_km_to_mast": 3.0,
+        "shadowed_sites": 30,
+        "rm_low": 95900000,
+        "rm_base": 142480000,
+        "rm_high": 213720000
+      }
+    },
+    {
+      "radius_km": 5,
+      "distance": {
+        "masts": 145,
+        "only_self_reachable": 60,
+        "mean_km_to_mast": 1.7,
+        "max_km_to_mast": 4.96,
+        "shadowed_sites": 12,
+        "rm_low": 50750000,
+        "rm_base": 75400000,
+        "rm_high": 113100000
+      },
+      "los": {
+        "masts": 222,
+        "only_self_reachable": 129,
+        "mean_km_to_mast": 1.05,
+        "max_km_to_mast": 4.96,
+        "shadowed_sites": 25,
+        "rm_low": 77700000,
+        "rm_base": 115440000,
+        "rm_high": 173160000
+      },
+      "fresnel": {
+        "masts": 253,
+        "only_self_reachable": 169,
+        "mean_km_to_mast": 0.79,
+        "max_km_to_mast": 4.98,
+        "shadowed_sites": 29,
+        "rm_low": 88550000,
+        "rm_base": 131560000,
+        "rm_high": 197340000
+      }
+    },
+    {
+      "radius_km": 10,
+      "distance": {
+        "masts": 86,
+        "only_self_reachable": 23,
+        "mean_km_to_mast": 3.97,
+        "max_km_to_mast": 9.99,
+        "shadowed_sites": 5,
+        "rm_low": 30100000,
+        "rm_base": 44720000,
+        "rm_high": 67080000
+      },
+      "los": {
+        "masts": 192,
+        "only_self_reachable": 103,
+        "mean_km_to_mast": 1.75,
+        "max_km_to_mast": 9.93,
+        "shadowed_sites": 25,
+        "rm_low": 67200000,
+        "rm_base": 99840000,
+        "rm_high": 149760000
+      },
+      "fresnel": {
+        "masts": 240,
+        "only_self_reachable": 157,
+        "mean_km_to_mast": 1.1,
+        "max_km_to_mast": 9.93,
+        "shadowed_sites": 28,
+        "rm_low": 84000000,
+        "rm_base": 124800000,
+        "rm_high": 187200000
+      }
+    }
+  ]
+}

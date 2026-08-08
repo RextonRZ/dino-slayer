@@ -1,6 +1,6 @@
 {
   "_what": "Distance-based candidate service areas for the 449 tower settlements. NOT predicted radio coverage: no terrain, no mast height, no line of sight. ITU-R P.1812 is the real calculation and it needs profiles we do not have.",
-  "_method": "Candidate sites are the settlement coordinates themselves. Greedy maximum coverage, which is the standard ln(n) approximation and not a proven minimum.",
+  "_method": "Candidate sites are the settlement coordinates themselves. A greedy set-cover heuristic, which is the standard ln(n) approximation and not a proven minimum.",
   "n_tower_settlements": 449,
   "top50_dipi_in_tower": 31,
   "terrain_shadowed": 55,

@@ -13,7 +13,8 @@ ground-cover profiles (ITU-R P.1812). Call the output a candidate service area.
 
 Candidate mast sites are existing settlement coordinates. That is a
 settlement-centre proxy, not a confirmed buildable site: nobody has checked
-land, access, power or planning at any of them. It also means full coverage is
+land, access or planning at any of them, and power only as far as a nightlight
+screen goes. It also means full coverage is
 always reachable (a settlement always covers itself), so "uncovered" is a check
 on the arithmetic rather than a finding.
 
@@ -49,11 +50,17 @@ def haversine_matrix(lat, lon):
 
 
 def greedy_cover(within):
-    """Classic greedy maximum coverage. Take the site that adds the most
-    uncovered settlements, repeat until everything is covered.
+    """Greedy set-cover heuristic. Take the site that adds the most uncovered
+    settlements, repeat until every settlement is assigned.
 
-    Greedy is not optimal: set cover is NP-hard and this is the standard
-    ln(n)-approximation. Reported as a screening figure, not a minimum.
+    Set cover, not maximum coverage. Maximum coverage fixes a budget of k sites
+    and maximises what they reach. This runs until all 449 are covered and the
+    OUTPUT is how many sites that took, which is minimum-cardinality set cover,
+    solved greedily.
+
+    NOT GUARANTEED MINIMAL. Set cover is NP-hard and greedy is the standard
+    ln(n)-approximation, so a smaller mast count may exist. Every figure here is
+    an upper bound and a screening estimate, never a minimum.
     """
     n = within.shape[0]
     uncovered = np.ones(n, dtype=bool)
@@ -175,7 +182,7 @@ def main():
                  "mast height, no line of sight. ITU-R P.1812 is the real "
                  "calculation and it needs profiles we do not have.",
         "_method": "Candidate sites are the settlement coordinates themselves. "
-                   "Greedy maximum coverage, which is the standard ln(n) "
+                   "A greedy set-cover heuristic, which is the standard ln(n) "
                    "approximation and not a proven minimum.",
         "n_tower_settlements": len(tw),
         "top50_dipi_in_tower": len(top50_in_tower),
