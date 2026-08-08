@@ -1,0 +1,82 @@
+{
+  "selected_model": "A (no terrain, no division)",
+  "target": "dl_mbps",
+  "n_train": 850,
+  "baseline_mae": 43.1,
+  "cv_spatial": {
+    "MAE": 34.059,
+    "RMSE": 48.841,
+    "R2": 0.33
+  },
+  "cv_naive": {
+    "MAE": 25.309,
+    "RMSE": 39.717,
+    "R2": 0.557
+  },
+  "beats_baseline": true,
+  "ablations": {
+    "B1_elevation": {
+      "mae": 34.48,
+      "verdict": "rejected, worse, 2/5 folds"
+    },
+    "A_plus_division": {
+      "mae": 36.51,
+      "verdict": "rejected, worse"
+    },
+    "C_opencellid": {
+      "mae": 36.55,
+      "r2": 0.262,
+      "verdict": "rejected \u2014 worse overall (1/5 folds), though district bias improved (Tawau -69.3\u2192-61.6, Pitas +32.0\u2192+24.5)",
+      "why": "OpenCelliD is crowdsourced; Tawau city (40k people, 205 Mbps measured) shows nearest recorded cell 115 km away because contributors never collected there. 62% of settlements have no record within 10 km.",
+      "source": "OpenCelliD CC BY-SA 4.0, 1,217 Sabah cell records, updated 2025-02 to 2026-08"
+    },
+    "B2_all_terrain": {
+      "mae": 34.06,
+      "r2": 0.317,
+      "folds_better": "3/5",
+      "features_added": [
+        "elevation_m",
+        "elev_drop_m",
+        "elev_pct_district"
+      ],
+      "verdict": "rejected \u2014 MAE ties (+0.01), R2 -0.012; terrain already captured by backhaul_km + place"
+    }
+  },
+  "uncertainty": "fold-ensemble disagreement (std of 5 fold models); NOT calibrated",
+  "biased_districts": {
+    "Nabawan": {
+      "mean": -23.46,
+      "count": 15
+    },
+    "Papar": {
+      "mean": -22.97,
+      "count": 24
+    },
+    "Pitas": {
+      "mean": 32.05,
+      "count": 39
+    },
+    "Sandakan": {
+      "mean": -18.31,
+      "count": 33
+    },
+    "Tawau": {
+      "mean": -69.32,
+      "count": 12
+    },
+    "Tuaran": {
+      "mean": -53.73,
+      "count": 51
+    }
+  },
+  "limitations": [
+    "No network-side predictors: the model infers place-type, not coverage.",
+    "Systematic per-district bias; Pitas under-predicted need (+32 Mbps mean residual).",
+    "Predictions support survey targeting only; NOT valid as a DIPI ranking input.",
+    "pop_2km is the strongest factor; for near-empty settlements the estimate is driven by emptiness.",
+    "Fold 0 = Ranau alone (21% of training rows); fold variance partly reflects this."
+  ],
+  "table_sha256": "fd0d29125cc21286e11a1ea74cdc167bc961fc8f15e147634618fb75a0d01845",
+  "seed": 42,
+  "run_date": "2026-08-08"
+}

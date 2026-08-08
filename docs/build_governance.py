@@ -26,7 +26,7 @@ MAPPED = [
   "a draft calling an unmeasured settlement \u201cunderserved\u201d is rejected, an illustrative cost or rule "
   "quoted without saying so is rejected, and each check is proved to fire from the tool's machine "
   "flags with every explanatory sentence blanked out.",
-  "`agent/test_agent.py` (39 assertions, no API key needed); `_scan()` in `agent/graph.py`"),
+  "`agent/test_agent.py` (194 assertions, no API key needed); `_scan()` in `agent/graph.py`"),
 
  ("GOVERN 6.2", "Third-party failure contingency",
   "Every external dependency degrades instead of breaking: no Street View imagery renders a sentence "
@@ -56,16 +56,23 @@ MAPPED = [
   "silently spending.",
   "`GOOGLE.setOn()`; `GOOGLE.MAX_CALLS`; `GOOGLE.left()` refusal path"),
 
- ("MAP 1.1", "Purpose and limits stated in every view",
-  "The contract sentence \u201cScreening for further assessment \u2014 not a coverage determination\u201d is present "
-  "in every view and is the one element that never truncates; the layout gives way around it.",
-  "footer `.contract`, `flex:1 0 auto`"),
+ ("MAP 1.1", "Purpose and limits stated where they are read",
+  "The screening limit is stated where it can act. On the map, a note under the legend "
+  "reads “Blank areas ≠ no coverage. This layer shows settlement screening points "
+  "only”, which is the inference a reader is most likely to make wrongly. Every print or "
+  "PDF export carries “Screening for further assessment, not a coverage determination” "
+  "in its footer, because an exported page travels without the app around it. Every copilot "
+  "answer ends with the same sentence, lifted out of the body and styled as a note rather "
+  "than left inline. A standing footer sentence was tried and removed: it sat beside nine "
+  "attribution lines a reader scans past, and it crowded out credits that are a licence "
+  "condition.",
+  "`#mapNote`; `.print-foot` and `.cmp-print-foot`; `AGENT_DISCLAIMER`; `DISCLAIMER` in `agent/tools.py`"),
 
  ("MAP 2.1", "The task and its method are defined",
   "DIPI is a documented weighted blend at 40/25/15/20, verified against the file to within rounding. "
   "The model's target is defined as `dl_mbps` from non-network features, with the circular option "
   "(predicting DIPI from its own components) explicitly ruled out.",
-  "`dataset/ml/COVERAGE_MODEL_GUIDE.md` \u00a71\u2013\u00a73"),
+  "`dataset/ml/model_ablations.json`; `dataset/ml/metrics.json`; `docs/how_it_works.md` \u00a710"),
 
  ("MAP 2.2", "Knowledge limits are on screen, not in an appendix",
   "\u201cBlank areas \u2260 no coverage\u201d sits permanently on the map. The simulator refuses where there is no "
@@ -76,13 +83,14 @@ MAPPED = [
   "29% of settlements share an exact speed value with another because they sit in the same Ookla tile. "
   "That was measured, and it is why the training guide mandates GroupKFold by district rather than a "
   "random split that would silently inflate the score.",
-  "`COVERAGE_MODEL_GUIDE.md` \u00a74; `dataset/ml/training_table.csv` district column"),
+  "`dataset/ml/model_ablations.json` validation block; `dataset/ml/fold_assignment.csv`"),
 
  ("MAP 3.3", "Scope narrowed on purpose",
   "The tool screens for further assessment. It does not confirm coverage status, locate infrastructure, "
   "assign operator fault, or make deployment decisions, and each of those refusals is written down as a "
   "rule the agent must enforce.",
-  "`SYSTEM` prompt in `agent/graph.py`; the footer contract sentence in `dashboard/index.html`"),
+  "`SYSTEM` prompt in `agent/graph.py`; `DISCLAIMER` in `agent/tools.py`, appended to every "
+  "answer; the print and export footers in `dashboard/index.html`"),
 
  ("MAP 3.5", "Human oversight boundary",
   "Queue B is rendered as a set needing measurement, never as a ranked leaderboard, and is immune to the "
@@ -103,12 +111,12 @@ MAPPED = [
  ("MEASURE 1.1", "Metrics chosen, and the unmeasurable named",
   "The model reports MAE in Mbps alongside R\u00b2, and must beat a district-median baseline or say so. "
   "Risks we cannot measure are stated rather than omitted: jitter and packet loss are not in this dataset.",
-  "`COVERAGE_MODEL_GUIDE.md` \u00a75; simulator call footnote"),
+  "`dataset/ml/metrics.json`; `dataset/web/model_report.json`; simulator call footnote"),
 
  ("MEASURE 2.1", "TEVV documented and runnable",
   "Sixteen data checks run on every page load and print to the console, with `?debug=1` rendering them as "
   "a panel: counts, unique ids, geometry, bbox, coordinate order, filter round-trips and null handling. "
-  "A separate suite of 191 assertions drives the real agent graph with a scripted model and needs no API "
+  "A separate suite of 194 assertions drives the real agent graph with a scripted model and needs no API "
   "key, including a parity check that the copilot and the dashboard cost a budget identically: at RM 50m "
   "both fund 358, 271 and 203 across the three cost cases. That check has caught two real divergences.",
   "`validateData()`; `?debug=1` panel; `agent/test_agent.py`"),
@@ -145,7 +153,7 @@ MAPPED = [
   "Validation is grouped by district so the model cannot be scored on settlements whose neighbours it "
   "trained on, and residuals are checked per district to catch systematic failure in one part of Sabah. "
   "Both the grouped and the naive random score are reported; the gap is the finding.",
-  "`COVERAGE_MODEL_GUIDE.md` \u00a74 and \u00a75a; `training_table.csv` district groups"),
+  "`dataset/ml/fold_assignment.csv`; `dataset/ml/metrics.json` biased_districts; `dataset/ml/model_ablations.json` known_bias"),
 
  ("MEASURE 2.13", "The measurement process is itself checked",
   "The spatial and random CV numbers are shown side by side in the model card, because the difference "
@@ -246,9 +254,8 @@ def main():
         "published, so the figures are benchmarks and the planner can enter their own over them |")
     add("| Model report with spatial and random CV | Modelling | Shipped. `dataset/web/model_report.json`, "
         "spatial MAE 34.06 against a naive 25.31 |")
-    add("| Per-district residual check (MEASURE 2.11) | Modelling | Pending |")
-    add("| Sensitivity of the cluster radius | Modelling | Pending. The bundles use "
-        "`min_cluster_size = 5`; what the count does at other settings is not recorded |")
+    add("| Per-district residual check (MEASURE 2.11) | Modelling | Done. All six flagged districts with their mean residual and row count are in `dataset/ml/metrics.json`, and the worst, Pitas at +32.05 over 39 settlements, is published as a limitation rather than corrected |")
+    add("| Sensitivity of the cluster radius | Modelling | Done, and it did not come out flat. `dataset/ml/cluster_sensitivity.json` sweeps `min_cluster_size` 3 to 10: the raw trunk runs 890 to 1,023 km and the shipped value of 5 is the most flattering in the sweep. The DIRECTION is robust, every setting saves at least 25%% against per-settlement billing, and the file says so rather than presenting 5 as a plateau |")
     add("| Rural mast reach, for bundling towers | Sourcing | Pending, and blocking. About RM 150m turns "
         "on it, and `fwa_max_km` is backhaul distance rather than coverage |")
     add("| Agent trace evidence (LangSmith) | Tracing | Pending |")
