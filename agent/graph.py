@@ -5,7 +5,7 @@
 The point of the graph is the evidence_check node: it is plain Python, it sees
 the RAW tool rows rather than the model's prose, and the model cannot reach the
 user without passing it. If the draft breaks an evidence rule, the answer is
-sent back to be rewritten with the violations named — and after two attempts a
+sent back to be rewritten with the violations named, and after two attempts a
 hard-templated safe answer is emitted instead.
 
 Nothing here computes a number. Numbers come from agent/tools.py.
@@ -60,7 +60,7 @@ Rules you must follow:
 - Ranking is the Digital Inclusion Priority Index (DIPI), a transparent weighted blend:
   connectivity need 40%, population at stake 25%, institutions served 15%, equity 20%.
   It screens communities for FURTHER ASSESSMENT.
-- Respect evidence tiers exactly. "insufficient" means say "evidence needed" — never
+- Respect evidence tiers exactly. "insufficient" means say "evidence needed", never
   "underserved", "poor coverage" or "confirmed". "low_evidence" means include the
   limited-tests warning.
 - Data is crowdsourced quarterly aggregates (Ookla 2025 Q1-Q4), not live measurement.
@@ -183,9 +183,44 @@ def compare_areas(names: str, level: str = "district") -> dict:
     return T.compare_areas(names, level)
 
 
+@tool
+def find_failing_schools(district: str = "", division: str = "", users: int = 30,
+                         tier: str = "360p", top_k: int = 25) -> dict:
+    """Settlements with a school within 3 km whose MEASURED link cannot carry a class of
+    `users` at `tier`. Use this for "which schools are worst off", "where can a classroom
+    not stream", "how many schools fall below 360p" and anything about schools and speed
+    together. Tiers: 360p, 480p, 720p, 1080p, 4k. Settlements with no measurement are
+    excluded rather than counted as failing."""
+    return T.find_failing_schools(district, division, users, tier, top_k)
+
+
+@tool
+def rank_bundles(budget_rm: float = 50_000_000, scenario: str = "balanced",
+                 cost_scenario: str = "base", top_k: int = 25) -> dict:
+    """Which groups of fibre settlements a budget funds, and in what order. Use this for
+    "what should we build first", "what does RM 50 million buy", "which corridor / bundle
+    / area should we deploy to", and anything about ORDER of deployment rather than one
+    settlement. A bundle is settlements close enough to screen as one shared build.
+    scenario: need (most urgent first, cost ignored), balanced (urgency per ringgit, the
+    default), or reach (most settlements and institutions per ringgit).
+    cost_scenario: low, base or high, the same catalogue optimise_budget uses.
+    Fibre only. Tower, satellite and community Wi-Fi are per-site builds with nothing to
+    share, so they are not bundled."""
+    return T.rank_bundles(budget_rm, scenario, cost_scenario, top_k)
+
+
+@tool
+def explain_bundle(name_or_id: str) -> dict:
+    """Which deployment bundle one settlement belongs to, and what else would be built
+    with it. Use this for "would X be built with anything else", "what is in X's bundle",
+    "is X part of a shared build". Answers honestly when a settlement is in no bundle."""
+    return T.explain_bundle(name_or_id)
+
+
 TOOL_LIST = [rank_settlements, explain_priority, compare_settlements, simulate_experience,
              predict_coverage, recommend_intervention, optimise_budget, plan_survey,
-             generate_validation_report, district_summary, list_facilities, compare_areas]
+             generate_validation_report, district_summary, list_facilities, compare_areas,
+             find_failing_schools, rank_bundles, explain_bundle]
 
 
 class TDState(TypedDict):
@@ -194,7 +229,7 @@ class TDState(TypedDict):
     violations: list
     rewrites: int
     # The District Decision Comparison currently on the user's screen, if any.
-    # Recomputed here in Python from the area NAMES the dashboard sends — the
+    # Recomputed here in Python from the area NAMES the dashboard sends, the
     # dashboard never sends its numbers, so a client cannot feed the model a
     # figure and have the guardrail bless it as data.
     context: dict
@@ -223,7 +258,7 @@ def _window(msgs: list) -> list:
     tool_calls and the ToolMessage answering it, so the window opened on a
     dangling function call and Gemini rejected the whole turn:
 
-        400 INVALID_ARGUMENT — Please ensure that function call turn comes
+        400 INVALID_ARGUMENT, Please ensure that function call turn comes
         immediately after a user turn or after a function response turn.
 
     which surfaced to the user as "Copilot offline" on question four, every
@@ -239,8 +274,8 @@ def _window(msgs: list) -> list:
     elif len(msgs) > MAX_HISTORY:
         msgs = msgs[-MAX_HISTORY:]
     # Belt and braces: never send a tool call whose response is not also in the
-    # window. Nothing in the graph produces one today — rewrite_node calls the
-    # model unbound, so it cannot emit a call that never runs — but this is the
+    # window. Nothing in the graph produces one today, rewrite_node calls the
+    # model unbound, so it cannot emit a call that never runs, but this is the
     # shape Gemini rejects outright, and it is one line to make impossible.
     answered = {getattr(m, "tool_call_id", None) for m in msgs}
     return [m for m in msgs
@@ -272,7 +307,42 @@ def seed_comparison(level: str, areas) -> dict:
     return {k: out[k] for k in CONTEXT_KEYS if k in out}
 
 
+def seed_bundles(budget_rm, scenario: str) -> dict:
+    """Recompute the deployment portfolio the user is looking at.
+
+    Same shape of contract as seed_comparison: the dashboard sends the SETTINGS,
+    never the figures, and rank_bundles recomputes them here. `ids` is dropped
+    because two hundred settlement ids would bloat the prompt for a question
+    about bundles, and `rows` keeps only the funded ones.
+    """
+    try:
+        budget = float(budget_rm)
+    except (TypeError, ValueError):
+        return {}
+    out = T.rank_bundles(budget, scenario or "balanced")
+    if not out.get("rows"):
+        return {}
+    keep = ("bundles_total", "bundles_funded", "settlements_funded", "schools_funded",
+            "clinics_funded", "spent_rm", "budget_rm", "cost_all_rm", "scenario",
+            "ranked_by", "flags", "label", "note")
+    ctx = {k: out[k] for k in keep if k in out}
+    ctx["rows"] = [r for r in out["rows"] if r.get("funded")]
+    return ctx
+
+
 def _context_message(ctx: dict) -> SystemMessage:
+    if "bundles_total" in ctx:
+        return SystemMessage(
+            "The user is looking at the Deployment bundles panel. The JSON below is the "
+            "EXACT set of figures on their screen, computed in Python by the same code "
+            "that drew the panel:\n"
+            + json.dumps(ctx, default=str)
+            + "\n\nAnswer from THESE numbers. `rows` is only the FUNDED bundles; "
+            "`bundles_total` counts all of them. Costs are illustrative benchmarks, and a "
+            "bundle is settlements grouped by position as a screening proxy for a shared "
+            "build, never an engineering design or a surveyed route: say so rather than "
+            "implying the route exists. You may still call tools for anything this object "
+            "does not contain, such as one named settlement.")
     names = ", ".join(ctx.get("areas") or [])
     return SystemMessage(
         f"The user is looking at the District Decision Comparison for {names}. The JSON "
@@ -282,7 +352,7 @@ def _context_message(ctx: dict) -> SystemMessage:
         + "\n\nAnswer from THESE numbers. Do not recompute them, do not round them "
         "differently, and do not introduce a figure that is neither in this object nor "
         "in a tool result. `summary` is the fixed-rule text already printed on their "
-        "sheet — never restate it and never contradict it; add the reasoning it cannot "
+        "sheet, never restate it and never contradict it; add the reasoning it cannot "
         "give, such as which of two areas to fund first and why, or what a field team "
         "should collect. `percentile_worse_than` is the rank against every area in "
         "Sabah, where a HIGHER number is worse. You may still call tools for anything "
@@ -385,7 +455,7 @@ def _text(msg) -> str:
 
 # A number a planner would read as a measurement: anything with a decimal
 # point, or an integer of four digits or more (populations, budgets). Small
-# integers are deliberately skipped — "top 10", "a class of 30", "40% of DIPI"
+# integers are deliberately skipped, "top 10", "a class of 30", "40% of DIPI"
 # are structure, not data, and flagging them would be all false positives.
 DATA_NUMBER = re.compile(r"\d[\d,]*\.\d+|\d[\d,]{3,}")
 # ...and a bare four-digit number in this range is a year, not a population.
@@ -420,7 +490,7 @@ def _tool_numbers(outputs: list) -> set:
 
 
 def _scan(draft: str, outputs: list) -> list:
-    """The guardrail. Pure Python, reading raw tool rows — not the model's word for it.
+    """The guardrail. Pure Python, reading raw tool rows, not the model's word for it.
 
     Detection keys off the machine-readable `flags` a tool returns. It used to
     key off the prose in `label` and `note`, which meant rewording a sentence in
@@ -429,7 +499,7 @@ def _scan(draft: str, outputs: list) -> list:
     """
     v = []
     ids_insufficient = []
-    has_low = has_modelled = has_illustrative = has_sharing = False
+    has_low = has_modelled = has_illustrative = has_sharing = has_bundle = False
     for o in outputs:
         r = o.get("result") or {}
         flags = set(r.get("flags") or [])
@@ -442,7 +512,7 @@ def _scan(draft: str, outputs: list) -> list:
         # ANY illustrative output, cost or rules. The prose check used to be
         # startswith("Illustrative planning"), which matched optimise_budget but
         # silently missed recommend_intervention's "Illustrative decision
-        # criteria" — so rule-based advice was never required to say so.
+        # criteria", so rule-based advice was never required to say so.
         if flags & {"illustrative_cost", "illustrative_rules"} \
                 or str(r.get("label", "")).lower().startswith("illustrative"):
             has_illustrative = True
@@ -450,6 +520,11 @@ def _scan(draft: str, outputs: list) -> list:
             has_modelled = True
         if "assumption_equal_sharing" in flags:
             has_sharing = True
+        # Bundles are a proximity screen, not an engineering design, and the
+        # difference is the whole claim. Without this an answer could say "build
+        # the Tenom corridor" as though a route had been surveyed.
+        if "bundle_proxy" in flags:
+            has_bundle = True
         if o["tool"] == "plan_survey" and r.get("rows"):
             ids_insufficient += [x.get("name", "") for x in r["rows"]]
 
@@ -466,7 +541,7 @@ def _scan(draft: str, outputs: list) -> list:
     if has_sharing and not re.search(r"shar|assum|each|per person|per user", draft, re.I):
         v.append("A shared-connection figure is quoted without saying it assumes the link is "
                  "split equally between users. Name the assumption.")
-    # "Python computes, the agent narrates" — enforced rather than requested.
+    # "Python computes, the agent narrates", enforced rather than requested.
     # The system prompt already forbids inventing a number, and the model
     # ignored it: asked why a settlement was not picked, it restated a speed
     # the USER had asserted in the question as if it were data, and no tool had
@@ -478,6 +553,16 @@ def _scan(draft: str, outputs: list) -> list:
                  + ". Every number must come from a tool. Remove them, or say the data does "
                    "not contain that figure. Never repeat a number the user supplied as if "
                    "the dataset confirmed it.")
+
+    # The disclaimer is appended to EVERY answer and begins "Screening for
+    # further assessment", so a keyword like "screen" is satisfied before the
+    # model has written a word. Check the body with the disclaimer removed.
+    _body = draft.lower().replace(T.DISCLAIMER.rstrip(".").lower(), " ")
+    if has_bundle and not re.search(
+            r"proxy|grouped|screened as|not a design|not an engineering|shared build", _body):
+        v.append("A deployment bundle is quoted without saying what it is. Bundles are "
+                 "settlements grouped by position as a SCREENING proxy for a shared build, "
+                 "not an engineering design or a surveyed route. Say so.")
 
     if T.DISCLAIMER.rstrip(".").lower() not in draft.lower():
         v.append(f"The closing disclaimer is missing: {T.DISCLAIMER}")
@@ -507,7 +592,7 @@ def rewrite_node(state: TDState):
     if n > MAX_REWRITES:
         # Hard-templated safe answer. The model does not get a third attempt.
         # It carries EVERY caveat _scan can ask for, because this text is the
-        # terminal state — if it tripped a rule of its own there would be
+        # terminal state, if it tripped a rule of its own there would be
         # nothing left to rewrite it into.
         rows = [o for o in _all_outputs(state) if (o.get("result") or {}).get("rows")]
         body = "\n".join(f"- {o['tool']}: {len((o['result'] or {}).get('rows', []))} row(s)"
@@ -634,7 +719,8 @@ def _payload(state: dict, trace_url: str = "") -> dict:
     out = {"answer": answer, "table": table,
            "map": {"action": "select" if len(ids) == 1 else "highlight", "ids": ids},
            "tools_used": used,
-           "grounded_in_comparison": bool(ctx),
+           "grounded_in_comparison": bool(ctx) and "areas" in ctx,
+           "grounded_in_bundles": bool(ctx) and "bundles_total" in ctx,
            "response_type": rtype,
            "notes": notes,
            "rewrites": state.get("rewrites", 0)}
@@ -647,8 +733,11 @@ def _initial(question: str, context) -> dict:
     """The turn's starting state. `context` is {level, areas} from the dashboard;
     the figures are recomputed here rather than accepted from the client."""
     ctx = {}
-    if isinstance(context, dict) and context.get("areas"):
-        ctx = seed_comparison(context.get("level", "district"), context.get("areas"))
+    if isinstance(context, dict):
+        if context.get("areas"):
+            ctx = seed_comparison(context.get("level", "district"), context.get("areas"))
+        elif context.get("budget_rm"):
+            ctx = seed_bundles(context.get("budget_rm"), context.get("scenario", ""))
     return {"messages": [HumanMessage(question)], "tool_outputs": [],
             "violations": [], "rewrites": 0, "context": ctx}
 
@@ -666,7 +755,7 @@ def ask(question: str, session_id: str | None = None, context=None) -> dict:
 # ── streaming ────────────────────────────────────────────────────────────────
 # The status line used to show one fixed sentence for the whole wait. These are
 # the graph's ACTUAL node transitions, so what the user reads is what is
-# happening — not a scripted progress animation.
+# happening, not a scripted progress animation.
 STEP_LABEL = {
     "agent": "Reading the question and choosing tools",
     "tools": "Running tools over the dataset",
