@@ -14,10 +14,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Set this to your agent's URL if it is not api.<this domain>. Left empty
-       the page works it out, and an unreachable agent only costs the chat
-       panel: every other panel reads static files and is unaffected. -->
-  <meta name="dino-agent" content="">
+<!-- Where the chat panel sends questions. Left empty the page guesses
+     api.<this domain>, which is right for a deploy that owns its own API
+     subdomain and wrong for us: the agent is a separate Render service, so
+     it is named here. ?agent=... still overrides for testing a branch.
+     An unreachable agent only costs the chat panel. Every other panel reads
+     static files and is unaffected. -->
+  <meta name="dino-agent" content="https://dino-slayer.onrender.com">
   <title>Dino Slayer, Digital Inclusion Priority Index, Sabah</title>
 <link rel="icon" type="image/png" href="public/favicon.png">
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.css">
