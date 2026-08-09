@@ -4509,7 +4509,16 @@ async function loadFacilityPhoto(p, coords) {
   mount.innerHTML = html;
 }
 
-/* Places (New). One nearby search, minimal field mask, at most 3 results. */
+/* Places (New). One nearby search, minimal field mask, at most 3 results.
+
+   The radius is a hard locationRestriction, so nothing outside it can come
+   back, but 5 km is wide enough to reach the next village and the panel used
+   to show these with no distance at all. That reads as "this settlement's
+   schools" when it means "schools within 5 km", and it looks like it
+   contradicts the scored count, which uses 3 km. Each one now carries how far
+   away it is, so the two can be told apart by looking. */
+const NEARBY_PLACES_KM = 5;
+
 async function placePhotosFor(coords) {
   const [lng, lat] = coords;
   const res = await fetch("https://places.googleapis.com/v1/places:searchNearby", {
@@ -4523,7 +4532,8 @@ async function placePhotosFor(coords) {
     body: JSON.stringify({
       includedTypes: ["school", "hospital", "primary_school", "secondary_school"],
       maxResultCount: 3,
-      locationRestriction: { circle: { center: { latitude: lat, longitude: lng }, radius: 5000 } }
+      locationRestriction: { circle: { center: { latitude: lat, longitude: lng },
+                                       radius: NEARBY_PLACES_KM * 1000 } }
     })
   });
   if (!res.ok) throw new Error("Places HTTP " + res.status);
@@ -4532,18 +4542,29 @@ async function placePhotosFor(coords) {
   // 1 for the search itself, plus 1 per photo, each <img> below is its own
   // billable Places Photo request, so the meter must count them too.
   GOOGLE.spend(1 + hits.length);
-  return hits.map(p => ({
-    name: p.displayName?.text || "Unnamed place",
-    type: p.primaryTypeDisplayName?.text || "",
-    lng: p.location?.longitude, lat: p.location?.latitude,
-    src: `https://places.googleapis.com/v1/${p.photos[0].name}/media`
-       + `?maxWidthPx=800&skipHttpRedirect=false&key=${encodeURIComponent(GOOGLE.key())}`
-  }));
+  return hits.map(p => {
+    const lng2 = p.location?.longitude, lat2 = p.location?.latitude;
+    return {
+      name: p.displayName?.text || "Unnamed place",
+      type: p.primaryTypeDisplayName?.text || "",
+      lng: lng2, lat: lat2,
+      away: isFinite(lng2) && isFinite(lat2) ? havKm(coords, [lng2, lat2]) : null,
+      src: `https://places.googleapis.com/v1/${p.photos[0].name}/media`
+         + `?maxWidthPx=800&skipHttpRedirect=false&key=${encodeURIComponent(GOOGLE.key())}`
+    };
+  });
 }
 
 /* The name under a Google photo. Clickable only when Google actually returned
    a coordinate: a caption that cannot show you where it is stays plain text
    rather than becoming a button that does nothing. */
+/* How far from the settlement, so a school in the next village cannot be read
+   as one in this one. Blank when Google gave no coordinate, which is the same
+   case that leaves the name unclickable. */
+function gAway(p) {
+  return p.away == null ? "" : ` · <b>${km(p.away)}</b> away`;
+}
+
 function gJump(p) {
   const nm = esc(p.name);
   if (!isFinite(p.lng) || !isFinite(p.lat)) return nm;
@@ -4589,13 +4610,16 @@ async function loadGoogleContext(settlementId, coords) {
       const [lead, ...rest] = photos;
       html += `<figure class="g-hero"><img src="${lead.src}" alt="${esc(lead.name)}" loading="lazy"
            onerror="this.closest('figure').remove()">
-         <figcaption>${gJump(lead)}${lead.type ? " · " + esc(lead.type) : ""}</figcaption></figure>`;
+         <figcaption>${gJump(lead)}${lead.type ? " · " + esc(lead.type) : ""}${gAway(lead)}</figcaption></figure>`;
       if (rest.length) html += `<div class="g-photos">${rest.map(p =>
         `<figure><img src="${p.src}" alt="${esc(p.name)}" loading="lazy"
            onerror="this.closest('figure').remove()">
-         <figcaption>${gJump(p)}</figcaption></figure>`).join("")}</div>`;
-      html += `<p class="caption">Click a name to put it on the map. These are Google
-               search results, not mapped facilities, and none of them enter the score.</p>`;
+         <figcaption>${gJump(p)}${gAway(p)}</figcaption></figure>`).join("")}</div>`;
+      html += `<p class="caption">Anything Google lists within ${NEARBY_PLACES_KM} km, which reaches
+               past the settlement itself, so check the distance on each. The scored
+               facility counts use 3 km and come from OpenStreetMap, so these will not
+               always agree. Click a name to put it on the map. Google search results
+               are context and none of them enter the score.</p>`;
     } else {
       html += `<p class="caption">No nearby places with photos.</p>`;
     }
