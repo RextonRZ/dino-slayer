@@ -31,6 +31,10 @@ over-blocks cleared land whose true ground is lower than the reading, and
 under-blocks tall forest a real signal would have to pass through. It narrows
 the radius uncertainty. It does not close it.
 
+Implementation:
+tower_isolated.csv (449 rows) works out, for each of those 449, 
+whether anything other than itself can reach it. 191 at 3 km, 169 at 5 km, 157 at 10 km.
+
 Run:  python dataset/tower_los.py
 """
 import json

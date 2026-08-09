@@ -9,6 +9,13 @@ Writes dataset/ml/training_table.csv, one row per settlement, with:
 
 Nothing is imputed. Missing stays empty so XGBoost sees NaN.
 See ml/model_ablations.json for why each column is in or out.
+
+Implementation:
+training_table.csv (1,448 rows) reads dipi.geojson, 
+works out which district and division each settlement falls in, 
+picks the 11 feature columns, and stamps the split column: 
+850 train, 264 validate, 118 check, 216 predict. 
+It deliberately leaves out anything to do with speed tests, otherwise the model would be predicting speed from speed.
 """
 import csv
 import bisect

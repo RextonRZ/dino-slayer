@@ -18,6 +18,10 @@ screen goes. It also means full coverage is
 always reachable (a settlement always covers itself), so "uncovered" is a check
 on the arithmetic rather than a finding.
 
+Implementation:
+tower_pairs.csv (10,070 rows) takes the 449 settlements the recommender sends to a tower, 
+and lists every village-to-village pair within 3, 5 and 10 km. Pure distance at this point, no terrain.
+
 Run:  python dataset/tower_scenarios.py
 """
 import json

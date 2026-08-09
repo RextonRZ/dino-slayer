@@ -1,0 +1,14 @@
+# Real secrets. This file is gitignored and must never be committed.
+# EDIT THIS FILE, not .env.example.
+
+# Gemini. Must come from AI Studio, not the Google Cloud console:
+# https://aistudio.google.com/apikey
+GOOGLE_API_KEY=AIzaSyDonp-Nz1O7GxD6to3tAq5fbVagFuXNcFI
+
+# Which Gemini model to use.
+GEMINI_MODEL=gemini-2.5-flash
+
+# Tracing. https://smith.langchain.com -> Settings -> API Keys
+# The key is the switch. A key here means every run is traced; blank means off.
+LANGSMITH_API_KEY=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
+LANGSMITH_PROJECT=tanya-dino
