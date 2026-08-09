@@ -36,12 +36,9 @@ for who to go and measure next. It screens. It does not certify.
 **The map.** Every settlement coloured by priority. Hollow rings are the ones with too
 little measurement to score, so an evidence gap looks like a gap and never like good news.
 
-<details>
-<summary>Screenshot: map overview</summary>
-
-![Map overview](docs/media/map-overview.png)
-
-</details>
+<p align="center">
+  <img src="docs/media/map-overview.png" alt="Map overview" width="640">
+</p>
 
 **Click any settlement** for the full case, pillar by pillar, with the raw numbers and how
 much measurement sits behind each.
@@ -50,22 +47,16 @@ much measurement sits behind each.
 people share the link, pick a task, watch a real clip play at the quality it can carry. At
 30 users, Talas gets 0.38 Mbps each and everything stalls.
 
-<details>
-<summary>Screenshot: experience simulator</summary>
-
-![Experience simulator](docs/media/drilldown-simulator.png)
-
-</details>
+<p align="center">
+  <img src="docs/media/drilldown-simulator.png" alt="Experience simulator" width="640">
+</p>
 
 **Nearby schools and clinics**, on the same 3 km buffer that feeds the Institutions pillar,
 so you can see what a fix would reach.
 
-<details>
-<summary>Screenshot: nearby facilities</summary>
-
-![Nearby facilities](docs/media/nearby-facilities.png)
-
-</details>
+<p align="center">
+  <img src="docs/media/nearby-facilities.png" alt="Nearby facilities" width="640">
+</p>
 
 **Terrain.** Elevation correlates -0.25 with measured download speed, a stronger
 relationship than distance to the nearest town. It never enters the score. It explains a
@@ -75,22 +66,16 @@ the town their mast would stand in, 132 of them in Ranau under Kinabalu.
 **The rankings.** All 1,114 scored settlements, sortable and filterable. Sorting never
 renumbers the rank column, so row 1 by latency is never mistaken for the top priority.
 
-<details>
-<summary>Screenshot: rankings</summary>
-
-![Rankings](docs/media/rankings.png)
-
-</details>
+<p align="center">
+  <img src="docs/media/rankings.png" alt="Rankings" width="640">
+</p>
 
 **Ask Dino.** Ask a question, get an answer from this dataset, watch the map fly to it.
 Every number comes from a Python tool, never from the model.
 
-<details>
-<summary>Screenshot: ask dino</summary>
-
-![Ask Dino](docs/media/copilot-answer.png)
-
-</details>
+<p align="center">
+  <img src="docs/media/copilot-answer.png" alt="Ask Dino" width="640">
+</p>
 
 **The coverage model.** 216 settlements have no usable measurement. A gradient model
 trained on the 850 measured ones estimates each, with an interval and its top three SHAP
@@ -99,34 +84,25 @@ tile with a neighbour: MAE 34.1 Mbps spatially against 25.3 on a random split. T
 is the finding. No modelled number appears without a one-click model card, and never enters
 the official ranking.
 
-<details>
-<summary>Screenshot: model card</summary>
-
-![Model card](docs/media/model-card.png)
-
-</details>
+<p align="center">
+  <img src="docs/media/model-card.png" alt="Model card" width="640">
+</p>
 
 **Where to measure next.** The 334 unscored settlements ranked by what is at stake against
 how wide the model's interval is. Both shown, never multiplied: stakes times Mbps has no
 unit.
 
-<details>
-<summary>Screenshot: survey planner</summary>
-
-![Survey planner](docs/media/survey-planner.png)
-
-</details>
+<p align="center">
+  <img src="docs/media/survey-planner.png" alt="Survey planner" width="640">
+</p>
 
 **Budget what-if.** Set a budget, see how far down the list it reaches and which
 settlements get funded. No Malaysian per-unit cost is published, so the defaults are ITU
 benchmarks rather than quotes, and a planner can type their own over them.
 
-<details>
-<summary>Screenshot: budget what-if</summary>
-
-![Budget what-if](docs/media/budget-whatif.png)
-
-</details>
+<p align="center">
+  <img src="docs/media/budget-whatif.png" alt="Budget what-if" width="640">
+</p>
 
 **Deployment bundles.** Two villages sharing one trench were each billed for the whole
 thing. HDBSCAN groups the fibre-eligible into 17 bundles, each charged the shorter of its
@@ -134,12 +110,9 @@ shared spur or its own run. Pricing individually overstated fibre at RM 190.9m a
 RM 89.0m. It also says what it cannot do: only 6 of the top 50 are in any bundle, because
 fibre needs 3,000 people within 2 km and the urgent settlements are small.
 
-<details>
-<summary>Screenshot: deployment bundles</summary>
-
-![Deployment bundles](docs/media/bundles.png)
-
-</details>
+<p align="center">
+  <img src="docs/media/bundles.png" alt="Deployment bundles" width="640">
+</p>
 
 **Shared mast screening.** Distance alone said 86 to 189 masts cover the 449 tower
 settlements. Running the same set cover over only the paths that survive an SRTM line of
@@ -147,55 +120,40 @@ sight and 60% Fresnel check says **240 to 274**. The second order effect is the 
 before terrain the assumed radius swung cost by RM 53.6m, after it RM 17.7m. Once four paths
 in five are blocked, extra reach stops buying coverage.
 
-<details>
-<summary>Screenshot: shared mast screening</summary>
-
-![Shared mast screening](docs/media/mast-screening.png)
-
-</details>
+<p align="center">
+  <img src="docs/media/mast-screening.png" alt="Shared mast screening" width="640">
+</p>
 
 **Night view.** Thirteen years of VIIRS radiance as a map mode, not an overlay. **703 of
 1,448 register nothing**, so anything sited there brings its own power, and 56 also need
 their own mast. A mode by choice: an overlay would say those places are worse served, which
 the data does not know. Nightlights measure electrification, never coverage.
 
-<details>
-<summary>Screenshot: night view</summary>
-
-![Night view](docs/media/night-view.png)
-
-</details>
+<p align="center">
+  <img src="docs/media/night-view.png" alt="Night view" width="640">
+</p>
 
 **Compare** districts, divisions, or up to 20 individual settlements by name, on identical
 definitions, with a metric table and a need profile.
 
-<details>
-<summary>Screenshot: compare settlements</summary>
-
-![Compare settlements](docs/media/compare-settlements.png)
-
-</details>
+<p align="center">
+  <img src="docs/media/compare-settlements.png" alt="Compare settlements" width="640">
+</p>
 
 The whole comparison prints to one page, weighting and evidence counts included, so the
 sheet someone carries into a meeting says what produced it.
 
-<details>
-<summary>Screenshot: comparison report</summary>
-
-![Comparison report](docs/media/comparison-report.png)
-
-</details>
+<p align="center">
+  <img src="docs/media/comparison-report.png" alt="Comparison report" width="640">
+</p>
 
 **Suggested option.** Filter by what the recommender suggests: fibre 323, tower 449,
 satellite 22, community Wi-Fi 654. A filter and not a colour, so dots keep their DIPI
 reading.
 
-<details>
-<summary>Screenshot: suggested option</summary>
-
-![Suggested option](docs/media/suggested-option.png)
-
-</details>
+<p align="center">
+  <img src="docs/media/suggested-option.png" alt="Suggested option" width="640">
+</p>
 
 **Cell tower records.** 1,217 crowdsourced OpenCelliD masts as context, never a feature:
 record count correlates 0.56 with Ookla test count, so it maps where volunteers surveyed,
@@ -204,23 +162,17 @@ not what is built. No marker means nobody surveyed, not no tower.
 **Argue with the weighting.** The four weights are ours, not a law of nature. Move them and
 every score, rank and colour recomputes live, stamped into the panel and the CSV.
 
-<details>
-<summary>Screenshot: weightings</summary>
-
-![Weightings](docs/media/weightings.png)
-
-</details>
+<p align="center">
+  <img src="docs/media/weightings.png" alt="Weightings" width="640">
+</p>
 
 **Light theme and satellite.** Both palettes checked for colour-vision separation, dot
 outlines thickened over imagery. Deep red is the top of the scale in both, after the two
 ramps once ran in opposite directions.
 
-<details>
-<summary>Screenshot: light theme</summary>
-
-![Light theme](docs/media/light-theme.png)
-
-</details>
+<p align="center">
+  <img src="docs/media/light-theme.png" alt="Light theme" width="640">
+</p>
 
 ---
 
