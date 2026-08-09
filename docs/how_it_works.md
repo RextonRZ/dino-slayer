@@ -174,9 +174,36 @@ Code: [index.html:2055-2058](../dashboard/index.html#L2055-L2058) for the weight
 | `low_evidence` | `n_tests >= 5` | 264 | 11 | Detached amber ring, scored but flagged |
 | `insufficient` | everything else | 334 | 0 | Hollow grey ring, **never scored** |
 
-**Where the thresholds came from.** Ours. 20 tests across 3 tiles is a judgement about when
-a median stops being noise, not a published standard. It is stated on screen wherever a tier
-is shown.
+**Where the thresholds came from.** Ours. 20 tests across 3 tiles is a judgement about when a
+median stops being noise, not a published standard. It is stated on screen wherever a tier is
+shown.
+
+**One of the two lines earns its keep and the other does not, and we can show which.**
+Latency above 500 ms is physically implausible on a terrestrial link, so it works as a noise
+detector. Counting settlements above it by how much measurement stands behind them:
+
+| Tests | n | Median down | Spread (IQR) | Latency over 500 ms |
+|---|---|---|---|---|
+| 1 to 4, unscored | 118 | 38.6 | 73.3 | 3 |
+| 5 to 9, scored | 104 | 47.4 | 64.0 | **11** |
+| 10 to 19, scored | 140 | 38.8 | 32.2 | **11** |
+| 20 to 99, measured | 348 | 34.7 | 39.3 | **0** |
+| 100+, measured | 522 | 62.8 | 92.3 | **0** |
+
+**Every implausible latency in the dataset sits below 20 tests. Not one above it.** The
+20-test line is doing real work. The 5-test line is not: the 5 to 9 band is barely tidier
+than the 1 to 4 band it sits above, has a higher maximum (346 against 227 Mbps) and carries
+more implausible readings, 11 against 3.
+
+So 5 is a **pragmatic project cutoff, not a demonstrated sufficiency threshold**, and it is
+described that way rather than defended. One caveat against reading too much into the spread
+column: IQR mixes real variation with noise, which is why the 100+ band is widest, and the
+latency count is the cleaner evidence.
+
+It is kept because moving it would shift 850 / 264 / 334 through the scoring, the docs and
+the agent, and because the consequence of the line being soft is handled in the interface
+instead: a settlement with 1 to 4 tests shows its **actual measured speed with its test
+count** rather than a blank, so a reader can judge the evidence rather than trust the cut.
 
 ---
 
@@ -398,10 +425,31 @@ Which produces, across the 1,448 settlements:
 | Satellite density check | 0.1 people/hectare | Sourced | Ogutu and Oughton 2021, arXiv:2108.10834 |
 | Terrain qualifies rather than decides | | Sourced | ITU Last-mile Guide 2020, Table 29 |
 
-**The terrain caveat.** If a settlement sits 150 m or more below its nearest town, the panel
-adds a line saying a line of sight to a mast there cannot be assumed. It never changes the
-option. 165 settlements trip this, and 132 of those are in Ranau alone. The 150 m figure is
-ours.
+**Two terrain caveats, and neither changes the option.**
+
+The first is a proxy. If a settlement sits 150 m or more below its nearest town, the panel
+says a line of sight to a mast there cannot be assumed. 165 settlements trip it, 132 of them
+in Ranau. The 150 m figure is ours.
+
+The second is computed. Where the ladder picks a tower, the panel checks the line-of-sight
+and 60% Fresnel screen from §18 and says whether **any other candidate mast site can reach
+this settlement at all**. At 3 km, **191 of the 449 tower settlements can be reached from no
+other site**, so a tower there means a mast of its own rather than one shared with
+neighbours. That is a different cost class, and the panel now says so. It follows whichever
+radius the mast panel is set to, so the two never disagree: 191 / 169 / 157 at 3 / 5 / 10 km.
+
+**Why it qualifies rather than decides.** It would be easy to let a failed screen push a
+settlement down to satellite. We do not, because the screen has no clutter loss, no rain
+fade, no multipath and no capacity in it, and ITU-R P.1812 is the calculation that would earn
+the right to overturn a recommendation. A screen that cannot predict coverage should not be
+allowed to remove an option. Published by
+[dataset/export_isolated.py](../dataset/export_isolated.py), which refuses to write if the
+radii do not nest or if its counts disagree with `towers_los.json`.
+
+This is deliberately **not** the `serves == 1` figure in `towers_los.json`. That one counts
+masts the greedy solver happened to leave covering only themselves, 172 at 3 km, which is a
+property of the solution. 191 is the property of the terrain: no other site can reach it,
+whatever solver runs.
 
 **What this is not.** It is a desktop screen. Australia's NBN does exactly the same thing, a
 desktop prediction followed by a technician on site, which is the precedent the panel cites.

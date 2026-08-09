@@ -747,7 +747,7 @@ letting that put it on top would be backwards.
 | Assumption | Value | Note |
 |---|---|---|
 | DIPI weights | 40/25/15/20 | the largest unsourced choice; mitigated by making them sliders |
-| Evidence tier thresholds | 20 tests / 3 tiles, 5 tests | a judgement about when a median stops being noise |
+| Evidence tier thresholds | 20 tests / 3 tiles, 5 tests | The **20-test line is demonstrably doing work**: no settlement above it carries an implausible latency, while 22 below it do. **The 5-test line is not.** The 5 to 9 band is barely tidier than the unscored 1 to 4 band beneath it, with a higher maximum and more bad readings. Kept as a pragmatic cutoff, not claimed as a proven sufficiency threshold. See how_it_works.md §3 |
 | `fibre_max_km` | 15 km | the only cut-off in the recommender ladder with no citation |
 | Receiver height | 10 m | the terrain screen's only remaining unsourced input |
 | Service threshold | 21 Mbps | ours, 0.7 x 30, built from the video ladder |
