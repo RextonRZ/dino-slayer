@@ -4370,7 +4370,17 @@ async function streetViewFor(coords) {
 
 /* A photo of THIS facility, by name. Text Search resolves the exact building
    far better than a nearby sweep, so clicking "Hospital Tambunan" shows that
-   hospital rather than whatever happens to sit closest to the pin. */
+   hospital rather than whatever happens to sit closest to the pin.
+
+   locationBias only BIASES. Google still returns a better-named match from the
+   other end of the country when it has one, and Malaysian facility names repeat
+   constantly, "SK Kampung Baru" many times over. So the answer is measured
+   against the pin and dropped if it is a different building. Without that check
+   a confident photo and a confident address can belong to a school hundreds of
+   kilometres away, and a picture of the wrong place is worse than no picture:
+   it is the one thing this panel must never do. */
+const FACILITY_PHOTO_MAX_KM = 3;      // the radius we asked to be biased towards
+
 async function facilityPhoto(name, coords) {
   const [lng, lat] = coords;
   const res = await fetch("https://places.googleapis.com/v1/places:searchText", {
@@ -4378,21 +4388,33 @@ async function facilityPhoto(name, coords) {
     headers: {
       "Content-Type": "application/json",
       "X-Goog-Api-Key": GOOGLE.key(),
-      "X-Goog-FieldMask": "places.displayName,places.photos,places.formattedAddress"
+      // places.location is what makes the check below possible.
+      "X-Goog-FieldMask": "places.displayName,places.photos,places.formattedAddress,places.location"
     },
     body: JSON.stringify({
       textQuery: name,
       maxResultCount: 1,
-      locationBias: { circle: { center: { latitude: lat, longitude: lng }, radius: 3000 } }
+      locationBias: { circle: { center: { latitude: lat, longitude: lng },
+                                radius: FACILITY_PHOTO_MAX_KM * 1000 } }
     })
   });
   if (!res.ok) throw new Error("Places HTTP " + res.status);
   const hit = (await res.json()).places?.[0];
   if (!hit || !hit.photos?.length) { GOOGLE.spend(1); return null; }
+  // Where Google says it is, against where our pin is. No coordinate back
+  // means we cannot prove it is the same building, so it is treated as if it
+  // were not: unverifiable and wrong get the same answer.
+  const loc = hit.location;
+  const away = loc ? havKm(coords, [loc.longitude, loc.latitude]) : null;
+  if (away === null || away > FACILITY_PHOTO_MAX_KM) {
+    GOOGLE.spend(1);                     // the search ran; no photo is fetched
+    return { wrong: true, name: hit.displayName?.text || name, away };
+  }
   GOOGLE.spend(2);                       // the search, plus the photo below
   return {
     name: hit.displayName?.text || name,
     where: hit.formattedAddress || "",
+    away,
     src: `https://places.googleapis.com/v1/${hit.photos[0].name}/media`
        + `?maxWidthPx=800&key=${encodeURIComponent(GOOGLE.key())}`
   };
@@ -4413,11 +4435,19 @@ async function loadFacilityPhoto(p, coords) {
   let html = "";
   try {
     const ph = await facilityPhoto(p.name, coords);
-    html = ph
-      ? `<figure class="g-hero"><img src="${ph.src}" alt="${esc(ph.name)}" loading="lazy"
+    html = !ph
+      ? `<p class="caption">No photo published for this facility.</p>`
+      : ph.wrong
+      // Named, but somewhere else. Say which and how far, so it reads as a
+      // name collision rather than as a fact about this facility.
+      ? `<p class="caption">Google's closest name match, ${esc(ph.name)}, is
+         ${ph.away === null ? "of unknown location" : km(ph.away) + " from this pin"},
+         so it is a different building. Showing nothing rather than the wrong
+         photo. The pin itself is from OpenStreetMap and is unchanged.</p>`
+      : `<figure class="g-hero"><img src="${ph.src}" alt="${esc(ph.name)}" loading="lazy"
            onerror="this.closest('figure').remove()">
-         <figcaption>${esc(ph.name)}${ph.where ? " · " + esc(ph.where) : ""}</figcaption></figure>`
-      : `<p class="caption">No photo published for this facility.</p>`;
+         <figcaption>${esc(ph.name)}${ph.where ? " · " + esc(ph.where) : ""}
+           ${ph.away != null ? " · " + km(ph.away) + " from the pin" : ""}</figcaption></figure>`;
   } catch (e) {
     html = `<p class="caption g-err">Photo unavailable (${esc(String(e.message || e))}).</p>`;
   }
