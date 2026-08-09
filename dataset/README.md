@@ -39,7 +39,7 @@ web/            GeoJSON the browser actually loads
 | `ml/clusters.json` | 323 | Fibre bundles and each settlement's spanning-tree spur |
 | `ml/cluster_sensitivity.json` | | What the bundling does at `min_cluster_size` 3 to 10. Not a plateau, and it says so |
 | `ml/tower_pairs.csv` | 10,070 | Every candidate mast to village path, distance only |
-| `ml/tower_pairs_los.csv` | 10,070 | The same paths with the SRTM terrain screen applied |
+| `ml/tower_pairs_los.csv` | 10,070 | The same paths with the SRTM terrain screen applied. **No script here writes it**, see below |
 | `ml/tower_scenarios.json` | | Mast counts by assumed radius, distance only |
 | `ml/tower_los_scenarios.json` | | Mast counts after the line-of-sight and Fresnel screen |
 | `ml/tower_isolated.csv` | 449 | Settlements only a mast in their own village can reach |
@@ -53,6 +53,34 @@ web/            GeoJSON the browser actually loads
 
 `sabah_divisions.geojson` is generated once, offline, by unioning district polygons per
 division. It is committed so the page never has to run a geometry library at load time.
+
+## Rebuilding the tower tables
+
+`notebooks/rebuild_tables.ipynb` runs the chain in Colab and checks each output
+against the committed copy. Verified: the two rebuildable tables come back
+byte for byte identical.
+
+```
+export_training_table.py   ->  training_table.csv
+tower_scenarios.py         ->  tower_pairs.csv
+  [SRTM screen, external]  ->  tower_pairs_los.csv
+tower_los.py               ->  tower_isolated.csv, tower_los_scenarios.json
+export_isolated.py         ->  web/isolated.json
+```
+
+**`tower_pairs_los.csv` has no generator in this repository.** It carries the
+terrain screen and was produced once against SRTM outside this code, so the
+chain cannot be re-run from nothing. Everything downstream reads the committed
+copy. What a rebuild would have to do is written out in section 3 of the
+notebook: sample SRTM along each of the 10,070 directed paths, 30 m mast and
+10 m receiver, 4/3 earth radius, then line of sight and 60% first Fresnel at
+700 MHz.
+
+Two things to know before touching that file. The screen is **directed, not
+symmetric**, because the two ends are at different heights: at 3 km, 100 of the
+712 clear paths work one way only. And `usable` is `True` on all 10,070 rows;
+it means the profile sampled cleanly, not that the link works. `fresnel` is the
+column that answers that.
 
 ---
 
