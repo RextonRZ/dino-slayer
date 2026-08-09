@@ -21,3 +21,8 @@ dashboard/public/mascot/*.png
 # OS
 Thumbs.db
 .DS_Store
+
+# Full-size logo art, 6250x6250 source files. The page loads only the resized
+# logo-nav-*.png and favicon.png; nothing in the repo references these. Kept
+# locally as the source to re-export from, same as the mascot originals above.
+dashboard/public/dino-slayer-logo-*.png
