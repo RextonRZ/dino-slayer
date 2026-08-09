@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dino Slayer</title>
+<!--
+  The site root is the REPO root, not dashboard/. It has to be: the dashboard
+  fetches ../dataset/web/*.geojson, so if dashboard/ were the root those paths
+  would climb above it and 404, which is exactly the failure this file exists
+  to stop being possible.
+
+  _redirects handles this on Cloudflare Pages and Netlify, and vercel.json on
+  Vercel. This page is the fallback for every host that honours neither, and
+  for a plain `python -m http.server` from the repo root. Three ways out, so
+  no single one has to work: an immediate meta refresh, a script that also
+  keeps ?query and #hash, and a link for anyone with both disabled.
+-->
+<meta http-equiv="refresh" content="0; url=dashboard/">
+<link rel="canonical" href="dashboard/">
+<link rel="icon" href="dashboard/public/favicon.png">
+<style>
+  html { color-scheme: dark light; }
+  body {
+    margin: 0; min-height: 100vh; display: grid; place-items: center;
+    background: #0C0F13; color: #E9EFF6;
+    font: 15px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    text-align: center; padding: 24px;
+  }
+  a { color: #3FC7E8; }
+  p { margin: 10px 0 0; color: #8B96A6; font-size: 13px; }
+</style>
+</head>
+<body>
+  <div>
+    <a href="dashboard/">Open Dino Slayer</a>
+    <p>Redirecting to the dashboard.</p>
+  </div>
+  <script>
+    // Carry any ?query and #hash through, so a shared deep link survives the hop.
+    location.replace("dashboard/" + location.search + location.hash);
+  </script>
+</body>
+</html>
