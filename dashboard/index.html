@@ -721,6 +721,18 @@ select.field{appearance:none;cursor:pointer;
   border-radius:99px;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.4);
   color:#fff;font-size:22px;line-height:1;cursor:pointer}
 .lb-close:hover{background:rgba(0,0,0,.65)}
+/* Deliberately not a facility glyph. A Google search result is context, and it
+   must not read as one of the mapped points the score is built from. */
+.g-pin{width:22px;height:22px;border-radius:50%;box-sizing:border-box;
+  border:2.5px dashed var(--accent);background:var(--accent-bg);
+  box-shadow:0 0 0 3px rgba(0,0,0,.28);cursor:pointer}
+/* The clickable name under a Google photo, and in the local-context list. */
+.g-jump,.fac-jump{background:none;border:0;padding:0;font:inherit;color:inherit;
+  text-align:left;cursor:pointer;text-decoration:underline;
+  text-decoration-style:dotted;text-underline-offset:2px}
+.g-jump:hover,.fac-jump:hover{color:var(--accent)}
+.g-jump:focus-visible,.fac-jump:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.fac-jump b{cursor:pointer}
 .g-hero img,.g-photos img{cursor:zoom-in}
 .g-hero{margin:0 0 8px}
 .g-hero img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:9px;
@@ -4279,6 +4291,27 @@ function closeFacility() {
   if (mapReady) map.setFilter("facility-selected", ["==", ["get","facility_id"], ""]);
 }
 
+/* A Google result put on the map. A DOM marker, not a style layer, for two
+   reasons: markers survive a basemap change without being re-added, and this
+   point must never live in the same layer as FACILITIES. Ours are mapped in
+   OpenStreetMap and can be scored against; this one is a search result we do
+   not own, so it is drawn as a hollow ring that looks nothing like a facility
+   glyph and it disappears the moment you look at something else. */
+let gPin = null;
+function showGooglePlace(lng, lat, name) {
+  if (!map || !isFinite(lng) || !isFinite(lat)) return;
+  if (!gPin) {
+    const node = document.createElement("div");
+    node.className = "g-pin";
+    gPin = new maplibregl.Marker({ element: node, anchor: "center" });
+  }
+  gPin.getElement().title = `${name} (Google result, context only)`;
+  gPin.setLngLat([lng, lat]).addTo(map);
+  map.flyTo({ center:[lng, lat], zoom:Math.max(map.getZoom(), 13.5),
+              duration:REDUCED ? 0 : 900 });
+}
+function clearGooglePlace() { if (gPin) gPin.remove(); }
+
 function selectFacility(fid) {
   const f = FACILITIES.find(x => x.properties.facility_id === fid);
   if (!f) return;
@@ -4426,30 +4459,50 @@ async function loadFacilityPhoto(p, coords) {
   const cacheKey = "fac:" + p.facility_id;
   if (GOOGLE.cache.has(cacheKey)) { mount.innerHTML = GOOGLE.cache.get(cacheKey); return; }
   if (GOOGLE.left() <= 0) { mount.innerHTML = `<p class="caption">Session budget reached.</p>`; return; }
-  if (!p.name) {                        // nothing to search on; don't burn a call
-    mount.innerHTML = `<p class="caption">This point has no name in OpenStreetMap, so there is nothing
-      to look up. The map pin is still exact.</p>`;
-    return;
-  }
-  mount.innerHTML = `<p class="caption">Loading photo…</p>`;
+  mount.innerHTML = `<p class="caption">Loading imagery…</p>`;
   let html = "";
+  // The photo of the building, then the panorama underneath it.
+  if (!p.name) {                        // nothing to search Places on; don't burn a call
+    html += `<p class="caption">This point has no name in OpenStreetMap, so there is no photo
+      to look up. The map pin is still exact.</p>`;
+  } else {
+    try {
+      const ph = await facilityPhoto(p.name, coords);
+      html += !ph
+        ? `<p class="caption">No photo published for this facility.</p>`
+        : ph.wrong
+        // Named, but somewhere else. Say which and how far, so it reads as a
+        // name collision rather than as a fact about this facility.
+        ? `<p class="caption">Google's closest name match, ${esc(ph.name)}, is
+           ${ph.away === null ? "of unknown location" : km(ph.away) + " from this pin"},
+           so it is a different building. Showing nothing rather than the wrong
+           photo. The pin itself is from OpenStreetMap and is unchanged.</p>`
+        : `<figure class="g-hero"><img src="${ph.src}" alt="${esc(ph.name)}" loading="lazy"
+             onerror="this.closest('figure').remove()">
+           <figcaption>${esc(ph.name)}${ph.where ? " · " + esc(ph.where) : ""}
+             ${ph.away != null ? " · " + km(ph.away) + " from the pin" : ""}</figcaption></figure>`;
+    } catch (e) {
+      html += `<p class="caption g-err">Photo unavailable (${esc(String(e.message || e))}).</p>`;
+    }
+  }
+  // Street View under it. This one does not depend on the name: the pin is a
+  // coordinate, so it still works for the unnamed points Places cannot be
+  // asked about, and for the ones whose only name match was the wrong building.
   try {
-    const ph = await facilityPhoto(p.name, coords);
-    html = !ph
-      ? `<p class="caption">No photo published for this facility.</p>`
-      : ph.wrong
-      // Named, but somewhere else. Say which and how far, so it reads as a
-      // name collision rather than as a fact about this facility.
-      ? `<p class="caption">Google's closest name match, ${esc(ph.name)}, is
-         ${ph.away === null ? "of unknown location" : km(ph.away) + " from this pin"},
-         so it is a different building. Showing nothing rather than the wrong
-         photo. The pin itself is from OpenStreetMap and is unchanged.</p>`
-      : `<figure class="g-hero"><img src="${ph.src}" alt="${esc(ph.name)}" loading="lazy"
-           onerror="this.closest('figure').remove()">
-         <figcaption>${esc(ph.name)}${ph.where ? " · " + esc(ph.where) : ""}
-           ${ph.away != null ? " · " + km(ph.away) + " from the pin" : ""}</figcaption></figure>`;
+    const sv = await streetViewFor(coords);
+    if (sv.embed) {
+      html += `<figure class="g-hero g-pano"><iframe src="${sv.embed}" title="Street View at this facility"
+             loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+         <figcaption>Street View at the pin. Drag to look around.</figcaption></figure>`;
+    } else if (sv.none) {
+      html += `<p class="caption">No Street View has ever been captured here. That says nothing
+               about the facility.</p>`;
+    } else {
+      html += `<p class="caption g-err">Street View request refused: <b>${esc(sv.error)}</b>.
+               ${esc(sv.why)} This is a key or API-enablement problem, not a fact about this place.</p>`;
+    }
   } catch (e) {
-    html = `<p class="caption g-err">Photo unavailable (${esc(String(e.message || e))}).</p>`;
+    html += `<p class="caption g-err">Street View unavailable (${esc(String(e.message || e))}).</p>`;
   }
   // No "context only" line here, the card already carries one at its foot.
   GOOGLE.cache.set(cacheKey, html);
@@ -4464,7 +4517,8 @@ async function placePhotosFor(coords) {
     headers: {
       "Content-Type": "application/json",
       "X-Goog-Api-Key": GOOGLE.key(),
-      "X-Goog-FieldMask": "places.displayName,places.photos,places.primaryTypeDisplayName"
+      // places.location is what lets a caption put the place on the map.
+      "X-Goog-FieldMask": "places.displayName,places.photos,places.primaryTypeDisplayName,places.location"
     },
     body: JSON.stringify({
       includedTypes: ["school", "hospital", "primary_school", "secondary_school"],
@@ -4481,9 +4535,21 @@ async function placePhotosFor(coords) {
   return hits.map(p => ({
     name: p.displayName?.text || "Unnamed place",
     type: p.primaryTypeDisplayName?.text || "",
+    lng: p.location?.longitude, lat: p.location?.latitude,
     src: `https://places.googleapis.com/v1/${p.photos[0].name}/media`
        + `?maxWidthPx=800&skipHttpRedirect=false&key=${encodeURIComponent(GOOGLE.key())}`
   }));
+}
+
+/* The name under a Google photo. Clickable only when Google actually returned
+   a coordinate: a caption that cannot show you where it is stays plain text
+   rather than becoming a button that does nothing. */
+function gJump(p) {
+  const nm = esc(p.name);
+  if (!isFinite(p.lng) || !isFinite(p.lat)) return nm;
+  return `<button type="button" class="g-jump" data-gjump
+    data-lng="${p.lng}" data-lat="${p.lat}" data-nm="${nm}"
+    title="Show on the map">${nm}</button>`;
 }
 
 /* Fired ONLY from an open drill-down panel, for that ONE settlement, and only
@@ -4491,6 +4557,9 @@ async function placePhotosFor(coords) {
 async function loadGoogleContext(settlementId, coords) {
   const mount = el("gMount");
   if (!mount || !GOOGLE.on()) return;
+  // A pin left over from the last settlement would be pointing at a place the
+  // open panel says nothing about.
+  clearGooglePlace();
   if (GOOGLE.cache.has(settlementId)) { mount.innerHTML = GOOGLE.cache.get(settlementId); return; }
   if (GOOGLE.left() <= 0) {
     mount.innerHTML = `<p class="caption">Session budget reached (${GOOGLE.MAX_CALLS} calls). Reload to reset.</p>`;
@@ -4520,11 +4589,13 @@ async function loadGoogleContext(settlementId, coords) {
       const [lead, ...rest] = photos;
       html += `<figure class="g-hero"><img src="${lead.src}" alt="${esc(lead.name)}" loading="lazy"
            onerror="this.closest('figure').remove()">
-         <figcaption>${esc(lead.name)}${lead.type ? " · " + esc(lead.type) : ""}</figcaption></figure>`;
+         <figcaption>${gJump(lead)}${lead.type ? " · " + esc(lead.type) : ""}</figcaption></figure>`;
       if (rest.length) html += `<div class="g-photos">${rest.map(p =>
         `<figure><img src="${p.src}" alt="${esc(p.name)}" loading="lazy"
            onerror="this.closest('figure').remove()">
-         <figcaption>${esc(p.name)}</figcaption></figure>`).join("")}</div>`;
+         <figcaption>${gJump(p)}</figcaption></figure>`).join("")}</div>`;
+      html += `<p class="caption">Click a name to put it on the map. These are Google
+               search results, not mapped facilities, and none of them enter the score.</p>`;
     } else {
       html += `<p class="caption">No nearby places with photos.</p>`;
     }
@@ -4682,7 +4753,9 @@ function localContextBlock(coords) {
           const p = f.properties;
           return `<div class="fac-row">
             ${facGlyph(p.kind, "fac-kind")}
-            <span class="fac-nm"><b>${esc(facilityName(p))}</b>
+            <span class="fac-nm">
+              <button type="button" class="fac-jump" data-facjump="${esc(p.facility_id)}"
+                title="Show on the map"><b>${esc(facilityName(p))}</b></button>
               <small>${esc(AMENITY[p.amenity])} &middot; ${esc(districtLabel(p._district))}</small></span>
             <span class="fac-d num">${km(d)}</span>
             <a class="fac-link" target="_blank" rel="noopener noreferrer" href="${gmapsLink(f.geometry.coordinates, p.name)}"
@@ -8679,6 +8752,19 @@ function wireUI() {
     zoomToDistrict(d);        // same framing a click on the shape gives
   };
   el("queueBToggle").onchange = applyFilters;
+  /* Delegated for the same reason as the lightbox below: these names are
+     rebuilt every time a panel opens, and the Google ones arrive from a fetch
+     after the panel is already on screen. */
+  document.addEventListener("click", e => {
+    const g = e.target.closest("[data-gjump]");
+    if (g) {
+      showGooglePlace(parseFloat(g.dataset.lng), parseFloat(g.dataset.lat), g.dataset.nm);
+      return;
+    }
+    const f = e.target.closest("[data-facjump]");
+    // Ours, so it goes through the normal selection and opens its own card.
+    if (f) { clearGooglePlace(); selectFacility(f.dataset.facjump); }
+  });
   /* Delegated, because the photos arrive later from a fetch and are replaced
      whenever a different settlement is opened. */
   document.addEventListener("click", e => {
@@ -8989,6 +9075,7 @@ function wireUI() {
   el("gToggle").onchange = e => {
     GOOGLE.setOn(e.target.checked);
     el("gRow").dataset.on = e.target.checked ? "1" : "0";
+    if (!e.target.checked) clearGooglePlace();   // off means off, pin included
     if (selectedId) {           // re-render so the mount appears or disappears
       const f = FEATURES.find(x => x.properties.settlement_id === selectedId);
       if (f) renderPanel(f.properties);
