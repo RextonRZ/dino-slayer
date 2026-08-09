@@ -14,7 +14,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dino Slayer, Digital Inclusion Priority Index, Sabah</title>
+<!-- Set this to your agent's URL if it is not api.<this domain>. Left empty
+       the page works it out, and an unreachable agent only costs the chat
+       panel: every other panel reads static files and is unaffected. -->
+  <meta name="dino-agent" content="">
+  <title>Dino Slayer, Digital Inclusion Priority Index, Sabah</title>
 <link rel="icon" type="image/png" href="public/favicon.png">
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.css">
 <style>
@@ -5993,14 +5997,39 @@ function stepsMarkup(d) {
      2. the map only ever moves to settlement_ids that exist in OUR data. An id
         the file does not contain is dropped and reported, so a hallucinated
         name can never fly the map somewhere and imply it is real.            */
-const ASK_URL = "http://localhost:7860/ask";
+/* Where the agent lives. Baked in as localhost:7860 until this was deployed,
+   which meant a visitor's browser called THEIR OWN machine and the panel said
+   unavailable forever.
+
+   Three ways to set it, first one that answers wins:
+
+     1. <meta name="dino-agent" content="https://api.example.com">  in the head
+     2. ?agent=https://...  on the URL, for testing a branch against a server
+     3. nothing, and it works it out: localhost when you are on localhost,
+        otherwise api.<whatever domain this page is served from>
+
+   Rule 3 is why a plain deploy to example.com finds api.example.com with no
+   configuration at all. Set the meta tag when that guess is wrong. */
+function agentBase() {
+  const q = new URLSearchParams(location.search).get("agent");
+  if (q) return q.replace(/\/+$/, "");
+  const m = document.querySelector('meta[name="dino-agent"]');
+  if (m && m.content.trim()) return m.content.trim().replace(/\/+$/, "");
+  const h = location.hostname;
+  if (!h || h === "localhost" || h === "127.0.0.1" || h === "[::1]")
+    return "http://localhost:7860";
+  // Strip a leading www. so www.example.com also reaches api.example.com.
+  return `${location.protocol}//api.${h.replace(/^www\./, "")}`;
+}
+const AGENT_BASE = agentBase();
+const ASK_URL = AGENT_BASE + "/ask";
 const STREAM_URL = ASK_URL + "/stream";
 /* One LangGraph thread per page load, so "why is that one ranked first?" can
    resolve "that one" against the previous turn. Never persisted: reloading the
    page starts a fresh conversation, which is the honest default for a kiosk
    demo a stranger might walk up to. */
 const SESSION_ID = "s" + Math.random().toString(36).slice(2) + Date.now().toString(36);
-const HEALTH_URL = "http://localhost:7860/health";
+const HEALTH_URL = AGENT_BASE + "/health";
 let chatBusy = false;
 let streamOk = true;          // flipped off permanently if the server has no /stream
 
