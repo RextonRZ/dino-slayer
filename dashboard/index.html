@@ -4521,6 +4521,10 @@ function renderGoogleSetup() {
     <h3>Google imagery setup</h3>
     <p class="caption">Stored in this browser only (localStorage). Never written to the repo.
       Use an HTTP-referrer-restricted browser key.</p>
+    <p class="caption">Needs three APIs enabled on the key's own project:
+      <b>Street View Static</b>, <b>Maps Embed</b> and <b>Places (New)</b>.
+      They are separate products, and a key restricted to a list must name all
+      three there as well.</p>
     <input class="field" id="gKeyInput" type="password" placeholder="Paste API key"
            value="${esc(GOOGLE.key())}" style="margin:10px 0 8px" autocomplete="off">
     <div style="display:flex;gap:6px">

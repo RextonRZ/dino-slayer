@@ -45,9 +45,22 @@ this repo.
 
 **Turn it on**
 
-1. Google Cloud console → enable **Street View Static API** and **Places API (New)**
+1. Google Cloud console → enable **all three** of these. They are separate
+   products and enabling two of them gets you two thirds of the panel:
+
+   | API | What breaks without it |
+   |---|---|
+   | **Street View Static API** | the free check for whether a panorama exists |
+   | **Maps Embed API** | the panorama itself, which is an embed, not a static image |
+   | **Places API (New)** | the facility photos |
+
 2. Create a **browser key**, restrict it by HTTP referrer to `localhost:8000/*`
-   (and your demo host), and restrict it to only those two APIs
+   (and your demo host), and restrict it to those three APIs
+
+   Enabling an API on the project is not the same as allowing it on the key.
+   If the key is set to "Restrict key", each one has to be ticked there too,
+   or it stays blocked after you have enabled it and the console will show it
+   enabled while the request is refused.
 3. Set a billing budget alert, belt and braces
 4. Open <http://localhost:8000/dashboard/?setup=1>, paste the key, Save
 5. A **"Google imagery"** toggle now appears in the sidebar under LAYERS. It
