@@ -136,7 +136,9 @@ button,a,input,select{transition:background-color .18s var(--ease),color .18s va
 .brand-home{display:flex;align-items:center;padding:2px;border-radius:8px;flex:none}
 .brand-home:hover{background:var(--tint)}
 .brand-home:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.brand-logo{height:34px;width:auto;flex:none}
+/* 40 in a 64 px header row, so 12 px of air above and below. The source
+   art is 96 px tall, which is still 2.4x at this size. */
+.brand-logo{height:40px;width:auto;flex:none}
 [data-theme="dark"] .light-only{display:none}
 [data-theme="light"] .dark-only{display:none}
 .brand span{font-size:13px;color:var(--ink-muted);white-space:nowrap;overflow:hidden;
