@@ -1,0 +1,37 @@
+# Not uploaded to the CDN. The browser only ever asks for three things: the
+# root redirect, dashboard/, and dataset/web/. Everything else in this repo is
+# source, documentation or the offline pipeline, and shipping it to every edge
+# location would add about 20 MB to each deploy for files nobody requests.
+#
+# It stays in git. This only controls what the static host serves.
+
+# The agent runs as its own service, not from the CDN.
+agent/
+
+# Prose and screenshots.
+docs/
+
+# The offline pipeline: model artefacts, terrain profiles, raw inputs, and the
+# scripts that turn them into dataset/web/. Only dataset/web/ is fetched.
+dataset/ml/
+dataset/network/
+dataset/settlements/
+dataset/boundaries/
+dataset/*.py
+dataset/README.md
+
+# Git's own object store. Wrangler walks the directory, not the index, so
+# without this it tries to upload .git and trips the 25 MiB asset limit on an
+# old packed object.
+.git/
+
+# Repo furniture.
+README.md
+_redirects
+vercel.json
+wrangler.toml
+.assetsignore
+.gitignore
+.pytest_cache/
+__pycache__/
+*.pyc

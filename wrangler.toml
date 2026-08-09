@@ -1,0 +1,26 @@
+# Cloudflare Workers static assets.
+#
+# The dashboard is one HTML file with no build step, so there is no script and
+# no `main` here: this is an assets-only Worker that serves files as they sit
+# in the repo.
+#
+# THE ONE THING THAT MATTERS IS `directory`.
+#
+# It must be the REPO ROOT, not dashboard/. The dashboard fetches
+# ../dataset/web/*.geojson, so if dashboard/ were the root those paths would
+# climb above it and every data file would 404. That is exactly what the first
+# deploy did: the page loaded, the map was empty, and the console was full of
+# 404s. index.html at the root then forwards visitors to /dashboard/.
+#
+# Files the browser never asks for are skipped in .assetsignore beside this.
+
+name = "dino-slayer"
+compatibility_date = "2026-08-09"
+
+[assets]
+directory = "./"
+
+# A missing file should be a missing file. The other options here are for
+# single-page apps that route client-side, which this is not: every URL it
+# serves is a real file on disk.
+not_found_handling = "none"
