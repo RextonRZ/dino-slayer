@@ -1,0 +1,24 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "_comment": [
+    "Static only, no build. The dashboard fetches ../dataset/web/, so the",
+    "deploy root has to be the REPO root and /dashboard/ is the entry.",
+    "Deploying the dashboard/ folder on its own 404s every data file."
+  ],
+  "cleanUrls": false,
+  "redirects": [
+    { "source": "/", "destination": "/dashboard/", "permanent": false }
+  ],
+  "headers": [
+    {
+      "_comment": "The data files change only when a dataset is republished.",
+      "source": "/dataset/web/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }]
+    },
+    {
+      "_comment": "56 MB of simulator clips and the mascot frames never change.",
+      "source": "/dashboard/public/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    }
+  ]
+}

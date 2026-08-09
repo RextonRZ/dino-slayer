@@ -29,9 +29,25 @@ from . import tools as T
 load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 
 app = FastAPI(title="Tanya Dino")
+
+# Which front ends may call this. The two localhost origins are the dev
+# defaults and are always allowed; a deployment adds its own through the
+# environment rather than by editing this file, because the origin belongs to
+# the deployment and not to the code.
+#
+#     ALLOWED_ORIGINS=https://example.com,https://www.example.com
+#
+# Set it as a secret in the host's dashboard. "*" is accepted for a throwaway
+# demo and refused alongside credentials, which is why this API carries none:
+# there is no login and no cookie, every answer is computed from public files.
+_DEV_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000"]
+_env_origins = [o.strip().rstrip("/") for o in
+                os.getenv("ALLOWED_ORIGINS", "").split(",") if o.strip()]
+ALLOWED_ORIGINS = ["*"] if "*" in _env_origins else _DEV_ORIGINS + _env_origins
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8000", "http://127.0.0.1:8000"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_methods=["*"], allow_headers=["*"],
 )
 

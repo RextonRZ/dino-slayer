@@ -1,0 +1,3 @@
+# Cloudflare Pages / Netlify. The dashboard reads ../dataset/web/, so the
+# site root must be the REPO root and /dashboard/ is the entry point.
+/    /dashboard/    302
