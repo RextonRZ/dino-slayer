@@ -4616,10 +4616,12 @@ async function loadGoogleContext(settlementId, coords) {
            onerror="this.closest('figure').remove()">
          <figcaption>${gJump(p)}${gAway(p)}</figcaption></figure>`).join("")}</div>`;
       html += `<p class="caption">Anything Google lists within ${NEARBY_PLACES_KM} km, which reaches
-               past the settlement itself, so check the distance on each. The scored
-               facility counts use 3 km and come from OpenStreetMap, so these will not
-               always agree. Click a name to put it on the map. Google search results
-               are context and none of them enter the score.</p>`;
+               past the settlement itself, so check the distance on each. These are
+               Google's own listings at Google's own coordinates, a different source
+               from the mapped facilities above: the same building can appear in both
+               a little way apart, and the scored counts use 3 km of OpenStreetMap, so
+               the two lists will not always agree. Click a name to put it on the map.
+               Nothing here enters the score.</p>`;
     } else {
       html += `<p class="caption">No nearby places with photos.</p>`;
     }
