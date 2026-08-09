@@ -8535,8 +8535,12 @@ function wireGuide() {
 }
 
 /* First visit only. A blocked or full localStorage means the guide opens
-   again next time, which is a smaller failure than never opening at all. */
+   again next time, which is a smaller failure than never opening at all.
+   Not during ?setup=1: that screen is also a first visit, and the guide would
+   open on top of it and swallow the clicks on its own Save button. Saving
+   returns to the plain URL, so the tour still runs, just one step later. */
 function maybeOpenGuide() {
+  if (new URLSearchParams(location.search).has("setup")) return;
   let seen = false;
   try { seen = localStorage.getItem(GUIDE_KEY) === "1"; } catch (e) {}
   if (!seen) setTimeout(guideOpen, 900);   // after the reveal sweep settles
