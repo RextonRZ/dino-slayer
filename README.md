@@ -37,7 +37,7 @@ for who to go and measure next. It screens. It does not certify.
 little measurement to score, so an evidence gap looks like a gap and never like good news.
 
 <p align="center">
-  <img src="docs/media/map-overview.png" alt="Map overview" width="640">
+  <img src="docs/media/map-overview.png" alt="Map overview" width="800">
 </p>
 
 **Click any settlement** for the full case, pillar by pillar, with the raw numbers and how
@@ -48,14 +48,14 @@ people share the link, pick a task, watch a real clip play at the quality it can
 30 users, Talas gets 0.38 Mbps each and everything stalls.
 
 <p align="center">
-  <img src="docs/media/drilldown-simulator.png" alt="Experience simulator" width="640">
+  <img src="docs/media/drilldown-simulator.png" alt="Experience simulator" width="800">
 </p>
 
 **Nearby schools and clinics**, on the same 3 km buffer that feeds the Institutions pillar,
 so you can see what a fix would reach.
 
 <p align="center">
-  <img src="docs/media/nearby-facilities.png" alt="Nearby facilities" width="640">
+  <img src="docs/media/nearby-facilities.png" alt="Nearby facilities" width="800">
 </p>
 
 **Terrain.** Elevation correlates -0.25 with measured download speed, a stronger
@@ -67,14 +67,14 @@ the town their mast would stand in, 132 of them in Ranau under Kinabalu.
 renumbers the rank column, so row 1 by latency is never mistaken for the top priority.
 
 <p align="center">
-  <img src="docs/media/rankings.png" alt="Rankings" width="640">
+  <img src="docs/media/rankings.png" alt="Rankings" width="800">
 </p>
 
 **Ask Dino.** Ask a question, get an answer from this dataset, watch the map fly to it.
 Every number comes from a Python tool, never from the model.
 
 <p align="center">
-  <img src="docs/media/copilot-answer.png" alt="Ask Dino" width="640">
+  <img src="docs/media/copilot-answer.png" alt="Ask Dino" width="800">
 </p>
 
 **The coverage model.** 216 settlements have no usable measurement. A gradient model
@@ -85,7 +85,7 @@ is the finding. No modelled number appears without a one-click model card, and n
 the official ranking.
 
 <p align="center">
-  <img src="docs/media/model-card.png" alt="Model card" width="640">
+  <img src="docs/media/model-card.png" alt="Model card" width="800">
 </p>
 
 **Where to measure next.** The 334 unscored settlements ranked by what is at stake against
@@ -93,7 +93,7 @@ how wide the model's interval is. Both shown, never multiplied: stakes times Mbp
 unit.
 
 <p align="center">
-  <img src="docs/media/survey-planner.png" alt="Survey planner" width="640">
+  <img src="docs/media/survey-planner.png" alt="Survey planner" width="800">
 </p>
 
 **Budget what-if.** Set a budget, see how far down the list it reaches and which
@@ -101,7 +101,7 @@ settlements get funded. No Malaysian per-unit cost is published, so the defaults
 benchmarks rather than quotes, and a planner can type their own over them.
 
 <p align="center">
-  <img src="docs/media/budget-whatif.png" alt="Budget what-if" width="640">
+  <img src="docs/media/budget-whatif.png" alt="Budget what-if" width="800">
 </p>
 
 **Deployment bundles.** Two villages sharing one trench were each billed for the whole
@@ -111,7 +111,7 @@ RM 89.0m. It also says what it cannot do: only 6 of the top 50 are in any bundle
 fibre needs 3,000 people within 2 km and the urgent settlements are small.
 
 <p align="center">
-  <img src="docs/media/bundles.png" alt="Deployment bundles" width="640">
+  <img src="docs/media/bundles.png" alt="Deployment bundles" width="800">
 </p>
 
 **Shared mast screening.** Distance alone said 86 to 189 masts cover the 449 tower
@@ -121,7 +121,7 @@ before terrain the assumed radius swung cost by RM 53.6m, after it RM 17.7m. Onc
 in five are blocked, extra reach stops buying coverage.
 
 <p align="center">
-  <img src="docs/media/mast-screening.png" alt="Shared mast screening" width="640">
+  <img src="docs/media/mast-screening.png" alt="Shared mast screening" width="800">
 </p>
 
 **Night view.** Thirteen years of VIIRS radiance as a map mode, not an overlay. **703 of
@@ -130,21 +130,21 @@ their own mast. A mode by choice: an overlay would say those places are worse se
 the data does not know. Nightlights measure electrification, never coverage.
 
 <p align="center">
-  <img src="docs/media/night-view.png" alt="Night view" width="640">
+  <img src="docs/media/night-view.png" alt="Night view" width="800">
 </p>
 
 **Compare** districts, divisions, or up to 20 individual settlements by name, on identical
 definitions, with a metric table and a need profile.
 
 <p align="center">
-  <img src="docs/media/compare-settlements.png" alt="Compare settlements" width="640">
+  <img src="docs/media/compare-settlements.png" alt="Compare settlements" width="800">
 </p>
 
 The whole comparison prints to one page, weighting and evidence counts included, so the
 sheet someone carries into a meeting says what produced it.
 
 <p align="center">
-  <img src="docs/media/comparison-report.png" alt="Comparison report" width="640">
+  <img src="docs/media/comparison-report.png" alt="Comparison report" width="800">
 </p>
 
 **Suggested option.** Filter by what the recommender suggests: fibre 323, tower 449,
@@ -152,7 +152,7 @@ satellite 22, community Wi-Fi 654. A filter and not a colour, so dots keep their
 reading.
 
 <p align="center">
-  <img src="docs/media/suggested-option.png" alt="Suggested option" width="640">
+  <img src="docs/media/suggested-option.png" alt="Suggested option" width="800">
 </p>
 
 **Cell tower records.** 1,217 crowdsourced OpenCelliD masts as context, never a feature:
@@ -163,7 +163,7 @@ not what is built. No marker means nobody surveyed, not no tower.
 every score, rank and colour recomputes live, stamped into the panel and the CSV.
 
 <p align="center">
-  <img src="docs/media/weightings.png" alt="Weightings" width="640">
+  <img src="docs/media/weightings.png" alt="Weightings" width="800">
 </p>
 
 **Light theme and satellite.** Both palettes checked for colour-vision separation, dot
@@ -171,7 +171,11 @@ outlines thickened over imagery. Deep red is the top of the scale in both, after
 ramps once ran in opposite directions.
 
 <p align="center">
-  <img src="docs/media/light-theme.png" alt="Light theme" width="640">
+  <img src="docs/media/light-theme.png" alt="Light theme" width="800">
+</p>
+
+<p align="center">
+  <img src="docs/media/satellite-map.png" alt="Satellite basemap" width="800">
 </p>
 
 ---
