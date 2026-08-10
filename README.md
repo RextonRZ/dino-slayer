@@ -14,6 +14,25 @@ Built for **ASEAN GeoAI Fusion 2026** · Open data only · No account, no build 
 
 ---
 
+## Try it
+
+**Live dashboard — <https://dino-slayer.rzrexton.com>**
+
+No account, no install, nothing to configure. Opens on the live map with all
+1,448 settlements.
+
+| Component | Where | Notes |
+|---|---|---|
+| Dashboard | <https://dino-slayer.rzrexton.com> | Static, served from Cloudflare |
+| Ask Dino API | <https://dino-slayer.onrender.com> | `/health` is public. Free tier, so the first request after an idle spell takes about 30 seconds to wake, then 2 seconds |
+
+The dashboard never hard-depends on the agent. If the API is asleep or its key
+is missing, only the chat panel says so and every other panel is unaffected.
+
+Everything below runs the same thing locally from this package.
+
+---
+
 ## Why we built it
 
 Everyone already knows rural Sabah has a connectivity problem. What nobody could hand a
@@ -31,23 +50,86 @@ for who to go and measure next. It screens. It does not certify.
 
 ---
 
-## A walk through the dashboard
+## Getting started
+
+**Prerequisites:** Python 3.10+ for the dataset scripts and the agent. Nothing else. The
+dashboard is one HTML file with no build step.
+
+Every derived file the browser reads is published by a script in `dataset/` that re-checks it
+on the way through and refuses to write if a check fails. That is not ceremony: it has caught
+a claim that all 216 unmeasured settlements were dark when 24 of them are lit, and a
+population figure that double counted overlapping buffers by a factor of 25.
+
+**The dashboard, on its own:**
+
+```bash
+git clone https://github.com/RextonRZ/dino-slayer.git
+cd dino-slayer
+python -m http.server
+```
+
+Open <http://localhost:8000/dashboard/>. Serve from the repo root, the page reads
+`../dataset/web/` and browsers block `file://` fetches.
+
+**Add the copilot** (optional, the dashboard works without it):
+
+```bash
+pip install -r agent/requirements.txt
+copy agent\.env.example agent\.env      # then put your real Gemini key in agent\.env
+python -m uvicorn agent.server:app --port 7860
+```
+
+`agent/.env` is gitignored. Never put a key in `.env.example`. The key must come from
+[aistudio.google.com/apikey](https://aistudio.google.com/apikey), not the Google Cloud
+console, and it must be a different key from the Maps one.
+
+**Check the tools without the LLM:**
+
+```bash
+python -m agent.tools        # runs all 15 tools against the real data and prints the results
+```
+
+**Endpoints**
+
+| Route | What |
+|---|---|
+| `GET /health` | Is it up, which model, how many settlements, which tools are registered |
+| `POST /ask` | `{question, session_id}` to the full contract in one response |
+| `POST /ask/stream` | The same, as server-sent events: one `step` per graph node, then `done` |
+
+---
+
+## Repo layout
+
+```
+dashboard/index.html        the entire dashboard, one file
+dashboard/public/           logo, mascot frames, simulator video clips
+dataset/                    sources, the DIPI pipeline output, and the web exports
+dataset/ml/                 training table, frozen folds, model artefacts, terrain and VIIRS
+dataset/export_*.py         publish a derived file, and re-verify it on the way through
+agent/                      LangGraph agent, tools, and the FastAPI server
+docs/system_info.md         what the system does, what is geo, what is AI, and the impact
+docs/how_it_works.md        every panel, how each number is counted, and its source
+docs/deployment_clusters.md the bundling and mast work, with the methods that failed
+docs/viirs_nightlights.md   nightlights tested and rejected, kept as a power flag
+docs/ai_governance.md       NIST AI RMF mapping, generated
+```
+
+---
+
+## What it does
+
+Screenshots of every panel below are in [Screenshots](#screenshots) at the end.
 
 **The map.** Every settlement coloured by priority. Hollow rings have too little
 measurement to score, so an evidence gap looks like a gap, never like good news.
-
-![Map overview](docs/media/map-overview.png)
 
 **Click any settlement** for the case behind its score, pillar by pillar.
 
 **The Experience Simulator** turns a speed into a sentence a minister can use. At 30 shared
 users, Talas gets 0.38 Mbps each and everything stalls.
 
-![Experience simulator](docs/media/drilldown-simulator.png)
-
 **Nearby schools and clinics**, on the same 3 km buffer that feeds the Institutions pillar.
-
-![Nearby facilities](docs/media/nearby-facilities.png)
 
 **Terrain.** Elevation correlates -0.25 with download speed, stronger than distance to town.
 It never enters the score. It explains a slow link and qualifies a siting recommendation.
@@ -55,59 +137,37 @@ It never enters the score. It explains a slow link and qualifies a siting recomm
 **The rankings.** All 1,114 scored settlements. Sorting never renumbers the rank column, so
 row 1 by latency is never mistaken for the top priority.
 
-![Rankings](docs/media/rankings.png)
-
 **Ask Dino.** Ask in plain English, the map flies to the answer. Every number comes from a
 Python tool, never from the model.
-
-![Ask Dino](docs/media/copilot-answer.png)
 
 **The coverage model.** 216 settlements have no usable measurement. A gradient model
 estimates each with an interval and its top three SHAP drivers. Validated by district:
 MAE 34.1 Mbps spatially against 25.3 random, and that 35% gap is the finding.
 
-![Model card](docs/media/model-card.png)
-
 **Where to measure next.** The 334 unscored settlements ranked by stakes against interval
 width. Both shown, never multiplied: stakes times Mbps has no unit.
 
-![Survey planner](docs/media/survey-planner.png)
-
 **Budget what-if.** Set a budget, see how far down the list it reaches. No Malaysian
 per-unit cost is published, so the defaults are ITU benchmarks and you can type over them.
-
-![Budget what-if](docs/media/budget-whatif.png)
 
 **Deployment bundles.** Two villages sharing one trench were each billed for the whole
 thing. Bundling them drops fibre from RM 190.9m to RM 89.0m. It also says what it cannot
 do: only 6 of the top 50 are in any bundle.
 
-![Deployment bundles](docs/media/bundles.png)
-
 **Shared mast screening.** Distance alone said 86 to 189 masts. Screening every path for
 line of sight and 60% Fresnel says **240 to 274**, because four in five are blocked.
-
-![Shared mast screening](docs/media/mast-screening.png)
 
 **Night view.** Thirteen years of VIIRS radiance as a map mode, not an overlay. **703 of
 1,448 register nothing**, so anything sited there brings its own power. An overlay would
 say those places are worse served, which the data does not know.
 
-![Night view](docs/media/night-view.png)
-
 **Compare** districts, divisions, or up to 20 settlements by name, on identical definitions.
-
-![Compare settlements](docs/media/compare-settlements.png)
 
 It prints to one page carrying its weighting and evidence counts, so the sheet someone takes
 into a meeting says what produced it.
 
-![Comparison report](docs/media/comparison-report.png)
-
 **Suggested option.** Filter by what the recommender suggests: fibre 323, tower 449,
 satellite 22, community Wi-Fi 654. A filter, not a colour, so dots keep their DIPI reading.
-
-![Suggested option](docs/media/suggested-option.png)
 
 **Cell tower records.** 1,217 OpenCelliD masts as context, never a feature: record count
 correlates 0.56 with test count, so it maps where volunteers went, not what is built.
@@ -115,20 +175,13 @@ correlates 0.56 with test count, so it maps where volunteers went, not what is b
 **Argue with the weighting.** The four weights are ours, not a law of nature. Move them and
 every score, rank and colour recomputes live, stamped into the panel and the CSV.
 
-![Weightings](docs/media/weightings.png)
-
 **Light theme.** Both palettes are checked for colour-vision separation. Deep red is the top
 of the scale in both, after the two ramps once ran in opposite directions.
-
-![Light theme](docs/media/light-theme.png)
 
 **Satellite.** Esri World Imagery, for checking a settlement against the ground it sits on:
 whether a village is cleared land or forest, and what a trench would cross. Dot outlines
 thicken over imagery so they hold their edge against a busy background, and the hillshade
 drops to a fifth of its strength because the imagery already carries its own relief.
-
-![Satellite basemap](docs/media/satellite-map.png)
-
 ---
 
 ## How the score is built
@@ -224,73 +277,6 @@ JSON so the quotes cannot drift.
 
 ---
 
-## Getting started
-
-**Prerequisites:** Python 3.10+ for the dataset scripts and the agent. Nothing else. The
-dashboard is one HTML file with no build step.
-
-Every derived file the browser reads is published by a script in `dataset/` that re-checks it
-on the way through and refuses to write if a check fails. That is not ceremony: it has caught
-a claim that all 216 unmeasured settlements were dark when 24 of them are lit, and a
-population figure that double counted overlapping buffers by a factor of 25.
-
-**The dashboard, on its own:**
-
-```bash
-git clone https://github.com/RextonRZ/dino-slayer.git
-cd dino-slayer
-python -m http.server
-```
-
-Open <http://localhost:8000/dashboard/>. Serve from the repo root, the page reads
-`../dataset/web/` and browsers block `file://` fetches.
-
-**Add the copilot** (optional, the dashboard works without it):
-
-```bash
-pip install -r agent/requirements.txt
-copy agent\.env.example agent\.env      # then put your real Gemini key in agent\.env
-python -m uvicorn agent.server:app --port 7860
-```
-
-`agent/.env` is gitignored. Never put a key in `.env.example`. The key must come from
-[aistudio.google.com/apikey](https://aistudio.google.com/apikey), not the Google Cloud
-console, and it must be a different key from the Maps one.
-
-**Check the tools without the LLM:**
-
-```bash
-python -m agent.tools        # runs all 15 tools against the real data and prints the results
-```
-
-**Endpoints**
-
-| Route | What |
-|---|---|
-| `GET /health` | Is it up, which model, how many settlements, which tools are registered |
-| `POST /ask` | `{question, session_id}` to the full contract in one response |
-| `POST /ask/stream` | The same, as server-sent events: one `step` per graph node, then `done` |
-
----
-
-## Repo layout
-
-```
-dashboard/index.html        the entire dashboard, one file
-dashboard/public/           logo, mascot frames, simulator video clips
-dataset/                    sources, the DIPI pipeline output, and the web exports
-dataset/ml/                 training table, frozen folds, model artefacts, terrain and VIIRS
-dataset/export_*.py         publish a derived file, and re-verify it on the way through
-agent/                      LangGraph agent, tools, and the FastAPI server
-docs/system_info.md         what the system does, what is geo, what is AI, and the impact
-docs/how_it_works.md        every panel, how each number is counted, and its source
-docs/deployment_clusters.md the bundling and mast work, with the methods that failed
-docs/viirs_nightlights.md   nightlights tested and rejected, kept as a power flag
-docs/ai_governance.md       NIST AI RMF mapping, generated
-```
-
----
-
 ## Data sources
 
 Every source is open, and every one is credited in the dashboard footer as well as here.
@@ -324,6 +310,78 @@ Details, file by file, in [dataset/README.md](dataset/README.md).
 dependencies to install.
 **Agent:** LangGraph, LangChain, Gemini, FastAPI, pandas.
 **Data:** pandas and pyarrow over Parquet, exported to GeoJSON for the browser.
+
+---
+
+## Screenshots
+
+**Map overview.** Every settlement by priority. Hollow rings cannot be scored yet.
+
+![Map overview](docs/media/map-overview.png)
+
+**Experience simulator.** What a link can actually carry once 30 people share it.
+
+![Experience simulator](docs/media/drilldown-simulator.png)
+
+**Nearby facilities.** Schools and clinics inside the 3 km buffer that feeds the Institutions pillar.
+
+![Nearby facilities](docs/media/nearby-facilities.png)
+
+**Rankings.** All 1,114 scored settlements. Sorting never renumbers the rank column.
+
+![Rankings](docs/media/rankings.png)
+
+**Ask Dino.** Ask Dino. Every number in the reply comes from a Python tool.
+
+![Ask Dino](docs/media/copilot-answer.png)
+
+**Model card.** No modelled number appears without its validation metrics one click away.
+
+![Model card](docs/media/model-card.png)
+
+**Survey planner.** Where to measure next: stakes against interval width, never multiplied.
+
+![Survey planner](docs/media/survey-planner.png)
+
+**Budget what-if.** Budget what-if, on ITU benchmarks you can type over.
+
+![Budget what-if](docs/media/budget-whatif.png)
+
+**Deployment bundles.** Deployment bundles. Sharing a trench drops fibre from RM 190.9m to RM 89.0m.
+
+![Deployment bundles](docs/media/bundles.png)
+
+**Shared mast screening.** Shared masts after the terrain screen: 240 to 274, not 86 to 189.
+
+![Shared mast screening](docs/media/mast-screening.png)
+
+**Night view.** Night view. 703 of 1,448 settlements register no light in thirteen years.
+
+![Night view](docs/media/night-view.png)
+
+**Compare settlements.** Compare up to 20 settlements on identical definitions.
+
+![Compare settlements](docs/media/compare-settlements.png)
+
+**Comparison report.** The printed sheet carries the weighting that produced it.
+
+![Comparison report](docs/media/comparison-report.png)
+
+**Suggested option.** Filter by suggested option. A filter, not a colour.
+
+![Suggested option](docs/media/suggested-option.png)
+
+**Weightings.** Move the four weights and every score, rank and colour recomputes live.
+
+![Weightings](docs/media/weightings.png)
+
+**Light theme.** Light theme. Deep red is the top of the scale in both palettes.
+
+![Light theme](docs/media/light-theme.png)
+
+**Satellite basemap.** Satellite. Whether a village is cleared land or forest, and what a trench crosses.
+
+![Satellite basemap](docs/media/satellite-map.png)
 
 ---
 
