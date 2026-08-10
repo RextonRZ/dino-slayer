@@ -18,8 +18,6 @@ Built for **ASEAN GeoAI Fusion 2026** · Open data only · No account, no build 
 
 **Live dashboard — <https://dino-slayer.rzrexton.com>**
 
-The copilot runs as a separate service at <https://dino-slayer.onrender.com>.
-It is not needed to use the dashboard.
 ---
 
 ## Why we built it
@@ -135,13 +133,6 @@ docs/
   media/                     the screenshots in this README
 ```
 
-Every derived file the browser reads is published by a script in `dataset/`
-that re-checks it on the way through and refuses to write if a check fails.
-That has already caught a claim that all 216 unmeasured settlements were dark
-when 24 of them are lit, and a population figure that double counted
-overlapping buffers by a factor of 25.
----
-
 ## What it does
 
 Six things, in the order a planner would use them. Screenshots of every panel
@@ -194,7 +185,6 @@ are in [Screenshots](#screenshots) at the end.
 **The four pillar weights are ours, not a law of nature.** Move them and every
 score, rank and colour recomputes live, stamped into the panel and the CSV so a
 figure can never be quoted without the weighting that produced it.
----
 
 ## How the score is built
 
