@@ -33,150 +33,101 @@ for who to go and measure next. It screens. It does not certify.
 
 ## A walk through the dashboard
 
-**The map.** Every settlement coloured by priority. Hollow rings are the ones with too
-little measurement to score, so an evidence gap looks like a gap and never like good news.
+**The map.** Every settlement coloured by priority. Hollow rings have too little
+measurement to score, so an evidence gap looks like a gap, never like good news.
 
-<p align="center">
-  <img src="docs/media/map-overview.png" alt="Map overview" width="800">
-</p>
+![Map overview](docs/media/map-overview.png)
 
-**Click any settlement** for the full case, pillar by pillar, with the raw numbers and how
-much measurement sits behind each.
+**Click any settlement** for the case behind its score, pillar by pillar.
 
-**The Experience Simulator** turns a speed into a sentence a minister can use. Set how many
-people share the link, pick a task, watch a real clip play at the quality it can carry. At
-30 users, Talas gets 0.38 Mbps each and everything stalls.
+**The Experience Simulator** turns a speed into a sentence a minister can use. At 30 shared
+users, Talas gets 0.38 Mbps each and everything stalls.
 
-<p align="center">
-  <img src="docs/media/drilldown-simulator.png" alt="Experience simulator" width="800">
-</p>
+![Experience simulator](docs/media/drilldown-simulator.png)
 
-**Nearby schools and clinics**, on the same 3 km buffer that feeds the Institutions pillar,
-so you can see what a fix would reach.
+**Nearby schools and clinics**, on the same 3 km buffer that feeds the Institutions pillar.
 
-<p align="center">
-  <img src="docs/media/nearby-facilities.png" alt="Nearby facilities" width="800">
-</p>
+![Nearby facilities](docs/media/nearby-facilities.png)
 
-**Terrain.** Elevation correlates -0.25 with measured download speed, a stronger
-relationship than distance to the nearest town. It never enters the score. It explains a
-slow link and qualifies a siting recommendation. 165 settlements sit 150 m or more below
-the town their mast would stand in, 132 of them in Ranau under Kinabalu.
+**Terrain.** Elevation correlates -0.25 with download speed, stronger than distance to town.
+It never enters the score. It explains a slow link and qualifies a siting recommendation.
 
-**The rankings.** All 1,114 scored settlements, sortable and filterable. Sorting never
-renumbers the rank column, so row 1 by latency is never mistaken for the top priority.
+**The rankings.** All 1,114 scored settlements. Sorting never renumbers the rank column, so
+row 1 by latency is never mistaken for the top priority.
 
-<p align="center">
-  <img src="docs/media/rankings.png" alt="Rankings" width="800">
-</p>
+![Rankings](docs/media/rankings.png)
 
-**Ask Dino.** Ask a question, get an answer from this dataset, watch the map fly to it.
-Every number comes from a Python tool, never from the model.
+**Ask Dino.** Ask in plain English, the map flies to the answer. Every number comes from a
+Python tool, never from the model.
 
-<p align="center">
-  <img src="docs/media/copilot-answer.png" alt="Ask Dino" width="800">
-</p>
+![Ask Dino](docs/media/copilot-answer.png)
 
 **The coverage model.** 216 settlements have no usable measurement. A gradient model
-trained on the 850 measured ones estimates each, with an interval and its top three SHAP
-drivers. Validated with GroupKFold by district, because 29% of settlements share an Ookla
-tile with a neighbour: MAE 34.1 Mbps spatially against 25.3 on a random split. That 35% gap
-is the finding. No modelled number appears without a one-click model card, and never enters
-the official ranking.
+estimates each with an interval and its top three SHAP drivers. Validated by district:
+MAE 34.1 Mbps spatially against 25.3 random, and that 35% gap is the finding.
 
-<p align="center">
-  <img src="docs/media/model-card.png" alt="Model card" width="800">
-</p>
+![Model card](docs/media/model-card.png)
 
-**Where to measure next.** The 334 unscored settlements ranked by what is at stake against
-how wide the model's interval is. Both shown, never multiplied: stakes times Mbps has no
-unit.
+**Where to measure next.** The 334 unscored settlements ranked by stakes against interval
+width. Both shown, never multiplied: stakes times Mbps has no unit.
 
-<p align="center">
-  <img src="docs/media/survey-planner.png" alt="Survey planner" width="800">
-</p>
+![Survey planner](docs/media/survey-planner.png)
 
-**Budget what-if.** Set a budget, see how far down the list it reaches and which
-settlements get funded. No Malaysian per-unit cost is published, so the defaults are ITU
-benchmarks rather than quotes, and a planner can type their own over them.
+**Budget what-if.** Set a budget, see how far down the list it reaches. No Malaysian
+per-unit cost is published, so the defaults are ITU benchmarks and you can type over them.
 
-<p align="center">
-  <img src="docs/media/budget-whatif.png" alt="Budget what-if" width="800">
-</p>
+![Budget what-if](docs/media/budget-whatif.png)
 
 **Deployment bundles.** Two villages sharing one trench were each billed for the whole
-thing. HDBSCAN groups the fibre-eligible into 17 bundles, each charged the shorter of its
-shared spur or its own run. Pricing individually overstated fibre at RM 190.9m against
-RM 89.0m. It also says what it cannot do: only 6 of the top 50 are in any bundle, because
-fibre needs 3,000 people within 2 km and the urgent settlements are small.
+thing. Bundling them drops fibre from RM 190.9m to RM 89.0m. It also says what it cannot
+do: only 6 of the top 50 are in any bundle.
 
-<p align="center">
-  <img src="docs/media/bundles.png" alt="Deployment bundles" width="800">
-</p>
+![Deployment bundles](docs/media/bundles.png)
 
-**Shared mast screening.** Distance alone said 86 to 189 masts cover the 449 tower
-settlements. Running the same set cover over only the paths that survive an SRTM line of
-sight and 60% Fresnel check says **240 to 274**. The second order effect is the useful part:
-before terrain the assumed radius swung cost by RM 53.6m, after it RM 17.7m. Once four paths
-in five are blocked, extra reach stops buying coverage.
+**Shared mast screening.** Distance alone said 86 to 189 masts. Screening every path for
+line of sight and 60% Fresnel says **240 to 274**, because four in five are blocked.
 
-<p align="center">
-  <img src="docs/media/mast-screening.png" alt="Shared mast screening" width="800">
-</p>
+![Shared mast screening](docs/media/mast-screening.png)
 
 **Night view.** Thirteen years of VIIRS radiance as a map mode, not an overlay. **703 of
-1,448 register nothing**, so anything sited there brings its own power, and 56 also need
-their own mast. A mode by choice: an overlay would say those places are worse served, which
-the data does not know. Nightlights measure electrification, never coverage.
+1,448 register nothing**, so anything sited there brings its own power. An overlay would
+say those places are worse served, which the data does not know.
 
-<p align="center">
-  <img src="docs/media/night-view.png" alt="Night view" width="800">
-</p>
+![Night view](docs/media/night-view.png)
 
-**Compare** districts, divisions, or up to 20 individual settlements by name, on identical
-definitions, with a metric table and a need profile.
+**Compare** districts, divisions, or up to 20 settlements by name, on identical definitions.
 
-<p align="center">
-  <img src="docs/media/compare-settlements.png" alt="Compare settlements" width="800">
-</p>
+![Compare settlements](docs/media/compare-settlements.png)
 
-The whole comparison prints to one page, weighting and evidence counts included, so the
-sheet someone carries into a meeting says what produced it.
+It prints to one page carrying its weighting and evidence counts, so the sheet someone takes
+into a meeting says what produced it.
 
-<p align="center">
-  <img src="docs/media/comparison-report.png" alt="Comparison report" width="800">
-</p>
+![Comparison report](docs/media/comparison-report.png)
 
 **Suggested option.** Filter by what the recommender suggests: fibre 323, tower 449,
-satellite 22, community Wi-Fi 654. A filter and not a colour, so dots keep their DIPI
-reading.
+satellite 22, community Wi-Fi 654. A filter, not a colour, so dots keep their DIPI reading.
 
-<p align="center">
-  <img src="docs/media/suggested-option.png" alt="Suggested option" width="800">
-</p>
+![Suggested option](docs/media/suggested-option.png)
 
-**Cell tower records.** 1,217 crowdsourced OpenCelliD masts as context, never a feature:
-record count correlates 0.56 with Ookla test count, so it maps where volunteers surveyed,
-not what is built. No marker means nobody surveyed, not no tower.
+**Cell tower records.** 1,217 OpenCelliD masts as context, never a feature: record count
+correlates 0.56 with test count, so it maps where volunteers went, not what is built.
 
 **Argue with the weighting.** The four weights are ours, not a law of nature. Move them and
 every score, rank and colour recomputes live, stamped into the panel and the CSV.
 
-<p align="center">
-  <img src="docs/media/weightings.png" alt="Weightings" width="800">
-</p>
+![Weightings](docs/media/weightings.png)
 
-**Light theme and satellite.** Both palettes checked for colour-vision separation, dot
-outlines thickened over imagery. Deep red is the top of the scale in both, after the two
-ramps once ran in opposite directions.
+**Light theme.** Both palettes are checked for colour-vision separation. Deep red is the top
+of the scale in both, after the two ramps once ran in opposite directions.
 
-<p align="center">
-  <img src="docs/media/light-theme.png" alt="Light theme" width="800">
-</p>
+![Light theme](docs/media/light-theme.png)
 
-<p align="center">
-  <img src="docs/media/satellite-map.png" alt="Satellite basemap" width="800">
-</p>
+**Satellite.** Esri World Imagery, for checking a settlement against the ground it sits on:
+whether a village is cleared land or forest, and what a trench would cross. Dot outlines
+thicken over imagery so they hold their edge against a busy background, and the hillshade
+drops to a fifth of its strength because the imagery already carries its own relief.
+
+![Satellite basemap](docs/media/satellite-map.png)
 
 ---
 
