@@ -2320,6 +2320,9 @@ td.cmp-worst .cmp-pc{background:var(--warn-bg);color:var(--warn)}
 </div>
 
 <script src="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.js"></script>
+<!-- Generated at request time from a Cloudflare Worker secret. This keeps the
+     CARTO key out of Git; browser basemap credentials are still user-visible. -->
+<script src="/carto-config.js"></script>
 <script>
 "use strict";
 /* ══════════════════════════════════════════════════════════════════════════
@@ -2346,9 +2349,15 @@ const RAMP = {
 // blue sea, warm land, green vegetation, not a grey document. It is muted
 // at the layer rather than swapped, because at full strength the basemap
 // competes with the dots drawn on top of it. See base-light paint below.
+const CARTO_BASEMAP_KEY = globalThis.DINO_CONFIG?.cartoBasemapKey || "";
+const CARTO_KEY_QUERY = CARTO_BASEMAP_KEY
+  ? `?key=${encodeURIComponent(CARTO_BASEMAP_KEY)}`
+  : "";
+if (!CARTO_BASEMAP_KEY)
+  console.warn("CARTO_BASEMAP_KEY is not configured; CARTO basemaps will show a watermark.");
 const BASEMAP = {
-  dark:  "https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
-  light: "https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
+  dark:  `https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png${CARTO_KEY_QUERY}`,
+  light: `https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png${CARTO_KEY_QUERY}`,
   // §D2. Esri World Imagery is free to use with the attribution below.
   satellite: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
 };

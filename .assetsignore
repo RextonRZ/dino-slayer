@@ -8,6 +8,14 @@
 # The agent runs as its own service, not from the CDN.
 agent/
 
+# Server-side Worker code and local secrets must never be published as static
+# files. Wrangler bundles worker/ separately from the asset upload.
+worker/
+.env
+*.env
+.dev.vars
+.dev.vars.*
+
 # Prose and screenshots.
 docs/
 

@@ -1,0 +1,3 @@
+# Copy this file to .dev.vars for `npx wrangler dev`, then replace the value.
+# .dev.vars is gitignored and excluded from the static asset upload.
+CARTO_BASEMAP_KEY=replace_with_your_carto_basemap_key
