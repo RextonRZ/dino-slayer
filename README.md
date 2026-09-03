@@ -58,6 +58,17 @@ python -m http.server
 Open <http://localhost:8000/dashboard/>. Serve from the repo root, the page reads
 `../dataset/web/` and browsers block `file://` fetches.
 
+The CARTO raster basemaps require a key. Production keeps it out of Git as the
+Cloudflare Worker secret `CARTO_BASEMAP_KEY`; `/carto-config.js` supplies it to
+the browser at runtime and tile requests still go directly to CARTO. For local
+map development, copy `.dev.vars.example` to `.dev.vars`, add the key, and run
+`npx wrangler dev` instead. The key is necessarily visible to browsers, so use
+the domain-specific key only for this project.
+
+For an existing assets-only deployment, first run `npx wrangler deploy` once to
+install the Worker script. Then add `CARTO_BASEMAP_KEY` under the Worker's
+Settings > Variables and Secrets; Cloudflare deploys the secret-bearing version.
+
 **Add the copilot** (optional, the dashboard works without it):
 
 ```bash
